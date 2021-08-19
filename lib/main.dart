@@ -15,9 +15,9 @@ import 'messages/messages.dart';
 import 'new_listing/new_listing.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   ThemeNotifier themeNotifier = ThemeNotifier();
-  WidgetsFlutterBinding.ensureInitialized();
   await appLanguage.fetchLocale();
   runApp(MyApp(
     appLanguage: appLanguage,
@@ -39,10 +39,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          Provider<AppLanguage>(
+          ChangeNotifierProvider<AppLanguage>(
             create: (_) => appLanguage,
           ),
-          Provider<ThemeNotifier>(
+          ChangeNotifierProvider<ThemeNotifier>(
               create: (_) => themeNotifier
           )
         ],

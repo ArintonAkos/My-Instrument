@@ -5,7 +5,7 @@ class ThemeNotifier with ChangeNotifier {
   final darkTheme = ThemeData(
     primaryColor: Colors.black,
     backgroundColor: const Color(0xFF212121),
-    dividerColor: Colors.black12,
+    dividerColor: Colors.black,
     colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.grey)
         .copyWith(
@@ -15,19 +15,21 @@ class ThemeNotifier with ChangeNotifier {
   );
 
   final lightTheme = ThemeData(
-    primaryColor: Colors.white,
-    backgroundColor: const Color(0xFFE5E5E5),
-    dividerColor: Colors.white54,
+    primaryColor: Colors.black,
+    backgroundColor: const Color(
+        //0xFFE5E5E5
+        0xFF212121),
+    dividerColor: Colors.grey,
     colorScheme: ColorScheme
-        .fromSwatch(primarySwatch: Colors.grey)
+        .fromSwatch(primarySwatch: Colors.blue)
         .copyWith(
         secondary: Colors.black,
         brightness: Brightness.light
     ),
   );
 
-  late ThemeData _themeData;
-  ThemeData getTheme() => _themeData;
+  ThemeData? _themeData;
+  ThemeData? getTheme() => _themeData;
 
   ThemeNotifier() {
     ThemeStorageManager.readData('themeMode').then((value) {

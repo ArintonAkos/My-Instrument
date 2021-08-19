@@ -19,7 +19,27 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate =
   _AppLocalizationsDelegate();
 
-  late Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings = {};
+
+  void mapJsonProperty(Map<String, dynamic> jsonProp, String keyName) {
+    jsonProp.forEach((key, value) {
+      if (value is Map<String, dynamic>) {
+        mapJsonProperty(value, keyName);
+      } else {
+        _localizedStrings['$keyName.$key'] = value;
+      }
+    });
+  }
+
+  void mapTranslateFile(Map<String, dynamic> jsonMap) {
+      jsonMap.forEach((key, value) {
+        if (value is Map<String, dynamic>) {
+          mapJsonProperty(value, key);
+        } else {
+          _localizedStrings[key] = value;
+        }
+      });
+  }
 
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
@@ -27,9 +47,7 @@ class AppLocalizations {
     await rootBundle.loadString('assets/i18n/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
+    mapTranslateFile(jsonMap);
 
     return true;
   }
