@@ -1,0 +1,17 @@
+{
+  "HOME": {
+    "TITLE": "Home"
+  },
+  "NEW_LISTING": {
+    "TITLE": "New Listing"
+  },
+  "FAV": {
+    "TITLE": "Favorites"
+  },
+  "PROFILE": {
+    "TITLE": "Profile"
+  },
+  "MESSAGES": {
+    "TITLE": "Messages"
+  }
+}

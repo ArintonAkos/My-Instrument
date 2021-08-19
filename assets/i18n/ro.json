@@ -1,0 +1,17 @@
+{
+  "HOME": {
+    "TITLE": "Acasă"
+  },
+  "NEW_LISTING": {
+    "TITLE": "Anunț nou"
+  },
+  "FAV": {
+    "TITLE": "Favorite"
+  },
+  "PROFILE": {
+    "TITLE": "Profil"
+  },
+  "MESSAGES": {
+    "TITLE": "Mesaje"
+  }
+}

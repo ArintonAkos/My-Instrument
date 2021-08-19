@@ -1,0 +1,17 @@
+{
+  "HOME": {
+    "TITLE": "Otthon"
+  },
+  "NEW_LISTING": {
+    "TITLE": "Új hirdetés"
+  },
+  "FAV": {
+    "TITLE": "Kedvencek"
+  },
+  "PROFILE": {
+    "TITLE": "Profil"
+  },
+  "MESSAGES": {
+    "TITLE": "Üzenetek"
+  }
+}
