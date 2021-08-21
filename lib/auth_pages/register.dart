@@ -4,20 +4,20 @@ import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
 import 'package:my_instrument/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<StatefulWidget> createState() => _RegisterPageState();
 }
 
-class _HomePageState extends State<HomePage> with BasePage
-    implements IPageNavbar {
+class _RegisterPageState extends State<RegisterPage> with BasePage
+    implements IPageNoNavbar {
 
   @override
   void initState() {
     super.initState();
-    this.showNavBar();
+    this.hideNavBar();
   }
 
   @override
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> with BasePage
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-                AppLocalizations.of(context)!.translate('HOME.TITLE')
+                AppLocalizations.of(context)!.translate('MESSAGES.TITLE')
             ),
           ],
         ),
@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> with BasePage
   }
 
   @override
-  void showNavBar() {
-    super.ShowNavBar(context.read<BottomNavBarProps>());
+  void hideNavBar() {
+    super.HideNavBar(context.read<BottomNavBarProps>());
   }
-
 }

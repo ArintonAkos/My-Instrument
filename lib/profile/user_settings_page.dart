@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:my_instrument/base/base_page.dart';
+import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
 import 'package:my_instrument/translation/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> with BasePage
+    implements IPageNavbar {
+
+  @override
+  void initState() {
+    super.initState();
+    this.showNavBar();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +27,22 @@ class UserPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: (
-          <Widget>[
-          Text(
-            AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-          ).alignment(Alignment.center).padding(bottom: 20),
-          const UserCard(),
-          const ActionsRow(),
-          const Settings(),
-        ].toColumn()),
+            <Widget>[
+              Text(
+                AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+              ).alignment(Alignment.center).padding(bottom: 20),
+              const UserCard(),
+              const ActionsRow(),
+              const Settings(),
+            ].toColumn()),
       ),
     );
+  }
+
+  @override
+  void showNavBar() {
+    super.ShowNavBar(context.read<BottomNavBarProps>());
   }
 }
 
