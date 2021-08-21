@@ -25,15 +25,12 @@ class AppLanguage extends ChangeNotifier {
     if (type == const Locale("hu")) {
       _appLocale = const Locale("hu");
       await prefs.setString('language_code', 'hu');
-      await prefs.setString('countryCode', '');
     } else if (type == const Locale("ro")) {
       _appLocale = const Locale("ro");
       await prefs.setString('language_code', 'ro');
-      await prefs.setString('countryCode', '');
     } else {
       _appLocale = const Locale("en");
       await prefs.setString('language_code', 'en');
-      await prefs.setString('countryCode', '');
     }
     notifyListeners();
   }

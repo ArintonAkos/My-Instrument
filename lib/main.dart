@@ -26,6 +26,7 @@ void main() async {
   BottomNavBarProps bottomNavBarProps = BottomNavBarProps();
 
   await appLanguage.fetchLocale();
+  await authModel.init();
 
   runApp(MyApp(
     appLanguage: appLanguage,
