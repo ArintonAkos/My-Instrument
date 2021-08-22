@@ -52,11 +52,13 @@ class _UserPageState extends State<UserPage> with BasePage
 class UserCard extends StatelessWidget {
   const UserCard({Key? key}) : super(key: key);
 
-  Widget _buildUserRow() {
+  Widget _buildUserRow(BuildContext context) {
     return <Widget>[
-      const Icon(Icons.account_circle)
+      Icon(
+        Icons.account_circle,
+        color: Theme.of(context).colorScheme.onSurface,)
           .decorated(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(30),
       )
           .constrained(height: 50, width: 50)
@@ -99,16 +101,18 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return <Widget>[_buildUserRow(), _buildUserStats()]
+    return <Widget>[_buildUserRow(context), _buildUserStats()]
         .toColumn(mainAxisAlignment: MainAxisAlignment.spaceAround)
         .padding(horizontal: 20, vertical: 10)
         .decorated(
-        color: const Color(0xff3977ff), borderRadius: BorderRadius.circular(20))
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(20)
+        )
         .elevation(
-      5,
-      shadowColor: const Color(0xff3977ff),
-      borderRadius: BorderRadius.circular(20),
-    )
+          5,
+          shadowColor: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(20),
+        )
         .height(175)
         .alignment(Alignment.center);
   }
@@ -117,22 +121,22 @@ class UserCard extends StatelessWidget {
 class ActionsRow extends StatelessWidget {
   const ActionsRow({Key? key}) : super(key: key);
 
-  Widget _buildActionItem(String name, IconData icon, VoidCallback? onTapFunction) {
-    final Widget actionIcon = InkWell(
-      child: Icon(icon, size: 20, color: const Color(0xFF42526F))
-          .alignment(Alignment.center)
-          .ripple()
-          .constrained(width: 50, height: 50)
-          .backgroundColor(const Color(0xfff6f5f8))
-          .clipOval()
-          .padding(bottom: 5),
-      onTap: onTapFunction
-    );
+  Widget _buildActionItem(String name, IconData icon, BuildContext context) {
+    final Widget actionIcon = Icon(icon,
+          size: 20,
+          color: Theme.of(context).colorScheme.onSurface
+        )
+        .alignment(Alignment.center)
+        .ripple()
+        .constrained(width: 50, height: 50)
+        .backgroundColor(Theme.of(context).cardColor)
+        .clipOval()
+        .padding(bottom: 5);
 
     final Widget actionText = Text(
       name,
       style: TextStyle(
-        color: Colors.black.withOpacity(0.8),
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
         fontSize: 12,
       ),
     );
@@ -143,28 +147,46 @@ class ActionsRow extends StatelessWidget {
     ].toColumn().padding(vertical: 20);
   }
 
-  _onThemeClick(ThemeNotifier themeNotifier) {
-    themeNotifier.setDarkMode();
+  _buildThemeActionItem(Widget child, ThemeNotifier themeNotifier) {
+    return InkWell(
+      child: child,
+      onTap: () => _onThemeClick(themeNotifier)
+    );
+  }
+
+  void _onThemeClick(ThemeNotifier themeNotifier) {
+    switch (themeNotifier.getThemeName()) {
+      case 'dark':
+        themeNotifier.setLightMode();
+        break;
+      default:
+        themeNotifier.setDarkMode();
+        break;
+    }
   }
 
   IconData _getThemeIcon(ThemeNotifier theme) {
     switch (theme.getThemeName()) {
       case 'dark':
-        return Icons.light_mode;
-      default:
         return Icons.dark_mode;
+      default:
+        return Icons.light_mode;
     }
   }
 
   @override
   Widget build(BuildContext context) => <Widget>[
-    _buildActionItem('Wallet', Icons.attach_money, null),
-    _buildActionItem('Delivery', Icons.card_giftcard, null),
-    _buildActionItem('Message', Icons.message, null),
-    _buildActionItem(
+    _buildActionItem('Wallet', Icons.attach_money, context),
+    _buildActionItem('Delivery', Icons.card_giftcard, context),
+    _buildActionItem('Message', Icons.message, context),
+    _buildThemeActionItem(
+      _buildActionItem(
         AppLocalizations.of(context)!.translate('PROFILE.THEME_SWITCH_LABEL'),
         _getThemeIcon(Provider.of<ThemeNotifier>(context)),
-        null),
+        context
+      ),
+      Provider.of<ThemeNotifier>(context)
+    ),
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 
@@ -255,13 +277,13 @@ class _SettingsItemState extends State<SettingsItem> {
         .alignment(Alignment.center)
         .borderRadius(all: 15)
         .ripple()
-        .backgroundColor(Colors.white, animate: true)
+        .backgroundColor(Theme.of(context).cardColor, animate: true)
         .clipRRect(all: 25) // clip ripple
         .borderRadius(all: 25, animate: true)
         .elevation(
       pressed ? 0 : 20,
       borderRadius: BorderRadius.circular(25),
-      shadowColor: Color(0x30000000),
+      shadowColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
     ) // shadow borderRadius
         .constrained(height: 80)
         .padding(vertical: 12) // margin
@@ -291,8 +313,8 @@ class _SettingsItemState extends State<SettingsItem> {
 
     final Widget description = Text(
       widget.description,
-      style: const TextStyle(
-        color: Colors.black26,
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
         fontWeight: FontWeight.bold,
         fontSize: 12,
       ),

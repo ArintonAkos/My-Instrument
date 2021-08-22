@@ -132,19 +132,24 @@ class _MainPageState extends State<MainPage> {
       builder: (_, model, __) => Scaffold(
         extendBody: true,
         body: SafeArea(
-            child: PageTransitionSwitcher(
-                transitionBuilder: (animChild, primaryAnimation,
-                    secondaryAnimation) =>
-                    FadeThroughTransition(
-                        animation: primaryAnimation,
-                        secondaryAnimation: secondaryAnimation,
-                        child: animChild
-                    ),
-                child: model.isSignedIn
-                    ? routes[selectedRouteId]
-                        : selectedRouteId == 0
-                    ? routes[0]
-                        : LoginPage(nextPage: routes[selectedRouteId],)
+            child: Container(
+              child: PageTransitionSwitcher(
+                  transitionBuilder: (animChild, primaryAnimation,
+                      secondaryAnimation) =>
+                      FadeThroughTransition(
+                          animation: primaryAnimation,
+                          secondaryAnimation: secondaryAnimation,
+                          child: Container(
+                            child: animChild,
+                            color: Theme.of(context).backgroundColor,
+                          )
+                      ),
+                  child: model.isSignedIn
+                      ? routes[selectedRouteId]
+                      : selectedRouteId == 0
+                      ? routes[0]
+                      : LoginPage(nextPage: routes[selectedRouteId],)
+              ),
             )
         ),
         bottomNavigationBar: Consumer<BottomNavBarProps>(

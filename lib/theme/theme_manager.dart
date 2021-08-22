@@ -3,17 +3,18 @@ import 'package:my_instrument/theme/theme_storage_manager.dart';
 
 class ThemeNotifier with ChangeNotifier {
   final darkTheme = ThemeData(
+    scaffoldBackgroundColor: const Color(0xFF121212),
     backgroundColor: const Color(0xFF121212),
     dividerColor: const Color(0xFF121212),
-    cardColor: Color(0xFF1f1f1f),
+    cardColor: Color(0xff2b2b2b),
     errorColor: const Color(0xFFCF6679),
     colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.grey)
         .copyWith(
         primary: const Color(0xFF0096E1),
         primaryVariant: const Color(0xFF015497),
-        secondary: const Color(0xFF02E1EE),
-        secondaryVariant: const Color(0xFF01AEC1),
+        // secondary: const Color(0xFF02E1EE),
+        // secondaryVariant: const Color(0xFF01AEC1),
         surface: const Color(0xFF1F1F1F),
         onPrimary: const Color(0xFFFFFFFF),
         onSecondary: const Color(0xFFFFFFFF),
@@ -25,6 +26,7 @@ class ThemeNotifier with ChangeNotifier {
   );
 
   final lightTheme = ThemeData(
+    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
     backgroundColor: const Color(0xFFFFFFFF),
     dividerColor: Colors.grey,
     cardColor: const Color(0xFFF0F0F0),
@@ -34,8 +36,8 @@ class ThemeNotifier with ChangeNotifier {
         .copyWith(
         primary: const Color(0xFF12B3F2),
         primaryVariant: const Color(0xFF015497),
-        secondary: const Color(0xFF02E1EE),
-        secondaryVariant: const Color(0xFF001AEC1),
+        // secondary: const Color(0xFF02E1EE),
+        // secondaryVariant: const Color(0xFF01AEC1),
         surface: const Color(0xFFFFFFFF),
         error: const Color(0xFFB00020),
         onPrimary: const Color(0xFFFFFFFF),
