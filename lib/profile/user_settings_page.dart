@@ -19,7 +19,9 @@ class _UserPageState extends State<UserPage> with BasePage
   @override
   void initState() {
     super.initState();
-    this.showNavBar();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this.showNavBar();
+    });
   }
 
   @override
@@ -149,10 +151,8 @@ class ActionsRow extends StatelessWidget {
     switch (theme.getThemeName()) {
       case 'dark':
         return Icons.light_mode;
-        break;
       default:
         return Icons.dark_mode;
-        break;
     }
   }
 
@@ -164,7 +164,7 @@ class ActionsRow extends StatelessWidget {
     _buildActionItem(
         AppLocalizations.of(context)!.translate('PROFILE.THEME_SWITCH_LABEL'),
         _getThemeIcon(Provider.of<ThemeNotifier>(context)),
-        _onThemeClick(Provider.of<ThemeNotifier>(context))),
+        null),
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 

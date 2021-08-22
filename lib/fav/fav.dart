@@ -17,7 +17,9 @@ class _FavPageState extends State<FavPage> with BasePage
   @override
   void initState() {
     super.initState();
-    this.showNavBar();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this.showNavBar();
+    });
   }
 
   @override

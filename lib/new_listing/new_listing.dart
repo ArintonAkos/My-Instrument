@@ -17,7 +17,9 @@ class _NewListingPageState extends State<NewListingPage> with BasePage
   @override
   void initState() {
     super.initState();
-    this.showNavBar();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this.showNavBar();
+    });
   }
 
   @override

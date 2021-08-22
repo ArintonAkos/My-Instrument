@@ -16,6 +16,7 @@ class BottomNavBarProps extends ChangeNotifier {
 
   setVisibility(Visibility e) {
     isShowing = e.value;
+    notifyListeners();
   }
 
 }

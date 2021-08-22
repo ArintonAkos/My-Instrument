@@ -17,7 +17,9 @@ class _RegisterPageState extends State<RegisterPage> with BasePage
   @override
   void initState() {
     super.initState();
-    this.hideNavBar();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this.hideNavBar();
+    });
   }
 
   @override

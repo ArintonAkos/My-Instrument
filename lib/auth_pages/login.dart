@@ -32,7 +32,9 @@ class _LoginPageState extends State<LoginPage> with BasePage
   @override
   void initState() {
     super.initState();
-    this.hideNavBar();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this.hideNavBar();
+    });
   }
 
   Widget _buildEmailTF() {
