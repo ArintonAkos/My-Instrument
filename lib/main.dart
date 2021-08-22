@@ -1,7 +1,8 @@
 import 'package:animations/animations.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/auth_pages/login.dart';
 import 'package:my_instrument/auth_pages/register.dart';
 import 'package:my_instrument/fav/fav.dart';
@@ -129,6 +130,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) => (
     Consumer<AuthModel>(
       builder: (_, model, __) => Scaffold(
+        extendBody: true,
         body: SafeArea(
             child: PageTransitionSwitcher(
                 transitionBuilder: (animChild, primaryAnimation,
@@ -147,17 +149,30 @@ class _MainPageState extends State<MainPage> {
         ),
         bottomNavigationBar: Consumer<BottomNavBarProps>(
           builder: (_, navbarProps, __) => navbarProps.isShowing
-              ? CurvedNavigationBar(
-                index: selectedRouteId,
+              ? CustomNavigationBar(
+                iconSize: 20.0,
+                selectedColor: Theme.of(context).colorScheme.onSurface,
+                strokeColor: Theme.of(context).colorScheme.onSurface,
+                currentIndex: selectedRouteId,
+                unSelectedColor: Colors.grey[600],
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 onTap: _changeSelectedIndex,
-                backgroundColor: Colors.transparent,
-                color: Theme.of(context).colorScheme.primary,
-                items: const <Widget>[
-                  Icon(Icons.home, size: 30, color: Colors.white),
-                  Icon(Icons.favorite, size: 30, color: Colors.white),
-                  Icon(Icons.add, size: 30, color: Colors.white),
-                  Icon(Icons.message, size: 30, color: Colors.white),
-                  Icon(Icons.person, size: 30, color: Colors.white)
+                items: <CustomNavigationBarItem>[
+                  CustomNavigationBarItem(
+                    icon: Icon(FontAwesomeIcons.home),
+                  ),
+                  CustomNavigationBarItem(
+                    icon: Icon(FontAwesomeIcons.heart),
+                  ),
+                  CustomNavigationBarItem(
+                    icon: Icon(FontAwesomeIcons.plus),
+                  ),
+                  CustomNavigationBarItem(
+                    icon: Icon(FontAwesomeIcons.comments),
+                  ),
+                  CustomNavigationBarItem(
+                    icon: Icon(FontAwesomeIcons.user),
+                  ),
                 ],
               )
               : SizedBox(
