@@ -151,7 +151,7 @@ class _MainPageState extends State<MainPage> {
                 index: selectedRouteId,
                 onTap: _changeSelectedIndex,
                 backgroundColor: Colors.transparent,
-                color: Colors.blueAccent,
+                color: Theme.of(context).colorScheme.primary,
                 items: const <Widget>[
                   Icon(Icons.home, size: 30, color: Colors.white),
                   Icon(Icons.favorite, size: 30, color: Colors.white),

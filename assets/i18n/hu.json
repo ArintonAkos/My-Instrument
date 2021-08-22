@@ -9,7 +9,8 @@
     "TITLE": "Kedvencek"
   },
   "PROFILE": {
-    "TITLE": "Profil"
+    "TITLE": "Profil",
+    "THEME_SWITCH_LABEL": "Téma"
   },
   "MESSAGES": {
     "TITLE": "Üzenetek"

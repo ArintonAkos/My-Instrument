@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_instrument/base/base_page.dart';
 import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
+import 'package:my_instrument/theme/theme_manager.dart';
 import 'package:my_instrument/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -114,14 +115,17 @@ class UserCard extends StatelessWidget {
 class ActionsRow extends StatelessWidget {
   const ActionsRow({Key? key}) : super(key: key);
 
-  Widget _buildActionItem(String name, IconData icon) {
-    final Widget actionIcon = Icon(icon, size: 20, color: const Color(0xFF42526F))
-        .alignment(Alignment.center)
-        .ripple()
-        .constrained(width: 50, height: 50)
-        .backgroundColor(const Color(0xfff6f5f8))
-        .clipOval()
-        .padding(bottom: 5);
+  Widget _buildActionItem(String name, IconData icon, VoidCallback? onTapFunction) {
+    final Widget actionIcon = InkWell(
+      child: Icon(icon, size: 20, color: const Color(0xFF42526F))
+          .alignment(Alignment.center)
+          .ripple()
+          .constrained(width: 50, height: 50)
+          .backgroundColor(const Color(0xfff6f5f8))
+          .clipOval()
+          .padding(bottom: 5),
+      onTap: onTapFunction
+    );
 
     final Widget actionText = Text(
       name,
@@ -137,14 +141,30 @@ class ActionsRow extends StatelessWidget {
     ].toColumn().padding(vertical: 20);
   }
 
+  _onThemeClick(ThemeNotifier themeNotifier) {
+    themeNotifier.setDarkMode();
+  }
+
+  IconData _getThemeIcon(ThemeNotifier theme) {
+    switch (theme.getThemeName()) {
+      case 'dark':
+        return Icons.light_mode;
+        break;
+      default:
+        return Icons.dark_mode;
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) => <Widget>[
-    _buildActionItem('Wallet', Icons.attach_money),
-    _buildActionItem('Delivery', Icons.card_giftcard),
-    _buildActionItem('Message', Icons.message),
+    _buildActionItem('Wallet', Icons.attach_money, null),
+    _buildActionItem('Delivery', Icons.card_giftcard, null),
+    _buildActionItem('Message', Icons.message, null),
     _buildActionItem(
-        AppLocalizations.of(context)!.translate('USER_SETTINGS.THEME_SWITCH_LABEL'),
-        Icons.light_mode),
+        AppLocalizations.of(context)!.translate('PROFILE.THEME_SWITCH_LABEL'),
+        _getThemeIcon(Provider.of<ThemeNotifier>(context)),
+        _onThemeClick(Provider.of<ThemeNotifier>(context))),
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 

@@ -3,30 +3,52 @@ import 'package:my_instrument/theme/theme_storage_manager.dart';
 
 class ThemeNotifier with ChangeNotifier {
   final darkTheme = ThemeData(
-    primaryColor: Colors.black,
-    backgroundColor: const Color(0xFF212121),
-    dividerColor: Colors.black,
+    backgroundColor: const Color(0xFF121212),
+    dividerColor: const Color(0xFF121212),
+    cardColor: Color(0xFF1f1f1f),
+    errorColor: const Color(0xFFCF6679),
     colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.grey)
         .copyWith(
-        secondary: Colors.white,
+        primary: const Color(0xFF0096E1),
+        primaryVariant: const Color(0xFF015497),
+        secondary: const Color(0xFF02E1EE),
+        secondaryVariant: const Color(0xFF01AEC1),
+        surface: const Color(0xFF1F1F1F),
+        onPrimary: const Color(0xFFFFFFFF),
+        onSecondary: const Color(0xFFFFFFFF),
+        onBackground: const Color(0xFFFFFFFF),
+        onSurface: const Color(0xFFFFFFFF),
+        onError: const Color(0xFFFFFFFF),
         brightness: Brightness.dark
       ),
   );
 
   final lightTheme = ThemeData(
-    primaryColor: Colors.black,
-    backgroundColor: const Color(
-        //0xFFE5E5E5
-        0xFF212121),
+    backgroundColor: const Color(0xFFFFFFFF),
     dividerColor: Colors.grey,
+    cardColor: const Color(0xFFF0F0F0),
+    errorColor: const Color(0xFFB00020),
     colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.blue)
         .copyWith(
-        secondary: Colors.black,
+        primary: const Color(0xFF12B3F2),
+        primaryVariant: const Color(0xFF015497),
+        secondary: const Color(0xFF02E1EE),
+        secondaryVariant: const Color(0xFF001AEC1),
+        surface: const Color(0xFFFFFFFF),
+        error: const Color(0xFFB00020),
+        onPrimary: const Color(0xFFFFFFFF),
+        onSecondary: const Color(0xFFFFFFFF),
+        onBackground: const Color(0xFFFFFFFF),
+        onSurface: const Color(0xFF000000),
+        onError: const Color(0xFFFFFFFF),
         brightness: Brightness.light
     ),
   );
+
+  String _themeName = '';
+  String getThemeName() => _themeName;
 
   ThemeData? _themeData;
   ThemeData? getTheme() => _themeData;
@@ -39,18 +61,21 @@ class ThemeNotifier with ChangeNotifier {
       } else {
         _themeData = darkTheme;
       }
+      _themeName = themeMode;
       notifyListeners();
     });
   }
 
   void setDarkMode() async {
     _themeData = darkTheme;
+    _themeName = 'dark';
     ThemeStorageManager.saveData('themeMode', 'dark');
     notifyListeners();
   }
 
   void setLightMode() async {
     _themeData = lightTheme;
+    _themeName = 'light';
     ThemeStorageManager.saveData('themeMode', 'light');
     notifyListeners();
   }

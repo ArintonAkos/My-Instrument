@@ -9,7 +9,8 @@
     "TITLE": "Favorite"
   },
   "PROFILE": {
-    "TITLE": "Profil"
+    "TITLE": "Profil",
+    "THEME_SWITCH_LABEL": "Temă"
   },
   "MESSAGES": {
     "TITLE": "Mesaje"
