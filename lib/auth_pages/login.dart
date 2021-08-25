@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/auth/auth_model.dart';
-import 'package:my_instrument/base/base_page.dart';
-import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
+import 'package:my_instrument/shared_widgets/custom_dialog.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_pages_constants.dart';
 
@@ -24,18 +25,11 @@ class LoginPage extends StatefulWidget {
 
 }
 
-class _LoginPageState extends State<LoginPage> with BasePage
-    implements IPageNoNavbar {
+class _LoginPageState extends State<LoginPage> {
 
   bool _rememberMe = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      this.hideNavBar();
-    });
-  }
+  final controllerEmail = TextEditingController();
+  final controllerPassword = TextEditingController();
 
   Widget _buildEmailTF() {
     return Column(
@@ -52,6 +46,7 @@ class _LoginPageState extends State<LoginPage> with BasePage
           height: 60.0,
           child: TextField(
             keyboardType: TextInputType.emailAddress,
+            controller: controllerEmail,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -87,6 +82,7 @@ class _LoginPageState extends State<LoginPage> with BasePage
           height: 60.0,
           child: TextField(
             obscureText: true,
+            controller: controllerPassword,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -164,7 +160,7 @@ class _LoginPageState extends State<LoginPage> with BasePage
           primary: Colors.white,
 
         ),
-        onPressed: () => Provider.of<AuthModel>(context, listen: false).signIn(),
+        onPressed: _loginUser,
         child: Text(
           'LOGIN',
           style: TextStyle(
@@ -342,8 +338,21 @@ class _LoginPageState extends State<LoginPage> with BasePage
     );
   }
 
-  @override
-  void hideNavBar() {
-    super.HideNavBar(context.read<BottomNavBarProps>());
+  _loginUser() async {
+    final email = controllerEmail.text.trim();
+    final password = controllerPassword.text.trim();
+
+    AuthModel authModel = Provider.of<AuthModel>(context, listen: false);
+
+    var response = await authModel.signIn(email, password);
+
+    if (!response.success) {
+      showDialog(context: context,
+          builder: (BuildContext dialogContext) => CustomDialog(
+            description: 'An error occurred, please try again later!',
+            dialogType: DialogType.Failure,
+          )
+      );
+    }
   }
 }

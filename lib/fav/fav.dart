@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_instrument/base/base_page.dart';
-import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
 import 'package:my_instrument/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -11,16 +9,7 @@ class FavPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FavPageState();
 }
 
-class _FavPageState extends State<FavPage> with BasePage
-    implements IPageNavbar {
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      this.showNavBar();
-    });
-  }
+class _FavPageState extends State<FavPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +25,4 @@ class _FavPageState extends State<FavPage> with BasePage
         ),
       );
   }
-
-  @override
-  void showNavBar() {
-    super.ShowNavBar(context.read<BottomNavBarProps>());
-  }
-
 }

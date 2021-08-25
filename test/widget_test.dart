@@ -10,7 +10,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_instrument/auth/auth_model.dart';
 
 import 'package:my_instrument/main.dart';
-import 'package:my_instrument/navigation/bottom_nav_bar_props.dart';
 import 'package:my_instrument/theme/theme_manager.dart';
 import 'package:my_instrument/translation/app_language.dart';
 
@@ -21,7 +20,6 @@ void main() {
       appLanguage: AppLanguage(),
       themeNotifier: ThemeNotifier(),
       authModel: AuthModel(),
-      bottomNavBarProps: BottomNavBarProps(),
     ));
 
     // Verify that our counter starts at 0.
