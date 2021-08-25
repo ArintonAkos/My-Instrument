@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           HomeTitle(),
-          // DiscoverSlider(),
+          DiscoverSlider(),
         ],
       ),
     );
@@ -56,17 +56,7 @@ class DiscoverSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      body: Column(
-        children: <Widget>[
-          Text('Asd 123'),
-          TextButton(
-            onPressed: () {
-              Provider.of<AuthModel>(context).signOut();
-            },
-            child: Text('log - out'),
-          )
-        ],
-      )/*Center(
+      body: Center(
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Column(
@@ -103,7 +93,7 @@ class DiscoverSlider extends StatelessWidget {
             ],
           ),
         ),
-      ),*/
+      ),
     );
   }
   

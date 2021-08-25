@@ -21,19 +21,19 @@ class CustomDialog extends StatelessWidget {
   static const iconList = <Icon>[
     Icon(Icons.done,
       color: Colors.white,
-      size: 33,
+      size: 80,
     ),
     Icon(Icons.error,
       color: Colors.white,
-      size: 33
+      size: 66
     ),
     Icon(Icons.warning,
       color: Colors.white,
-      size: 33
+      size: 60
     ),
     Icon(Icons.info,
       color: Colors.white,
-      size: 33,
+      size: 60,
     )
   ];
 

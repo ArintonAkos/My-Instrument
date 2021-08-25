@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/auth/auth_model.dart';
 import 'package:my_instrument/shared_widgets/custom_dialog.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_pages_constants.dart';
 
@@ -30,6 +28,26 @@ class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
+
+  bool _isButtonDisabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isButtonDisabled = false;
+  }
+
+  void _disableButton() {
+    setState(() {
+      _isButtonDisabled = false;
+    });
+  }
+
+  void _enableButton() {
+    setState(() {
+      _isButtonDisabled = true;
+    });
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -158,9 +176,9 @@ class _LoginPageState extends State<LoginPage> {
             borderRadius: BorderRadius.circular(30.0),
           ),
           primary: Colors.white,
-
+          onPrimary: Colors.grey[400]
         ),
-        onPressed: _loginUser,
+        onPressed: _isButtonDisabled ? null : _loginUser,
         child: Text(
           'LOGIN',
           style: TextStyle(
@@ -279,22 +297,22 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: <Widget>[
               Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF73AEF5),
+                        Color(0xFF61A4F1),
+                        Color(0xFF478DE0),
+                        Color(0xFF398AE5),
+                      ],
+                      stops: [0.1, 0.4, 0.7, 0.9],
+                    ),
                   ),
                 ),
-              ),
               Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
@@ -339,6 +357,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _loginUser() async {
+    _disableButton();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
@@ -346,6 +365,7 @@ class _LoginPageState extends State<LoginPage> {
 
     var response = await authModel.signIn(email, password);
 
+    _enableButton();
     if (!response.success) {
       showDialog(context: context,
           builder: (BuildContext dialogContext) => CustomDialog(
