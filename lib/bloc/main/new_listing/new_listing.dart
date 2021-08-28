@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_instrument/translation/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:my_instrument/shared/translation/app_localizations.dart';
 
 class NewListingPage extends StatefulWidget {
   const NewListingPage({Key? key}) : super(key: key);

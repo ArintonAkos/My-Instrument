@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_instrument/theme/theme_manager.dart';
-import 'package:my_instrument/translation/app_localizations.dart';
+import 'package:my_instrument/shared/theme/theme_manager.dart';
+import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -274,7 +274,7 @@ class _SettingsItemState extends State<SettingsItem> {
         .gestures(
       onTapChange: (tapStatus) => setState(() => pressed = tapStatus),
       onTapDown: (details) => print('tapDown'),
-      onTap: () => print('onTap'),
+      onTap: () => {}//AutoRouter.of(context).push(RegisterRoute()),
     )
         .scale(all: pressed ? 0.95 : 1.0, animate: true)
         .animate(const Duration(milliseconds: 150), Curves.easeOut);

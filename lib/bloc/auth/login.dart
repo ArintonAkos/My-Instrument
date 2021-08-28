@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_instrument/auth/auth_model.dart';
-import 'package:my_instrument/shared_widgets/custom_dialog.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/shared/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_pages_constants.dart';
 
 class LoginPage extends StatefulWidget {
-  final Object? nextPage;
-
   const LoginPage({
     Key? key,
-    required this.nextPage
   })
     : super(key: key);
 
@@ -39,13 +38,13 @@ class _LoginPageState extends State<LoginPage> {
 
   void _disableButton() {
     setState(() {
-      _isButtonDisabled = false;
+      _isButtonDisabled = true;
     });
   }
 
   void _enableButton() {
     setState(() {
-      _isButtonDisabled = true;
+      _isButtonDisabled = false;
     });
   }
 
@@ -261,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => _register,
       child: RichText(
         text: TextSpan(
           children: [
@@ -280,6 +279,9 @@ class _LoginPageState extends State<LoginPage> {
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
+              recognizer: TapGestureRecognizer()..onTap = () {
+                Modular.to.pushNamed('/register');
+              }
             ),
           ],
         ),
@@ -356,12 +358,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  _register() {
+  }
+
   _loginUser() async {
     _disableButton();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    AuthModel authModel = Provider.of<AuthModel>(context, listen: false);
+    AuthModel authModel = Modular.get<AuthModel>();;
 
     var response = await authModel.signIn(email, password);
 
@@ -373,6 +378,8 @@ class _LoginPageState extends State<LoginPage> {
             dialogType: DialogType.Failure,
           )
       );
+    } else {
+      Modular.to.pushNamed('/home/');
     }
   }
 }

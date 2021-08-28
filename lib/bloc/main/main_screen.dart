@@ -1,44 +1,53 @@
-import 'package:animations/animations.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  int _selectedPageIndex = 0;
+
+  void _changePageIndex(int id) {
+    if (id  != _selectedPageIndex) {
+      if (id == 0) {
+        Modular.to.navigate('/home/');
+      } else if (id == 1) {
+        Modular.to.navigate('/home/favorites');
+      } else if (id == 2) {
+        Modular.to.navigate('/home/new-listing');
+      } else if (id == 3) {
+        Modular.to.navigate('/home/messages');
+      } else if (id == 4) {
+        Modular.to.navigate('/home/profile');
+      }
+      setState(() {
+        _selectedPageIndex = id;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-  return AutoTabsScaffold(
-      routes: [],
-      extendBody: true,
-      builder: (context, child, animation) => SafeArea(
-          child: PageTransitionSwitcher(
-              transitionBuilder: (animChild, primaryAnimation,
-                  secondaryAnimation) =>
-                  FadeThroughTransition(
-                      animation: primaryAnimation,
-                      secondaryAnimation: secondaryAnimation,
-                      child: animChild
-                  ),
-              child: child
-          )
+  return Scaffold(
+      body: SafeArea(
+        child: RouterOutlet(),
       ),
-      bottomNavigationBuilder: (_,  tabsRouter) {
-        return CustomNavigationBar(
+      bottomNavigationBar:
+        CustomNavigationBar(
           iconSize: 20.0,
           selectedColor: Theme.of(context).colorScheme.onSurface,
           strokeColor: Theme.of(context).colorScheme.onSurface,
-          currentIndex: tabsRouter.activeIndex,
           unSelectedColor: Colors.grey[600],
           backgroundColor: Theme.of(context).colorScheme.surface,
-          onTap: tabsRouter.setActiveIndex,
+          currentIndex: _selectedPageIndex,
+          onTap: _changePageIndex,
           items: <CustomNavigationBarItem>[
             CustomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.home),
@@ -56,8 +65,8 @@ class _MainPageState extends State<MainPage> {
               icon: Icon(FontAwesomeIcons.user),
             ),
           ],
-        );
-      }
+        )
+
     );
   }
 

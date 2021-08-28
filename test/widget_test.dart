@@ -7,20 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_instrument/auth/auth_model.dart';
 
 import 'package:my_instrument/main.dart';
-import 'package:my_instrument/theme/theme_manager.dart';
-import 'package:my_instrument/translation/app_language.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
-      appLanguage: AppLanguage(),
-      themeNotifier: ThemeNotifier(),
-      authModel: AuthModel(),
-    ));
+    await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
