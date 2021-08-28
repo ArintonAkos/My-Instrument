@@ -3,7 +3,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/modular/app_module.dart';
 
-import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
@@ -33,6 +32,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    _init();
+  }
+
+  _init() async {
+    await appLanguage.fetchLocale();
   }
 
   // This widget is the root of your application.
@@ -61,7 +65,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate
             ],
             title: 'Instrumental',
-            theme: theme.getTheme(),
+            theme: theme.getTheme()?.materialTheme,
             initialRoute: '/splash',
           ).modular()
         )

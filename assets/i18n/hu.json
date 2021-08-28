@@ -14,5 +14,19 @@
   },
   "MESSAGES": {
     "TITLE": "Üzenetek"
+  },
+  "LOGIN": {
+    "EMAIL_INPUT_LABEL": "Email",
+    "EMAIL_INPUT_TEXT": "Email cím",
+    "PASSWORD_INPUT_LABEL": "Jelszó",
+    "PASSWORD_INPUT_TEXT": "Jelszó",
+    "LOGIN_BUTTON": "Bejelentkezés",
+    "LOGIN_HEADER_TEXT": "BEJELENTKEZÉS",
+    "REGISTER_LABEL": "Nincs fiókod? ",
+    "REGISTER)BOLD_TEXT": "Regisztálj",
+    "FORGOT_PASSWORD_LABEL": "Elfelejtett jeslzó?",
+    "REMEMBER_ME_LABEL":  "Maradj bejelentkezve",
+    "OR_LABEL": "VAGY",
+    "SIGN_IN_WITH_LABEL": "Jelentkezz be"
   }
 }

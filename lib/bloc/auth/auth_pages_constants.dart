@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_instrument/shared/theme/app_theme_data.dart';
 
 final kHintTextStyle = TextStyle(
   color: Colors.white54,
@@ -11,14 +12,16 @@ final kLabelStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
-final kBoxDecorationStyle = BoxDecoration(
-  color: Color(0xFF6CA8F1),
-  borderRadius: BorderRadius.circular(10.0),
-  boxShadow: [
-    BoxShadow(
-      color: Colors.black12,
-      blurRadius: 6.0,
-      offset: Offset(0, 2),
-    ),
-  ],
-);
+BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
+  return BoxDecoration(
+    color: appThemeData?.customTheme.LoginInputColor,
+    borderRadius: BorderRadius.circular(10.0),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black12,
+        blurRadius: 6.0,
+        offset: Offset(0, 2),
+      ),
+    ],
+  );
+}
