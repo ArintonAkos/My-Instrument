@@ -63,6 +63,8 @@ class ThemeNotifier with ChangeNotifier {
   AppThemeData? _themeData;
   AppThemeData? getTheme() => _themeData;
 
+  bool get isDarkMode => _themeName == 'dark';
+
   ThemeNotifier() {
     ThemeStorageManager.readData('themeMode').then((value) {
       var themeMode = value ?? 'light';

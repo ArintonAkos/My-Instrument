@@ -29,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
+  late Icon _themeSwitcherIcon;
 
   bool _isButtonDisabled = false;
 
@@ -36,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _isButtonDisabled = false;
+    _themeSwitcherIcon = _getThemeIcon(Provider.of<ThemeNotifier>(context, listen: false).getThemeName());
   }
 
   void _disableButton() {
@@ -47,6 +49,21 @@ class _LoginPageState extends State<LoginPage> {
   void _enableButton() {
     setState(() {
       _isButtonDisabled = false;
+    });
+  }
+
+  void _updateThemeIcon(String oldTheme) {
+    Icon newIcon;
+    switch (oldTheme) {
+      case 'dark':
+        newIcon = _getThemeIcon('');
+        break;
+      default:
+        newIcon = _getThemeIcon('dark');
+        break;
+    }
+    setState(() {
+      _themeSwitcherIcon = newIcon;
     });
   }
 
@@ -322,33 +339,41 @@ class _LoginPageState extends State<LoginPage> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 60.0,
+                    vertical: 100.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        height: 50.0,
-                        alignment: Alignment.topRight,
-                        child: InkWell(
-                          child: Icon(
-                            _getThemeIcon(Provider.of<ThemeNotifier>(context)),
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                          onTap: () {
-                            _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false));
-                          },
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.translate('LOGIN.LOGIN_HEADER_TEXT'),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        child: Stack(
+                          children: <Widget>[
+                            Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.translate('LOGIN.LOGIN_HEADER_TEXT'),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 250),
+                                  transitionBuilder: (Widget child, Animation<double> animation) => 
+                                    ScaleTransition(scale: animation, child: child,),
+                                  child: _themeSwitcherIcon,
+                                ),
+                                onTap: () {
+                                  _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false));
+                                },
+                              ),
+                            ),
+                          ],
+                        )
                       ),
                       SizedBox(height: 30.0),
                       _buildEmailTF(),
@@ -398,8 +423,8 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  IconData _getThemeIcon(ThemeNotifier themeNotifier) {
-    switch (themeNotifier.getThemeName()) {
+  IconData _getThemeIconData(String themeName) {
+    switch (themeName) {
       case 'dark':
         return Icons.dark_mode;
       default:
@@ -407,8 +432,19 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Icon _getThemeIcon(String themeName) {
+    return Icon(
+      _getThemeIconData(themeName),
+      key: ValueKey<int>(themeName == 'dark' ? 1 : 0),
+      color: Colors.white,
+      size: 30,
+    );
+  }
+
   void _onThemeClick(ThemeNotifier themeNotifier) {
-    switch (themeNotifier.getThemeName()) {
+    String themeName = themeNotifier.getThemeName();
+    _updateThemeIcon(themeName);
+    switch (themeName) {
       case 'dark':
         themeNotifier.setLightMode();
         break;
@@ -416,5 +452,6 @@ class _LoginPageState extends State<LoginPage> {
         themeNotifier.setDarkMode();
         break;
     }
+
   }
 }
