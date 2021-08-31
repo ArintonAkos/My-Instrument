@@ -68,75 +68,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildEmailTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_LABEL'),
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle(Provider.of<ThemeNotifier>(context).getTheme()),
-          height: 60.0,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            controller: controllerEmail,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              fillColor: Colors.red,
-              prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              hintText: AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_TEXT'),
-              hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
+    return buildTF(
+      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_LABEL'),
+      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_TEXT'),
+      Provider.of<ThemeNotifier>(context).getTheme(),
+      inputController: controllerEmail,
+      textInputType: TextInputType.emailAddress
     );
   }
 
   Widget _buildPasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_LABEL'),
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle(Provider.of<ThemeNotifier>(context).getTheme()),
-          height: 60.0,
-          child: TextField(
-            obscureText: true,
-            controller: controllerPassword,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),
-              hintText: AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_TEXT'),
-              hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
+    return buildTF(
+      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_LABEL'),
+      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_TEXT'),
+      Provider.of<ThemeNotifier>(context).getTheme(),
+      inputController: controllerPassword,
+      obscureText: true
     );
   }
 
@@ -184,31 +131,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          elevation: 5.0,
-          padding: EdgeInsets.all(15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          primary: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonsColor,
-          onPrimary: Colors.grey[400]
-        ),
-        onPressed: _isButtonDisabled ? null : _loginUser,
-        child: Text(
-          AppLocalizations.of(context)!.translate('LOGIN.LOGIN_BUTTON'),
-          style: TextStyle(
-            color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonText,
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
+    return buildAuthButton(
+      AppLocalizations.of(context)!.translate('LOGIN.LOGIN_BUTTON'),
+      Provider.of<ThemeNotifier>(context).getTheme()?.customTheme,
+      onPressed: _loginUser,
+      disabled: _isButtonDisabled,
     );
   }
 
@@ -279,32 +206,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () => _register,
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w400,
             ),
-            TextSpan(
-              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_BOLD_TEXT'),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-              recognizer: TapGestureRecognizer()..onTap = () {
-                Modular.to.pushNamed('/register');
-              }
+          ),
+          TextSpan(
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_BOLD_TEXT'),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
+            recognizer: TapGestureRecognizer()..onTap = () {
+              Modular.to.pushNamed('/register');
+            }
+          ),
+        ],
       ),
     );
   }
@@ -398,9 +322,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  _register() {
-  }
-
   _loginUser() async {
     _disableButton();
     final email = controllerEmail.text.trim();
@@ -408,7 +329,8 @@ class _LoginPageState extends State<LoginPage> {
 
     AuthModel authModel = Modular.get<AuthModel>();;
 
-    var response = await authModel.signIn(email, password);
+    var response = await authModel.signIn(email, password,
+        rememberMe: _rememberMe);
 
     _enableButton();
     if (!response.success) {

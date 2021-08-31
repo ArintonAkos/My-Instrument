@@ -12,6 +12,17 @@
     "TITLE": "Profile",
     "THEME_SWITCH_LABEL": "Theme"
   },
+  "REGISTER": {
+    "REGISTER_HEADER_TEXT": "REGISTER",
+    "EMAIL_INPUT_LABEL": "Email",
+    "EMAIL_INPUT_TEXT": "Enter your email",
+    "PASSWORD_INPUT_LABEL": "Password",
+    "PASSWORD_INPUT_TEXT": "Enter password",
+    "CONFIRM_PASSWORD_INPUT_LABEL": "Confirm password",
+    "CONFIRM_PASSWORD_INPUT_TEXT": "Enter password",
+    "REGISTER_BUTTON": "Sign Up",
+    "ACCOUNT_TYPE_LABEL": "Account Type"
+  },
   "MESSAGES": {
     "TITLE": "Messages"
   },

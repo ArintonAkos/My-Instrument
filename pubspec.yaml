@@ -44,6 +44,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   parse_server_sdk: ^3.1.0
   flutter_modular: ^3.4.1+1
+  dropdown_search: ^1.0.0-beta2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

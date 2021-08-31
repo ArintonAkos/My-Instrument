@@ -7,7 +7,7 @@ import 'future_response.dart';
 class AuthModel {
   SharedPreferences? prefs;
   String? userEmail;
-  bool get isSignedIn => userEmail?.isEmpty ?? false;
+  bool get isSignedIn => !(userEmail?.isEmpty ?? true);
 
   Future init() async {
     this.prefs = await SharedPreferences.getInstance();
@@ -31,6 +31,7 @@ class AuthModel {
           this.prefs!.setString('userEmail', email);
           prefs!.setBool('signedIn', true);
         }
+        this.userEmail = email;
       } else {
         return FutureResponse(exception: response.error);
       }

@@ -11,13 +11,15 @@ class CustomAppTheme {
   final Color LoginInputColor;
   final Color LoginButtonsColor;
   final Color LoginButtonText;
+  final Color DropdownItemColor;
 
   const CustomAppTheme({
     required this.LoginGradientStart,
     required this.LoginGradientEnd,
     required this.LoginInputColor,
     required this.LoginButtonsColor,
-    required this.LoginButtonText
+    required this.LoginButtonText,
+    required this.DropdownItemColor
   });
 }
 
@@ -36,6 +38,7 @@ class AppThemeData {
     LoginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
     LoginButtonsColor: Colors.white,
     LoginButtonText: const Color(0xFF12B3F2),
+    DropdownItemColor: const Color(0xFF008eca)
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
@@ -44,6 +47,7 @@ class AppThemeData {
     LoginInputColor: const Color(0xFF2B2B2B),
     LoginButtonsColor: const Color(0xFF2A2A2A),
     LoginButtonText: Colors.white,
+    DropdownItemColor: const Color(0xFF2B2B2B)
   );
 
 
