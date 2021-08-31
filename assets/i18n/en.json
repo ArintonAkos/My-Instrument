@@ -27,14 +27,20 @@
     "TITLE": "Messages"
   },
   "LOGIN": {
-    "EMAIL_INPUT_LABEL": "Email",
-    "EMAIL_INPUT_TEXT": "Enter your email",
-    "PASSWORD_INPUT_LABEL": "Password",
-    "PASSWORD_INPUT_TEXT": "Enter your password",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Enter your email"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Password",
+      "HINT": "Enter your password"
+    },
     "LOGIN_BUTTON": "Sign In",
     "LOGIN_HEADER_TEXT": "LOGIN",
-    "REGISTER_LABEL": "Don't have an account? ",
-    "REGISTER_BOLD_TEXT": "Sign up",
+    "REGISTER": {
+      "LABEL": "Don't have an account? ",
+      "BOLD_TEXT": "Sign up"
+    },
     "FORGOT_PASSWORD_LABEL": "Forgot Password?",
     "REMEMBER_ME_LABEL":  "Remember me",
     "OR_LABEL": "OR",
