@@ -16,14 +16,20 @@
     "TITLE": "Mesaje"
   },
   "LOGIN": {
-    "EMAIL_INPUT_LABEL": "Email",
-    "EMAIL_INPUT_TEXT": "Adresă email",
-    "PASSWORD_INPUT_LABEL": "Parolă",
-    "PASSWORD_INPUT_TEXT": "Parolă",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Adresă email"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Parolă",
+      "HINT": "Parolă"
+    },
     "LOGIN_BUTTON": "Autentificare",
     "LOGIN_HEADER_TEXT": "AUTENTIFICARE",
-    "REGISTER_LABEL": "Nu ai cont? ",
-    "REGISTER_BOLD_TEXT": "Registrează",
+    "REGISTER": {
+      "LABEL": "Nu ai cont? ",
+      "BOLD_TEXT": "Registrează"
+    },
     "FORGOT_PASSWORD_LABEL": "Parolă uitată?",
     "REMEMBER_ME_LABEL":  "Autentificare automată",
     "OR_LABEL": "SAU",

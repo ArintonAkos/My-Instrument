@@ -16,14 +16,20 @@
     "TITLE": "Üzenetek"
   },
   "LOGIN": {
-    "EMAIL_INPUT_LABEL": "Email",
-    "EMAIL_INPUT_TEXT": "Email cím",
-    "PASSWORD_INPUT_LABEL": "Jelszó",
-    "PASSWORD_INPUT_TEXT": "Jelszó",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Email cím"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Jelszó",
+      "HINT": "Jelszó"
+    },
     "LOGIN_BUTTON": "Bejelentkezés",
     "LOGIN_HEADER_TEXT": "BEJELENTKEZÉS",
-    "REGISTER_LABEL": "Nincs fiókod? ",
-    "REGISTER)BOLD_TEXT": "Regisztálj",
+    "REGISTER": {
+      "LABEL": "Nincs fiókod? ",
+      "BOLD_TEXT": "Regisztrálj"
+    },
     "FORGOT_PASSWORD_LABEL": "Elfelejtett jeslzó?",
     "REMEMBER_ME_LABEL":  "Maradj bejelentkezve",
     "OR_LABEL": "VAGY",

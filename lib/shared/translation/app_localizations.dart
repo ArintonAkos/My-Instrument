@@ -24,7 +24,7 @@ class AppLocalizations {
   void mapJsonProperty(Map<String, dynamic> jsonProp, String keyName) {
     jsonProp.forEach((key, value) {
       if (value is Map<String, dynamic>) {
-        mapJsonProperty(value, keyName);
+        mapJsonProperty(value, keyName + "." + key);
       } else {
         _localizedStrings['$keyName.$key'] = value;
       }

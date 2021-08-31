@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_LABEL'),
+          AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.LABEL'),
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.email,
                 color: Colors.white,
               ),
-              hintText: AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_TEXT'),
+              hintText: AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.HINT'),
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_LABEL'),
+          AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.LABEL'),
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_TEXT'),
+              hintText: AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.HINT'),
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -285,7 +285,7 @@ class _LoginPageState extends State<LoginPage> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
+              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.LABEL'),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -293,7 +293,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             TextSpan(
-              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_BOLD_TEXT'),
+              text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.BOLD_TEXT'),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -406,7 +406,7 @@ class _LoginPageState extends State<LoginPage> {
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    AuthModel authModel = Modular.get<AuthModel>();;
+    AuthModel authModel = Modular.get<AuthModel>();
 
     var response = await authModel.signIn(email, password);
 
