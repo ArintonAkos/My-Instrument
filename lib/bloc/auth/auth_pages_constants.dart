@@ -72,7 +72,7 @@ BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
   );
 }
 
-Widget buildTF(String inputLabel, String hintText, AppThemeData? theme,
+Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData iconData,
     {
       TextEditingController? inputController,
       TextInputType? textInputType,
@@ -102,9 +102,7 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme,
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 14.0),
             prefixIcon: Icon(
-              textInputType == TextInputType.emailAddress
-                  ? Icons.email_outlined
-                  : Icons.lock_outline,
+              iconData,
               color: Colors.white,
             ),
             hintText: hintText,

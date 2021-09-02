@@ -25,15 +25,21 @@ class AppModule extends Module {
       child: (context, args) => MainPage(),
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')],
       children: [
-        ChildRoute('/', child: (_, __) => HomePage()),
-        ChildRoute('/favorites', child: (_, __) => FavPage()),
-        ChildRoute('/new-listing', child: (_, __) => NewListingPage()),
-        ChildRoute('/messages', child: (_, __) => MessagesPage()),
-        ChildRoute('/profile', child: (_, __) => UserPage()),
+        ChildRoute('/', child: (_, __) => const HomePage()),
+        ChildRoute('/favorites', child: (_, __) => const FavPage()),
+        ChildRoute('/new-listing', child: (_, __) => const NewListingPage()),
+        ChildRoute('/messages', child: (_, __) => const MessagesPage()),
+        ChildRoute('/profile', child: (_, __) => const UserPage()),
       ]
     ),
-    ChildRoute('/login', child: (_, __) => LoginPage()),
-    ChildRoute('/register', child: (_, __) => RegisterPage()),
-    ChildRoute('/splash', child: (_, args) => SplashPage())
+    ChildRoute('/login', child: (_, __) => LoginPage(),
+      transition: TransitionType.downToUp
+    ),
+    ChildRoute('/register', child: (_, __) => RegisterPage(),
+      transition: TransitionType.rightToLeft
+    ),
+    ChildRoute('/splash', child: (_, args) => SplashPage(),
+      transition: TransitionType.leftToRight
+    )
   ];
 }

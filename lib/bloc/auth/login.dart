@@ -72,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
       AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.LABEL'),
       AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
+      Icons.email_outlined,
       inputController: controllerEmail,
       textInputType: TextInputType.emailAddress
     );
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
       AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.LABEL'),
       AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
+      Icons.lock_outline,
       inputController: controllerPassword,
       obscureText: true
     );
@@ -210,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.LABEL'),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
