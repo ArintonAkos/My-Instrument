@@ -69,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildEmailTF() {
     return buildTF(
-      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_LABEL'),
-      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT_TEXT'),
+      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.LABEL'),
+      AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
       inputController: controllerEmail,
       textInputType: TextInputType.emailAddress
@@ -79,8 +79,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildPasswordTF() {
     return buildTF(
-      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_LABEL'),
-      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT_TEXT'),
+      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.LABEL'),
+      AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
       inputController: controllerPassword,
       obscureText: true
@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildLoginBtn() {
     return buildAuthButton(
-      AppLocalizations.of(context)!.translate('LOGIN.LOGIN_BUTTON'),
+      AppLocalizations.of(context)!.translate('LOGIN.BUTTON'),
       Provider.of<ThemeNotifier>(context).getTheme()?.customTheme,
       onPressed: _loginUser,
       disabled: _isButtonDisabled,
@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.LABEL'),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
@@ -218,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           TextSpan(
-            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_BOLD_TEXT'),
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.BOLD_TEXT'),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: <Widget>[
                             Center(
                               child: Text(
-                                AppLocalizations.of(context)!.translate('LOGIN.LOGIN_HEADER_TEXT'),
+                                AppLocalizations.of(context)!.translate('LOGIN.HEADER_TEXT'),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'OpenSans',
@@ -336,7 +336,7 @@ class _LoginPageState extends State<LoginPage> {
     if (!response.success) {
       showDialog(context: context,
           builder: (BuildContext dialogContext) => CustomDialog(
-            description: 'An error occurred, please try again later!',
+            description: AppLocalizations.of(context)!.translate('SHARED.BASIC_ERROR_MESSAGE'),
             dialogType: DialogType.Failure,
           )
       );

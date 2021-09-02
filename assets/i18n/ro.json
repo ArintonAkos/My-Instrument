@@ -26,6 +26,39 @@
     "TITLE": "Profil",
     "THEME_SWITCH_LABEL": "Temă"
   },
+  "REGISTER": {
+    "HEADER_TEXT": "REGISTRAȚIE",
+    "BUTTON": "Înregistrează-te",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Adresă email"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Parolă",
+      "HINT": "Parolă"
+    },
+    "CONFIRM_PASSWORD_INPUT": {
+      "LABEL": "Confirmă parola",
+      "HINT": "Parolă"
+    },
+    "FIRST_NAME_INPUT": {
+      "LABEL": "Nume",
+      "HINT": "Nume"
+    },
+    "LAST_NAME_INPUT": {
+      "LABEL": "Prenume",
+      "HINT": "Prenume"
+    },
+    "COMPANY_NAME_INPUT": {
+      "LABEL": "Numele Companiei",
+      "HINT": "Numele Companiei"
+    },
+    "ACCOUNT_TYPE_LABEL": "Tip de cont",
+    "ACCOUNT_CREATION_LABEL": {
+      "SUCCESSFUL": "Cont creat cu succes! Întoarceți la pagina de autentificare și autentificați în cont.",
+      "FAILED": "A apărut o eroare, încercați mai târziu!"
+    }
+  },
   "MESSAGES": {
     "TITLE": "Mesaje"
   },
@@ -38,8 +71,8 @@
       "LABEL": "Parolă",
       "HINT": "Parolă"
     },
-    "LOGIN_BUTTON": "Autentificare",
-    "LOGIN_HEADER_TEXT": "AUTENTIFICARE",
+    "BUTTON": "Autentificare",
+    "HEADER_TEXT": "AUTENTIFICARE",
     "REGISTER": {
       "LABEL": "Nu ai cont? ",
       "BOLD_TEXT": "Registrează"
@@ -48,5 +81,8 @@
     "REMEMBER_ME_LABEL":  "Autentificare automată",
     "OR_LABEL": "SAU",
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
+  },
+  "SHARED": {
+    "BASIC_ERROR_MESSAGE": "A apărut o eroare, încercați mai târziu!"
   }
 }

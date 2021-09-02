@@ -27,15 +27,37 @@
     "THEME_SWITCH_LABEL": "Theme"
   },
   "REGISTER": {
-    "REGISTER_HEADER_TEXT": "REGISTER",
-    "EMAIL_INPUT_LABEL": "Email",
-    "EMAIL_INPUT_TEXT": "Enter your email",
-    "PASSWORD_INPUT_LABEL": "Password",
-    "PASSWORD_INPUT_TEXT": "Enter password",
-    "CONFIRM_PASSWORD_INPUT_LABEL": "Confirm password",
-    "CONFIRM_PASSWORD_INPUT_TEXT": "Enter password",
-    "REGISTER_BUTTON": "Sign Up",
-    "ACCOUNT_TYPE_LABEL": "Account Type"
+    "HEADER_TEXT": "REGISTER",
+    "BUTTON": "Sign Up",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Enter your email"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Password",
+      "HINT": "Enter password"
+    },
+    "CONFIRM_PASSWORD_INPUT": {
+      "LABEL": "Confirm password",
+      "HINT": "Enter password"
+    },
+    "FIRST_NAME_INPUT": {
+      "LABEL": "First name",
+      "HINT": "Enter first name"
+    },
+    "LAST_NAME_INPUT": {
+      "LABEL": "Last name",
+      "HINT": "Enter last name"
+    },
+    "COMPANY_NAME_INPUT": {
+      "LABEL": "Company name",
+      "HINT": "Enter company name"
+    },
+    "ACCOUNT_TYPE_LABEL": "Account Type",
+    "ACCOUNT_CREATION_LABEL": {
+      "SUCCESSFUL": "User successfully created! Please return to login page and log in to your account.",
+      "FAILED": "An error occurred, please try again later!"
+    }
   },
   "MESSAGES": {
     "TITLE": "Messages"
@@ -49,8 +71,8 @@
       "LABEL": "Password",
       "HINT": "Enter your password"
     },
-    "LOGIN_BUTTON": "Sign In",
-    "LOGIN_HEADER_TEXT": "LOGIN",
+    "BUTTON": "Sign In",
+    "HEADER_TEXT": "LOGIN",
     "REGISTER": {
       "LABEL": "Don't have an account? ",
       "BOLD_TEXT": "Sign up"
@@ -59,5 +81,8 @@
     "REMEMBER_ME_LABEL":  "Remember me",
     "OR_LABEL": "OR",
     "SIGN_IN_WITH_LABEL": "Sign in with"
+  },
+  "SHARED": {
+    "BASIC_ERROR_MESSAGE": "An error occurred, please try again later!"
   }
 }
