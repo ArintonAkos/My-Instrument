@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_instrument/bloc/shared/listing_card.dart';
@@ -102,10 +101,6 @@ class _HomePageState extends State<HomePage> {
               
             ),
           ),
-          Padding(
-              padding: EdgeInsets.all(0),
-            child: InstrumentScroll(),
-          ),
           Padding(padding: EdgeInsets.only(top: 20.0, bottom: 35.0,left: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
@@ -154,7 +149,7 @@ class DiscoverSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
