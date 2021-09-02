@@ -1,6 +1,20 @@
 {
   "HOME": {
-    "TITLE": "Acasă"
+    "TITLE": "Acasă",
+    "INSTRUMENTS": "Instrumente",
+    "LISTINGS": "Listări",
+    "INSTRUMENT_CARD": {
+      "GUITAR_TITLE": "Chitare",
+      "GUITAR_TEXT": "Alegeți cea mai bună chitară din aplicație!",
+      "DRUM_TITLE": "Truse de tobe",
+      "DRUM_TEXT": "Alegeți cea mai bună trusă de tobe din aplicație!",
+      "BASS_TITLE": "Basuri",
+      "BASS_TEXT": "Alegeți cel mai bun bas din aplicație!",
+      "VIOLIN_TITLE": "Viorile",
+      "VIOLIN_TEXT": "Alegeți cea mai bună vioară din aplicație!",
+      "PIANO_TITLE": "Pianouri",
+      "PIANO_TEXT": "Alegeți cel mai bun pian din aplicație!"
+    }
   },
   "NEW_LISTING": {
     "TITLE": "Anunț nou"

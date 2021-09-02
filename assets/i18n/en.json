@@ -1,6 +1,20 @@
 {
   "HOME": {
-    "TITLE": "Home"
+    "TITLE": "Home",
+    "INSTRUMENTS": "Instruments",
+    "LISTINGS": "Listings",
+    "INSTRUMENT_CARD": {
+      "GUITAR_TITLE": "Guitars",
+      "GUITAR_TEXT": "Choose the best guitar from the app!",
+      "DRUM_TITLE": "Drum kits",
+      "DRUM_TEXT": "Choose the best drum kit from the app!",
+      "BASS_TITLE": "Basses",
+      "BASS_TEXT": "Choose the best bass from the app!",
+      "VIOLIN_TITLE": "Violins",
+      "VIOLIN_TEXT": "Choose the best violin from the app!",
+      "PIANO_TITLE": "Pianos",
+      "PIANO_TEXT": "Choose the best piano from the app!"
+    }
   },
   "NEW_LISTING": {
     "TITLE": "New Listing"

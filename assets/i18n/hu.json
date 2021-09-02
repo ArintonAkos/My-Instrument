@@ -1,6 +1,20 @@
 {
   "HOME": {
-    "TITLE": "Otthon"
+    "TITLE": "Otthon",
+    "INSTRUMENTS": "Hangszerek",
+    "LISTINGS": "Hírdetések",
+    "INSTRUMENT_CARD": {
+      "GUITAR_TITLE": "Gitárok",
+      "GUITAR_TEXT": "Válaszd a legjobb gitárt az applikációban!",
+      "DRUM_TITLE": "Dobfelszerelések",
+      "DRUM_TEXT": "Válaszd a legjobb dobfelszerelést az applikációban!",
+      "BASS_TITLE": "Basszusgitárok",
+      "BASS_TEXT": "Válaszd a legjobb basszusgitárt az applikációban!",
+      "VIOLIN_TITLE": "Hegedűk",
+      "VIOLIN_TEXT": "Válaszd a legjobb hegedűt az applikációban!",
+      "PIANO_TITLE": "Zongora",
+      "PIANO_TEXT": "Válaszd a legjobb zongorát az applikációban!"
+    }
   },
   "NEW_LISTING": {
     "TITLE": "Új hirdetés"

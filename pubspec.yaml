@@ -78,6 +78,11 @@ flutter:
     - assets/i18n/en.json
     - assets/i18n/ro.json
     - assets/i18n/hu.json
+    - assets/guitar1.jpeg
+    - assets/drums.jpg
+    - assets/bass-guitar.jpg
+    - assets/violin.jpeg
+    - assets/piano.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
