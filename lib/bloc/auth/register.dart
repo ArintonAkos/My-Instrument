@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/shared/data/page_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
@@ -222,6 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
+          onAccept: () { Modular.to.navigate('/login'); },
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.SUCCESSFUL'),
           dialogType: DialogType.Success,
         )
@@ -239,7 +241,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool validateFields(String email, String password, String confirmPassword,
       String firstName, String lastName, String companyName) {
-    return true;
 
     if (password != confirmPassword) {
       return false;
@@ -258,5 +259,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       return false;
     }
+
+    return true;
   }
 }

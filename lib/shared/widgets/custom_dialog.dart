@@ -17,11 +17,12 @@ extension on DialogType {
 class CustomDialog extends StatelessWidget {
   final String description;
   final DialogType dialogType;
+  final Function? onAccept;
 
   static const iconList = <Icon>[
     Icon(Icons.done,
       color: Colors.white,
-      size: 80,
+      size: 66,
     ),
     Icon(Icons.error,
       color: Colors.white,
@@ -29,17 +30,18 @@ class CustomDialog extends StatelessWidget {
     ),
     Icon(Icons.warning,
       color: Colors.white,
-      size: 60
+      size: 66
     ),
     Icon(Icons.info,
       color: Colors.white,
-      size: 60,
+      size: 66,
     )
   ];
 
   CustomDialog({
     required this.description,
-    required this.dialogType
+    required this.dialogType,
+    this.onAccept
   });
 
   @override
@@ -107,7 +109,10 @@ class CustomDialog extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // To close the dialog
+                Navigator.of(context).pop();// To close the dialog
+                if(onAccept != null) {
+                  onAccept!();
+                }
               },
               child: Text('Okay'),
             ),

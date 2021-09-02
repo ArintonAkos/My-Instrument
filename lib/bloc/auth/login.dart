@@ -341,7 +341,7 @@ class _LoginPageState extends State<LoginPage> {
           )
       );
     } else {
-      Modular.to.pushNamed('/home/');
+      Modular.to.navigate('/home/');
     }
   }
 
