@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final companyName = controllerCompanyName.text.trim();
 
     if (!validateFields(email, password, confirmPassword, firstName, lastName, companyName)) {
-
+      return;
     }
     final user = ParseUser.createUser(username, password, email);
 
@@ -239,10 +239,25 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  bool _validatePasswords(String password, String confirmPassword) {
+
+    if(password.length < 8 || password.length > 16) {
+      return false;
+    }
+    if(!password.contains(RegExp(r'[A-Z]')) || !password.contains(RegExp(r'[a-z]')) || !password.contains(RegExp(r'[0-9]'))) {
+      return false;
+    }
+    if (password != confirmPassword) {
+      return false;
+    }
+
+    return true;
+  }
+
   bool validateFields(String email, String password, String confirmPassword,
       String firstName, String lastName, String companyName) {
 
-    if (password != confirmPassword) {
+    if(!_validatePasswords(password, confirmPassword)) {
       return false;
     }
 
