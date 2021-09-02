@@ -83,6 +83,7 @@
     "SIGN_IN_WITH_LABEL": "Sign in with"
   },
   "SHARED": {
-    "BASIC_ERROR_MESSAGE": "An error occurred, please try again later!"
+    "BASIC_ERROR_MESSAGE": "An error occurred, please try again later!",
+    "LOGOUT_ERROR_MESSAGE": "Error during logout. Please try again later!"
   }
 }

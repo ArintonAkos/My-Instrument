@@ -83,6 +83,7 @@
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
   },
   "SHARED": {
-    "BASIC_ERROR_MESSAGE": "A apărut o eroare, încercați mai târziu!"
+    "BASIC_ERROR_MESSAGE": "A apărut o eroare, încercați mai târziu!",
+    "LOGOUT_ERROR_MESSAGE": "A apărut o eroare în timpul deconectării. Încercați mai târziu!"
   }
 }

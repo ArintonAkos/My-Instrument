@@ -27,7 +27,7 @@ class AuthModel {
       var response = await user.login();
 
       if (response.success) {
-        if (rememberMe != null) {
+        if (rememberMe == true) {
           this.prefs!.setString('userEmail', email);
           prefs!.setBool('signedIn', true);
         }
@@ -44,23 +44,26 @@ class AuthModel {
 
   Future<FutureResponse> signOut() async {
     try {
-      final user = ParseUser.currentUser() as ParseUser;
-      var response = await user.logout();
+      var user = await ParseUser.currentUser();
+      if (user != null) {
+        user = user as ParseUser;
+        var response = await user.logout();
 
-      if (response.success) {
-        if (prefs == null) {
-          throw new UninitializedException(CallerClass.SharedPreferences);
+        if (response.success) {
+          if (prefs == null) {
+            throw new UninitializedException(CallerClass.SharedPreferences);
+          }
+        } else {
+          return FutureResponse(exception: response.error);
         }
-
-        prefs?.setString('userEmail', '');
-        prefs?.setBool('signedIn', false);
-      } else {
-        return FutureResponse(exception: response.error);
       }
-
     } catch (e) {
       return FutureResponse(exception: e);
     }
+
+    userEmail = null;
+    prefs?.setString('userEmail', '');
+    prefs?.setBool('signedIn', false);
     return FutureResponse();
   }
 }

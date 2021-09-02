@@ -83,6 +83,7 @@
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
   },
   "SHARED": {
-    "BASIC_ERROR_MESSAGE": "Hiba lépett fel, kérlek, próbálkozz később!"
+    "BASIC_ERROR_MESSAGE": "Hiba lépett fel, kérlek, próbálkozz később!",
+    "LOGOUT_ERROR_MESSAGE": "Hiba lépett fel a kijelentkezés során. Kérlek próbalkozz késöbb."
   }
 }

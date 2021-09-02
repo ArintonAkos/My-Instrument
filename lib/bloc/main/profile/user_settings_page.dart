@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/shared/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -179,12 +182,30 @@ class SettingsItemModel {
   final Color color;
   final String title;
   final String description;
+  final Function(BuildContext context)? onTap;
+
   const SettingsItemModel({
     required this.color,
     required this.description,
     required this.icon,
     required this.title,
+    this.onTap
   });
+}
+
+logoutUser(BuildContext context) async {
+  var authModel = Modular.get<AuthModel>();
+  var result = await authModel.signOut();
+
+  if (result.success) {
+    Modular.to.navigate('/login');
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+        buildInfoSnackBar(
+          AppLocalizations.of(context)?.translate('SHARED.LOGOUT_ERROR_MESSAGE') ?? ''
+        )
+    );
+  }
 }
 
 const List<SettingsItemModel> settingsItems = [
@@ -218,6 +239,13 @@ const List<SettingsItemModel> settingsItems = [
     title: 'Support',
     description: 'We are here to help',
   ),
+  SettingsItemModel(
+    icon: Icons.logout,
+    color: Color(0xff1ABC9C),
+    title: 'Sign out',
+    description: 'Sign out of and return to login page',
+    onTap: logoutUser
+  ),
 ];
 
 class Settings extends StatelessWidget {
@@ -230,6 +258,7 @@ class Settings extends StatelessWidget {
       iconBgColor: settingsItem.color,
       title: settingsItem.title,
       description: settingsItem.description,
+      onTap: settingsItem.onTap,
   ))
       .toList()
       .toColumn();
@@ -240,13 +269,15 @@ class SettingsItem extends StatefulWidget {
     required this.icon,
     required this.iconBgColor,
     required this.title,
-    required this.description
+    required this.description,
+    this.onTap
   }) : super (key: key);
 
   final IconData icon;
   final Color iconBgColor;
   final String title;
   final String description;
+  final Function(BuildContext context)? onTap;
 
   @override
   _SettingsItemState createState() => _SettingsItemState();
@@ -274,7 +305,11 @@ class _SettingsItemState extends State<SettingsItem> {
         .gestures(
       onTapChange: (tapStatus) => setState(() => pressed = tapStatus),
       onTapDown: (details) => print('tapDown'),
-      onTap: () => {}//AutoRouter.of(context).push(RegisterRoute()),
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!(context);
+        }
+      },
     )
         .scale(all: pressed ? 0.95 : 1.0, animate: true)
         .animate(const Duration(milliseconds: 150), Curves.easeOut);

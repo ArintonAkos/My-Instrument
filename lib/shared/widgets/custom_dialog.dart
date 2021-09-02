@@ -75,7 +75,7 @@ class CustomDialog extends StatelessWidget {
       ),
       margin: EdgeInsets.only(top: 66.0),
       decoration: new BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
@@ -109,7 +109,7 @@ class CustomDialog extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pop();// To close the dialog
+                Navigator.of(context).pop(); // To close the dialog
                 if(onAccept != null) {
                   onAccept!();
                 }

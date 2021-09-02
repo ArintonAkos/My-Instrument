@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.LABEL'),
+            text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER_LABEL'),
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
