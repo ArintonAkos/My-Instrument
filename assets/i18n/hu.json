@@ -12,6 +12,39 @@
     "TITLE": "Profil",
     "THEME_SWITCH_LABEL": "Téma"
   },
+  "REGISTER": {
+    "HEADER_TEXT": "REGISZTRÁLÁS",
+    "BUTTON": "Regisztrálj",
+    "EMAIL_INPUT": {
+      "LABEL": "Email",
+      "HINT": "Email cím"
+    },
+    "PASSWORD_INPUT": {
+      "LABEL": "Jelszó",
+      "HINT": "Jelszó"
+    },
+    "CONFIRM_PASSWORD_INPUT": {
+      "LABEL": "Jelszó megerősítése",
+      "HINT": "Jelszó"
+    },
+    "FIRST_NAME_INPUT": {
+      "LABEL": "Keresztnév",
+      "HINT": "Keresztnév"
+    },
+    "LAST_NAME_INPUT": {
+      "LABEL": "Vezetéknév",
+      "HINT": "Vezetéknév"
+    },
+    "COMPANY_NAME_INPUT": {
+      "LABEL": "Cégnév",
+      "HINT": "Cégnév"
+    },
+    "ACCOUNT_TYPE_LABEL": "Fiók típus",
+    "ACCOUNT_CREATION_LABEL": {
+      "SUCCESSFUL": "Felhasználó sikeresen létrehozva! Kérlek térj vissza a bejelentkezési lapra és jelentkezz be a fiókodba.",
+      "FAILED": "Hiba lépett fel, kérlek, próbálkozz később!"
+    }
+  },
   "MESSAGES": {
     "TITLE": "Üzenetek"
   },
@@ -24,8 +57,8 @@
       "LABEL": "Jelszó",
       "HINT": "Jelszó"
     },
-    "LOGIN_BUTTON": "Bejelentkezés",
-    "LOGIN_HEADER_TEXT": "BEJELENTKEZÉS",
+    "BUTTON": "Bejelentkezés",
+    "HEADER_TEXT": "BEJELENTKEZÉS",
     "REGISTER": {
       "LABEL": "Nincs fiókod? ",
       "BOLD_TEXT": "Regisztrálj"
@@ -34,5 +67,8 @@
     "REMEMBER_ME_LABEL":  "Maradj bejelentkezve",
     "OR_LABEL": "VAGY",
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
+  },
+  "SHARED": {
+    "BASIC_ERROR_MESSAGE": "Hiba lépett fel, kérlek, próbálkozz később!"
   }
 }

@@ -65,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Container(
                               child: Center(
                                   child: Text(
-                                    AppLocalizations.of(context)!.translate('REGISTER.REGISTER_HEADER_TEXT'),
+                                    AppLocalizations.of(context)!.translate('REGISTER.HEADER_TEXT'),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'OpenSans',
@@ -110,8 +110,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildEmailTF() {
     return buildTF(
-        AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT_LABEL'),
-        AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT_TEXT'),
+        AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT.LABEL'),
+        AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
         inputController: controllerEmail,
         textInputType: TextInputType.emailAddress
@@ -120,8 +120,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildPasswordTF() {
     return buildTF(
-        AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT_LABEL'),
-        AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT_TEXT'),
+        AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT.LABEL'),
+        AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
         inputController: controllerPassword,
         obscureText: true
@@ -130,8 +130,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildConfirmPasswordTF() {
     return buildTF(
-      AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT_LABEL'),
-      AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT_TEXT'),
+      AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT.LABEL'),
+      AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
       inputController: controllerConfirmPassword,
       obscureText: true
@@ -140,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildRegisterBtn() {
     return buildAuthButton(
-      AppLocalizations.of(context)!.translate('REGISTER.REGISTER_BUTTON'),
+      AppLocalizations.of(context)!.translate('REGISTER.BUTTON'),
       Provider.of<ThemeNotifier>(context).getTheme()?.customTheme,
       onPressed: _register,
       disabled: false,
@@ -149,8 +149,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildFirstNameTF() {
     return buildTF(
-        AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT_LABEL'),
-        AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT_TEXT'),
+        AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT.LABEL'),
+        AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
         inputController: controllerFirstName,
         textInputType: TextInputType.text
@@ -159,8 +159,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildLastNameTF() {
     return buildTF(
-        AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT_LABEL'),
-        AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT_TEXT'),
+        AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT.LABEL'),
+        AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
         inputController: controllerLastName,
         textInputType: TextInputType.text
@@ -169,8 +169,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildCompanyNameTF() {
     return buildTF(
-        AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT_LABEL'),
-        AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT_TEXT'),
+        AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT.LABEL'),
+        AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
         inputController: controllerCompanyName,
         textInputType: TextInputType.text
@@ -222,7 +222,7 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
-          description: 'User successfully created! Please return to login page and log in to your account.',
+          description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.SUCCESSFUL'),
           dialogType: DialogType.Success,
         )
       );
@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
-          description: 'An error occurred, please try again later!',
+          description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.FAILED'),
           dialogType: DialogType.Failure,
         )
       );
