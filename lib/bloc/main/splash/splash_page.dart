@@ -20,7 +20,7 @@ class SplashPage extends StatelessWidget {
         ServerConstants.APPLICATION_ID,
         ServerConstants.PARSE_SERVER_URL,
         clientKey: ServerConstants.CLIENT_KEY,
-        debug: false
+        debug: true
     );
     Modular.to.navigate('/home/');
   }

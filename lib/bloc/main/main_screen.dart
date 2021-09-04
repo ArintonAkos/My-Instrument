@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
                 duration: Duration(milliseconds: 400),
                 tabBackgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
-                tabs: [
+                tabs: const [
                   GButton(
                     icon: LineIcons.home,
                     text: 'Home',

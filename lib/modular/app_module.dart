@@ -9,6 +9,7 @@ import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
 import 'package:my_instrument/bloc/main/profile/user_settings_page.dart';
 import 'package:my_instrument/bloc/main/splash/splash_page.dart';
 import 'package:my_instrument/modular/auth_guard.dart';
+import 'package:my_instrument/modular/custom_transitions/slide_transition.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 
 class AppModule extends Module {
@@ -22,25 +23,46 @@ class AppModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/home',
-      child: (context, args) => MainPage(),
+      child: (context, args) => const MainPage(),
       transition: TransitionType.scale,
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')],
       children: [
-        ChildRoute('/', child: (_, __) => const HomePage()),
-        ChildRoute('/favorites', child: (_, __) => const FavPage()),
-        ChildRoute('/new-listing', child: (_, __) => const NewListingPage()),
-        ChildRoute('/messages', child: (_, __) => const MessagesPage()),
-        ChildRoute('/profile', child: (_, __) => const UserPage()),
+        ChildRoute('/',
+          child: (_, __) => const HomePage(),
+          transition: TransitionType.fadeIn,
+        ),
+        ChildRoute('/favorites',
+          child: (_, __) => const FavPage(),
+          transition: TransitionType.fadeIn,
+        ),
+        ChildRoute('/new-listing',
+          child: (_, __) => const NewListingPage(),
+          transition: TransitionType.fadeIn,
+        ),
+        ChildRoute('/messages',
+          child: (_, __) => const MessagesPage(),
+          transition: TransitionType.fadeIn,
+        ),
+        ChildRoute('/profile',
+          child: (_, __) => const UserPage(),
+          transition: TransitionType.fadeIn,
+        ),
       ]
     ),
-    ChildRoute('/login', child: (_, __) => LoginPage(),
-      transition: TransitionType.scale
+    ChildRoute('/login',
+      child: (_, __) => LoginPage(),
+      transition: TransitionType.custom,
+      customTransition: slideTransition,
     ),
-    ChildRoute('/register', child: (_, __) => RegisterPage(),
-      transition: TransitionType.rightToLeft
+    ChildRoute('/register',
+      child: (_, __) => RegisterPage(),
+      transition: TransitionType.custom,
+      customTransition: slideTransition,
     ),
-    ChildRoute('/splash', child: (_, args) => SplashPage(),
-      transition: TransitionType.scale
+    ChildRoute('/splash',
+      child: (_, args) => SplashPage(),
+      transition: TransitionType.custom,
+      customTransition: slideTransition,
     )
   ];
 }
