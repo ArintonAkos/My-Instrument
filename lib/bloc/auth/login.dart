@@ -338,7 +338,7 @@ class _LoginPageState extends State<LoginPage> {
     if (!response.success) {
       showDialog(context: context,
           builder: (BuildContext dialogContext) => CustomDialog(
-            description: AppLocalizations.of(context)!.translate('SHARED.BASIC_ERROR_MESSAGE'),
+            description: AppLocalizations.of(context)!.translate('SHARED.ERROR.BASIC_MESSAGE'),
             dialogType: DialogType.Failure,
           )
       );

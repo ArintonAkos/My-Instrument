@@ -83,7 +83,16 @@
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
   },
   "SHARED": {
-    "BASIC_ERROR_MESSAGE": "Hiba lépett fel, kérlek, próbálkozz később!",
-    "LOGOUT_ERROR_MESSAGE": "Hiba lépett fel a kijelentkezés során. Kérlek próbalkozz késöbb."
+    "ERROR": {
+      "BASIC_MESSAGE": "Hiba lépett fel, kérlek probálkozz később!",
+      "EMAIL_MESSAGE": "Érvénytelen email cím",
+      "PASSWORD": {
+        "LENGTH_MESSAGE": "Túl hosszú vagy túl rövid jelszó",
+        "VALID_MESSAGE": "A jelszónak tartalmaznia kell kis- és nagybetűket, valamint legalább egy számot"
+      },
+      "CONFIRM_PASSWORD_MESSAGE": "A jelszavak nem egyeznek",
+      "EMPTY_FIELD_MESSAGE": "A mező nem lehet üres",
+      "LOGOUT_MESSAGE": "Hiba lépett fel kijelentkezés közben! Kérlek probálkozz később!"
+    }
   }
 }

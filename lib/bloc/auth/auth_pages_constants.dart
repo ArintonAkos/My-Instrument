@@ -76,7 +76,8 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData
     {
       TextEditingController? inputController,
       TextInputType? textInputType,
-      bool? obscureText
+      bool? obscureText,
+      String? errorText
     }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +86,7 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData
         inputLabel,
         style: kLabelStyle,
       ),
-      SizedBox(height: 10.0),
+      SizedBox(height: 5.0),
       Container(
         alignment: Alignment.centerLeft,
         decoration: kBoxDecorationStyle(theme),
@@ -109,6 +110,16 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData
             hintStyle: kHintTextStyle,
           ),
         ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: 5.0),
+        child: Text(
+          errorText?? "",
+          style: TextStyle(
+            fontSize: 14,
+            color: theme?.materialTheme.errorColor
+          ),
+        )
       ),
     ],
   );

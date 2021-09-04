@@ -202,7 +202,7 @@ logoutUser(BuildContext context) async {
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
         buildInfoSnackBar(
-          AppLocalizations.of(context)?.translate('SHARED.LOGOUT_ERROR_MESSAGE') ?? ''
+          AppLocalizations.of(context)?.translate('SHARED.ERROR.LOGOUT_MESSAGE') ?? ''
         )
     );
   }
