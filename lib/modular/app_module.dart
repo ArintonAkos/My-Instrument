@@ -23,6 +23,7 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/home',
       child: (context, args) => MainPage(),
+      transition: TransitionType.scale,
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')],
       children: [
         ChildRoute('/', child: (_, __) => const HomePage()),
@@ -33,13 +34,13 @@ class AppModule extends Module {
       ]
     ),
     ChildRoute('/login', child: (_, __) => LoginPage(),
-      transition: TransitionType.downToUp
+      transition: TransitionType.scale
     ),
     ChildRoute('/register', child: (_, __) => RegisterPage(),
       transition: TransitionType.rightToLeft
     ),
     ChildRoute('/splash', child: (_, args) => SplashPage(),
-      transition: TransitionType.leftToRight
+      transition: TransitionType.scale
     )
   ];
 }

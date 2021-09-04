@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
@@ -14,8 +16,12 @@ class SplashPage extends StatelessWidget {
 
   void _init() async {
     await authModel.init();
-    await Parse().initialize(ServerConstants.APPLICATION_ID, ServerConstants.PARSE_SERVER_URL,
-        clientKey: ServerConstants.CLIENT_KEY, debug: true);
+    await Parse().initialize(
+        ServerConstants.APPLICATION_ID,
+        ServerConstants.PARSE_SERVER_URL,
+        clientKey: ServerConstants.CLIENT_KEY,
+        debug: false
+    );
     Modular.to.navigate('/home/');
   }
 
