@@ -36,7 +36,6 @@ dependencies:
   shared_preferences: ^2.0.6
   styled_widget: ^0.3.1+2
   animations: ^2.0.1
-  openid_client: ^0.4.1
   url_launcher: ^6.0.9
   font_awesome_flutter: ^9.1.0
   google_nav_bar: ^5.0.5
@@ -46,6 +45,8 @@ dependencies:
   flutter_modular: ^3.4.1+1
   dropdown_search: ^1.0.0-beta2
   line_icons: ^2.0.1
+  flutter_svg: ^0.22.0
+  liquid_swipe: ^2.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -83,6 +84,9 @@ flutter:
     - assets/bass-guitar.jpg
     - assets/violin.jpeg
     - assets/piano.jpeg
+    - assets/music_festival.svg
+    - assets/search_listing.svg
+    - assets/profile.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

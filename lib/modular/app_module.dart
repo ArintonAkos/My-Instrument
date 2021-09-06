@@ -8,12 +8,14 @@ import 'package:my_instrument/bloc/main/listing/listing.dart';
 import 'package:my_instrument/bloc/main/main_screen.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
+import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
 import 'package:my_instrument/bloc/main/profile/user_settings_page.dart';
 import 'package:my_instrument/bloc/main/splash/splash_page.dart';
 import 'package:my_instrument/modular/auth_guard.dart';
 import 'package:my_instrument/modular/custom_transitions/slide_transition.dart';
 import 'package:my_instrument/modular/modules/listing_module.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/main/user/ratings.dart';
 
 class AppModule extends Module {
   static AuthModel authModel = AuthModel();
@@ -21,6 +23,7 @@ class AppModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.singleton((i) => authModel),
+    Bind.singleton((i) => RatingsService())
   ];
 
   @override
@@ -62,6 +65,11 @@ class AppModule extends Module {
       child: (_, args) => CategoryPage(model: args.data,),
       transition: TransitionType.noTransition,
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
+    ),
+    ChildRoute(
+      '/onboard',
+      child: (_, __) => OnBoardPage(),
+      transition: TransitionType.fadeIn,
     ),
     ChildRoute('/login',
       child: (_, __) => LoginPage(),
