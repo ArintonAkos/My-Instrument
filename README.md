@@ -3,8 +3,9 @@
 A project where individual users/companies can upload their user/new instruments.
 ### Frontend
 
-Mobile app: Flutter
-Web app: ReactJS
+Mobile app: Flutter.
+
+Web app: ReactJS.
 
 ### Backend
 
