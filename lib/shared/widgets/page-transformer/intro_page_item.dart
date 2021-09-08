@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:my_instrument/bloc/shared/page-transformer/page_transformer.dart';
+import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 
 import 'data.dart';
 
