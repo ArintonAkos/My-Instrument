@@ -83,6 +83,16 @@
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
   },
   "SHARED": {
-    "BASIC_ERROR_MESSAGE": "A apărut o eroare, încercați mai târziu!"
+    "ERROR": {
+      "BASIC_MESSAGE": "A apărut o eroare, încercați mai târziu!",
+      "EMAIL_MESSAGE": "Adresă de email invalid",
+      "PASSWORD": {
+        "LENGTH_MESSAGE": "Parola este prea scurtă sau pre lungă",
+        "VALID_MESSAGE": "Parola trebuie să conțină litere mari și mici, precum și un număr"
+      },
+      "CONFIRM_PASSWORD_MESSAGE": "Parolele nu se potrivește",
+      "EMPTY_FIELD_MESSAGE": "Câmpul nu poate fi gol",
+      "LOGOUT_MESSAGE": "A apărut o eroare în timpul deconectării! Încercați mai târziu!"
+    }
   }
 }

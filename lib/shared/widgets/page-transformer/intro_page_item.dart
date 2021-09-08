@@ -8,10 +8,12 @@ class IntroPageItem extends StatelessWidget {
   IntroPageItem({
     required this.item,
     required this.pageVisibility,
+    this.onTap
   });
 
   final IntroItem item;
   final PageVisibility pageVisibility;
+  final VoidCallback? onTap;
 
   Widget _applyTextEffects({
     required double translationFactor,
@@ -107,18 +109,21 @@ class IntroPageItem extends StatelessWidget {
         ),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(18.0),
-        child: Material(
-          elevation: 4.0,
-          borderRadius: BorderRadius.circular(8.0),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              image,
-              imageOverlayGradient,
-              _buildTextContainer(context),
-            ],
-          ),
-        )
+          child: InkWell(
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8.0),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  image,
+                  imageOverlayGradient,
+                  _buildTextContainer(context),
+                ],
+              ),
+            ),
+            onTap: onTap
+          )
         ),
       );
   }

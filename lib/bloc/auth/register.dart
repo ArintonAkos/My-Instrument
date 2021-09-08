@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/shared/data/page_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
@@ -25,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final controllerFirstName = TextEditingController();
   final controllerLastName = TextEditingController();
   final controllerCompanyName = TextEditingController();
+  String? emailErrorText, passwordErrorText, confirmPasswordErrorText, firstNameErrorText, lastNameErrorText, companyNameErrorText;
 
   int _accountType = 0;
 
@@ -33,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Center(
       child: Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark,
+          value: SystemUiOverlayStyle.light,
           child: Stack(
             children: <Widget>[
               Container(
@@ -62,26 +64,48 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                              child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.translate('REGISTER.HEADER_TEXT'),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'OpenSans',
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold,
+                          Stack(
+                            children: [
+                              Positioned(
+                                child: ClipOval(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Modular.to.pop();
+                                      },
+                                      icon: Icon(
+                                          Icons.arrow_back,
+                                          color: Colors.white
+                                      )
                                     ),
-                                  )
-                              )
+                                  ),
+                                ),
+                                left: 0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: 5.0, bottom: 10.0),
+                                child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate('REGISTER.HEADER_TEXT'),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'OpenSans',
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                )
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 30.0,),
+                          SizedBox(height: 15.0,),
                           _buildEmailTF(),
-                          SizedBox(height: 30.0,),
+                          SizedBox(height: 15.0,),
                           _buildPasswordTF(),
-                          SizedBox(height: 30.0,),
+                          SizedBox(height: 15.0,),
                           _buildConfirmPasswordTF(),
-                          SizedBox(height: 30.0,),
+                          SizedBox(height: 15.0,),
                           buildDropDownInput(context,
                             PageData.AccountTypes,
                             _accountType,
@@ -95,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             translate('REGISTER.ACCOUNT_TYPE_LABEL')
                           ),
                           ..._buildAdditionalInfoTF(),
-                          SizedBox(height: 30.0,),
+                          SizedBox(height: 15.0,),
                           _buildRegisterBtn()
                         ],
                       )
@@ -113,8 +137,10 @@ class _RegisterPageState extends State<RegisterPage> {
         AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT.LABEL'),
         AppLocalizations.of(context)!.translate('REGISTER.EMAIL_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
+        Icons.email_outlined,
         inputController: controllerEmail,
-        textInputType: TextInputType.emailAddress
+        textInputType: TextInputType.emailAddress,
+        errorText: emailErrorText
     );
   }
 
@@ -123,8 +149,10 @@ class _RegisterPageState extends State<RegisterPage> {
         AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT.LABEL'),
         AppLocalizations.of(context)!.translate('REGISTER.PASSWORD_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
+        Icons.lock_outlined,
         inputController: controllerPassword,
-        obscureText: true
+        obscureText: true,
+        errorText: passwordErrorText
     );
   }
 
@@ -133,8 +161,10 @@ class _RegisterPageState extends State<RegisterPage> {
       AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT.LABEL'),
       AppLocalizations.of(context)!.translate('REGISTER.CONFIRM_PASSWORD_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
+      Icons.lock_outlined,
       inputController: controllerConfirmPassword,
-      obscureText: true
+      obscureText: true,
+        errorText: confirmPasswordErrorText
     );
   }
 
@@ -152,8 +182,10 @@ class _RegisterPageState extends State<RegisterPage> {
         AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT.LABEL'),
         AppLocalizations.of(context)!.translate('REGISTER.FIRST_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
+        Icons.person_outline_rounded,
         inputController: controllerFirstName,
-        textInputType: TextInputType.text
+        textInputType: TextInputType.text,
+        errorText: firstNameErrorText
     );
   }
 
@@ -162,8 +194,10 @@ class _RegisterPageState extends State<RegisterPage> {
         AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT.LABEL'),
         AppLocalizations.of(context)!.translate('REGISTER.LAST_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
+        Icons.person_outline_rounded,
         inputController: controllerLastName,
-        textInputType: TextInputType.text
+        textInputType: TextInputType.text,
+        errorText: lastNameErrorText
     );
   }
 
@@ -172,22 +206,24 @@ class _RegisterPageState extends State<RegisterPage> {
         AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT.LABEL'),
         AppLocalizations.of(context)!.translate('REGISTER.COMPANY_NAME_INPUT.HINT'),
         Provider.of<ThemeNotifier>(context).getTheme(),
+        Icons.business_outlined,
         inputController: controllerCompanyName,
-        textInputType: TextInputType.text
+        textInputType: TextInputType.text,
+        errorText: companyNameErrorText
     );
   }
 
   List<Widget> _buildAdditionalInfoTF() {
     if (_accountType == 0) {
       return [
-        SizedBox(height: 20.0,),
+        SizedBox(height: 30.0,),
         _buildFirstNameTF(),
-        SizedBox(height: 20.0,),
+        SizedBox(height: 10.0,),
         _buildLastNameTF(),
       ];
     } else {
       return [
-        SizedBox(height: 20.0),
+        SizedBox(height: 30.0),
         _buildCompanyNameTF()
       ];
     }
@@ -203,8 +239,9 @@ class _RegisterPageState extends State<RegisterPage> {
     final companyName = controllerCompanyName.text.trim();
 
     if (!validateFields(email, password, confirmPassword, firstName, lastName, companyName)) {
-
+      return;
     }
+
     final user = ParseUser.createUser(username, password, email);
 
     user.set('accountType', _accountType);
@@ -222,6 +259,7 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
+          onAccept: () { Modular.to.navigate('/login'); },
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.SUCCESSFUL'),
           dialogType: DialogType.Success,
         )
@@ -237,26 +275,93 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  _resetErrorTexts() {
+    this.emailErrorText = null;
+    this.passwordErrorText = null;
+    this.confirmPasswordErrorText = null;
+    this.firstNameErrorText = null;
+    this.lastNameErrorText = null;
+    this.companyNameErrorText = null;
+  }
+
+  bool _validatePasswords(String password, String confirmPassword) {
+    _resetErrorTexts();
+
+    if(password.length < 8 || password.length > 16) {
+      setState(() {
+        passwordErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.PASSWORD.LENGTH_MESSAGE');
+      });
+      return false;
+    }
+    if(!password.contains(RegExp(r'[A-Z]')) || !password.contains(RegExp(r'[a-z]')) || !password.contains(RegExp(r'[0-9]'))) {
+      setState(() {
+        passwordErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.PASSWORD.VALID_MESSAGE');
+      });
+      return false;
+    }
+    if (password != confirmPassword) {
+      setState(() {
+        confirmPasswordErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.CONFIRM_PASSWORD_MESSAGE');
+      });
+      return false;
+    }
+
+    return true;
+  }
+
   bool validateFields(String email, String password, String confirmPassword,
       String firstName, String lastName, String companyName) {
-    return true;
+    _resetErrorTexts();
 
-    if (password != confirmPassword) {
+    if(email == "") {
+      setState(() {
+        emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
+      });
+      return false;
+    } else if(!email.contains('@')) {
+      setState(() {
+        emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
+      });
+      return false;
+    } else if(!email.contains('.', email.indexOf('@'))) {
+      setState(() {
+        emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
+      });
+      return false;
+    } else if(email.lastIndexOf('.') == email.length - 1) {
+      setState(() {
+        emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
+      });
+      return false;
+    }
+
+    if(!_validatePasswords(password, confirmPassword)) {
       return false;
     }
 
     if (_accountType == 1) {
       if (companyName == "") {
+        setState(() {
+          companyNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
+        });
         return false;
       }
     } else if (_accountType == 0) {
       if (firstName == "") {
+        setState(() {
+          firstNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
+        });
         return false;
       } else if (lastName == "") {
+        setState(() {
+          lastNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
+        });
         return false;
       }
     } else {
       return false;
     }
+
+    return true;
   }
 }

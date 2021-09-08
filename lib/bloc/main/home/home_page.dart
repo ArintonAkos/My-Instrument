@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_instrument/shared/widgets/listing_card.dart';
-import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
-import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
-import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/bloc/shared/listing_card.dart';
+import 'package:my_instrument/bloc/shared/page-transformer/data.dart';
+import 'package:my_instrument/bloc/shared/page-transformer/intro_page_item.dart';
+import 'package:my_instrument/bloc/shared/page-transformer/page_transformer.dart';
+import 'package:my_instrument/models/category.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/main/user/ratings.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 // import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -47,7 +50,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ClipRRect(
-           // borderRadius: BorderRadius.circular(18.0),
             child: SizedBox.fromSize(
               size: const Size.fromHeight(300.0),
               child: ClipRRect(
@@ -55,11 +57,15 @@ class _HomePageState extends State<HomePage> {
                 child: PageTransformer(
                   pageViewBuilder: (_context, visibilityResolver) {
                     var sampleItems = <IntroItem>[
-                      new IntroItem(title: AppLocalizations.of(context)!.translate(
-                          'HOME.INSTRUMENT_CARD.GUITAR_TEXT'),
+                      new IntroItem(
+                        title: AppLocalizations.of(context)!.translate(
+                          'HOME.INSTRUMENT_CARD.GUITAR_TEXT'
+                        ),
                         category: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.GUITAR_TITLE'),
-                        imageUrl: 'assets/guitar1.jpeg',),
+                          'HOME.INSTRUMENT_CARD.GUITAR_TITLE'
+                        ),
+                        imageUrl: 'assets/guitar1.jpeg',
+                      ),
                       new IntroItem(title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.DRUM_TEXT'),
                         category: AppLocalizations.of(context)!.translate(
@@ -92,6 +98,9 @@ class _HomePageState extends State<HomePage> {
                         return IntroPageItem(
                           item: item,
                           pageVisibility: pageVisibility,
+                          onTap: () {
+                            Modular.to.pushNamed('/category', arguments: Category(category: 'Category', parentCategory: 'parentCategory'));
+                          },
                         );
                       },
                     );
@@ -113,7 +122,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           DiscoverSlider(imgList: imgList),
-          SizedBox(height: 70.0,)
+          SizedBox(height: 70.0,),
+          TextButton(
+            onPressed: () {
+              Modular.get<RatingsService>().getUserRatings();
+            },
+            child: Text('send request'),
+          ),
         ],
       ),
     );

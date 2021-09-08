@@ -72,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
       AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.LABEL'),
       AppLocalizations.of(context)!.translate('LOGIN.EMAIL_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
+      Icons.email_outlined,
       inputController: controllerEmail,
       textInputType: TextInputType.emailAddress
     );
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
       AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.LABEL'),
       AppLocalizations.of(context)!.translate('LOGIN.PASSWORD_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
+      Icons.lock_outline,
       inputController: controllerPassword,
       obscureText: true
     );
@@ -336,12 +338,12 @@ class _LoginPageState extends State<LoginPage> {
     if (!response.success) {
       showDialog(context: context,
           builder: (BuildContext dialogContext) => CustomDialog(
-            description: AppLocalizations.of(context)!.translate('SHARED.BASIC_ERROR_MESSAGE'),
+            description: AppLocalizations.of(context)!.translate('SHARED.ERROR.BASIC_MESSAGE'),
             dialogType: DialogType.Failure,
           )
       );
     } else {
-      Modular.to.pushNamed('/home/');
+      Modular.to.navigate('/home/');
     }
   }
 

@@ -72,11 +72,12 @@ BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
   );
 }
 
-Widget buildTF(String inputLabel, String hintText, AppThemeData? theme,
+Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData iconData,
     {
       TextEditingController? inputController,
       TextInputType? textInputType,
-      bool? obscureText
+      bool? obscureText,
+      String? errorText
     }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +86,7 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme,
         inputLabel,
         style: kLabelStyle,
       ),
-      SizedBox(height: 10.0),
+      SizedBox(height: 5.0),
       Container(
         alignment: Alignment.centerLeft,
         decoration: kBoxDecorationStyle(theme),
@@ -102,15 +103,23 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme,
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 14.0),
             prefixIcon: Icon(
-              textInputType == TextInputType.emailAddress
-                  ? Icons.email_outlined
-                  : Icons.lock_outline,
+              iconData,
               color: Colors.white,
             ),
             hintText: hintText,
             hintStyle: kHintTextStyle,
           ),
         ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: 5.0),
+        child: Text(
+          errorText?? "",
+          style: TextStyle(
+            fontSize: 14,
+            color: theme?.materialTheme.errorColor
+          ),
+        )
       ),
     ],
   );
