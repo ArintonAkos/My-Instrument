@@ -108,8 +108,7 @@ class ListingCard extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onPrimary,
                     size: 18,
                   ),
-
-
+                  splashRadius: 0.,
                 )
               ),
             ),
