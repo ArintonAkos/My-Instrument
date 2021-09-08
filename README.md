@@ -33,6 +33,7 @@ A few useful resources:
 - [Liquid Swipe](https://github.com/iamSahdeep/liquid_swipe_flutter)
 - [Flutter WeChat Assets Picker](https://github.com/fluttercandies/flutter_wechat_assets_picker)
 - [Back4App Docs](https://www.back4app.com/docs/flutter/parse-sdk/parse-flutter-sdk)
+- [Material Icons](https://fonts.google.com/icons)
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:my_instrument/bloc/shared/page-transformer/page_transformer.dart';
+import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 
 import 'data.dart';
 
@@ -109,20 +109,20 @@ class IntroPageItem extends StatelessWidget {
         ),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(18.0),
-          child: InkWell(
             child: Material(
               elevation: 4.0,
               borderRadius: BorderRadius.circular(8.0),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  image,
-                  imageOverlayGradient,
-                  _buildTextContainer(context),
-                ],
-              ),
-            ),
-            onTap: onTap
+                child: InkWell(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      image,
+                      imageOverlayGradient,
+                      _buildTextContainer(context),
+                    ],
+                  ),
+                    onTap: onTap
+                ),
           )
         ),
       );
