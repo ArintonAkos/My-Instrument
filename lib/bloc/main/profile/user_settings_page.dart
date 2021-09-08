@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/shared/widgets/card_item.dart';
 import 'package:my_instrument/shared/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -29,7 +30,7 @@ class _UserPageState extends State<UserPage> {
               ).alignment(Alignment.center).padding(bottom: 20),
               const UserCard(),
               const ActionsRow(),
-              const Settings(),
+              const Settings(settingsItems: _settingsItems)
             ].toColumn()),
       ),
     );
@@ -175,22 +176,6 @@ class ActionsRow extends StatelessWidget {
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 
-class SettingsItemModel {
-  final IconData icon;
-  final Color color;
-  final String title;
-  final String description;
-  final Function(BuildContext context)? onTap;
-
-  const SettingsItemModel({
-    required this.color,
-    required this.description,
-    required this.icon,
-    required this.title,
-    this.onTap
-  });
-}
-
 logoutUser(BuildContext context) async {
   var authModel = Modular.get<AuthModel>();
   var result = await authModel.signOut();
@@ -206,38 +191,43 @@ logoutUser(BuildContext context) async {
   }
 }
 
-const List<SettingsItemModel> settingsItems = [
-  SettingsItemModel(
+navigateToAboutPage(BuildContext context) {
+  Modular.to.pushNamed('/about');
+}
+
+const List<CardItemModel> _settingsItems = [
+  CardItemModel(
     icon: Icons.location_on,
     color: Color(0xff8D7AEE),
     title: 'Address',
     description: 'Ensure your harvesting address',
   ),
-  SettingsItemModel(
+  CardItemModel(
     icon: Icons.lock,
     color: Color(0xffF468B7),
     title: 'Privacy',
     description: 'System permission change',
   ),
-  SettingsItemModel(
+  CardItemModel(
     icon: Icons.menu,
     color: Color(0xffFEC85C),
     title: 'General',
     description: 'Basic functional settings',
   ),
-  SettingsItemModel(
+  CardItemModel(
     icon: Icons.notifications,
     color: Color(0xff5FD0D3),
-    title: 'Notifications',
-    description: 'Take over the news in time',
+    title: 'About',
+    description: 'Terms of Service and licenses',
+    onTap: navigateToAboutPage
   ),
-  SettingsItemModel(
+  CardItemModel(
     icon: Icons.question_answer,
     color: Color(0xffBFACAA),
     title: 'Support',
     description: 'We are here to help',
   ),
-  SettingsItemModel(
+  CardItemModel(
     icon: Icons.logout,
     color: Color(0xff1ABC9C),
     title: 'Sign out',
@@ -247,10 +237,14 @@ const List<SettingsItemModel> settingsItems = [
 ];
 
 class Settings extends StatelessWidget {
-  const Settings({Key? key}) : super(key: key);
+  final List<CardItemModel> settingsItems;
+  const Settings({
+    Key? key,
+    required this.settingsItems
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => settingsItems
+  Widget build(BuildContext context) => this.settingsItems
       .map((settingsItem) => SettingsItem(
       icon: settingsItem.icon,
       iconBgColor: settingsItem.color,

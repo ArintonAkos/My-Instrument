@@ -9,6 +9,7 @@ import 'package:my_instrument/bloc/main/main_screen.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
+import 'package:my_instrument/bloc/main/profile/about/about.dart';
 import 'package:my_instrument/bloc/main/profile/user_settings_page.dart';
 import 'package:my_instrument/bloc/main/splash/splash_page.dart';
 import 'package:my_instrument/modular/auth_guard.dart';
@@ -65,6 +66,12 @@ class AppModule extends Module {
       child: (_, args) => CategoryPage(model: args.data,),
       transition: TransitionType.noTransition,
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
+    ),
+    ChildRoute(
+        '/about',
+        child: (_, __) => AboutPage(),
+        transition: TransitionType.fadeIn,
+        guards: [AuthGuard(authModel: authModel, guardedRoute: 'login')]
     ),
     ChildRoute(
       '/onboard',
