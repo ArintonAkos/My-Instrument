@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_instrument/bloc/shared/listing_card.dart';
-import 'package:my_instrument/bloc/shared/page-transformer/data.dart';
-import 'package:my_instrument/bloc/shared/page-transformer/intro_page_item.dart';
-import 'package:my_instrument/bloc/shared/page-transformer/page_transformer.dart';
+import 'package:my_instrument/shared/widgets/listing_card.dart';
+import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
+import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
+import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
