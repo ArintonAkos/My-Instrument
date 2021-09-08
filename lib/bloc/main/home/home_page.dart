@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_instrument/shared/widgets/listing_card.dart';
+import 'package:my_instrument/bloc/main/home/widgets/discover_slider.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
@@ -26,6 +26,40 @@ class _HomePageState extends State<HomePage> {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
 
+  List<IntroItem> getSampleItems() {
+    return <IntroItem>[
+      IntroItem(
+        title: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.GUITAR_TEXT'
+        ),
+        category: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.GUITAR_TITLE'
+        ),
+        imageUrl: 'assets/guitar1.jpeg',
+      ),
+      IntroItem(title: AppLocalizations.of(context)!.translate(
+          'HOME.INSTRUMENT_CARD.DRUM_TEXT'),
+        category: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.DRUM_TITLE'),
+        imageUrl: 'assets/drums.jpg',),
+      IntroItem(title: AppLocalizations.of(context)!.translate(
+          'HOME.INSTRUMENT_CARD.BASS_TEXT'),
+        category: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.BASS_TITLE'),
+        imageUrl: 'assets/bass-guitar.jpg',),
+      IntroItem(title: AppLocalizations.of(context)!.translate(
+          'HOME.INSTRUMENT_CARD.VIOLIN_TEXT'),
+        category: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.VIOLIN_TITLE'),
+        imageUrl: 'assets/violin.jpeg',),
+      IntroItem(title: AppLocalizations.of(context)!.translate(
+          'HOME.INSTRUMENT_CARD.PIANO_TEXT'),
+        category: AppLocalizations.of(context)!.translate(
+            'HOME.INSTRUMENT_CARD.PIANO_TITLE'),
+        imageUrl: 'assets/piano.jpeg',),
+    ];
+  }
+
   @override
   void initState() {
     _pageController = PageController(
@@ -48,7 +82,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            //HomeTitle(),
             Padding(padding: const EdgeInsets.all(20.0),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -62,40 +95,10 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox.fromSize(
                 size: const Size.fromHeight(300.0),
                 child: ClipRRect(
-                  //borderRadius: BorderRadius.circular(28.0),
                   child: PageTransformer(
                     pageViewBuilder: (_context, visibilityResolver) {
-                      var sampleItems = <IntroItem>[
-                        IntroItem(
-                          title: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.GUITAR_TEXT'
-                          ),
-                          category: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.GUITAR_TITLE'
-                          ),
-                          imageUrl: 'assets/guitar1.jpeg',
-                        ),
-                        IntroItem(title: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.DRUM_TEXT'),
-                          category: AppLocalizations.of(context)!.translate(
-                              'HOME.INSTRUMENT_CARD.DRUM_TITLE'),
-                          imageUrl: 'assets/drums.jpg',),
-                        IntroItem(title: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.BASS_TEXT'),
-                          category: AppLocalizations.of(context)!.translate(
-                              'HOME.INSTRUMENT_CARD.BASS_TITLE'),
-                          imageUrl: 'assets/bass-guitar.jpg',),
-                        IntroItem(title: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.VIOLIN_TEXT'),
-                          category: AppLocalizations.of(context)!.translate(
-                              'HOME.INSTRUMENT_CARD.VIOLIN_TITLE'),
-                          imageUrl: 'assets/violin.jpeg',),
-                        IntroItem(title: AppLocalizations.of(context)!.translate(
-                            'HOME.INSTRUMENT_CARD.PIANO_TEXT'),
-                          category: AppLocalizations.of(context)!.translate(
-                              'HOME.INSTRUMENT_CARD.PIANO_TITLE'),
-                          imageUrl: 'assets/piano.jpeg',),
-                      ];
+                      final sampleItems = getSampleItems();
+
                       return PageView.builder(
                         controller: PageController(viewportFraction: 0.85),
                         itemCount: sampleItems.length,
@@ -108,12 +111,7 @@ class _HomePageState extends State<HomePage> {
                             item: item,
                             pageVisibility: pageVisibility,
                             onTap: () {
-                              /*Modular.to.pushNamed('/category',
-                                arguments: Category(
-                                  category: 'Category',
-                                  parentCategory: 'parentCategory'
-                                )
-                              );*/
+
                             },
                           );
                         },
@@ -140,73 +138,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-class HomeTitle extends StatelessWidget {
-  const HomeTitle({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Text(
-            AppLocalizations.of(context)!.translate('HOME.TITLE'),
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          )
-        ]
-      ),
-    );
-  }
-}
-
-class DiscoverSlider extends StatelessWidget {
-  final controller = PageController(viewportFraction: 0.8);
-  final List<String> imgList;
-
-  DiscoverSlider({Key? key,
-    required this.imgList
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-           // SizedBox(height: 16),
-            SizedBox(
-              height: 350,
-              child: PageView(
-                controller: controller,
-                children: List.generate(
-                    6,
-                        (index) => ListingCard(
-                          imgUrl: imgList[index],
-                          listingName: 'Shecter Guitar',
-                          listingPrice: '420.69',
-                          listingDescription: 'Description',
-                        )
-                ),
-              ),
-            ),
-           // SizedBox(height: 16),
-            /*Container(
-              child: SmoothPageIndicator(
-                controller: controller,
-                count: 6,
-                effect: ExpandingDotsEffect(
-                  expansionFactor: 4,
-                ),
-              ),
-            ),*/
-          ],
-        ),
-      ),
-    );
-  }
-  
 }
