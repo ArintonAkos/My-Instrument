@@ -102,13 +102,15 @@ class ListingCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  },
+
                   icon: Icon(
                     Icons.arrow_forward,
                     color: Theme.of(context).colorScheme.onPrimary,
                     size: 18,
                   ),
-                  splashRadius: 0.,
+                  splashRadius: 0.1,
                 )
               ),
             ),
