@@ -108,17 +108,23 @@ class UserCard extends StatelessWidget {
 class ActionsRow extends StatelessWidget {
   const ActionsRow({Key? key}) : super(key: key);
 
-  Widget _buildActionItem(String name, IconData icon, BuildContext context) {
-    final Widget actionIcon = Icon(icon,
-          size: 20,
-          color: Theme.of(context).colorScheme.onSurface
-        )
-        .alignment(Alignment.center)
-        .ripple()
-        .constrained(width: 50, height: 50)
-        .backgroundColor(Theme.of(context).cardColor)
-        .clipOval()
-        .padding(bottom: 5);
+  Widget _buildActionItem(String name, IconData icon, BuildContext context, { VoidCallback? onTap } ) {
+    final Widget actionIcon = Container(
+      height: 50.0,
+      width: 50.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        splashRadius: 25.0,
+          icon: Icon(icon,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ), onPressed: () { _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false)); },
+
+      ).ripple()
+    );
 
     final Widget actionText = Text(
       name,
@@ -132,13 +138,6 @@ class ActionsRow extends StatelessWidget {
       actionIcon,
       actionText,
     ].toColumn().padding(vertical: 20);
-  }
-
-  _buildThemeActionItem(Widget child, ThemeNotifier themeNotifier) {
-    return InkWell(
-      child: child,
-      onTap: () => _onThemeClick(themeNotifier)
-    );
   }
 
   void _onThemeClick(ThemeNotifier themeNotifier) {
@@ -166,13 +165,12 @@ class ActionsRow extends StatelessWidget {
     _buildActionItem('Wallet', Icons.attach_money, context),
     _buildActionItem('Delivery', Icons.card_giftcard, context),
     _buildActionItem('Message', Icons.message, context),
-    _buildThemeActionItem(
-      _buildActionItem(
-        AppLocalizations.of(context)!.translate('PROFILE.THEME_SWITCH_LABEL'),
-        _getThemeIcon(Provider.of<ThemeNotifier>(context)),
-        context
-      ),
-      Provider.of<ThemeNotifier>(context)
+    _buildActionItem(
+      AppLocalizations.of(context)!.translate('PROFILE.THEME_SWITCH_LABEL'),
+      _getThemeIcon(Provider.of<ThemeNotifier>(context)),
+      context,
+      onTap: () =>
+        _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false))
     ),
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
