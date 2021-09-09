@@ -122,7 +122,7 @@ class ActionsRow extends StatelessWidget {
           icon: Icon(icon,
             size: 20,
             color: Theme.of(context).colorScheme.onSurface,
-          ), onPressed: () { _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false)); },
+          ), onPressed: onTap,
 
       ).ripple()
     );
