@@ -36,7 +36,22 @@
   },
   "PROFILE": {
     "TITLE": "Profil",
-    "THEME_SWITCH_LABEL": "Téma"
+    "THEME_SWITCH_LABEL": "Téma",
+    "ABOUT": {
+      "TITLE": "Rólunk",
+      "LICENSES": {
+        "TITLE": "Licenszek",
+        "DESCRIPTION": "Megszerzett licenszek"
+      },
+      "TERMS_OF_SERVICE": {
+        "TITLE": "Szolgáltatási feltételek",
+        "DESCRIPTION": "Olvasd el a szolgáltatási feltételek",
+      },
+      "PRIVACY_POLICY": {
+        "TITLE": "Adatvédelmi irányelvek",
+        "DESCRIPTION": "Olvasd el az adatvédelmi irányelveinket"
+      }
+    }
   },
   "REGISTER": {
     "HEADER_TEXT": "REGISZTRÁLÁS",

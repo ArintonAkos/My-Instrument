@@ -36,7 +36,22 @@
   },
   "PROFILE": {
     "TITLE": "Profile",
-    "THEME_SWITCH_LABEL": "Theme"
+    "THEME_SWITCH_LABEL": "Theme",
+    "ABOUT": {
+      "TITLE": "About",
+      "LICENSES": {
+        "TITLE": "Licenses",
+        "DESCRIPTION": "Acquired licenses"
+      },
+      "TERMS_OF_SERVICE": {
+        "TITLE": "Terms of Service",
+        "DESCRIPTION": "Read our terms of service"
+      },
+      "PRIVACY_POLICY": {
+        "TITLE": "Privacy Policy",
+        "DESCRIPTION": "Read our privacy policy"
+      }
+    }
   },
   "REGISTER": {
     "HEADER_TEXT": "REGISTER",

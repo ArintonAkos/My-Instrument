@@ -36,7 +36,22 @@
   },
   "PROFILE": {
     "TITLE": "Profil",
-    "THEME_SWITCH_LABEL": "Temă"
+    "THEME_SWITCH_LABEL": "Temă",
+    "ABOUT": {
+      "TITLE": "Informați",
+      "LICENSES": {
+        "TITLE": "Licențe",
+        "DESCRIPTION": "Licențe dobândite"
+      },
+      "TERMS_OF_SERVICE": {
+        "TITLE": "Termenii serviciului",
+        "DESCRIPTION": "Citești termenii serviciului"
+      },
+      "PRIVACY_POLICY": {
+        "TITLE": "Politica de confidențialitate",
+        "DESCRIPTION": "Citești Politica de confidențialitate"
+      }
+    }
   },
   "REGISTER": {
     "HEADER_TEXT": "REGISTRAȚIE",
