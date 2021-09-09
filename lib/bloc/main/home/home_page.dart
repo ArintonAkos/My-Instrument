@@ -6,12 +6,7 @@ import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/models/category.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/main/user/ratings.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
-import 'package:provider/provider.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -125,7 +120,6 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 70.0,),
           TextButton(
             onPressed: () {
-              Modular.get<RatingsService>().getUserRatings();
             },
             child: Text('send request'),
           ),
