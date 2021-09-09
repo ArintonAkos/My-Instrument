@@ -1,4 +1,16 @@
 {
+  "ONBOARD_TAB": {
+    "TITLE": {
+      "FIRST": "New era of shopping",
+      "SECOND": "Find the best instruments",
+      "THIRD": "Connect now"
+    },
+    "DESCRIPTION": {
+      "FIRST": "MyInstruments brings the new era of online shopping. Choosing a new instrument has never been easier before.",
+      "SECOND": "Find the instrument that fits you best. Using MyInstruments' detailed filters and categories, you can easily find the product you are looking for.",
+      "THIRD": "Connect now to a community of musicians. Sign Up or if you already have an account, Log in."
+    }
+  },
   "HOME": {
     "TITLE": "Home",
     "INSTRUMENTS": "Instruments",

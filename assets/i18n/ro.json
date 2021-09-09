@@ -1,4 +1,16 @@
 {
+  "ONBOARD_TAB": {
+    "TITLE": {
+      "FIRST": "Noua eră a cumpărăturilor",
+      "SECOND": "Găsești cele mai bune instrumente",
+      "THIRD": "Conectează acum"
+    },
+    "DESCRIPTION": {
+      "FIRST": "MyInstruments aduce noua eră a cumpărăturilor online. Alegerea unui nou instrument nu a fost niciodată mai ușor.",
+      "SECOND": "Găsești instrumentul care ți se potrivește cel mai bine. Utilizarea filtrelor și categoriilor detaliate ale MyInstruments, poți găsi cu uşurinţă produsul pe care îl căutaţi.",
+      "THIRD": "Conectează acum la o comunitate de muzicieni. Înregistrează-te sau dacă ai un cont, autentificați."
+    }
+  },
   "HOME": {
     "TITLE": "Acasă",
     "INSTRUMENTS": "Instrumente",

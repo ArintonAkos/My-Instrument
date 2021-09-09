@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_data.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_tab.dart';
+import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardPage extends StatefulWidget {
@@ -25,26 +26,31 @@ class OnBoardPage extends StatefulWidget {
 
 class _OnBoardPageState extends State<OnBoardPage> {
   int page = 0;
-  static List<OnBoardData> pages = <OnBoardData>[
-    OnBoardData(
-        imagePath: 'assets/music_festival.svg',
-        title: 'New era of shopping',
-        description: 'MyInstruments brings the new era of online shopping. Choosing a new instrument has never easier before.',
-        backgroundColor: Colors.blue
-    ),
-    OnBoardData(
-        imagePath: 'assets/search_listing.svg',
-        title: 'Find the best instruments',
-        description: 'Find the instrument that fits you the best. Using MyInstruments detailed filters and categories, you can easily find the product that you are looking for.',
-        backgroundColor: Colors.blueAccent
-    ),
-    OnBoardData(
-        imagePath: 'assets/profile.svg',
-        title: 'Connect now',
-        description: 'Connect now to a community of musicians. Sign Up or if you already have an account Log In.',
-        backgroundColor: Colors.indigoAccent
-    ),
-  ];
+
+  _pages() {
+    List<OnBoardData> pages = <OnBoardData>[
+      OnBoardData(
+          imagePath: 'assets/music_festival.svg',
+          title: AppLocalizations.of(context)!.translate('ONBOARD_TAB.TITLE.FIRST'),
+          description: AppLocalizations.of(context)!.translate('ONBOARD_TAB.DESCRIPTION.FIRST'),
+          backgroundColor: Colors.blue
+      ),
+      OnBoardData(
+          imagePath: 'assets/search_listing.svg',
+          title: AppLocalizations.of(context)!.translate('ONBOARD_TAB.TITLE.SECOND'),
+          description: AppLocalizations.of(context)!.translate('ONBOARD_TAB.DESCRIPTION.SECOND'),
+          backgroundColor: Colors.blueAccent
+      ),
+      OnBoardData(
+          imagePath: 'assets/profile.svg',
+          title: AppLocalizations.of(context)!.translate('ONBOARD_TAB.TITLE.THIRD'),
+          description: AppLocalizations.of(context)!.translate('ONBOARD_TAB.DESCRIPTION.THIRD'),
+          backgroundColor: Colors.indigoAccent
+      ),
+    ];
+
+    return pages;
+  }
 
   _finishBoardingPage() {
     widget.prefs.setBool('boardingCompleted', true);
@@ -71,12 +77,12 @@ class _OnBoardPageState extends State<OnBoardPage> {
         padding: const EdgeInsets.all(25.0),
         child: AnimatedSwitcher(
           duration: Duration(milliseconds: 250),
-          child: page != pages.length -1
+          child: page != _pages().length -1
             ? TextButton(
               onPressed: () {
                 widget.liquidController.animateToPage(
                     page:
-                    widget.liquidController.currentPage + 1 > pages.length - 1
+                    widget.liquidController.currentPage + 1 > _pages().length - 1
                         ? 0
                         : widget.liquidController.currentPage + 1
                 );
@@ -101,15 +107,15 @@ class _OnBoardPageState extends State<OnBoardPage> {
         padding: const EdgeInsets.all(25.0),
         child: TextButton(
           onPressed: () {
-            if (page != pages.length - 1) {
+            if (page != _pages().length - 1) {
               widget.liquidController.animateToPage(
-                  page: pages.length - 1, duration: 700);
+                  page: _pages().length - 1, duration: 700);
             } else {
               _finishBoardingPage();
             }
           },
           child: Text(
-            page != pages.length -1
+            page != _pages().length -1
               ? "Skip to End"
               : "Continue"
             ,
@@ -138,7 +144,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List<Widget>.generate(
-              pages.length,
+                _pages().length,
               _buildDot
             ),
           ),
@@ -163,7 +169,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                 },
                 enableLoop: false,
                 pages: <Widget>[
-                    ...pages.map((pageData) => OnBoardTab(
+                    ..._pages().map((pageData) => OnBoardTab(
                       onBoardData: pageData,
                     )
                   )

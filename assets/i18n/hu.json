@@ -1,4 +1,16 @@
 {
+  "ONBOARD_TAB": {
+    "TITLE": {
+      "FIRST": "A vásárlás új érája",
+      "SECOND": "Találd meg a legjobb hangszereket",
+      "THIRD": "Csatlakozz most"
+    },
+    "DESCRIPTION": {
+      "FIRST": "A MyInstruments elhozza az online vásárlás új korszakát. Egy új hangszer választása soha nem volt egyszerűbb.",
+      "SECOND": "Találd meg a hangszert, amelyik leginkább illik hozzád. A MyInstruments részletes szűrőit és kategóriáit használva könnyedén megtalálhatod a keresett terméket.",
+      "THIRD": "Csatlakozz a zenészek közösségéhez. Regisztrálj vagy, ha már van fiókod, lépj be."
+    }
+  },
   "HOME": {
     "TITLE": "Otthon",
     "INSTRUMENTS": "Hangszerek",
