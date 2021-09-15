@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/auth/server_constants.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatelessWidget {
@@ -17,12 +13,6 @@ class SplashPage extends StatelessWidget {
 
   void _init() async {
     await authModel.init();
-    await Parse().initialize(
-        ServerConstants.APPLICATION_ID,
-        ServerConstants.PARSE_SERVER_URL,
-        clientKey: ServerConstants.CLIENT_KEY,
-        debug: true
-    );
     var prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('boardingCompleted') == true) {
       Modular.to.navigate('/home/');

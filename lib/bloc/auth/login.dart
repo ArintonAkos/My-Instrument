@@ -329,10 +329,9 @@ class _LoginPageState extends State<LoginPage> {
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    AuthModel authModel = Modular.get<AuthModel>();;
+    AuthModel authModel = Modular.get<AuthModel>();
 
-    var response = await authModel.signIn(email, password,
-        rememberMe: _rememberMe);
+    var response = await authModel.signIn(email, password, rememberMe: _rememberMe);
 
     _enableButton();
     if (!response.success) {

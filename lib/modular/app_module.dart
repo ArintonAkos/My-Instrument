@@ -4,7 +4,6 @@ import 'package:my_instrument/bloc/auth/register.dart';
 import 'package:my_instrument/bloc/main/fav/fav.dart';
 import 'package:my_instrument/bloc/main/home/category/category.dart';
 import 'package:my_instrument/bloc/main/home/home_page.dart';
-import 'package:my_instrument/bloc/main/listing/listing.dart';
 import 'package:my_instrument/bloc/main/main_screen.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
@@ -16,15 +15,17 @@ import 'package:my_instrument/modular/auth_guard.dart';
 import 'package:my_instrument/modular/custom_transitions/slide_transition.dart';
 import 'package:my_instrument/modular/modules/listing_module.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/main/user/ratings.dart';
+import 'package:my_instrument/services/auth/auth_service.dart';
+import 'package:my_instrument/services/main/category/category_service.dart';
 
 class AppModule extends Module {
   static AuthModel authModel = AuthModel();
 
   @override
   final List<Bind> binds = [
+    Bind.singleton((i) => AuthService()),
+    Bind.lazySingleton((i) => CategoryService()),
     Bind.singleton((i) => authModel),
-    Bind.singleton((i) => RatingsService())
   ];
 
   @override

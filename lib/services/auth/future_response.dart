@@ -12,10 +12,12 @@ extension on ResponseStatus {
 
 class FutureResponse {
   Object? exception;
+  List<dynamic>? data;
   late bool success;
 
   FutureResponse({
-    this.exception
+    this.exception,
+    this.data
   }) {
     this.success = (this.exception == null);
   }

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/bloc/main/i_auth_notifier.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:line_icons/line_icons.dart';
 
 class MainPage extends StatefulWidget {
@@ -12,8 +13,9 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> implements IAuthNotifier {
   int _selectedPageIndex = 0;
+  late final AuthModel model;
 
   void _changePageIndex(int id) {
     if (id  != _selectedPageIndex) {
@@ -94,4 +96,21 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  @override
+  onSignOut() {
+    Modular.to.navigate('/login');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.model = Modular.get<AuthModel>();
+    model.setListener(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    model.removeListener();
+  }
 }

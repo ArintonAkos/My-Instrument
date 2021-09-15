@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/models/requests/auth/register_request.dart';
 import 'package:my_instrument/shared/data/page_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_pages_constants.dart';
@@ -230,7 +231,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _register() async {
-    final username = controllerEmail.text.trim();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
     final confirmPassword =  controllerConfirmPassword.text.trim();
@@ -242,18 +242,21 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    final user = ParseUser.createUser(username, password, email);
+    RegisterRequest request = RegisterRequest(
+      email: email,
+      password: password,
+      accountType: _accountType,
+    );
 
-    user.set('accountType', _accountType);
     if (_accountType == 1) {
-      user.set('companyName', companyName);
+      request.companyName = companyName;
     } else {
-      user.set('firstName', firstName);
-      user.set('lastName', lastName);
+      request.firstName =  firstName;
+      request.lastName = lastName;
     }
 
-
-    var response = await user.signUp();
+    AuthModel authModel = Modular.get<AuthModel>();
+    var response = await authModel.register(request);
 
     if (response.success) {
       showDialog(
