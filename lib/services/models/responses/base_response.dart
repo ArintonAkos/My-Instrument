@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_instrument/services/models/responses/error_response.dart';
 
 class BaseResponse {
   late final String Message;
@@ -11,6 +12,17 @@ class BaseResponse {
     StatusCode = json['statusCode'] ?? 0;
     Status = json['status'] ?? '';
     Language = json['language'] ?? 0;
+  }
+
+  factory BaseResponse.error({ language = 0 }) {
+    var errorResponse = ErrorResponse(language: language).ResponseJSON;
+    Map<String, dynamic> json = {
+      'message': errorResponse['message'],
+      'statusCode': 404,
+      'status': errorResponse['status'],
+      'language': language
+    };
+    return BaseResponse(json);
   }
 
   get OK {

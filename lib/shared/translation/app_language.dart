@@ -6,6 +6,15 @@ class AppLanguage extends ChangeNotifier {
 
   Locale get appLocal => _appLocale;
 
+  int get LocaleIndex {
+    if (_appLocale == const Locale("hu")) {
+      return 1;
+    } else if (_appLocale == const Locale("ro")) {
+      return 2;
+    }
+    return 0;
+  }
+
   fetchLocale() async {
     var prefs = await SharedPreferences.getInstance();
     if (prefs.getString('language_code') == null) {
@@ -15,7 +24,6 @@ class AppLanguage extends ChangeNotifier {
     _appLocale = Locale(prefs.getString('language_code') ?? 'en');
     return Null;
   }
-
 
   void changeLanguage(Locale type) async {
     var prefs = await SharedPreferences.getInstance();

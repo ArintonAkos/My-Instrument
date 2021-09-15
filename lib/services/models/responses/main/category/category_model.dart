@@ -36,16 +36,19 @@ class CategoryModel {
   }
 
   List<CategoryModel>? parseChildren() {
-    Map<String, dynamic>? children = json?['children'];
-    if (children != null) {
-      List<CategoryModel> list = [];
-      children.forEach((key, value) {
-        var cat = parseCategoryModel(value);
-        if (cat != null) {
-          list.add(cat);
-        }
-      });
-      return list;
+    var childrenRaw = json?['children'];
+    if (childrenRaw != null) {
+      List<Map<String, dynamic>>? children = List<Map<String, dynamic>>.from(childrenRaw);
+      if (children != null) {
+        List<CategoryModel> list = [];
+        children.forEach((value) {
+          var cat = parseCategoryModel(value);
+          if (cat != null) {
+            list.add(cat);
+          }
+        });
+        return list;
+      }
     }
     return null;
   }

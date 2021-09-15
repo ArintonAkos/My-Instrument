@@ -11,7 +11,7 @@ import 'package:my_instrument/services/models/responses/main/category/category_c
 import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 
 class CategoryService extends HttpService {
-  Future<CategoryResponse> getBaseCategoriesWithChildren({ int language = 0 }) async {
+  Future<MyBaseResponse.BaseResponse> getBaseCategoriesWithChildren({ int language = 0 }) async {
     if (await this.model.ensureAuthorized()) {
       Response res = await getData(CategoryConstants.BaseWithChildrenURL + '?language=${language}');
 
@@ -22,12 +22,13 @@ class CategoryService extends HttpService {
         return response;
       }
     }
-    return CategoryResponse.errorMessage(language: language);
+    return MyBaseResponse.BaseResponse.error();
   }
 
-  Future<CategoryResponse> getCategoryWithChildren(int categoryId, { int language = 0}) async {
+  Future<MyBaseResponse.BaseResponse> getCategoryWithChildren(int categoryId, { int language = 0}) async {
     if (await this.model.ensureAuthorized()) {
-      Response res = await getData(CategoryConstants.BaseWithChildrenURL + '?categoryId=${categoryId}&language=${language}');
+      Response res = await getData(CategoryConstants.BaseWithChildrenURL +
+          '?categoryId=${categoryId}&language=${language}');
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -36,6 +37,6 @@ class CategoryService extends HttpService {
         return response;
       }
     }
-    return CategoryResponse.errorMessage(language: language);
+    return MyBaseResponse.BaseResponse.error();
   }
 }

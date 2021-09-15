@@ -9,11 +9,12 @@ import 'package:my_instrument/services/models/responses/auth/auth_constants.dart
 import 'package:my_instrument/services/models/responses/auth/login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
 import 'package:my_instrument/services/models/responses/auth/register_response.dart';
+import 'package:my_instrument/services/models/responses/base_response.dart' as MyBaseResponse;
 import 'package:my_instrument/services/models/responses/error_response.dart';
 
 class AuthService extends HttpService {
 
-  Future<LoginResponse> login(LoginRequest request) async {
+  Future<MyBaseResponse.BaseResponse> login(LoginRequest request) async {
     Response res = await this.postJson(request, AuthConstants.LoginURL);
 
     if (res.statusCode == 200) {
@@ -23,10 +24,10 @@ class AuthService extends HttpService {
       return loginResponse;
     }
 
-    return ErrorResponse(language: request.language).ResponseJSON;
+    return MyBaseResponse.BaseResponse.error();
   }
 
-  Future<RegisterResponse> register(RegisterRequest request) async {
+  Future<MyBaseResponse.BaseResponse> register(RegisterRequest request) async {
     Response res = await this.postJson(request, AuthConstants.RegisterURL);
 
     if (res.statusCode == 200) {
@@ -36,10 +37,10 @@ class AuthService extends HttpService {
       return registerResponse;
     }
 
-    return ErrorResponse(language: request.language).ResponseJSON;
+    return MyBaseResponse.BaseResponse.error();
   }
 
-  Future<RefreshTokenResponse> refreshToken(RefreshTokenRequest request) async {
+  Future<MyBaseResponse.BaseResponse> refreshToken(RefreshTokenRequest request) async {
     Response res = await this.postJson(request, AuthConstants.RefreshTokenURL);
 
     if (res.statusCode == 200) {
@@ -49,6 +50,6 @@ class AuthService extends HttpService {
       return refreshTokenResponse;
     }
 
-    return ErrorResponse(language: request.language).ResponseJSON;
+    return MyBaseResponse.BaseResponse.error();
   }
 }

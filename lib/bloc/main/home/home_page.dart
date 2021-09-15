@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/main/category/category_service.dart';
+import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 import 'package:my_instrument/shared/widgets/listing_card.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
@@ -123,6 +124,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               CategoryService categoryService = Modular.get<CategoryService>();
               var response = await categoryService.getBaseCategoriesWithChildren();
+              if (response.OK) {
+                var data = response as CategoryResponse;
+                var abcde = 0;
+              }
               int abcd = 0;
             },
             child: Text('send request'),

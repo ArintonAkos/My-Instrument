@@ -10,10 +10,10 @@ class CategoryResponse extends BaseResponse {
   }
 
   List<CategoryModel>? parseCategories(Map<String, dynamic> json) {
-    Map<String, dynamic>? data = json['data'];
+    List<Map<String, dynamic>>? data = List<Map<String, dynamic>>.from(json['data']);
     if (data != null) {
       List<CategoryModel> categoryList = [];
-      data.forEach((key, value) {
+      data.forEach((value) {
         categoryList.add(CategoryModel(json: value));
       });
       return categoryList;

@@ -2,12 +2,14 @@ import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 
 class PageData {
-  static const AccountTypes = ["Individual seller", "Company"];
+  static const AccountTypes = <List<String>>[
+    ["Individual seller", "Company"],
+    ["Magánszemély", "Cég"],
+    ["Persoană fizică", "Firmă"]
+  ];
 
-  static getAccountTypes(AppLanguage appLanguage) {
-    // const type = appLanguage.appLocal;
-
-    // if (app)
+  static List<String> getAccountTypes(AppLanguage appLanguage) {
+    return AccountTypes[appLanguage.LocaleIndex];
   }
 
 }

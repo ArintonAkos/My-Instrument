@@ -5,6 +5,7 @@ import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/models/requests/auth/register_request.dart';
 import 'package:my_instrument/shared/data/page_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
+import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
@@ -108,11 +109,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           _buildConfirmPasswordTF(),
                           SizedBox(height: 15.0,),
                           buildDropDownInput(context,
-                            PageData.AccountTypes,
+                            PageData.getAccountTypes(Provider.of<AppLanguage>(context)),
                             _accountType,
                             (String? value) {
                               setState(() {
-                                var ind = PageData.AccountTypes.indexOf(value.toString());
+                                var ind = PageData.getAccountTypes(Provider.of<AppLanguage>(context))
+                                    .indexOf(value.toString());
                                 _accountType = ind > -1 ? ind : 0;
                               });
                             },
