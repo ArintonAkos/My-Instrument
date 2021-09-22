@@ -112,13 +112,13 @@
   "SHARED": {
     "ERROR": {
       "BASIC_MESSAGE": "An error occurred, please try again later!",
-      "EMAIL_MESSAGE": "Invalid email",
+      "EMAIL_MESSAGE": "Invalid email.",
       "PASSWORD": {
-        "LENGTH_MESSAGE": "Password too short or too long",
-        "VALID_MESSAGE": "The password must contain upper and lowercase letters, as well as a number"
+        "LENGTH_MESSAGE": "Password too short or too long.",
+        "VALID_MESSAGE": "The password must contain upper and lowercase letters, as well as a number."
       },
-      "CONFIRM_PASSWORD_MESSAGE": "Passwords do not match",
-      "EMPTY_FIELD_MESSAGE": "Field cannot be empty",
+      "CONFIRM_PASSWORD_MESSAGE": "Passwords do not match.",
+      "EMPTY_FIELD_MESSAGE": "Field cannot be empty.",
       "LOGOUT_MESSAGE": "An error occurred during logout! Please try again later!"
     }
   }

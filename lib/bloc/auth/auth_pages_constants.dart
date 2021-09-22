@@ -117,7 +117,7 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData
           errorText?? "",
           style: TextStyle(
             fontSize: 14,
-            color: theme?.materialTheme.errorColor
+            color: theme?.customTheme.AuthErrorColor
           ),
         )
       ),

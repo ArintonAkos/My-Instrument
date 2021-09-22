@@ -9,6 +9,8 @@ import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 import 'auth_pages_constants.dart';
 
@@ -28,7 +30,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final controllerFirstName = TextEditingController();
   final controllerLastName = TextEditingController();
   final controllerCompanyName = TextEditingController();
-  String? emailErrorText, passwordErrorText, confirmPasswordErrorText, firstNameErrorText, lastNameErrorText, companyNameErrorText;
+  String? emailErrorText,
+      passwordErrorText,
+      confirmPasswordErrorText,
+      firstNameErrorText,
+      lastNameErrorText,
+      companyNameErrorText;
 
   int _accountType = 0;
 
@@ -43,16 +50,21 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                child: WaveWidget(
+                  config: CustomConfig(
                     colors: [
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientEnd,
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[0],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[1],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[2],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[3]
                     ],
-                    stops: [0.1, 0.9],
+                    durations: [18000, 8000, 5000, 12000],
+                    heightPercentages: [0.59, 0.61, 0.63, 0.65],
+                    blur: MaskFilter.blur(BlurStyle.solid, 10.0),
                   ),
+                  size: Size(double.infinity, double.infinity),
+                  backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
+                  waveAmplitude: 1,
                 ),
               ),
               Container(
@@ -167,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Icons.lock_outlined,
       inputController: controllerConfirmPassword,
       obscureText: true,
-        errorText: confirmPasswordErrorText
+      errorText: confirmPasswordErrorText
     );
   }
 
@@ -290,7 +302,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   bool _validatePasswords(String password, String confirmPassword) {
-    _resetErrorTexts();
 
     if(password.length < 8 || password.length > 16) {
       setState(() {
@@ -298,7 +309,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       return false;
     }
-    if(!password.contains(RegExp(r'[A-Z]')) || !password.contains(RegExp(r'[a-z]')) || !password.contains(RegExp(r'[0-9]'))) {
+    if(!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(password)) {
       setState(() {
         passwordErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.PASSWORD.VALID_MESSAGE');
       });
@@ -317,31 +328,32 @@ class _RegisterPageState extends State<RegisterPage> {
   bool validateFields(String email, String password, String confirmPassword,
       String firstName, String lastName, String companyName) {
     _resetErrorTexts();
+    bool areThereErrors = false;
 
     if(email == "") {
       setState(() {
         emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
       });
-      return false;
+      areThereErrors = true;
     } else if(!email.contains('@')) {
       setState(() {
         emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
       });
-      return false;
+      areThereErrors = true;
     } else if(!email.contains('.', email.indexOf('@'))) {
       setState(() {
         emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
       });
-      return false;
+      areThereErrors = true;
     } else if(email.lastIndexOf('.') == email.length - 1) {
       setState(() {
         emailErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMAIL_MESSAGE');
       });
-      return false;
+      areThereErrors = true;
     }
 
     if(!_validatePasswords(password, confirmPassword)) {
-      return false;
+      areThereErrors = true;
     }
 
     if (_accountType == 1) {
@@ -349,24 +361,26 @@ class _RegisterPageState extends State<RegisterPage> {
         setState(() {
           companyNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
         });
-        return false;
+        areThereErrors = true;
       }
     } else if (_accountType == 0) {
       if (firstName == "") {
         setState(() {
-          firstNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
+          firstNameErrorText = AppLocalizations.of(context)!.translate(
+              'SHARED.ERROR.EMPTY_FIELD_MESSAGE');
         });
-        return false;
-      } else if (lastName == "") {
+        areThereErrors = true;
+      }
+      if (lastName == "") {
         setState(() {
           lastNameErrorText = AppLocalizations.of(context)!.translate('SHARED.ERROR.EMPTY_FIELD_MESSAGE');
         });
-        return false;
+        areThereErrors = true;
       }
     } else {
-      return false;
+      areThereErrors = true;
     }
 
-    return true;
+    return !areThereErrors;
   }
 }

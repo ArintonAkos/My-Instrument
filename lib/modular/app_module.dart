@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/bloc/auth/forgot_password.dart';
 import 'package:my_instrument/bloc/auth/login.dart';
 import 'package:my_instrument/bloc/auth/register.dart';
 import 'package:my_instrument/bloc/main/fav/fav.dart';
@@ -88,6 +89,10 @@ class AppModule extends Module {
       child: (_, __) => RegisterPage(),
       transition: TransitionType.custom,
       customTransition: slideTransition,
+    ),
+    ChildRoute('',
+      child: (_, __) => ForgotPasswordPage(),
+      transition: TransitionType.fadeIn
     ),
     ChildRoute('/splash',
       child: (_, args) => SplashPage(),

@@ -9,6 +9,8 @@ import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 import 'auth_pages_constants.dart';
 
@@ -247,16 +249,21 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                   height: double.infinity,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                  child: WaveWidget(
+                    config: CustomConfig(
                       colors: [
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientEnd,
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[0],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[1],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[2],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[3]
                       ],
-                      stops: [0.1, 0.9],
+                      durations: [18000, 8000, 5000, 12000],
+                      heightPercentages: [0.59, 0.61, 0.63, 0.65],
+                      blur: MaskFilter.blur(BlurStyle.solid, 10.0),
                     ),
+                    size: Size(double.infinity, double.infinity),
+                    backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
+                    waveAmplitude: 1,
                   ),
                 ),
               Container(
