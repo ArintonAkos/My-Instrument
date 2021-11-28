@@ -10,7 +10,7 @@ import 'models/requests/backend_request.dart';
 import 'models/requests/multipart_request.dart';
 
 class HttpService {
-  final String LocalApiUrl = "https://myinstrument.conveyor.cloud/api/";
+  final String LocalApiUrl = "https://myinstrument-yy3.conveyor.cloud/api/";
   final String ProductionApiUrl = "";
   late final AuthModel model;
   late final SharedPreferences prefs;

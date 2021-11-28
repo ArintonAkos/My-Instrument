@@ -10,7 +10,8 @@ class CategoryResponse extends BaseResponse {
   }
 
   List<CategoryModel>? parseCategories(Map<String, dynamic> json) {
-    List<Map<String, dynamic>>? data = List<Map<String, dynamic>>.from(json['data']);
+    List<Map<String, dynamic>>? data =
+        List<Map<String, dynamic>>.from(json['data']);
     if (data != null) {
       List<CategoryModel> categoryList = [];
       data.forEach((value) {
@@ -21,7 +22,7 @@ class CategoryResponse extends BaseResponse {
     return null;
   }
 
-  factory CategoryResponse.errorMessage({ int language = 0}) {
+  factory CategoryResponse.errorMessage({int language = 0}) {
     return CategoryResponse(ErrorResponse(language: language).ResponseJSON);
   }
 }
