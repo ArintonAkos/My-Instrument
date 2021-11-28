@@ -9,9 +9,7 @@ Web app: ReactJS.
 
 ### Backend
 
-Back4App
-Parse SDK
-GraphQL
+.NET 6
 
 ## Getting Started
 
