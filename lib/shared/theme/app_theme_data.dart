@@ -13,6 +13,8 @@ class CustomAppTheme {
   final Color LoginButtonText;
   final Color DropdownItemColor;
   final Color AuthErrorColor;
+  final Color TextFieldBackgroundColor;
+  final Color TextFieldHintColor;
   final List<Color> AuthPagesPrimaryColors;
 
   const CustomAppTheme({
@@ -24,6 +26,8 @@ class CustomAppTheme {
     required this.DropdownItemColor,
     required this.AuthErrorColor,
     required this.AuthPagesPrimaryColors,
+    required this.TextFieldBackgroundColor,
+    required this.TextFieldHintColor
   });
 }
 
@@ -49,7 +53,9 @@ class AppThemeData {
       const Color(0xFF2ABBF3).withOpacity(0.3),
       const Color(0xFF41C2F5).withOpacity(0.3),
       const Color(0xFF71D1F7).withOpacity(0.3),
-    ]
+    ],
+    TextFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
+    TextFieldHintColor: const Color(0xff000000)
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
@@ -65,7 +71,9 @@ class AppThemeData {
       const Color(0xFF2B2B2B).withOpacity(0.7),
       const Color(0xFF2F2F2F).withOpacity(0.6),
       const Color(0xFF323232).withOpacity(1)
-    ]
+    ],
+    TextFieldBackgroundColor: const Color(0xff131313),
+    TextFieldHintColor: const Color(0xffffffff)
   );
 
 
@@ -77,6 +85,6 @@ class AppThemeData {
   }
 
   ThemeData get materialTheme {
-    return this.themeData;
+    return themeData;
   }
 }

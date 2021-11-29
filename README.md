@@ -32,6 +32,7 @@ A few useful resources:
 - [Flutter WeChat Assets Picker](https://github.com/fluttercandies/flutter_wechat_assets_picker)
 - [Back4App Docs](https://www.back4app.com/docs/flutter/parse-sdk/parse-flutter-sdk)
 - [Material Icons](https://fonts.google.com/icons)
+- [Illustrations](https://www.freepik.com/vectors/illustrations)
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,

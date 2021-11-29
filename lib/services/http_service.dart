@@ -10,17 +10,18 @@ import 'models/requests/backend_request.dart';
 import 'models/requests/multipart_request.dart';
 
 class HttpService {
-  final String LocalApiUrl = "https://myinstrument-yy3.conveyor.cloud/api/";
-  final String ProductionApiUrl = "";
+  static const String LocalApiUrl = "https://myinstrument.conveyor.cloud/api/";
+  static const String ProductionApiUrl = "";
   late final AuthModel model;
   late final SharedPreferences prefs;
+
   HttpService() {
-    this.model = Modular.get<AuthModel>();
+    model = Modular.get<AuthModel>();
     init();
   }
 
   void init() async {
-    this.prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
   }
 
   get ApiUrl {
@@ -38,7 +39,7 @@ class HttpService {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': bearerToken != null ? 'Bearer ${bearerToken}' : ''
+        'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
     });
   }
 
@@ -47,7 +48,7 @@ class HttpService {
     return http.get(
       Uri.parse(ApiUrl + path),
       headers: {
-        'Authorization': bearerToken != null ? 'Bearer ${bearerToken}' : ''
+        'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
     );
   }
@@ -59,7 +60,7 @@ class HttpService {
       Uri.parse(ApiUrl + path)
     )
       ..headers.addAll({
-        'Authorization': bearerToken != null ? 'Bearer ${bearerToken}' : '',
+        'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
         'X-Requested-With': 'XMLHttpRequest'
       })
       ..fields.addAll(data.toJson());
@@ -67,7 +68,7 @@ class HttpService {
     var imagePaths = data.getImagePaths();
     int i = 0;
     imagePaths.forEach((element) async {
-      var multipartFile = await http.MultipartFile.fromPath('file-${i}', element);
+      var multipartFile = await http.MultipartFile.fromPath('file-$i', element);
       request.files.add(multipartFile);
       i++;
     });
@@ -80,7 +81,7 @@ class HttpService {
     return http.delete(
         Uri.parse(ApiUrl + path),
         headers: {
-          'Authorization': bearerToken != null ? 'Bearer ${bearerToken}' : ''
+          'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
         }
     );
   }

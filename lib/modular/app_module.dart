@@ -6,6 +6,7 @@ import 'package:my_instrument/bloc/main/fav/fav.dart';
 import 'package:my_instrument/bloc/main/home/category/category.dart';
 import 'package:my_instrument/bloc/main/home/home_page.dart';
 import 'package:my_instrument/bloc/main/main_screen.dart';
+import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
@@ -73,7 +74,11 @@ class AppModule extends Module {
         '/about',
         child: (_, __) => AboutPage(),
         transition: TransitionType.fadeIn,
-        guards: [AuthGuard(authModel: authModel, guardedRoute: 'login')]
+        guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
+    ),
+    ChildRoute('/chat-hub',
+        child: (_, __) => const ChattingPage(),
+        transition: TransitionType.rightToLeft
     ),
     ChildRoute(
       '/onboard',

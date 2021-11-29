@@ -122,8 +122,8 @@ class ActionsRow extends StatelessWidget {
           icon: Icon(icon,
             size: 20,
             color: Theme.of(context).colorScheme.onSurface,
-          ), onPressed: onTap,
-
+          ),
+        onPressed: onTap,
       ).ripple()
     );
 
@@ -176,9 +176,9 @@ class ActionsRow extends StatelessWidget {
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 
-logoutUser(BuildContext context) async {
+logoutUser(BuildContext context) {
   var authModel = Modular.get<AuthModel>();
-  var result = await authModel.signOut();
+  var result = authModel.signOut();
 
   if (result.success) {
     Modular.to.navigate('/login');
@@ -244,7 +244,7 @@ class Settings extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => this.settingsItems
+  Widget build(BuildContext context) => settingsItems
       .map((settingsItem) => SettingsItem(
       icon: settingsItem.icon,
       iconBgColor: settingsItem.color,
@@ -278,34 +278,42 @@ class SettingsItem extends StatefulWidget {
 class _SettingsItemState extends State<SettingsItem> {
   bool pressed = false;
 
+  settingsItem({required Widget child}) =>
+    Styled.widget(child: child)
+      .alignment(Alignment.center)
+      .borderRadius(all: 15)
+      .ripple()
+      .backgroundColor(
+        Theme.of(context).cardColor,
+        animate: true
+      )
+      .clipRRect(all: 25) // clip ripple
+      .borderRadius(all: 25, animate: true)
+      .elevation(
+        pressed
+            ? 0
+            : 20,
+        borderRadius: BorderRadius.circular(25),
+        shadowColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+      )
+      .constrained(height: 80)
+      .padding(vertical: 12) // margin
+      .gestures(
+        onTapChange: (tapStatus) => setState(() => pressed = tapStatus),
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap!(context);
+          }
+        },
+      )
+      .scale(all: pressed ? 0.95 : 1.0, animate: true)
+      .animate(
+        const Duration(milliseconds: 150),
+        Curves.easeOut
+      );
+
   @override
   Widget build(BuildContext context) {
-    final settingsItem = ({required Widget child}) => Styled.widget(child: child)
-        .alignment(Alignment.center)
-        .borderRadius(all: 15)
-        .ripple()
-        .backgroundColor(Theme.of(context).cardColor, animate: true)
-        .clipRRect(all: 25) // clip ripple
-        .borderRadius(all: 25, animate: true)
-        .elevation(
-      pressed ? 0 : 20,
-      borderRadius: BorderRadius.circular(25),
-      shadowColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
-    ) // shadow borderRadius
-        .constrained(height: 80)
-        .padding(vertical: 12) // margin
-        .gestures(
-      onTapChange: (tapStatus) => setState(() => pressed = tapStatus),
-      onTapDown: (details) => print('tapDown'),
-      onTap: () {
-        if (widget.onTap != null) {
-          widget.onTap!(context);
-        }
-      },
-    )
-        .scale(all: pressed ? 0.95 : 1.0, animate: true)
-        .animate(const Duration(milliseconds: 150), Curves.easeOut);
-
     final Widget icon = Icon(widget.icon, size: 20, color: Colors.white)
         .padding(all: 12)
         .decorated(
