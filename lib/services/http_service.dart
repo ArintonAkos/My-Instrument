@@ -24,7 +24,7 @@ class HttpService {
     prefs = await SharedPreferences.getInstance();
   }
 
-  get ApiUrl {
+  static get ApiUrl {
     if (Foundation.kReleaseMode) {
       return ProductionApiUrl;
     }

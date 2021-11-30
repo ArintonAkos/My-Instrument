@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/models/chat_profile.dart';
+import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +28,28 @@ class _MessagesPageState extends State<MessagesPage> {
     ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
     ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
   ];
+
+  final SignalRService _signalRService = Modular.get<SignalRService>();
+  late StreamSubscription<Object?> _subscription;
+
+  _fetchChatProfiles() async {
+    _signalRService.startService();
+    _subscription = _signalRService.hubConnection.stream('ReceiveMessage', [{}]).listen((event) {
+      chatUsers.add(ChatProfile.fromStream(event));
+    });
+  }
+
+  @override
+  void initState() {
+    _fetchChatProfiles();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -20,6 +20,16 @@ class ChatProfile extends StatefulWidget {
     required this.isMessageRead
   }) : super(key: key);
 
+  factory ChatProfile.fromStream(Object? streamObject)
+  {
+    return const ChatProfile(
+        name: 'Abc',
+        messageText: 'Efg',
+        time: 'Hijklm',
+        isMessageRead: false
+    );
+  }
+  
   @override
   _ConversationListState createState() => _ConversationListState();
 }

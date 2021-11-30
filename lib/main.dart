@@ -1,7 +1,10 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/modular/app_module.dart';
+import 'package:my_instrument/services/main/signalr/signalr_service.dart';
+import 'package:my_instrument/shared/connectivity/network_connectivity.dart';
 
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_language.dart';
@@ -9,17 +12,17 @@ import 'package:my_instrument/shared/translation/app_localizations.dart';
 
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(
     ModularApp(
       module: AppModule(),
-      child: MyApp(),
+      child: const MyApp(),
     )
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
@@ -28,11 +31,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppLanguage appLanguage = AppLanguage();
   final ThemeNotifier themeNotifier = ThemeNotifier();
+  final SignalRService _signalRService = Modular.get<SignalRService>();
+  final NetworkConnectivity _connectivity = NetworkConnectivity.instance;
 
   @override
   void initState() {
     super.initState();
     _init();
+    _signalRService.startService();
+    _connectivity.initialise();
+    _connectivity.myStream.listen((event) {
+      if (event == ConnectivityResult.none) { // No Internet connection
+
+      }
+    });
   }
 
   _init() async {
@@ -71,5 +83,12 @@ class _MyAppState extends State<MyApp> {
         )
       )
     );
+  }
+
+  @override
+  void dispose() {
+    _signalRService.stopService();
+    _connectivity.disposeStream();
+    super.dispose();
   }
 }
