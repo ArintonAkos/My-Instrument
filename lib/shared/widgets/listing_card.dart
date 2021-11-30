@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 
 class ListingCard extends StatelessWidget {
@@ -6,6 +7,7 @@ class ListingCard extends StatelessWidget {
   final String listingName;
   final String listingPrice;
   final String listingDescription;
+
   const ListingCard({Key? key,
     required this.imgUrl,
     required this.listingName,
@@ -103,8 +105,8 @@ class ListingCard extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
+                    Modular.to.pushNamed('/listing-details');
                   },
-
                   icon: Icon(
                     Icons.arrow_forward,
                     color: Theme.of(context).colorScheme.onPrimary,

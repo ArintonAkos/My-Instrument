@@ -5,6 +5,8 @@ import 'package:my_instrument/bloc/auth/register.dart';
 import 'package:my_instrument/bloc/main/fav/fav.dart';
 import 'package:my_instrument/bloc/main/home/category/category.dart';
 import 'package:my_instrument/bloc/main/home/home_page.dart';
+import 'package:my_instrument/bloc/main/home/listing_details/listing_details_page.dart';
+import 'package:my_instrument/bloc/main/listing/listing.dart';
 import 'package:my_instrument/bloc/main/main_screen.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
@@ -70,10 +72,16 @@ class AppModule extends Module {
       guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
     ),
     ChildRoute(
+        '/listing-details',
+        child: (_, args) => ListingDetailsPage(),
+        transition: TransitionType.noTransition,
+        guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
+    ),
+    ChildRoute(
         '/about',
         child: (_, __) => AboutPage(),
         transition: TransitionType.fadeIn,
-        guards: [AuthGuard(authModel: authModel, guardedRoute: 'login')]
+        guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
     ),
     ChildRoute(
       '/onboard',

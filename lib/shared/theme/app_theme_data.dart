@@ -13,6 +13,8 @@ class CustomAppTheme {
   final Color LoginButtonText;
   final Color DropdownItemColor;
   final Color AuthErrorColor;
+  final Color DotColor;
+  final Color ActiveDotColor;
   final List<Color> AuthPagesPrimaryColors;
 
   const CustomAppTheme({
@@ -23,6 +25,8 @@ class CustomAppTheme {
     required this.LoginButtonText,
     required this.DropdownItemColor,
     required this.AuthErrorColor,
+    required this.DotColor,
+    required this.ActiveDotColor,
     required this.AuthPagesPrimaryColors,
   });
 }
@@ -44,6 +48,8 @@ class AppThemeData {
     LoginButtonText: const Color(0xFF12B3F2),
     DropdownItemColor: const Color(0xFF008eca),
     AuthErrorColor: const Color(0xFFFF80AB),
+    DotColor: Colors.black,
+    ActiveDotColor: const Color(0xFF12B3F2),
     AuthPagesPrimaryColors: [
       const Color(0xFF12B3F1).withOpacity(0.3),
       const Color(0xFF2ABBF3).withOpacity(0.3),
@@ -60,6 +66,8 @@ class AppThemeData {
     LoginButtonText: Colors.white,
     DropdownItemColor: const Color(0xFF2B2B2B),
     AuthErrorColor: Colors.white,
+    DotColor: Colors.white,
+    ActiveDotColor: const Color(0xFF16BDFF),
     AuthPagesPrimaryColors: [
       const Color(0xFF1F1F1F).withOpacity(0.8),
       const Color(0xFF2B2B2B).withOpacity(0.7),
