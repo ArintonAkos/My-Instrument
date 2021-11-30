@@ -10,7 +10,7 @@ class ThemeNotifier with ChangeNotifier {
       scaffoldBackgroundColor: const Color(0xFF121212),
       backgroundColor: const Color(0xFF121212),
       dividerColor: const Color(0xFF121212),
-      cardColor: Color(0xff2b2b2b),
+      cardColor: const Color(0xff2b2b2b),
       errorColor: const Color(0xFFCF6679),
       colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.grey)

@@ -61,8 +61,8 @@ class _MainPageState extends State<MainPage> implements IAuthNotifier {
                 gap: 6,
                 activeColor: Theme.of(context).colorScheme.onSurface,
                 iconSize: 20,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-                duration: Duration(milliseconds: 400),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                duration: const Duration(milliseconds: 400),
                 tabBackgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
                 tabs: const [
@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> implements IAuthNotifier {
   @override
   void initState() {
     super.initState();
-    this.model = Modular.get<AuthModel>();
+    model = Modular.get<AuthModel>();
     model.setListener(this);
   }
 

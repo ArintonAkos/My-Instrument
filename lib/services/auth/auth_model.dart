@@ -29,7 +29,8 @@ class AuthModel {
 
   Future init() async {
     authService = Modular.get<AuthService>();
-    this.prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
+
     if (prefs?.getBool('signedIn') == true) {
       String? userPref = prefs?.getString('user');
       _user = ParseMethods.fromJsonString(userPref);
@@ -38,10 +39,10 @@ class AuthModel {
         var result = await ensureAuthorized();
 
         if (!result) {
-          this.signOut();
+          signOut();
         }
       } else {
-        this.signOut();
+        signOut();
       }
     }
   }
@@ -49,19 +50,19 @@ class AuthModel {
   Future<FutureResponse> signIn(String email, String password, { bool? rememberMe }) async {
     try {
       if (prefs == null) {
-        throw new UninitializedException(CallerClass.SharedPreferences);
+        throw UninitializedException(CallerClass.SharedPreferences);
       }
       var response = await authService.login(LoginRequest(email: email, password: password));
 
       if (response.OK) {
         _user = (response as LoginResponse).ApplicationUser;
         if (rememberMe == true) {
-          this.prefs?.setBool('signedIn', true);
+          prefs?.setBool('signedIn', true);
           saveUserToPrefs();
         }
       } else {
         if (response.StatusCode == 409) {
-          this.signOut();
+          signOut();
         }
         return FutureResponse(exception: response.Message);
       }
@@ -101,7 +102,7 @@ class AuthModel {
         }
       } else {
         if (response.StatusCode == 409) {
-          this.signOut();
+          signOut();
         }
         return FutureResponse(exception: response.Message);
       }
@@ -122,7 +123,7 @@ class AuthModel {
 
   Future<bool> ensureAuthorized() async {
     if (_user?.TokenExpires?.dateTime == null || _user?.RefreshTokenExpires?.dateTime == null) {
-      this.signOut();
+      signOut();
       return false;
     }
     if (_user?.TokenExpires?.dateTime?.isBefore(DateTime.now().toUtc()) == true) {
@@ -146,7 +147,7 @@ class AuthModel {
   }
 
   removeListener() {
-    this.authNotifier = null;
+    authNotifier = null;
   }
 
   DateTime? tryParseInt(int? timeStamp) {

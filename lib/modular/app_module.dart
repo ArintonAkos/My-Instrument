@@ -8,6 +8,7 @@ import 'package:my_instrument/bloc/main/home/home_page.dart';
 import 'package:my_instrument/bloc/main/home/listing_details/listing_details_page.dart';
 import 'package:my_instrument/bloc/main/listing/listing.dart';
 import 'package:my_instrument/bloc/main/main_screen.dart';
+import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
@@ -20,6 +21,7 @@ import 'package:my_instrument/modular/modules/listing_module.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/main/category/category_service.dart';
+import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 
 class AppModule extends Module {
   static AuthModel authModel = AuthModel();
@@ -29,6 +31,7 @@ class AppModule extends Module {
     Bind.singleton((i) => AuthService()),
     Bind.lazySingleton((i) => CategoryService()),
     Bind.singleton((i) => authModel),
+    Bind.singleton((i) => SignalRService())
   ];
 
   @override
@@ -81,6 +84,11 @@ class AppModule extends Module {
         '/about',
         child: (_, __) => AboutPage(),
         transition: TransitionType.fadeIn,
+        guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
+    ),
+    ChildRoute('/chat-hub',
+        child: (_, __) => const ChattingPage(),
+        transition: TransitionType.rightToLeft,
         guards: [AuthGuard(authModel: authModel, guardedRoute: '/login')]
     ),
     ChildRoute(
