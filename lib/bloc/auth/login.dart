@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerRight,
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.only(right: 0.0),
+          padding: const EdgeInsets.only(right: 0.0),
         ),
         onPressed: () => print('Forgot Password Button Pressed'),
         child: Text(
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildRememberMeCheckbox() {
-    return Container(
+    return SizedBox(
       height: 20.0,
       child: Row(
         children: <Widget>[
@@ -148,12 +148,12 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           AppLocalizations.of(context)!.translate('LOGIN.OR_LABEL'),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w400,
           ),
         ),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
         Text(
           AppLocalizations.of(context)!.translate('LOGIN.SIGN_IN_WITH_LABEL'),
           style: kLabelStyle,
@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonsColor,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black26,
               offset: Offset(0, 2),
@@ -186,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSocialBtnRow() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -215,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           TextSpan(
             text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.LABEL'),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
@@ -223,7 +223,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           TextSpan(
             text: AppLocalizations.of(context)!.translate('LOGIN.REGISTER.BOLD_TEXT'),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -259,58 +259,56 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                       durations: [18000, 8000, 5000, 12000],
                       heightPercentages: [0.59, 0.61, 0.63, 0.65],
-                      blur: MaskFilter.blur(BlurStyle.solid, 10.0),
+                      blur: const MaskFilter.blur(BlurStyle.solid, 10.0),
                     ),
-                    size: Size(double.infinity, double.infinity),
+                    size: const Size(double.infinity, double.infinity),
                     backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
                     waveAmplitude: 1,
                   ),
                 ),
-              Container(
+              SizedBox(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
                     vertical: 100.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        child: Stack(
-                          children: <Widget>[
-                            Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.translate('LOGIN.HEADER_TEXT'),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'OpenSans',
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ),
-                            Container(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 250),
-                                  transitionBuilder: (Widget child, Animation<double> animation) => 
-                                    ScaleTransition(scale: animation, child: child,),
-                                  child: _themeSwitcherIcon,
-                                ),
-                                onTap: () {
-                                  _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false));
-                                },
+                      Stack(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.translate('LOGIN.HEADER_TEXT'),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
                               ),
+                            )
+                          ),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 250),
+                                transitionBuilder: (Widget child, Animation<double> animation) =>
+                                  ScaleTransition(scale: animation, child: child,),
+                                child: _themeSwitcherIcon,
+                              ),
+                              onTap: () {
+                                _onThemeClick(Provider.of<ThemeNotifier>(context, listen: false));
+                              },
                             ),
-                          ],
-                        )
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       _buildEmailTF(),
-                      SizedBox(
+                      const SizedBox(
                         height: 30.0,
                       ),
                       _buildPasswordTF(),

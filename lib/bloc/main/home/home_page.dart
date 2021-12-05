@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/main/category/category_service.dart';
+import 'package:my_instrument/services/main/message/message_service.dart';
+import 'package:my_instrument/services/models/requests/main/message/message_request.dart';
 import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 import 'package:my_instrument/shared/widgets/listing_card.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
@@ -119,11 +121,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           DiscoverSlider(imgList: imgList),
-          SizedBox(height: 70.0,),
+          const SizedBox(height: 70.0,),
           TextButton(
             onPressed: () async {
-              CategoryService categoryService = Modular.get<CategoryService>();
-              var response = await categoryService.getBaseCategoriesWithChildren();
+              MessageService categoryService = Modular.get<MessageService>();
+              var response = await categoryService.sendMessage(
+                  SendMessageRequest(
+                      toUserId: '5e3c0d41-6e99-4359-b12c-40cc81f62016',
+                      message: 'asdasdasdasd ad as'
+                  )
+              );
               if (response.OK) {
                 var data = response as CategoryResponse;
                 var abcde = 0;

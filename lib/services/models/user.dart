@@ -9,6 +9,7 @@ class User {
   User({
     required this.Email,
     required this.Name,
+    required this.Id,
     required this.Roles,
     required this.Ratings,
     required this.Setting,
@@ -20,6 +21,7 @@ class User {
 
   final String Email;
   final String Name;
+  final String Id;
   final List<String> Roles;
   final List<String> Ratings;
   final Settings Setting;
@@ -32,6 +34,7 @@ class User {
     return User(
       Email: json['email'] ?? '',
       Name: json['name'] ?? '',
+      Id: json['userId'] ?? '',
       Roles: ParseMethods.parseStringList(json['roles']),
       Ratings: ParseMethods.parseStringList(json['ratings']),
       Setting: Settings.fromJson(json['setting']),
@@ -46,6 +49,7 @@ class User {
     return <String, dynamic>{
       'email': this.Email,
       'name': this.Name,
+      'id': this.Id,
       'roles': this.Roles,
       'ratings': this.Ratings,
       'setting': this.Setting,

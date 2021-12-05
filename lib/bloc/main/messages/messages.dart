@@ -3,7 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/models/chat_profile.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/main/message/message_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
+import 'package:my_instrument/services/models/requests/main/message/message_request.dart';
+import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -29,13 +33,17 @@ class _MessagesPageState extends State<MessagesPage> {
     ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
   ];
 
+  final AuthModel _authModel = Modular.get<AuthModel>();
   final SignalRService _signalRService = Modular.get<SignalRService>();
   late StreamSubscription<Object?> _subscription;
 
   _fetchChatProfiles() async {
-    _signalRService.startService();
-    _subscription = _signalRService.hubConnection.stream('ReceiveMessage', [{}]).listen((event) {
-      chatUsers.add(ChatProfile.fromStream(event));
+    _subscription = _signalRService.hubConnection.stream('ReceiveOwnMessage', <Object>[ _authModel.userId ?? '' ])
+        .listen((event) {
+          chatUsers.add(ChatProfile.fromStream(event));
+    });
+    _signalRService.hubConnection.on('ReceiveOwnMessage', (arguments) {
+      print(arguments);
     });
   }
 
@@ -125,6 +133,21 @@ class _MessagesPageState extends State<MessagesPage> {
                 ),
               ),
             ),
+          ),
+          TextButton(
+            onPressed: () async {
+              MessageService categoryService = Modular.get<MessageService>();
+              var response = await categoryService.sendMessage(
+                  SendMessageRequest(
+                      toUserId: '5e3c0d41-6e99-4359-b12c-40cc81f62016',
+                      message: 'asdasdasdasd ad as'
+                  )
+              );
+              if (response.OK) {
+
+              }
+            },
+            child: Text('send request'),
           ),
           ListView.builder(
             itemCount: chatUsers.length,

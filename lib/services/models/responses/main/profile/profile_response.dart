@@ -8,7 +8,7 @@ class ProfileResponse extends BaseResponse {
   late final ProfileModel? data;
 
   ProfileResponse(Map<String, dynamic> json) : super(json) {
-    this.data = parseProfile(json);
+    data = parseProfile(json);
   }
 
   ProfileModel? parseProfile(Map<String, dynamic> json) {

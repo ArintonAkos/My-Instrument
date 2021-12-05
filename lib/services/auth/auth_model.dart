@@ -20,10 +20,20 @@ import 'future_response.dart';
 class AuthModel {
   User? _user;
   SharedPreferences? prefs;
+
   bool get isSignedIn {
-    return (_user?.Token != null && _user?.RefreshToken != null &&
-        _user?.TokenExpires?.dateTime != null && _user?.RefreshTokenExpires?.dateTime != null);
+    return (
+        _user?.Token != null &&
+        _user?.RefreshToken != null &&
+        _user?.TokenExpires?.dateTime != null &&
+        _user?.RefreshTokenExpires?.dateTime != null)
+    ;
   }
+
+  String? get userId {
+    return _user?.Id;
+  }
+
   late final AuthService authService;
   IAuthNotifier? authNotifier;
 
@@ -95,9 +105,9 @@ class AuthModel {
         response = response as RefreshTokenResponse;
         if (response.StatusCode != 1001) {
           _user?.Token = response.Token;
-          _user?.TokenExpires = ParsableDateTime(dateTime: response.TokenExpires);
+          _user?.TokenExpires = response.TokenExpires;
           _user?.RefreshToken = response.RefreshToken;
-          _user?.RefreshTokenExpires = ParsableDateTime(dateTime: response.RefreshTokenExpires);
+          _user?.RefreshTokenExpires = response.RefreshTokenExpires;
           saveUserToPrefs();
         }
       } else {
@@ -136,10 +146,19 @@ class AuthModel {
       ));
 
       if (!result.success) {
+        // signOut();
         return false;
       }
     }
     return true;
+  }
+
+  Future<String> getAccessToken() async {
+    if (await ensureAuthorized()) {
+      return _user?.Token ?? '';
+    }
+
+    return '';
   }
 
   setListener(IAuthNotifier authNotifier) {

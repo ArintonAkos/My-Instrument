@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,12 +11,12 @@ import 'package:my_instrument/services/models/responses/main/profile/profile_con
 import 'package:my_instrument/services/models/responses/main/profile/profile_response.dart';
 
 class ProfileService extends HttpService {
-  static ProfileService instance = ProfileService();
+  // static ProfileService instance = ProfileService();
 
   Future<MyBaseResponse.BaseResponse> getProfile(int id) async {
-    if (await this.model.ensureAuthorized()) {
+    if (await model.ensureAuthorized()) {
       Response res =
-          await getData(ProfileConstants.GetPublicProfile + "${id}");
+          await getData(ProfileConstants.GetPublicProfile + "$id");
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -25,4 +27,20 @@ class ProfileService extends HttpService {
     }
     return MyBaseResponse.BaseResponse.error();
   }
+
+
+  Future<MyBaseResponse.BaseResponse> getMyProfile() async {
+    if (await model.ensureAuthorized()) {
+      Response res = await getData(ProfileConstants.GetMyProfile);
+
+      if (res.statusCode == 200) {
+        dynamic body = jsonDecode(res.body);
+
+        ProfileResponse profileResponse = ProfileResponse(body);
+        return profileResponse;
+      }
+    }
+    return MyBaseResponse.BaseResponse.error();
+  }
+
 }

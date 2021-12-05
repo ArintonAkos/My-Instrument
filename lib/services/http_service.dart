@@ -10,8 +10,9 @@ import 'models/requests/backend_request.dart';
 import 'models/requests/multipart_request.dart';
 
 class HttpService {
-  static const String LocalApiUrl = "https://myinstrument.conveyor.cloud/api/";
-  static const String ProductionApiUrl = "";
+  static const String _LocalUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _ProductionUrl = "";
+
   late final AuthModel model;
   late final SharedPreferences prefs;
 
@@ -26,9 +27,16 @@ class HttpService {
 
   static get ApiUrl {
     if (Foundation.kReleaseMode) {
-      return ProductionApiUrl;
+      return _ProductionUrl + 'api/';
     }
-    return LocalApiUrl;
+    return _LocalUrl + 'api/';
+  }
+
+  static get HubUrl {
+    if (Foundation.kReleaseMode) {
+      return _ProductionUrl + 'hubs/chat';
+    }
+    return _LocalUrl + 'hubs/chat';
   }
 
   postJson(BackendRequest data, String path, ) {

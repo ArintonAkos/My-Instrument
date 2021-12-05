@@ -21,6 +21,7 @@ import 'package:my_instrument/modular/modules/listing_module.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/main/category/category_service.dart';
+import 'package:my_instrument/services/main/message/message_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 
 class AppModule extends Module {
@@ -30,6 +31,7 @@ class AppModule extends Module {
   final List<Bind> binds = [
     Bind.singleton((i) => AuthService()),
     Bind.lazySingleton((i) => CategoryService()),
+    Bind.lazySingleton((i) => MessageService()),
     Bind.singleton((i) => authModel),
     Bind.singleton((i) => SignalRService())
   ];

@@ -10,7 +10,6 @@ import 'package:my_instrument/services/models/responses/auth/login_response.dart
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
 import 'package:my_instrument/services/models/responses/auth/register_response.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart' as MyBaseResponse;
-import 'package:my_instrument/services/models/responses/error_response.dart';
 
 class AuthService extends HttpService {
 

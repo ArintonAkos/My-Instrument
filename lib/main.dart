@@ -39,6 +39,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _init();
     _signalRService.startService();
+    /*_signalRService.hubConnection.onclose(({error}) {
+      print(error);
+    });*/
     _connectivity.initialise();
     _connectivity.myStream.listen((event) {
       if (event == ConnectivityResult.none) { // No Internet connection

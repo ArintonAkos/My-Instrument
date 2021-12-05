@@ -6,16 +6,18 @@ class ParsableDateTime {
   });
 
   String toJson() {
-    return this.dateTime?.toIso8601String() ?? '';
+    return dateTime?.toIso8601String() ?? '';
   }
 
   factory ParsableDateTime.fromJson(String? IsoString) {
-    var dateTime = null;
+    DateTime? dateTime;
+
     if (IsoString != null) {
       try {
         dateTime = DateTime.parse(IsoString);
       } catch (exception) {}
     }
+
     return ParsableDateTime(dateTime: dateTime);
   }
 }

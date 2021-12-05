@@ -26,7 +26,7 @@ class BaseResponse {
   }
 
   get OK {
-    return (StatusCode / 100 == 2 || this.Status == 'Success');
+    return (StatusCode / 100 == 2 || Status == 'Success');
   }
 
   DateTime? tryParseStr(String? dateStr) {
