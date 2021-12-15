@@ -40,8 +40,8 @@ class User {
       Setting: Settings.fromJson(json['setting']),
       Token: json['token'] ?? '',
       RefreshToken: json['refreshToken'] ?? '',
-      TokenExpires: ParsableDateTime.fromJson(json['tokenExpires']),
-      RefreshTokenExpires: ParsableDateTime.fromJson(json['refreshTokenExpires'])
+      TokenExpires: ParsableDateTime.fromString(json['tokenExpires']),
+      RefreshTokenExpires: ParsableDateTime.fromString(json['refreshTokenExpires'])
     );
   }
 

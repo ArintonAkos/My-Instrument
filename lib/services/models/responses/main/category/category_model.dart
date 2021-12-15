@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 
+import '../../list_parser.dart';
+
 class CategoryModel {
   Map<String, dynamic>? json;
   CategoryModel({
@@ -11,7 +13,7 @@ class CategoryModel {
     name_hu = json?['nameHu'] ?? '';
     name_ro = json?['nameRo'] ?? '';
     imagePath = json?['imagePath'];
-    children = parseChildren();
+    children = ListParser.parse<CategoryModel>(json?['childrenRaw'], parseCategoryModel);
   }
 
   late final int id;
@@ -33,24 +35,6 @@ class CategoryModel {
       }
     }
     return "";
-  }
-
-  List<CategoryModel>? parseChildren() {
-    var childrenRaw = json?['children'];
-    if (childrenRaw != null) {
-      List<Map<String, dynamic>>? children = List<Map<String, dynamic>>.from(childrenRaw);
-      if (children != null) {
-        List<CategoryModel> list = [];
-        children.forEach((value) {
-          var cat = parseCategoryModel(value);
-          if (cat != null) {
-            list.add(cat);
-          }
-        });
-        return list;
-      }
-    }
-    return null;
   }
 
   CategoryModel? parseCategoryModel(Map<String, dynamic> json) {

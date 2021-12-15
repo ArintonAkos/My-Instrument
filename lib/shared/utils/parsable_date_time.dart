@@ -9,12 +9,12 @@ class ParsableDateTime {
     return dateTime?.toIso8601String() ?? '';
   }
 
-  factory ParsableDateTime.fromJson(String? IsoString) {
+  factory ParsableDateTime.fromString(String? isoString) {
     DateTime? dateTime;
 
-    if (IsoString != null) {
+    if (isoString != null) {
       try {
-        dateTime = DateTime.parse(IsoString);
+        dateTime = DateTime.parse(isoString);
       } catch (exception) {}
     }
 

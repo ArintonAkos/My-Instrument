@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_instrument/services/main/category/category_service.dart';
-import 'package:my_instrument/services/main/message/message_service.dart';
-import 'package:my_instrument/services/models/requests/main/message/message_request.dart';
-import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 import 'package:my_instrument/shared/widgets/listing_card.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
@@ -37,14 +33,12 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           //HomeTitle(),
-          Padding(padding: EdgeInsets.all(20.0),
+          Padding(padding: const EdgeInsets.all(20.0),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Text(
-                  AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -56,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 child: PageTransformer(
                   pageViewBuilder: (_context, visibilityResolver) {
                     var sampleItems = <IntroItem>[
-                      new IntroItem(
+                      IntroItem(
                         title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.GUITAR_TEXT'
                         ),
@@ -65,22 +59,22 @@ class _HomePageState extends State<HomePage> {
                         ),
                         imageUrl: 'assets/guitar1.jpeg',
                       ),
-                      new IntroItem(title: AppLocalizations.of(context)!.translate(
+                      IntroItem(title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.DRUM_TEXT'),
                         category: AppLocalizations.of(context)!.translate(
                             'HOME.INSTRUMENT_CARD.DRUM_TITLE'),
                         imageUrl: 'assets/drums.jpg',),
-                      new IntroItem(title: AppLocalizations.of(context)!.translate(
+                      IntroItem(title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.BASS_TEXT'),
                         category: AppLocalizations.of(context)!.translate(
                             'HOME.INSTRUMENT_CARD.BASS_TITLE'),
                         imageUrl: 'assets/bass-guitar.jpg',),
-                      new IntroItem(title: AppLocalizations.of(context)!.translate(
+                      IntroItem(title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.VIOLIN_TEXT'),
                         category: AppLocalizations.of(context)!.translate(
                             'HOME.INSTRUMENT_CARD.VIOLIN_TITLE'),
                         imageUrl: 'assets/violin.jpeg',),
-                      new IntroItem(title: AppLocalizations.of(context)!.translate(
+                      IntroItem(title: AppLocalizations.of(context)!.translate(
                           'HOME.INSTRUMENT_CARD.PIANO_TEXT'),
                         category: AppLocalizations.of(context)!.translate(
                             'HOME.INSTRUMENT_CARD.PIANO_TITLE'),
@@ -109,36 +103,17 @@ class _HomePageState extends State<HomePage> {
               
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: 20.0, bottom: 35.0,left: 20.0),
+          Padding(padding: const EdgeInsets.only(top: 20.0, bottom: 35.0,left: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Text(
-                  AppLocalizations.of(context)!.translate('HOME.LISTINGS'),
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                AppLocalizations.of(context)!.translate('HOME.LISTINGS'),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
           ),
           DiscoverSlider(imgList: imgList),
           const SizedBox(height: 70.0,),
-          TextButton(
-            onPressed: () async {
-              MessageService categoryService = Modular.get<MessageService>();
-              var response = await categoryService.sendMessage(
-                  SendMessageRequest(
-                      toUserId: '5e3c0d41-6e99-4359-b12c-40cc81f62016',
-                      message: 'asdasdasdasd ad as'
-                  )
-              );
-              if (response.OK) {
-                var data = response as CategoryResponse;
-                var abcde = 0;
-              }
-              int abcd = 0;
-            },
-            child: Text('send request'),
-          ),
         ],
       ),
     );
@@ -146,15 +121,17 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomeTitle extends StatelessWidget {
+  const HomeTitle({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           Text(
             AppLocalizations.of(context)!.translate('HOME.TITLE'),
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           )
         ]
       ),

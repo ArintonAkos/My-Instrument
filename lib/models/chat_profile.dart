@@ -2,14 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:avatars/avatars.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/services/models/responses/main/message/message_model.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:time_elapsed/time_elapsed.dart';
 
 class ChatProfile extends StatefulWidget {
   final String name;
   final String messageText;
   final String? imageUrl;
-  final String time;
+  final String? time;
   final bool isMessageRead;
+  final String userId;
 
   const ChatProfile({
     Key? key,
@@ -17,16 +20,27 @@ class ChatProfile extends StatefulWidget {
     required this.messageText,
     this.imageUrl,
     required this.time,
-    required this.isMessageRead
+    required this.isMessageRead,
+    required this.userId
   }) : super(key: key);
 
-  factory ChatProfile.fromStream(Object? streamObject)
-  {
-    return const ChatProfile(
+  factory ChatProfile.fromStream(Map<String, dynamic> streamObject) {
+    return ChatProfile(
         name: 'Abc',
         messageText: 'Efg',
-        time: 'Hijklm',
-        isMessageRead: false
+        time: streamObject['creationDate'],
+        isMessageRead: false,
+        userId: 'asd'
+    );
+  }
+
+  factory ChatProfile.fromMessageModel(MessageModel messageModel) {
+    return ChatProfile(
+      name: messageModel.fullName,
+      messageText: messageModel.message,
+      time: messageModel.lastMessageSentAt,
+      isMessageRead: messageModel.seen,
+      userId: messageModel.userId
     );
   }
   
@@ -93,7 +107,7 @@ class _ConversationListState extends State<ChatProfile> {
                 ),
               ),
               Text(
-                widget.time,
+                TimeElapsed.fromDateStr(widget.time ?? ''),
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: widget.isMessageRead

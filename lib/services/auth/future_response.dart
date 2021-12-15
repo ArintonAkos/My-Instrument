@@ -14,12 +14,14 @@ class FutureResponse {
   Object? exception;
   List<dynamic>? data;
   late bool success;
+  final int? statusCode;
 
   FutureResponse({
     this.exception,
-    this.data
+    this.data,
+    this.statusCode
   }) {
-    this.success = (this.exception == null);
+    success = (exception == null);
   }
 
 }

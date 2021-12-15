@@ -8,6 +8,7 @@ as MyBaseResponse;
 
 import 'package:my_instrument/services/models/responses/main/message/message_constants.dart';
 import 'package:my_instrument/services/models/responses/main/message/message_response.dart';
+import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_response.dart';
 
 class MessageService extends HttpService {
   static MessageService instance = MessageService();
@@ -35,6 +36,21 @@ class MessageService extends HttpService {
         return messageResponse;
       }
     }
+    return MyBaseResponse.BaseResponse.error();
+  }
+
+  Future<MyBaseResponse.BaseResponse> getUnseenMessageMembers() async {
+    if (await model.ensureAuthorized()) {
+      Response res = await getData(MessageConstants.GetUnseenMessageMembers);
+
+      if (res.statusCode == 200) {
+        dynamic body = jsonDecode(res.body);
+
+        UnseenMessageMemberResponse response = UnseenMessageMemberResponse(body);
+        return response;
+      }
+    }
+
     return MyBaseResponse.BaseResponse.error();
   }
 

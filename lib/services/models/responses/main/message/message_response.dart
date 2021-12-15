@@ -12,14 +12,9 @@ class MessageResponse extends BaseResponse {
   }
 
   List<MessageModel> parseMessage(Map<String, dynamic> json) {
-    dynamic data = json['data'];
-
-    if (data != null) {
-      var list = data['messages'] as List;
-      List<MessageModel> messages = list.map((e) =>
-          MessageModel(json: e)
-      ).toList();
-
+    var list = json['messages'] as List?;
+    if (list != null) {
+      List<MessageModel> messages = list.map((e) => MessageModel(json: e)).toList();
       return messages;
     }
 

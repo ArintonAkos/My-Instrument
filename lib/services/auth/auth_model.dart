@@ -46,11 +46,7 @@ class AuthModel {
       _user = ParseMethods.fromJsonString(userPref);
 
       if (_user?.Email != null) {
-        var result = await ensureAuthorized();
-
-        if (!result) {
-          signOut();
-        }
+        await ensureAuthorized();
       } else {
         signOut();
       }
@@ -66,6 +62,7 @@ class AuthModel {
 
       if (response.OK) {
         _user = (response as LoginResponse).ApplicationUser;
+
         if (rememberMe == true) {
           prefs?.setBool('signedIn', true);
           saveUserToPrefs();
@@ -74,6 +71,7 @@ class AuthModel {
         if (response.StatusCode == 409) {
           signOut();
         }
+
         return FutureResponse(exception: response.Message);
       }
     } catch (e) {
@@ -98,11 +96,15 @@ class AuthModel {
   }
 
   Future<FutureResponse> refreshToken(RefreshTokenRequest request) async {
+    int? statusCode;
+
     try {
       var response = await authService.refreshToken(request);
 
       if (response.OK) {
         response = response as RefreshTokenResponse;
+        statusCode = response.StatusCode;
+
         if (response.StatusCode != 1001) {
           _user?.Token = response.Token;
           _user?.TokenExpires = response.TokenExpires;
@@ -111,16 +113,17 @@ class AuthModel {
           saveUserToPrefs();
         }
       } else {
-        if (response.StatusCode == 409) {
+        if (response.StatusCode == 404 || response.StatusCode == 409) {
           signOut();
         }
+
         return FutureResponse(exception: response.Message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
     }
 
-    return FutureResponse();
+    return FutureResponse(statusCode: statusCode);
   }
 
   FutureResponse signOut() {
@@ -146,7 +149,10 @@ class AuthModel {
       ));
 
       if (!result.success) {
-        // signOut();
+        if (result.statusCode == 403 || result.statusCode == 409) {
+          signOut();
+        }
+
         return false;
       }
     }
@@ -184,6 +190,7 @@ class AuthModel {
     if (prefs != null && _user != null) {
       prefs?.setString('token', _user?.Token ?? '');
       prefs?.setString('user', jsonEncode(_user));
+      prefs?.setBool('isSignedIn', true);
     }
   }
 }

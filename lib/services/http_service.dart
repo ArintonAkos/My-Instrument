@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/auth_model.dart';
 import 'models/requests/backend_request.dart';
-import 'models/requests/multipart_request.dart';
+import 'models/requests/multipart_request.dart' as multipart_request;
 
 class HttpService {
   static const String _LocalUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _LocalRemoteUrl = "https://myinstrument.conveyor.cloud/";
   static const String _ProductionUrl = "";
+  static const String _ProductionRemoteUrl = "";
 
   late final AuthModel model;
   late final SharedPreferences prefs;
@@ -25,6 +28,13 @@ class HttpService {
     prefs = await SharedPreferences.getInstance();
   }
 
+  static get BasicUrl {
+    if (Foundation.kReleaseMode) {
+      return _ProductionUrl;
+    }
+    return _LocalUrl;
+  }
+
   static get ApiUrl {
     if (Foundation.kReleaseMode) {
       return _ProductionUrl + 'api/';
@@ -34,12 +44,12 @@ class HttpService {
 
   static get HubUrl {
     if (Foundation.kReleaseMode) {
-      return _ProductionUrl + 'hubs/chat';
+      return _ProductionRemoteUrl + 'hubs/chat';
     }
-    return _LocalUrl + 'hubs/chat';
+    return _LocalRemoteUrl + 'hubs/chat';
   }
 
-  postJson(BackendRequest data, String path, ) {
+  Future<http.Response> postJson(BackendRequest data, String path, )  async {
     String? bearerToken = prefs.getString('token');
     return http.post(
       Uri.parse(ApiUrl + path),
@@ -51,7 +61,7 @@ class HttpService {
     });
   }
 
-  getData(String path) {
+  Future<http.Response> getData(String path) {
     String? bearerToken = prefs.getString('token');
     return http.get(
       Uri.parse(ApiUrl + path),
@@ -60,8 +70,8 @@ class HttpService {
       }
     );
   }
-  
-  postMultipart(MultipartRequest data, String path) async {
+
+  Future<http.StreamedResponse> postMultipart(multipart_request.MultipartRequest data, String path) async {
     String? bearerToken = prefs.getString('token');
     var request = http.MultipartRequest(
       'POST',
@@ -75,16 +85,16 @@ class HttpService {
 
     var imagePaths = data.getImagePaths();
     int i = 0;
-    imagePaths.forEach((element) async {
+    for (var element in imagePaths) {
       var multipartFile = await http.MultipartFile.fromPath('file-$i', element);
       request.files.add(multipartFile);
       i++;
-    });
+    }
 
     return request.send();
   }
 
-  deleteData(String path) {
+  Future<http.Response> deleteData(String path) async {
     String? bearerToken = prefs.getString('token');
     return http.delete(
         Uri.parse(ApiUrl + path),

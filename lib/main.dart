@@ -9,6 +9,7 @@ import 'package:my_instrument/shared/connectivity/network_connectivity.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:logging/logging.dart';
 
 import 'package:provider/provider.dart';
 
@@ -38,16 +39,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _init();
-    _signalRService.startService();
-    /*_signalRService.hubConnection.onclose(({error}) {
-      print(error);
-    });*/
-    _connectivity.initialise();
-    _connectivity.myStream.listen((event) {
-      if (event == ConnectivityResult.none) { // No Internet connection
-
-      }
+    Logger.root.onRecord.listen((record) => {
+      print('${record.level.name}: ${record.time}: ${record.message}')
     });
+    _connectivity.initialise();
   }
 
   _init() async {

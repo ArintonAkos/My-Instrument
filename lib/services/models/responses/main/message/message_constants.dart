@@ -5,5 +5,7 @@ class MessageConstants {
 
   static const GetMessages = _MessageUrl + 'Conversation?userId=';
 
+  static const GetUnseenMessageMembers = _MessageUrl + 'UnseenMessageMembers';
+
   static const SendMessage = _MessageUrl + 'SendMessage?userId=';
 }

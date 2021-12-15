@@ -21,7 +21,10 @@ class ErrorResponse {
     if (lang > -1 && lang < 3) {
       mess = _errorMessages[lang];
     }
-    Map<String, dynamic> map = { 'message': mess, 'status': 'Error' };
+    Map<String, dynamic> map = {
+      'message': mess,
+      'status': 'Error',
+    };
     return map;
   }
 

@@ -1,17 +1,11 @@
-import 'dart:async';
-
 import 'package:avatars/avatars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
-import 'package:my_instrument/services/models/responses/main/profile/profile_model.dart';
-import 'package:my_instrument/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
@@ -163,14 +157,11 @@ class _ChattingPageState extends State<ChattingPage> {
   }
 
   void _loadMessages() async {
-    final response = await rootBundle.loadString('assets/messages.json');
-    final messages = (jsonDecode(response) as List)
-        .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-        .toList();
+    // final messages = _messageService();
 
-    setState(() {
+    /* setState(() {
       _messages = messages;
-    });
+    });*/
   }
 
   @override

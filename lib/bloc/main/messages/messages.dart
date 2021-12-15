@@ -1,13 +1,14 @@
-import 'dart:async';
-
+import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/models/chat_profile.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/main/message/message_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 import 'package:my_instrument/services/models/requests/main/message/message_request.dart';
-import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
+import 'package:my_instrument/services/models/responses/base_response.dart';
+import 'package:my_instrument/services/models/responses/list_parser.dart';
+import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
+import 'package:my_instrument/services/models/responses/main/message/message_response.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -20,42 +21,45 @@ class MessagesPage extends StatefulWidget {
 }
 
 class _MessagesPageState extends State<MessagesPage> {
-  List<ChatProfile> chatUsers = const [
-    ChatProfile(name: "Jane Russel", messageText: "Awesome Setup", time: "Now", isMessageRead: true),
-    ChatProfile(name: "Glady's Murphy", messageText: "That's Great", time: "Yesterday", isMessageRead: true),
-    ChatProfile(name: "Jorge Henry", messageText: "Hey where are you?", time: "31 Mar", isMessageRead: true),
-    ChatProfile(name: "Philip Fox", messageText: "Busy! Call me in 20 mins", time: "28 Mar", isMessageRead: true),
-    ChatProfile(name: "Debra Hawkins", messageText: "Thank you, It's awesome", time: "23 Mar", isMessageRead: true),
-    ChatProfile(name: "Jacob Pena", messageText: "will update you in evening", time: "17 Mar", isMessageRead: true),
-    ChatProfile(name: "Andrey Jones", messageText: "Can you please share the file?", time: "24 Feb", isMessageRead: true),
-    ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
-    ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
-    ChatProfile(name: "John Wick", messageText: "How are you?", time: "18 Feb", isMessageRead: true),
-  ];
 
-  final AuthModel _authModel = Modular.get<AuthModel>();
+  List<ChatProfile> chatUsers = const [];
   final SignalRService _signalRService = Modular.get<SignalRService>();
-  late StreamSubscription<Object?> _subscription;
-
-  _fetchChatProfiles() async {
-    _subscription = _signalRService.hubConnection.stream('ReceiveOwnMessage', <Object>[ _authModel.userId ?? '' ])
-        .listen((event) {
-          chatUsers.add(ChatProfile.fromStream(event));
-    });
-    _signalRService.hubConnection.on('ReceiveOwnMessage', (arguments) {
-      print(arguments);
-    });
-  }
+  final MessageService _messageService = Modular.get<MessageService>();
+  bool _mounted = false;
 
   @override
   void initState() {
-    _fetchChatProfiles();
+    _mounted = true;
+    _getMessageList();
+    _signalRService.onReceiveMessage.listen((event) {
+      List<ChatProfile> unseenMessageMembers = _updateUnseenMessageMembers(event);
+      setState(() {
+        chatUsers = unseenMessageMembers;
+      });
+    });
     super.initState();
+  }
+
+  _getMessageList() async {
+    BaseResponse response = await _messageService.getMessageList();
+
+    if (response.OK) {
+      var res = response as MessageResponse;
+      List<ChatProfile> chatProfiles = res.messageList
+          .map((el) => ChatProfile.fromMessageModel(el))
+          .toList();
+
+      if (mounted) {
+        setState(() {
+          chatUsers = chatProfiles;
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
-    _subscription.cancel();
+    _mounted = false;
     super.dispose();
   }
 
@@ -134,21 +138,6 @@ class _MessagesPageState extends State<MessagesPage> {
               ),
             ),
           ),
-          TextButton(
-            onPressed: () async {
-              MessageService categoryService = Modular.get<MessageService>();
-              var response = await categoryService.sendMessage(
-                  SendMessageRequest(
-                      toUserId: '5e3c0d41-6e99-4359-b12c-40cc81f62016',
-                      message: 'asdasdasdasd ad as'
-                  )
-              );
-              if (response.OK) {
-
-              }
-            },
-            child: Text('send request'),
-          ),
           ListView.builder(
             itemCount: chatUsers.length,
             shrinkWrap: true,
@@ -163,12 +152,41 @@ class _MessagesPageState extends State<MessagesPage> {
                 isMessageRead: (index == 0 || index == 3)
                     ? true
                     : false,
+                userId: chatUsers[index].userId,
               );
             },
+
           ),
         ],
       )
     );
+  }
+
+  List<ChatProfile> _updateUnseenMessageMembers(List<Object>? event) {
+    List<ChatProfile> unseenMessageMembers = chatUsers;
+
+    ListParser
+        .parse<ChatMessage>(event, (mess) => ChatMessage.fromJson(mess))
+        .forEach((element) {
+          ChatProfile profile = ChatProfile(
+            name: element.userName,
+            time: element.creationDateString,
+            userId: element.userId,
+            messageText: element.message,
+            isMessageRead: false,
+          );
+
+          if (unseenMessageMembers.isEmpty) {
+            unseenMessageMembers.add(profile);
+          } else {
+            var searchedProfile = unseenMessageMembers.firstWhereOrNull((umm) => umm.userId == profile.userId);
+            if (searchedProfile == null) {
+              unseenMessageMembers.add(profile);
+            }
+          }
+        });
+
+    return unseenMessageMembers;
   }
 
 }
