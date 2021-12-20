@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart' as Foundation;
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:injector/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/auth_model.dart';
@@ -15,12 +15,13 @@ class HttpService {
   static const String _LocalRemoteUrl = "https://myinstrument.conveyor.cloud/";
   static const String _ProductionUrl = "";
   static const String _ProductionRemoteUrl = "";
+  final _injector = Injector.appInstance;
 
   late final AuthModel model;
   late final SharedPreferences prefs;
 
   HttpService() {
-    model = Modular.get<AuthModel>();
+    model = _injector.get<AuthModel>();
     init();
   }
 

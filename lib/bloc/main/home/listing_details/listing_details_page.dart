@@ -1,11 +1,6 @@
-import 'dart:ui';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_instrument/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/shared/theme/theme_methods.dart';
-import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -31,7 +26,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 60.0),
+          padding: const EdgeInsets.only(top: 60.0),
           child: (
             <Widget>[
               Stack(
@@ -80,12 +75,12 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                       alignment: Alignment.center,
                       child: IconButton(
                         padding: EdgeInsets.zero,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           size: 20,
                         ),
                         onPressed: () {
-                          Modular.to.popUntil(ModalRoute.withName('/home/'));
+                          AutoRouter.of(context).popUntilRouteWithName('/');
                         },
                       ),
                     ),

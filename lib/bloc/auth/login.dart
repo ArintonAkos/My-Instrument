@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -229,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.bold,
             ),
             recognizer: TapGestureRecognizer()..onTap = () {
-              Modular.to.pushNamed('/register');
+              AutoRouter.of(context).replace(const RegisterRoute());
             }
           ),
         ],
@@ -246,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
             children: <Widget>[
-              Container(
+              SizedBox(
                   height: double.infinity,
                   width: double.infinity,
                   child: WaveWidget(
@@ -334,7 +335,7 @@ class _LoginPageState extends State<LoginPage> {
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    AuthModel authModel = Modular.get<AuthModel>();
+    AuthModel authModel = AppInjector.get<AuthModel>();
 
     var response = await authModel.signIn(email, password, rememberMe: _rememberMe);
 
@@ -346,8 +347,6 @@ class _LoginPageState extends State<LoginPage> {
             dialogType: DialogType.Failure,
           )
       );
-    } else {
-      Modular.to.navigate('/home/');
     }
   }
 

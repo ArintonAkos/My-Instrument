@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_instrument/bloc/main/i_auth_notifier.dart';
 import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/models/requests/auth/login_request.dart';
 import 'package:my_instrument/services/models/requests/auth/refresh_token_request.dart';
@@ -11,8 +9,8 @@ import 'package:my_instrument/services/models/responses/auth/login_response.dart
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
 import 'package:my_instrument/services/models/user.dart';
 import 'package:my_instrument/shared/exceptions/uninitialized_exception.dart';
-import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 import 'package:my_instrument/shared/utils/parse_methods.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'future_response.dart';
@@ -35,10 +33,9 @@ class AuthModel {
   }
 
   late final AuthService authService;
-  IAuthNotifier? authNotifier;
 
   Future init() async {
-    authService = Modular.get<AuthService>();
+    authService = AppInjector.get<AuthService>();
     prefs = await SharedPreferences.getInstance();
 
     if (prefs?.getBool('signedIn') == true) {
@@ -130,7 +127,6 @@ class AuthModel {
     prefs?.remove('signedIn');
     prefs?.remove('user');
     prefs?.remove('token');
-    authNotifier?.onSignOut();
     return FutureResponse();
   }
 
@@ -165,14 +161,6 @@ class AuthModel {
     }
 
     return '';
-  }
-
-  setListener(IAuthNotifier authNotifier) {
-    this.authNotifier = authNotifier;
-  }
-
-  removeListener() {
-    authNotifier = null;
   }
 
   DateTime? tryParseInt(int? timeStamp) {

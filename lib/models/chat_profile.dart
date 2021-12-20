@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:avatars/avatars.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
 import 'package:my_instrument/services/models/responses/main/message/message_model.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:time_elapsed/time_elapsed.dart';
 
@@ -24,16 +25,6 @@ class ChatProfile extends StatefulWidget {
     required this.userId
   }) : super(key: key);
 
-  factory ChatProfile.fromStream(Map<String, dynamic> streamObject) {
-    return ChatProfile(
-        name: 'Abc',
-        messageText: 'Efg',
-        time: streamObject['creationDate'],
-        isMessageRead: false,
-        userId: 'asd'
-    );
-  }
-
   factory ChatProfile.fromMessageModel(MessageModel messageModel) {
     return ChatProfile(
       name: messageModel.fullName,
@@ -53,7 +44,7 @@ class _ConversationListState extends State<ChatProfile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/chat-hub');
+        AutoRouter.of(context).push(ChattingRoute(userId: widget.userId));
       },
       child: Container(
         margin: const EdgeInsets.only(

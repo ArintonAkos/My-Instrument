@@ -14,13 +14,15 @@ class _FavPageState extends State<FavPage> {
   Widget build(BuildContext context) {
     return
       Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
                 AppLocalizations.of(context)!.translate('FAV.TITLE')
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       );
   }

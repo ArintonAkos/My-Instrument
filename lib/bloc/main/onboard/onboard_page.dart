@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_data.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_tab.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardPage extends StatefulWidget {
@@ -12,12 +12,12 @@ class OnBoardPage extends StatefulWidget {
   late final LiquidController liquidController;
 
   OnBoardPage({Key? key}) : super(key: key) {
-    this.init();
+    init();
   }
 
   Future init() async {
-    this.liquidController = LiquidController();
-    this.prefs = await SharedPreferences.getInstance();
+    liquidController = LiquidController();
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -54,13 +54,13 @@ class _OnBoardPageState extends State<OnBoardPage> {
 
   _finishBoardingPage() {
     widget.prefs.setBool('boardingCompleted', true);
-    Modular.to.navigate('/home/');
+    AutoRouter.of(context).replace(const HomeRoute());
   }
 
   AnimatedContainer _buildDot(int index) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
-      margin: EdgeInsets.only(right: 5),
+      duration: const Duration(milliseconds: 100),
+      margin: const EdgeInsets.only(right: 5),
       height: 6,
       width: page == index ? 20 : 6,
       decoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
       child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 250),
           child: page != _pages().length -1
             ? TextButton(
               onPressed: () {
@@ -87,7 +87,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                         : widget.liquidController.currentPage + 1
                 );
               },
-              child: Text(
+              child: const Text(
                 "Next",
                 style: TextStyle(
                     color: Colors.white
@@ -119,7 +119,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
               ? "Skip to End"
               : "Continue"
             ,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white
             ),
           ),
@@ -133,14 +133,14 @@ class _OnBoardPageState extends State<OnBoardPage> {
 
   Widget _buildPageIndicators() {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 20.0,
         right: 20.0,
         bottom: 45.0
       ),
       child: Column(
         children: <Widget>[
-          Expanded(child: SizedBox()),
+          const Expanded(child: SizedBox()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List<Widget>.generate(

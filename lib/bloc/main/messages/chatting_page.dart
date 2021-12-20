@@ -1,9 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:avatars/avatars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
@@ -12,14 +12,19 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ChattingPage extends StatefulWidget {
-  const ChattingPage({Key? key}) : super(key: key);
+  final String userId;
+
+  const ChattingPage({
+    Key? key,
+    @PathParam('userId') required this.userId
+  }) : super(key: key);
 
   @override
   _ChattingPageState createState() => _ChattingPageState();
 }
 
 class _ChattingPageState extends State<ChattingPage> {
-  List<types.Message> _messages = [];
+  final List<types.Message> _messages = [];
   final _user = const types.User(id: '06c33e8b-e835-4736-80f4-63f44b66666c');
 
   @override
@@ -179,7 +184,7 @@ class _ChattingPageState extends State<ChattingPage> {
                 children: <Widget>[
                   IconButton(
                     onPressed: (){
-                      Modular.to.pop();
+                      AutoRouter.of(context).pop();
                     },
                     icon: Icon(
                       Icons.arrow_back,

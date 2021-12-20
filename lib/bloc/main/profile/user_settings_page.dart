@@ -1,10 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/card_item.dart';
 import 'package:my_instrument/shared/widgets/info_snackbar.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -20,18 +22,20 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: (
-            <Widget>[
-              Text(
-                AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-              ).alignment(Alignment.center).padding(bottom: 20),
-              const UserCard(),
-              const ActionsRow(),
-              const Settings(settingsItems: _settingsItems)
-            ].toColumn()),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: (
+              <Widget>[
+                Text(
+                  AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                ).alignment(Alignment.center).padding(bottom: 20),
+                const UserCard(),
+                const ActionsRow(),
+                const Settings(settingsItems: _settingsItems)
+              ].toColumn()),
+        ),
       ),
     );
   }
@@ -177,11 +181,11 @@ class ActionsRow extends StatelessWidget {
 }
 
 logoutUser(BuildContext context) {
-  var authModel = Modular.get<AuthModel>();
+  var authModel = AppInjector.get<AuthModel>();
   var result = authModel.signOut();
 
   if (result.success) {
-    Modular.to.navigate('/login');
+    AutoRouter.of(context).replace(const LoginRoute());
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
         buildInfoSnackBar(
@@ -192,7 +196,7 @@ logoutUser(BuildContext context) {
 }
 
 navigateToAboutPage(BuildContext context) {
-  Modular.to.pushNamed('/about');
+  AutoRouter.of(context).push(const AboutRoute());
 }
 
 const List<CardItemModel> _settingsItems = [

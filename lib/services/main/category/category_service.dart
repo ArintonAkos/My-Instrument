@@ -1,11 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/services/models/responses/error_response.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart' as MyBaseResponse;
 import 'package:my_instrument/services/models/responses/main/category/category_constants.dart';
 import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
