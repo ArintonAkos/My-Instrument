@@ -37,4 +37,14 @@ extension UnseenMessageMemberModelExtensions on List<String> {
       add(newUserId);
     }
   }
+
+  void removeUnseenMessageMember({ required String userId }) {
+    if (isNotEmpty) {
+      var messengerIndex = indexOf(userId);
+
+      if (messengerIndex != -1) {
+        removeAt(messengerIndex);
+      }
+    }
+  }
 }

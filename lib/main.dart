@@ -50,8 +50,19 @@ class _MyAppState extends State<MyApp> {
     InjectorInitializer.initialize();
   }
 
+  _updateSignedInState(bool signedIn) {
+    if (signedIn != isSignedIn) {
+      setState(() {
+        isSignedIn = signedIn;
+      });
+    }
+  }
+
   _init() async {
     _authModel = AppInjector.get<AuthModel>();
+    _authModel.authStream.listen((event) {
+      _updateSignedInState(event);
+    });
 
     await appLanguage.fetchLocale();
     _signalRService = AppInjector.get<SignalRService>();
@@ -96,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                 _appRouter,
                 routes: (_) => [
                   if (initialize.initialized)
-                    if (_authModel.isSignedIn)
+                    if (isSignedIn)
                       const BaseRouter(children: [MainRoute()])
                     else if (initialize.boardingCompleted)
                       const AuthRouter(children: [LoginRoute()])
@@ -116,7 +127,7 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     _signalRService.stopService();
     _connectivity.disposeStream();
-
+    _authModel.disposeAuthStream();
     super.dispose();
   }
 }

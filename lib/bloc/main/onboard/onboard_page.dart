@@ -1,14 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_data.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_tab.dart';
+import 'package:my_instrument/bloc/main/splash/initialize_notifier.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
-import 'package:my_instrument/structure/route/router.gr.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardPage extends StatefulWidget {
-  late final SharedPreferences prefs;
   late final LiquidController liquidController;
 
   OnBoardPage({Key? key}) : super(key: key) {
@@ -17,7 +15,6 @@ class OnBoardPage extends StatefulWidget {
 
   Future init() async {
     liquidController = LiquidController();
-    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -25,7 +22,18 @@ class OnBoardPage extends StatefulWidget {
 }
 
 class _OnBoardPageState extends State<OnBoardPage> {
+  late final InitializeNotifier _initializeNotifier;
+
   int page = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _initializeNotifier = Provider.of<InitializeNotifier>(context, listen: false);
+    });
+  }
 
   _pages() {
     List<OnBoardData> pages = <OnBoardData>[
@@ -53,8 +61,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
   }
 
   _finishBoardingPage() {
-    widget.prefs.setBool('boardingCompleted', true);
-    AutoRouter.of(context).replace(const HomeRoute());
+    _initializeNotifier.setBoardingCompleted(true);
   }
 
   AnimatedContainer _buildDot(int index) {

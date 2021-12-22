@@ -6,6 +6,7 @@ class InitializeNotifier with ChangeNotifier {
   bool boardingCompleted = false;
   bool initialized = false;
 
+
   void init(SplashPage widget, BuildContext context) async {
     await widget.authModel.init();
     var prefs = await SharedPreferences.getInstance();
@@ -13,5 +14,14 @@ class InitializeNotifier with ChangeNotifier {
     boardingCompleted = prefs.getBool('boardingCompleted') ?? false;
     initialized = true;
     notifyListeners();
+  }
+
+  void setBoardingCompleted(bool boardingCompleted) async {
+    if (boardingCompleted != this.boardingCompleted) {
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setBool('boardingCompleted', boardingCompleted);
+      this.boardingCompleted = boardingCompleted;
+      notifyListeners();
+    }
   }
 }

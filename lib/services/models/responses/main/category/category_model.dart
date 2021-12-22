@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 
-import '../../list_parser.dart';
+import '../../../../../shared/utils/list_parser.dart';
 
 class CategoryModel {
   Map<String, dynamic>? json;

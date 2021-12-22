@@ -17,9 +17,7 @@ class ListingModel {
     this.creationDate,
     required this.userId,
     required this.category
-  }) {
-
-  }
+  });
 
   factory ListingModel.fromJson(Map<String, dynamic> json) {
    return ListingModel(

@@ -8,4 +8,6 @@ class MessageConstants {
   static const GetUnseenMessageMembers = _MessageUrl + 'UnseenMessageMembers';
 
   static const SendMessage = _MessageUrl + 'SendMessage?userId=';
+
+  static const ReadAllMessages = _MessageUrl + 'ReadAllMessages';
 }

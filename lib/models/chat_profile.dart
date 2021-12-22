@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:avatars/avatars.dart';
-import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
 import 'package:my_instrument/services/models/responses/main/message/message_model.dart';
+import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:time_elapsed/time_elapsed.dart';
@@ -11,7 +11,7 @@ class ChatProfile extends StatefulWidget {
   final String name;
   final String messageText;
   final String? imageUrl;
-  final String? time;
+  final ParsableDateTime time;
   final bool isMessageRead;
   final String userId;
 
@@ -29,12 +29,23 @@ class ChatProfile extends StatefulWidget {
     return ChatProfile(
       name: messageModel.fullName,
       messageText: messageModel.message,
-      time: messageModel.lastMessageSentAt,
+      time: messageModel.creationDate,
       isMessageRead: messageModel.seen,
       userId: messageModel.userId
     );
   }
-  
+
+  ChatProfile copyWith({ bool? seen }) {
+    return ChatProfile(
+        name: name,
+        messageText: messageText,
+        time: time,
+        imageUrl: imageUrl,
+        isMessageRead: seen ?? isMessageRead,
+        userId: userId
+    );
+  }
+
   @override
   _ConversationListState createState() => _ConversationListState();
 }
@@ -47,10 +58,6 @@ class _ConversationListState extends State<ChatProfile> {
         AutoRouter.of(context).push(ChattingRoute(userId: widget.userId));
       },
       child: Container(
-        margin: const EdgeInsets.only(
-          left: 10,
-          right: 10
-        ),
         child: Container(
           padding: const EdgeInsets.only(
               left: 10,
@@ -98,7 +105,7 @@ class _ConversationListState extends State<ChatProfile> {
                 ),
               ),
               Text(
-                TimeElapsed.fromDateStr(widget.time ?? ''),
+                TimeElapsed.fromDateTime(widget.time.dateTime!),
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: widget.isMessageRead

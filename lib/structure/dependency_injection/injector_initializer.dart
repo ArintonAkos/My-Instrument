@@ -3,6 +3,7 @@ import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/main/category/category_service.dart';
 import 'package:my_instrument/services/main/message/message_service.dart';
+import 'package:my_instrument/services/main/profile/profile_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 
 class InjectorInitializer {
@@ -10,6 +11,7 @@ class InjectorInitializer {
     AppInjector.registerSingleton<AuthService>(() => AuthService());
     AppInjector.registerSingleton<CategoryService>(() => CategoryService());
     AppInjector.registerSingleton<MessageService>(() => MessageService());
+    AppInjector.registerSingleton<ProfileService>(() => ProfileService());
     AppInjector.registerSingleton<AuthModel>(() => AuthModel());
     AppInjector.registerSingleton<SignalRService>(() => SignalRService());
   }

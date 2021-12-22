@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/main/message/message_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart';
-import 'package:my_instrument/services/models/responses/list_parser.dart';
+import 'package:my_instrument/shared/utils/list_parser.dart';
 import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
 import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_model.dart';
 import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_response.dart';
@@ -24,23 +26,25 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<String> _unseenMessageMembers = List.empty(); // Store only the id's
   late final AuthModel model;
+  late final StreamSubscription<List<Object>?> _receiveMessageSubscription;
+  late final StreamSubscription<List<String>?> _readAllMessagesSubscription;
+
   final MessageService _messageService = AppInjector.get<MessageService>();
   final SignalRService _signalRService = AppInjector.get<SignalRService>();
-  // final FavoriteService _favoriteService = Modular.get<FavoriteService>();
 
   @override
   Widget build(BuildContext context) {
   return
     AutoTabsScaffold(
-        extendBody: true,
-        routes: const [
-          HomeRoute(),
-          FavRoute(),
-          BlankRoute(),
-          MessagesRoute(),
-          ProfileRoute(),
-        ],
-        bottomNavigationBuilder: (_, tabsRouter) => _bottomNavBar(tabsRouter)
+      extendBody: true,
+      routes: const [
+        HomeRoute(),
+        FavRoute(),
+        BlankRoute(),
+        MessagesRoute(),
+        ProfileRoute(),
+      ],
+      bottomNavigationBuilder: (_, tabsRouter) => _bottomNavBar(tabsRouter)
     );
   }
 
@@ -48,15 +52,30 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _getUnseenMessageMembers();
-    _signalRService.onReceiveMessage.listen((event) {
-      List<String> unseenMessageMembers = _unseenMessageMembers;
-      ListParser.parse<ChatMessage>(event, ChatMessage.fromJson).forEach((element) {
-        UnseenMessageMemberModelExtensions(unseenMessageMembers).addUnseenMessageMember(newUserId: element.userId);
-      });
+    _receiveMessageSubscription = _signalRService.onReceiveMessage.listen(_handleReceiveMessage);
+    _readAllMessagesSubscription = _signalRService.onReadAllMessages.listen(_handleReadAllMessages);
+  }
 
-      setState(() {
-        _unseenMessageMembers = unseenMessageMembers;
-      });
+  _handleReceiveMessage(List<Object>? messageList) {
+    List<String> unseenMessageMembers = _unseenMessageMembers;
+    ListParser.parse<ChatMessage>(messageList, ChatMessage.fromJson).forEach((chatMessage) {
+      UnseenMessageMemberModelExtensions(unseenMessageMembers).addUnseenMessageMember(newUserId: chatMessage.userId);
+    });
+
+    setState(() {
+      _unseenMessageMembers = unseenMessageMembers;
+    });
+  }
+
+  _handleReadAllMessages(List<String>? userIds) {
+    List<String> unseenMessageMembers = _unseenMessageMembers;
+
+    userIds?.forEach((userId) {
+      UnseenMessageMemberModelExtensions(unseenMessageMembers).removeUnseenMessageMember(userId: userId);
+    });
+
+    setState(() {
+      _unseenMessageMembers = _unseenMessageMembers;
     });
   }
 
@@ -74,6 +93,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void dispose() {
+    _receiveMessageSubscription.cancel();
+    _readAllMessagesSubscription.cancel();
     super.dispose();
   }
 
@@ -107,6 +128,8 @@ class _MainPageState extends State<MainPage> {
             icon: const Icon(
               LineIcons.comments,
             ),
+            badgeCount: _unseenMessageMembers.length,
+            showBadge: (_unseenMessageMembers.length > 0)
           ),
           CustomNavigationBarItem(
             icon: const Icon(

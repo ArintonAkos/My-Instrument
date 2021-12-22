@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/shared/widgets/gradient_indeterminate_progress_bar.dart';
 
-import 'default_falback.dart';
+import 'default_fallback.dart';
 
 typedef FallbackBuilder = Widget Function(BuildContext context);
 typedef ItemBuilder = Widget Function(BuildContext context);

@@ -5,7 +5,7 @@ class ChatMessage {
   final String message;
   final String userId;
   final String email;
-  final ParsableDateTime? creationDate;
+  final ParsableDateTime creationDate;
   final String? creationDateString;
 
   ChatMessage({
@@ -18,13 +18,14 @@ class ChatMessage {
   });
 
   static ChatMessage fromJson(Map<String, dynamic> json) {
+    var creationDate = ParsableDateTime.fromString(json['creationDate']);
     return ChatMessage(
       userName: json['userName'],
       message: json['message'],
       userId: json['userId'],
       email: json['email'],
-      creationDate: ParsableDateTime.fromString(json['creationDate']),
-      creationDateString: json['creationDate']
+      creationDate: creationDate,
+      creationDateString: creationDate.toLocaleString()
     );
   }
 }

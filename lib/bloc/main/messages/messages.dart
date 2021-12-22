@@ -1,17 +1,18 @@
+import 'dart:async';
+
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:my_instrument/models/chat_profile.dart';
 import 'package:my_instrument/services/main/message/message_service.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart';
-import 'package:my_instrument/services/models/responses/list_parser.dart';
+import 'package:my_instrument/shared/utils/list_parser.dart';
 import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
 import 'package:my_instrument/services/models/responses/main/message/message_response.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/widgets/data-loader/data_loader.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:provider/provider.dart';
-
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({Key? key}) : super(key: key);
@@ -25,6 +26,9 @@ class _MessagesPageState extends State<MessagesPage> {
   List<ChatProfile> chatUsers = const [];
   final SignalRService _signalRService = AppInjector.get<SignalRService>();
   final MessageService _messageService = AppInjector.get<MessageService>();
+  late final StreamSubscription<List<Object>?> _signalRSubscription;
+  late final StreamSubscription<List<String>?> _readAllMessageSubscription;
+
   bool _mounted = false;
   bool _isLoading = false;
 
@@ -32,12 +36,20 @@ class _MessagesPageState extends State<MessagesPage> {
   void initState() {
     _mounted = true;
     _getMessageList();
-    _signalRService.onReceiveMessage.listen((event) {
-      List<ChatProfile> unseenMessageMembers = _updateUnseenMessageMembers(event);
+    _signalRSubscription = _signalRService.onReceiveMessage.listen((event) {
+      List<ChatProfile> unseenMessageMembers = _updateMessageMembers(event);
       setState(() {
         chatUsers = unseenMessageMembers;
       });
     });
+    _readAllMessageSubscription = _signalRService.onReadAllMessages.listen((event) {
+      List<ChatProfile> unseenMessageMembers = _updateMessageMembersState(event);
+
+      setState(() {
+        chatUsers = unseenMessageMembers;
+      });
+    });
+
     super.initState();
   }
 
@@ -66,6 +78,8 @@ class _MessagesPageState extends State<MessagesPage> {
   @override
   void dispose() {
     _mounted = false;
+    _signalRSubscription.cancel();
+    _readAllMessageSubscription.cancel();
     super.dispose();
   }
 
@@ -173,31 +187,47 @@ class _MessagesPageState extends State<MessagesPage> {
     );
   }
 
-  List<ChatProfile> _updateUnseenMessageMembers(List<Object>? event) {
-    List<ChatProfile> unseenMessageMembers = chatUsers;
+  List<ChatProfile> _updateMessageMembers(List<Object>? event) {
+    List<ChatProfile> messageMembers = chatUsers;
 
     ListParser
         .parse<ChatMessage>(event, (mess) => ChatMessage.fromJson(mess))
         .forEach((element) {
           ChatProfile profile = ChatProfile(
             name: element.userName,
-            time: element.creationDateString,
+            time: element.creationDate,
             userId: element.userId,
             messageText: element.message,
             isMessageRead: false,
           );
 
-          if (unseenMessageMembers.isEmpty) {
-            unseenMessageMembers.add(profile);
+          if (messageMembers.isEmpty) {
+            messageMembers.add(profile);
           } else {
-            var searchedProfile = unseenMessageMembers.firstWhereOrNull((umm) => umm.userId == profile.userId);
+            var searchedProfile = messageMembers.firstWhereOrNull((umm) => umm.userId == profile.userId);
             if (searchedProfile == null) {
-              unseenMessageMembers.add(profile);
+              messageMembers.add(profile);
             }
           }
         });
 
-    return unseenMessageMembers;
+    return messageMembers;
   }
 
+  List<ChatProfile> _updateMessageMembersState(List<String>? event) {
+    List<ChatProfile> messageMembers = chatUsers;
+
+    if (event != null) {
+      for (var element in event) {
+        final index = messageMembers.indexWhere((c) => c.userId == element);
+        if (index != -1) {
+          ChatProfile newMessageMember = messageMembers[index].copyWith(seen: true);
+          messageMembers.removeAt(index);
+          messageMembers.insert(index, newMessageMember);
+        }
+      }
+    }
+
+    return messageMembers;
+  }
 }

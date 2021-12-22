@@ -7,56 +7,56 @@ import 'settings.dart';
 
 class User {
   User({
-    required this.Email,
-    required this.Name,
-    required this.Id,
-    required this.Roles,
-    required this.Ratings,
-    required this.Setting,
-    required this.TokenExpires,
-    required this.RefreshTokenExpires,
-    required this.Token,
-    required this.RefreshToken
+    required this.email,
+    required this.name,
+    required this.userId,
+    required this.roles,
+    required this.ratings,
+    required this.setting,
+    required this.tokenExpires,
+    required this.refreshTokenExpires,
+    required this.token,
+    required this.refreshToken
   });
 
-  final String Email;
-  final String Name;
-  final String Id;
-  final List<String> Roles;
-  final List<String> Ratings;
-  final Settings Setting;
-  ParsableDateTime? TokenExpires;
-  ParsableDateTime? RefreshTokenExpires;
-  String Token;
-  String RefreshToken;
+  final String email;
+  final String name;
+  final String userId;
+  final List<String> roles;
+  final List<String> ratings;
+  final Settings setting;
+  ParsableDateTime? tokenExpires;
+  ParsableDateTime? refreshTokenExpires;
+  String token;
+  String refreshToken;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      Email: json['email'] ?? '',
-      Name: json['name'] ?? '',
-      Id: json['userId'] ?? '',
-      Roles: ParseMethods.parseStringList(json['roles']),
-      Ratings: ParseMethods.parseStringList(json['ratings']),
-      Setting: Settings.fromJson(json['setting']),
-      Token: json['token'] ?? '',
-      RefreshToken: json['refreshToken'] ?? '',
-      TokenExpires: ParsableDateTime.fromString(json['tokenExpires']),
-      RefreshTokenExpires: ParsableDateTime.fromString(json['refreshTokenExpires'])
+      email: json['email'] ?? '',
+      name: json['name'] ?? '',
+      userId: json['userId'] ?? '',
+      roles: ParseMethods.parseStringList(json['roles']),
+      ratings: ParseMethods.parseStringList(json['ratings']),
+      setting: Settings.fromJson(json['setting']),
+      token: json['token'] ?? '',
+      refreshToken: json['refreshToken'] ?? '',
+      tokenExpires: ParsableDateTime.fromString(json['tokenExpires'], toLocale: false),
+      refreshTokenExpires: ParsableDateTime.fromString(json['refreshTokenExpires'], toLocale: false)
     );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'email': this.Email,
-      'name': this.Name,
-      'id': this.Id,
-      'roles': this.Roles,
-      'ratings': this.Ratings,
-      'setting': this.Setting,
-      'tokenExpires': this.TokenExpires,
-      'refreshTokenExpires': this.RefreshTokenExpires,
-      'token': this.Token,
-      'refreshToken': this.RefreshToken
+      'email': email,
+      'name': name,
+      'userId': userId,
+      'roles': roles,
+      'ratings': ratings,
+      'setting': setting,
+      'tokenExpires': tokenExpires,
+      'refreshTokenExpires': refreshTokenExpires,
+      'token': token,
+      'refreshToken': refreshToken
     };
   }
 

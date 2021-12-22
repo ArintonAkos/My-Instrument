@@ -184,9 +184,7 @@ logoutUser(BuildContext context) {
   var authModel = AppInjector.get<AuthModel>();
   var result = authModel.signOut();
 
-  if (result.success) {
-    AutoRouter.of(context).replace(const LoginRoute());
-  } else {
+  if (!result.success) {
     ScaffoldMessenger.of(context).showSnackBar(
         buildInfoSnackBar(
           AppLocalizations.of(context)?.translate('SHARED.ERROR.LOGOUT_MESSAGE') ?? ''

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -19,17 +20,22 @@ class AuthModel {
   User? _user;
   SharedPreferences? prefs;
 
+  final _controller = StreamController<bool>();
+  Stream get authStream => _controller.stream;
+
+  void disposeAuthStream() => _controller.close();
+
   bool get isSignedIn {
     return (
-        _user?.Token != null &&
-        _user?.RefreshToken != null &&
-        _user?.TokenExpires?.dateTime != null &&
-        _user?.RefreshTokenExpires?.dateTime != null)
+        _user?.token != null &&
+        _user?.refreshToken != null &&
+        _user?.tokenExpires?.dateTime != null &&
+        _user?.refreshTokenExpires?.dateTime != null)
     ;
   }
 
   String? get userId {
-    return _user?.Id;
+    return _user?.userId;
   }
 
   late final AuthService authService;
@@ -42,10 +48,11 @@ class AuthModel {
       String? userPref = prefs?.getString('user');
       _user = ParseMethods.fromJsonString(userPref);
 
-      if (_user?.Email != null) {
+      if (_user?.email != null) {
         await ensureAuthorized();
+        _controller.sink.add(true);
       } else {
-        signOut();
+        await signOut();
       }
     }
   }
@@ -58,15 +65,15 @@ class AuthModel {
       var response = await authService.login(LoginRequest(email: email, password: password));
 
       if (response.OK) {
-        _user = (response as LoginResponse).ApplicationUser;
+        _user = (response as LoginResponse).applicationUser;
 
         if (rememberMe == true) {
-          prefs?.setBool('signedIn', true);
-          saveUserToPrefs();
+          await prefs?.setBool('signedIn', true);
+          await saveUserToPrefs();
         }
       } else {
         if (response.StatusCode == 409) {
-          signOut();
+          await signOut();
         }
 
         return FutureResponse(exception: response.Message);
@@ -75,6 +82,7 @@ class AuthModel {
       return FutureResponse(exception: e);
     }
 
+    _controller.sink.add(true);
     return FutureResponse();
   }
 
@@ -103,15 +111,15 @@ class AuthModel {
         statusCode = response.StatusCode;
 
         if (response.StatusCode != 1001) {
-          _user?.Token = response.Token;
-          _user?.TokenExpires = response.TokenExpires;
-          _user?.RefreshToken = response.RefreshToken;
-          _user?.RefreshTokenExpires = response.RefreshTokenExpires;
-          saveUserToPrefs();
+          _user?.token = response.Token;
+          _user?.tokenExpires = response.TokenExpires;
+          _user?.refreshToken = response.RefreshToken;
+          _user?.refreshTokenExpires = response.RefreshTokenExpires;
+          await saveUserToPrefs();
         }
       } else {
         if (response.StatusCode == 404 || response.StatusCode == 409) {
-          signOut();
+          await signOut();
         }
 
         return FutureResponse(exception: response.Message);
@@ -123,21 +131,22 @@ class AuthModel {
     return FutureResponse(statusCode: statusCode);
   }
 
-  FutureResponse signOut() {
-    prefs?.remove('signedIn');
-    prefs?.remove('user');
-    prefs?.remove('token');
+  Future<FutureResponse> signOut() async {
+    await prefs?.remove('signedIn');
+    await prefs?.remove('user');
+    await prefs?.remove('token');
+    _controller.sink.add(false);
     return FutureResponse();
   }
 
   Future<bool> ensureAuthorized() async {
-    if (_user?.TokenExpires?.dateTime == null || _user?.RefreshTokenExpires?.dateTime == null) {
-      signOut();
+    if (_user?.tokenExpires?.dateTime == null || _user?.refreshTokenExpires?.dateTime == null) {
+      await signOut();
       return false;
     }
-    if (_user?.TokenExpires?.dateTime?.isBefore(DateTime.now().toUtc()) == true) {
-      var token = _user?.Token ?? '';
-      var refreshToken = _user?.RefreshToken ?? '';
+    if (_user?.tokenExpires?.dateTime?.isBefore(DateTime.now().toUtc()) == true) {
+      var token = _user?.token ?? '';
+      var refreshToken = _user?.refreshToken ?? '';
 
       var result = await this.refreshToken(RefreshTokenRequest(
           token: token,
@@ -146,7 +155,7 @@ class AuthModel {
 
       if (!result.success) {
         if (result.statusCode == 403 || result.statusCode == 409) {
-          signOut();
+          await signOut();
         }
 
         return false;
@@ -157,7 +166,7 @@ class AuthModel {
 
   Future<String> getAccessToken() async {
     if (await ensureAuthorized()) {
-      return _user?.Token ?? '';
+      return _user?.token ?? '';
     }
 
     return '';
@@ -174,11 +183,11 @@ class AuthModel {
     return _user;
   }
 
-  saveUserToPrefs() {
+  saveUserToPrefs() async {
     if (prefs != null && _user != null) {
-      prefs?.setString('token', _user?.Token ?? '');
-      prefs?.setString('user', jsonEncode(_user));
-      prefs?.setBool('isSignedIn', true);
+      await prefs?.setString('token', _user?.token ?? '');
+      await prefs?.setString('user', jsonEncode(_user));
+      await prefs?.setBool('signedIn', true);
     }
   }
 }
