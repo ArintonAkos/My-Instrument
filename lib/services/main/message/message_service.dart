@@ -5,7 +5,7 @@ import 'package:my_instrument/services/http_service.dart';
 import 'package:my_instrument/services/models/requests/main/message/read_all_messages_request.dart';
 import 'package:my_instrument/services/models/requests/main/message/send_message_request.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart'
-as MyBaseResponse;
+as my_base_response;
 import 'package:my_instrument/services/models/responses/main/message/chat_message_response.dart';
 
 import 'package:my_instrument/services/models/responses/main/message/message_constants.dart';
@@ -13,9 +13,9 @@ import 'package:my_instrument/services/models/responses/main/message/message_res
 import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_response.dart';
 
 class MessageService extends HttpService {
-  Future<MyBaseResponse.BaseResponse> getMessageList() async {
+  Future<my_base_response.BaseResponse> getMessageList() async {
     if (await model.ensureAuthorized()) {
-      Response res = await getData(MessageConstants.GetMessageList);
+      Response res = await getData(MessageConstants.getMessageList);
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
@@ -23,12 +23,12 @@ class MessageService extends HttpService {
         return messageResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> getMessages(String userId, int page) async {
+  Future<my_base_response.BaseResponse> getMessages(String userId, int page) async {
     if (await model.ensureAuthorized()) {
-      Response res = await getData(MessageConstants.GetMessages + userId + '&page=$page');
+      Response res = await getData(MessageConstants.getMessages + userId + '&page=$page');
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
@@ -36,12 +36,12 @@ class MessageService extends HttpService {
         return chatMessageResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> getUnseenMessageMembers() async {
+  Future<my_base_response.BaseResponse> getUnseenMessageMembers() async {
     if (await model.ensureAuthorized()) {
-      Response res = await getData(MessageConstants.GetUnseenMessageMembers);
+      Response res = await getData(MessageConstants.getUnseenMessageMembers);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -51,34 +51,34 @@ class MessageService extends HttpService {
       }
     }
 
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> sendMessage(SendMessageRequest data) async {
+  Future<my_base_response.BaseResponse> sendMessage(SendMessageRequest data) async {
     if (await model.ensureAuthorized()) {
-      Response res = await postJson(data, MessageConstants.SendMessage);
+      Response res = await postJson(data, MessageConstants.sendMessage);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
-        MyBaseResponse.BaseResponse sendMessageResponse = MyBaseResponse.BaseResponse(body);
+        my_base_response.BaseResponse sendMessageResponse = my_base_response.BaseResponse(body);
         return sendMessageResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> readAllMessages(ReadAllMessagesRequest request) async {
+  Future<my_base_response.BaseResponse> readAllMessages(ReadAllMessagesRequest request) async {
     if (await model.ensureAuthorized()) {
-      Response res = await postJson(request, MessageConstants.ReadAllMessages);
+      Response res = await postJson(request, MessageConstants.readAllMessages);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
-        MyBaseResponse.BaseResponse sendMessageResponse = MyBaseResponse.BaseResponse(body);
+        my_base_response.BaseResponse sendMessageResponse = my_base_response.BaseResponse(body);
         return sendMessageResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 }

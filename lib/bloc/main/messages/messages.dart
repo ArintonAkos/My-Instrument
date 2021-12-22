@@ -24,8 +24,8 @@ class MessagesPage extends StatefulWidget {
 class _MessagesPageState extends State<MessagesPage> {
 
   List<ChatProfile> chatUsers = const [];
-  final SignalRService _signalRService = AppInjector.get<SignalRService>();
-  final MessageService _messageService = AppInjector.get<MessageService>();
+  final SignalRService _signalRService = appInjector.get<SignalRService>();
+  final MessageService _messageService = appInjector.get<MessageService>();
   late final StreamSubscription<List<Object>?> _signalRSubscription;
   late final StreamSubscription<List<String>?> _readAllMessageSubscription;
 
@@ -60,7 +60,7 @@ class _MessagesPageState extends State<MessagesPage> {
 
     BaseResponse response = await _messageService.getMessageList();
 
-    if (response.OK) {
+    if (response.ok) {
       var res = response as MessageResponse;
       List<ChatProfile> chatProfiles = res.messageList
           .map((el) => ChatProfile.fromMessageModel(el))
@@ -110,13 +110,13 @@ class _MessagesPageState extends State<MessagesPage> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonText,
+                        color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonText,
                       ),
                       child: Row(
                         children: <Widget>[
                           Icon(
                             Icons.add,
-                            color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonsColor,
+                            color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonsColor,
                             size: 20,
                           ),
                           const SizedBox(width: 2,),
@@ -125,7 +125,7 @@ class _MessagesPageState extends State<MessagesPage> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonsColor
+                                color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonsColor
                             ),
                           ),
                         ],
@@ -138,20 +138,20 @@ class _MessagesPageState extends State<MessagesPage> {
                 decoration: InputDecoration(
                   hintText: "Search...",
                   hintStyle: TextStyle(
-                    color:  Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.TextFieldHintColor
+                    color:  Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.textFieldHintColor
                   ),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.TextFieldHintColor,
+                    color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.textFieldHintColor,
                     size: 20,
                   ),
                   filled: true,
-                  fillColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.TextFieldBackgroundColor,
+                  fillColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.textFieldBackgroundColor,
                   contentPadding: const EdgeInsets.all(8),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(
-                      color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.TextFieldBackgroundColor ?? Colors.white,
+                      color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.textFieldBackgroundColor ?? Colors.white,
                     ),
                 ),
               ),

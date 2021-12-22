@@ -8,15 +8,15 @@ import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 
 class InjectorInitializer {
   static initialize() {
-    AppInjector.registerSingleton<AuthService>(() => AuthService());
-    AppInjector.registerSingleton<CategoryService>(() => CategoryService());
-    AppInjector.registerSingleton<MessageService>(() => MessageService());
-    AppInjector.registerSingleton<ProfileService>(() => ProfileService());
-    AppInjector.registerSingleton<AuthModel>(() => AuthModel());
-    AppInjector.registerSingleton<SignalRService>(() => SignalRService());
+    appInjector.registerSingleton<AuthService>(() => AuthService());
+    appInjector.registerSingleton<CategoryService>(() => CategoryService());
+    appInjector.registerSingleton<MessageService>(() => MessageService());
+    appInjector.registerSingleton<ProfileService>(() => ProfileService());
+    appInjector.registerSingleton<AuthModel>(() => AuthModel());
+    appInjector.registerSingleton<SignalRService>(() => SignalRService());
   }
 }
 
-get AppInjector {
+get appInjector {
   return Injector.appInstance;
 }

@@ -1,5 +1,5 @@
 enum CallerClass {
-  SharedPreferences
+  sharedPreferences
 }
 
 extension on CallerClass {
@@ -14,6 +14,6 @@ class UninitializedException implements Exception {
 
   @override
   String toString() {
-    return '${this.callerClass.name} was not initialized!';
+    return '${callerClass.name} was not initialized!';
   }
 }

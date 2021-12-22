@@ -40,10 +40,10 @@ class ChattingPage extends StatefulWidget {
 class _ChattingPageState extends State<ChattingPage> {
   late List<types.Message> _messages = [];
 
-  final AuthModel _authModel = AppInjector.get<AuthModel>();
-  final ProfileService _profileService = AppInjector.get<ProfileService>();
-  final MessageService _messageService = AppInjector.get<MessageService>();
-  final SignalRService _signalRService = AppInjector.get<SignalRService>();
+  final AuthModel _authModel = appInjector.get<AuthModel>();
+  final ProfileService _profileService = appInjector.get<ProfileService>();
+  final MessageService _messageService = appInjector.get<MessageService>();
+  final SignalRService _signalRService = appInjector.get<SignalRService>();
   late final StreamSubscription<List<Object>?> _signalRSubscription;
 
   late final types.User _user;
@@ -208,7 +208,7 @@ class _ChattingPageState extends State<ChattingPage> {
     ));
 
 
-    if (res.OK) {
+    if (res.ok) {
       final newTextMessage = textMessage.copyWith(
         status: types.Status.sent
       );
@@ -282,7 +282,7 @@ class _ChattingPageState extends State<ChattingPage> {
     isProfileLoading = true;
     var res = await _profileService.getBaseProfile(widget.userId);
 
-    if (res.OK) {
+    if (res.ok) {
       var baseProfileRes = res as BaseProfileResponse;
 
       _partner = _partner.copyWith(
@@ -304,7 +304,7 @@ class _ChattingPageState extends State<ChattingPage> {
 
     areMessagesLoading = true;
     var res = await _messageService.getMessages(widget.userId, page);
-    if (res.OK) {
+    if (res.ok) {
       var messageResponse = res as ChatMessageResponse;
       if (messageResponse.messageList.isEmpty) {
         setState(() {
@@ -343,7 +343,7 @@ class _ChattingPageState extends State<ChattingPage> {
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.TextFieldBackgroundColor,
+          backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.textFieldBackgroundColor,
           flexibleSpace: SafeArea(
             child: Container(
               padding: const EdgeInsets.only(right: 16),

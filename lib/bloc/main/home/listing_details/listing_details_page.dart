@@ -55,8 +55,8 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                       controller: controller,
                       count: imgList.length,
                       effect: WormEffect(
-                          dotColor: getCustomTheme(context)?.DotColor ?? Colors.blueGrey,
-                          activeDotColor: getCustomTheme(context)?.ActiveDotColor ?? Colors.white,
+                          dotColor: getCustomTheme(context)?.dotColor ?? Colors.blueGrey,
+                          activeDotColor: getCustomTheme(context)?.activeDotColor ?? Colors.white,
                           dotHeight: 8.0,
                           dotWidth: 8.0
                       ),
@@ -101,7 +101,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
 class ImageClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var path = new Path();
+    var path = Path();
     path.lineTo(0, size.height - 65);
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);

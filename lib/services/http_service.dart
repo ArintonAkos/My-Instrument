@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:injector/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,10 +10,10 @@ import 'models/requests/backend_request.dart';
 import 'models/requests/multipart_request.dart' as multipart_request;
 
 class HttpService {
-  static const String _LocalUrl = "https://myinstrument.conveyor.cloud/";
-  static const String _LocalRemoteUrl = "https://myinstrument.conveyor.cloud/";
-  static const String _ProductionUrl = "";
-  static const String _ProductionRemoteUrl = "";
+  static const String _localUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _localRemoteUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _productionUrl = "";
+  static const String _productionRemoteUrl = "";
   final _injector = Injector.appInstance;
 
   late final AuthModel model;
@@ -29,31 +28,31 @@ class HttpService {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static get BasicUrl {
-    if (Foundation.kReleaseMode) {
-      return _ProductionUrl;
+  static get basicUrl {
+    if (foundation.kReleaseMode) {
+      return _productionUrl;
     }
-    return _LocalUrl;
+    return _localUrl;
   }
 
-  static get ApiUrl {
-    if (Foundation.kReleaseMode) {
-      return _ProductionUrl + 'api/';
+  static get apiUrl {
+    if (foundation.kReleaseMode) {
+      return _productionUrl + 'api/';
     }
-    return _LocalUrl + 'api/';
+    return _localUrl + 'api/';
   }
 
-  static get HubUrl {
-    if (Foundation.kReleaseMode) {
-      return _ProductionRemoteUrl + 'hubs/chat';
+  static get hubUrl {
+    if (foundation.kReleaseMode) {
+      return _productionRemoteUrl + 'hubs/chat';
     }
-    return _LocalRemoteUrl + 'hubs/chat';
+    return _localRemoteUrl + 'hubs/chat';
   }
 
   Future<http.Response> postJson(BackendRequest data, String path, )  async {
     String? bearerToken = prefs.getString('token');
     return http.post(
-      Uri.parse(ApiUrl + path),
+      Uri.parse(apiUrl + path),
       body: jsonEncode(data.toJson()),
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +64,7 @@ class HttpService {
   Future<http.Response> getData(String path) {
     String? bearerToken = prefs.getString('token');
     return http.get(
-      Uri.parse(ApiUrl + path),
+      Uri.parse(apiUrl + path),
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
@@ -76,7 +75,7 @@ class HttpService {
     String? bearerToken = prefs.getString('token');
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse(ApiUrl + path)
+      Uri.parse(apiUrl + path)
     )
       ..headers.addAll({
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
@@ -98,7 +97,7 @@ class HttpService {
   Future<http.Response> deleteData(String path) async {
     String? bearerToken = prefs.getString('token');
     return http.delete(
-        Uri.parse(ApiUrl + path),
+        Uri.parse(apiUrl + path),
         headers: {
           'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
         }

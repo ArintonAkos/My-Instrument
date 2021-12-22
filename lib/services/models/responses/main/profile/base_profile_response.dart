@@ -21,6 +21,6 @@ class BaseProfileResponse extends BaseResponse {
   }
 
   factory BaseProfileResponse.errorMessage({int language = 0}) {
-    return BaseProfileResponse(ErrorResponse(language: language).ResponseJSON);
+    return BaseProfileResponse(ErrorResponse(language: language).responseJSON);
   }
 }

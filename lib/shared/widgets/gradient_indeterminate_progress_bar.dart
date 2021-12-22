@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +94,7 @@ class _GradientIndeterminateProgressbarState
             gradient: SweepGradient(
                 colors: <Color>[
                   Theme.of(context).backgroundColor,
-                  Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonText ?? Colors.white                ,
+                  Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonText ?? Colors.white                ,
                 ],
                 stops: const <double>[0.25, 1.0]),
             thicknessUnit: GaugeSizeUnit.factor,

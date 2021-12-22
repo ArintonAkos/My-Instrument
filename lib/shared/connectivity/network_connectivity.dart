@@ -24,7 +24,7 @@ class NetworkConnectivity {
   void _checkStatus(ConnectivityResult result) async {
     bool isOnline = false;
     try {
-      final result = await InternetAddress.lookup(HttpService.BasicUrl);
+      final result = await InternetAddress.lookup(HttpService.basicUrl);
       isOnline = result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
       isOnline = false;

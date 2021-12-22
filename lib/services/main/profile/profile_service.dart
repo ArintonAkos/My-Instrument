@@ -3,14 +3,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart' as MyBaseResponse;
+import 'package:my_instrument/services/models/responses/base_response.dart' as my_base_response;
 import 'package:my_instrument/services/models/responses/main/profile/base_profile_response.dart';
 import 'package:my_instrument/services/models/responses/main/profile/profile_constants.dart';
 import 'package:my_instrument/services/models/responses/main/profile/profile_response.dart';
 
 class ProfileService extends HttpService {
 
-  Future<MyBaseResponse.BaseResponse> getProfile(String id) async {
+  Future<my_base_response.BaseResponse> getProfile(String id) async {
     if (await model.ensureAuthorized()) {
       Response res =
       await getData(ProfileConstants.GetPublicProfile + id);
@@ -22,10 +22,10 @@ class ProfileService extends HttpService {
         return profileResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> getBaseProfile(String id) async {
+  Future<my_base_response.BaseResponse> getBaseProfile(String id) async {
     if (await model.ensureAuthorized()) {
       Response res =
       await getData(ProfileConstants.GetBaseProfile + id);
@@ -37,11 +37,11 @@ class ProfileService extends HttpService {
         return baseProfileResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
 
-  Future<MyBaseResponse.BaseResponse> getMyProfile() async {
+  Future<my_base_response.BaseResponse> getMyProfile() async {
     if (await model.ensureAuthorized()) {
       Response res = await getData(ProfileConstants.GetMyProfile);
 
@@ -52,7 +52,7 @@ class ProfileService extends HttpService {
         return profileResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
 }

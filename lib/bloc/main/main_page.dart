@@ -29,8 +29,8 @@ class _MainPageState extends State<MainPage> {
   late final StreamSubscription<List<Object>?> _receiveMessageSubscription;
   late final StreamSubscription<List<String>?> _readAllMessagesSubscription;
 
-  final MessageService _messageService = AppInjector.get<MessageService>();
-  final SignalRService _signalRService = AppInjector.get<SignalRService>();
+  final MessageService _messageService = appInjector.get<MessageService>();
+  final SignalRService _signalRService = appInjector.get<SignalRService>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +82,11 @@ class _MainPageState extends State<MainPage> {
   _getUnseenMessageMembers() async {
     BaseResponse response = await _messageService.getUnseenMessageMembers();
 
-    if (response.OK) {
+    if (response.ok) {
       var unseenMessageResponse = response as UnseenMessageMemberResponse;
 
       setState(() {
-        _unseenMessageMembers = unseenMessageResponse.UnseenMessageMembers.map((element) => element.UserId).toList();
+        _unseenMessageMembers = unseenMessageResponse.unseenMessageMembers.map((element) => element.userId).toList();
       }) ;
     }
   }
@@ -103,8 +103,8 @@ class _MainPageState extends State<MainPage> {
       padding: const EdgeInsets.only(bottom: 20),
       child: CustomNavigationBar(
         iconSize: 30.0,
-        selectedColor: getCustomTheme(context)?.LoginButtonText,
-        strokeColor: getCustomTheme(context)?.LoginButtonText.withOpacity(0.1) ?? const Color(0xFF12B3F2),
+        selectedColor: getCustomTheme(context)?.loginButtonText,
+        strokeColor: getCustomTheme(context)?.loginButtonText.withOpacity(0.1) ?? const Color(0xFF12B3F2),
         unSelectedColor: Colors.grey[600],
         backgroundColor: Theme.of(context).colorScheme.surface,
         borderRadius: const Radius.circular(20.0),
@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> {
               LineIcons.comments,
             ),
             badgeCount: _unseenMessageMembers.length,
-            showBadge: (_unseenMessageMembers.length > 0)
+            showBadge: _unseenMessageMembers.isNotEmpty
           ),
           CustomNavigationBarItem(
             icon: const Icon(

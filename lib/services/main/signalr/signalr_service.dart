@@ -11,12 +11,12 @@ import 'package:signalr_netcore/signalr_client.dart';
 import '../../http_service.dart';
 
 class SignalRService {
-  final serverUrl = HttpService.HubUrl;
+  final serverUrl = HttpService.hubUrl;
   late final HubConnection hubConnection;
   final hubProtocolLogger = Logger("SignalR - hub");
   final transportProtocolLogger = Logger("SignalR - transport");
 
-  final AuthModel authModel = AppInjector.get<AuthModel>();
+  final AuthModel authModel = appInjector.get<AuthModel>();
   final NetworkConnectivity _connectivity = NetworkConnectivity.instance;
 
   final _onReceiveOwnMessage = StreamController<List<Object>?>.broadcast();

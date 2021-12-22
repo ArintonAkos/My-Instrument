@@ -2,16 +2,16 @@ import 'package:my_instrument/services/models/responses/base_response.dart';
 import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 
 class RefreshTokenResponse extends BaseResponse {
-  late final String Token;
-  late final ParsableDateTime? TokenExpires;
-  late final String RefreshToken;
-  late final ParsableDateTime? RefreshTokenExpires;
+  late final String token;
+  late final ParsableDateTime? tokenExpires;
+  late final String refreshToken;
+  late final ParsableDateTime? refreshTokenExpires;
 
 
   RefreshTokenResponse(Map<String, dynamic> json) : super(json) {
-    Token = json['token'];
-    TokenExpires = ParsableDateTime.fromString(json['tokenExpires']);
-    RefreshToken = json['refreshToken'];
-    RefreshTokenExpires = ParsableDateTime.fromString(json['refreshTokenExpires']);
+    token = json['token'];
+    tokenExpires = ParsableDateTime.fromString(json['tokenExpires']);
+    refreshToken = json['refreshToken'];
+    refreshTokenExpires = ParsableDateTime.fromString(json['refreshTokenExpires']);
   }
 }

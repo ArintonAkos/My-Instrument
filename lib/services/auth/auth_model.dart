@@ -41,7 +41,7 @@ class AuthModel {
   late final AuthService authService;
 
   Future init() async {
-    authService = AppInjector.get<AuthService>();
+    authService = appInjector.get<AuthService>();
     prefs = await SharedPreferences.getInstance();
 
     if (prefs?.getBool('signedIn') == true) {
@@ -60,11 +60,11 @@ class AuthModel {
   Future<FutureResponse> signIn(String email, String password, { bool? rememberMe }) async {
     try {
       if (prefs == null) {
-        throw UninitializedException(CallerClass.SharedPreferences);
+        throw UninitializedException(CallerClass.sharedPreferences);
       }
       var response = await authService.login(LoginRequest(email: email, password: password));
 
-      if (response.OK) {
+      if (response.ok) {
         _user = (response as LoginResponse).applicationUser;
 
         if (rememberMe == true) {
@@ -72,11 +72,11 @@ class AuthModel {
           await saveUserToPrefs();
         }
       } else {
-        if (response.StatusCode == 409) {
+        if (response.statusCode == 409) {
           await signOut();
         }
 
-        return FutureResponse(exception: response.Message);
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
@@ -90,8 +90,8 @@ class AuthModel {
     try {
       var response = await authService.register(request);
 
-      if (!response.OK) {
-        return FutureResponse(exception: response.Message);
+      if (!response.ok) {
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
@@ -106,23 +106,23 @@ class AuthModel {
     try {
       var response = await authService.refreshToken(request);
 
-      if (response.OK) {
+      if (response.ok) {
         response = response as RefreshTokenResponse;
-        statusCode = response.StatusCode;
+        statusCode = response.statusCode;
 
-        if (response.StatusCode != 1001) {
-          _user?.token = response.Token;
-          _user?.tokenExpires = response.TokenExpires;
-          _user?.refreshToken = response.RefreshToken;
-          _user?.refreshTokenExpires = response.RefreshTokenExpires;
+        if (response.statusCode != 1001) {
+          _user?.token = response.token;
+          _user?.tokenExpires = response.tokenExpires;
+          _user?.refreshToken = response.refreshToken;
+          _user?.refreshTokenExpires = response.refreshTokenExpires;
           await saveUserToPrefs();
         }
       } else {
-        if (response.StatusCode == 404 || response.StatusCode == 409) {
+        if (response.statusCode == 404 || response.statusCode == 409) {
           await signOut();
         }
 
-        return FutureResponse(exception: response.Message);
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);

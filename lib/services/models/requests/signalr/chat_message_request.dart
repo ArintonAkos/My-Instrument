@@ -1,13 +1,13 @@
 class ChatMessageRequest {
-  final String User;
-  final String Message;
+  final String user;
+  final String message;
 
-  ChatMessageRequest(this.User, this.Message);
+  ChatMessageRequest(this.user, this.message);
 
   Map<String, dynamic> toJson() {
     return {
-      'User': User,
-      'Message': Message
+      'User': user,
+      'Message': message
     };
   }
 }

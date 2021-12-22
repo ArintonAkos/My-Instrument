@@ -5,6 +5,6 @@ class ListingResponse extends BaseResponse {
   late final ListingModel listing;
 
   ListingResponse(Map<String, dynamic> json) : super(json) {
-    this.listing = ListingModel.fromJson(json);
+    listing = ListingModel.fromJson(json);
   }
 }

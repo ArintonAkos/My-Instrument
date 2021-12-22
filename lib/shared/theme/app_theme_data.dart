@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 
 enum AppThemeMode {
-  Light,
-  Dark
+  light,
+  dark
 }
 
 class CustomAppTheme {
-  final Color LoginGradientStart;
-  final Color LoginGradientEnd;
-  final Color LoginInputColor;
-  final Color LoginButtonsColor;
-  final Color LoginButtonText;
-  final Color DropdownItemColor;
-  final Color AuthErrorColor;
-  final Color DotColor;
-  final Color ActiveDotColor;
-  final Color TextFieldBackgroundColor;
-  final Color TextFieldHintColor;
-  final List<Color> AuthPagesPrimaryColors;
+  final Color loginGradientStart;
+  final Color loginGradientEnd;
+  final Color loginInputColor;
+  final Color loginButtonsColor;
+  final Color loginButtonText;
+  final Color dropdownItemColor;
+  final Color authErrorColor;
+  final Color dotColor;
+  final Color activeDotColor;
+  final Color textFieldBackgroundColor;
+  final Color textFieldHintColor;
+  final List<Color> authPagesPrimaryColors;
 
   const CustomAppTheme({
-    required this.LoginGradientStart,
-    required this.LoginGradientEnd,
-    required this.LoginInputColor,
-    required this.LoginButtonsColor,
-    required this.LoginButtonText,
-    required this.DropdownItemColor,
-    required this.AuthErrorColor,
-    required this.DotColor,
-    required this.ActiveDotColor,
-    required this.AuthPagesPrimaryColors,
-    required this.TextFieldBackgroundColor,
-    required this.TextFieldHintColor
+    required this.loginGradientStart,
+    required this.loginGradientEnd,
+    required this.loginInputColor,
+    required this.loginButtonsColor,
+    required this.loginButtonText,
+    required this.dropdownItemColor,
+    required this.authErrorColor,
+    required this.dotColor,
+    required this.activeDotColor,
+    required this.authPagesPrimaryColors,
+    required this.textFieldBackgroundColor,
+    required this.textFieldHintColor
   });
 }
 
@@ -45,48 +45,48 @@ class AppThemeData {
   });
 
   CustomAppTheme customLightTheme = CustomAppTheme(
-    LoginGradientStart: const Color(0xFF0E7FC2),
-    LoginGradientEnd: const Color(0xFF015497),
-    LoginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
-    LoginButtonsColor: Colors.white,
-    LoginButtonText: const Color(0xFF12B3F2),
-    DropdownItemColor: const Color(0xFF008eca),
-    AuthErrorColor: const Color(0xFFFF80AB),
-    DotColor: Colors.black,
-    ActiveDotColor: const Color(0xFF12B3F2),
-    AuthPagesPrimaryColors: [
+    loginGradientStart: const Color(0xFF0E7FC2),
+    loginGradientEnd: const Color(0xFF015497),
+    loginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
+    loginButtonsColor: Colors.white,
+    loginButtonText: const Color(0xFF12B3F2),
+    dropdownItemColor: const Color(0xFF008eca),
+    authErrorColor: const Color(0xFFFF80AB),
+    dotColor: Colors.black,
+    activeDotColor: const Color(0xFF12B3F2),
+    authPagesPrimaryColors: [
       const Color(0xFF12B3F1).withOpacity(0.3),
       const Color(0xFF2ABBF3).withOpacity(0.3),
       const Color(0xFF41C2F5).withOpacity(0.3),
       const Color(0xFF71D1F7).withOpacity(0.3),
     ],
-    TextFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
-    TextFieldHintColor: const Color(0xff000000)
+    textFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
+    textFieldHintColor: const Color(0xff000000)
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
-    LoginGradientStart: const Color(0xFF1F1F1F),
-    LoginGradientEnd: const Color(0xFF1F1F1F),
-    LoginInputColor: const Color(0xFF2B2B2B),
-    LoginButtonsColor: const Color(0xFF2A2A2A),
-    LoginButtonText: Colors.white,
-    DropdownItemColor: const Color(0xFF2B2B2B),
-    AuthErrorColor: Colors.white,
-    DotColor: Colors.white,
-    ActiveDotColor: const Color(0xFF16BDFF),
-    AuthPagesPrimaryColors: [
+    loginGradientStart: const Color(0xFF1F1F1F),
+    loginGradientEnd: const Color(0xFF1F1F1F),
+    loginInputColor: const Color(0xFF2B2B2B),
+    loginButtonsColor: const Color(0xFF2A2A2A),
+    loginButtonText: Colors.white,
+    dropdownItemColor: const Color(0xFF2B2B2B),
+    authErrorColor: Colors.white,
+    dotColor: Colors.white,
+    activeDotColor: const Color(0xFF16BDFF),
+    authPagesPrimaryColors: [
       const Color(0xFF1F1F1F).withOpacity(0.8),
       const Color(0xFF2B2B2B).withOpacity(0.7),
       const Color(0xFF2F2F2F).withOpacity(0.6),
       const Color(0xFF323232).withOpacity(1)
     ],
-    TextFieldBackgroundColor: const Color(0xff131313),
-    TextFieldHintColor: const Color(0xffffffff)
+    textFieldBackgroundColor: const Color(0xff131313),
+    textFieldHintColor: const Color(0xffffffff)
   );
 
 
   CustomAppTheme get customTheme {
-    if (themeMode == AppThemeMode.Dark) {
+    if (themeMode == AppThemeMode.dark) {
       return customDarkTheme;
     }
     return customLightTheme;

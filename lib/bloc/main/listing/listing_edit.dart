@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListingEditPage extends StatelessWidget {
   final String id;
 
-  ListingEditPage({
+  const ListingEditPage({
+    Key? key,
     required this.id
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'app_theme_data.dart';
 
 class ThemeNotifier with ChangeNotifier {
   final darkTheme = AppThemeData(
-    themeMode: AppThemeMode.Dark,
+    themeMode: AppThemeMode.dark,
     themeData: ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scaffoldBackgroundColor: const Color(0xFF121212),
@@ -32,7 +32,7 @@ class ThemeNotifier with ChangeNotifier {
   );
 
   final lightTheme = AppThemeData(
-    themeMode: AppThemeMode.Light,
+    themeMode: AppThemeMode.light,
     themeData: ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scaffoldBackgroundColor: const Color(0xFFFFFFFF),

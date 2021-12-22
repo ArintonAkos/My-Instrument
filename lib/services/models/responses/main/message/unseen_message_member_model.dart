@@ -1,26 +1,24 @@
-import 'package:collection/src/iterable_extensions.dart';
-import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
 import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 
 class UnseenMessageMemberModel {
-  final String UserId;
-  final String DefaultName;
-  final String LastMessage;
-  final ParsableDateTime? LastMessageDate;
+  final String userId;
+  final String defaultName;
+  final String lastMessage;
+  final ParsableDateTime? dastMessageDate;
 
   UnseenMessageMemberModel({
-    required this.UserId,
-    required this.DefaultName,
-    required this.LastMessage,
-    required this.LastMessageDate
+    required this.userId,
+    required this.defaultName,
+    required this.lastMessage,
+    required this.dastMessageDate
   });
 
   static UnseenMessageMemberModel fromJson(Map<String, dynamic> json) {
     return UnseenMessageMemberModel(
-        UserId: json['userId'],
-        DefaultName: json['defaultName'],
-        LastMessage: json['lastMessage'],
-        LastMessageDate: ParsableDateTime.fromString(json['lastMessageDate'])
+        userId: json['userId'],
+        defaultName: json['defaultName'],
+        lastMessage: json['lastMessage'],
+        dastMessageDate: ParsableDateTime.fromString(json['lastMessageDate'])
     );
   }
 }
@@ -28,9 +26,9 @@ class UnseenMessageMemberModel {
 extension UnseenMessageMemberModelExtensions on List<String> {
   void addUnseenMessageMember({ required String newUserId }) {
     if (isNotEmpty) {
-      var unseenMessengerId = firstWhereOrNull((element) => element == newUserId);
+      var unseenMessengerIndex = indexWhere((element) => element == newUserId);
 
-      if (unseenMessengerId == null) {
+      if (unseenMessengerIndex == -1) {
         add(newUserId);
       }
     } else {

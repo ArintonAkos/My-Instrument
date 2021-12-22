@@ -59,13 +59,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   _init() async {
-    _authModel = AppInjector.get<AuthModel>();
+    _authModel = appInjector.get<AuthModel>();
     _authModel.authStream.listen((event) {
       _updateSignedInState(event);
     });
 
     await appLanguage.fetchLocale();
-    _signalRService = AppInjector.get<SignalRService>();
+    _signalRService = appInjector.get<SignalRService>();
 
     Logger.root.onRecord.listen((record) => {
       print('${record.level.name}: ${record.time}: ${record.message}')

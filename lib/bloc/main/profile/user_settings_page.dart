@@ -181,7 +181,7 @@ class ActionsRow extends StatelessWidget {
 }
 
 logoutUser(BuildContext context) {
-  var authModel = AppInjector.get<AuthModel>();
+  var authModel = appInjector.get<AuthModel>();
   var result = authModel.signOut();
 
   if (!result.success) {

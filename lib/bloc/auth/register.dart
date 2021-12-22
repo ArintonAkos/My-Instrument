@@ -55,17 +55,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[0],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[1],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[2],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[3]
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[0],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[1],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[2],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[3]
                     ],
                     durations: [18000, 8000, 5000, 12000],
                     heightPercentages: [0.59, 0.61, 0.63, 0.65],
                     blur: const MaskFilter.blur(BlurStyle.solid, 10.0),
                   ),
                   size: const Size(double.infinity, double.infinity),
-                  backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
+                  backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.loginGradientStart,
                   waveAmplitude: 1,
                 ),
               ),
@@ -271,7 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
       request.lastName = lastName;
     }
 
-    AuthModel authModel = AppInjector.get<AuthModel>();
+    AuthModel authModel = appInjector.get<AuthModel>();
     var response = await authModel.register(request);
 
     if (response.success) {
@@ -282,7 +282,7 @@ class _RegisterPageState extends State<RegisterPage> {
             AutoRouter.of(context).replace(const LoginRoute());
           },
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.SUCCESSFUL'),
-          dialogType: DialogType.Success,
+          dialogType: DialogType.success,
         )
       );
     } else {
@@ -290,7 +290,7 @@ class _RegisterPageState extends State<RegisterPage> {
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.FAILED'),
-          dialogType: DialogType.Failure,
+          dialogType: DialogType.failure,
         )
       );
     }

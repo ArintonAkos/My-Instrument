@@ -6,7 +6,7 @@ class AppLanguage extends ChangeNotifier {
 
   Locale get appLocal => _appLocale;
 
-  int get LocaleIndex {
+  int get localeIndex {
     if (_appLocale == const Locale("hu")) {
       return 1;
     } else if (_appLocale == const Locale("ro")) {

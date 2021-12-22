@@ -1,27 +1,27 @@
 class Settings {
   Settings({
-    required this.LanguageId,
-    required this.ThemeId,
-    required this.NotificationEnabled
+    required this.languageId,
+    required this.themeId,
+    required this.notificationEnabled
   });
 
-  final int LanguageId;
-  final int ThemeId;
-  final bool NotificationEnabled;
+  final int languageId;
+  final int themeId;
+  final bool notificationEnabled;
 
   factory Settings.fromJson(Map<String, dynamic>? json) {
     return Settings(
-      LanguageId: json?['languageId'] ?? 0,
-      ThemeId: json?['theme'] ?? 0,
-      NotificationEnabled: json?['notificationEnabled'] ?? true
+      languageId: json?['languageId'] ?? 0,
+      themeId: json?['theme'] ?? 0,
+      notificationEnabled: json?['notificationEnabled'] ?? true
     );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'languageId': this.LanguageId,
-      'themeId': this.ThemeId,
-      'notificationEnabled': this.NotificationEnabled
+      'languageId': languageId,
+      'themeId': themeId,
+      'notificationEnabled': notificationEnabled
     };
   }
 }

@@ -21,6 +21,6 @@ class CategoryResponse extends BaseResponse {
   }
 
   factory CategoryResponse.errorMessage({int language = 0}) {
-    return CategoryResponse(ErrorResponse(language: language).ResponseJSON);
+    return CategoryResponse(ErrorResponse(language: language).responseJSON);
   }
 }

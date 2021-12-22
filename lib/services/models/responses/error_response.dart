@@ -1,7 +1,3 @@
-import 'package:my_instrument/services/models/responses/base_response.dart';
-
-import '../../http_service.dart';
-
 class ErrorResponse {
   int? language;
 
@@ -15,9 +11,9 @@ class ErrorResponse {
     this.language
   });
 
-  get ResponseJSON {
+  get responseJSON {
     var mess = _errorMessages[0];
-    var lang = this.language ?? 0;
+    var lang = language ?? 0;
     if (lang > -1 && lang < 3) {
       mess = _errorMessages[lang];
     }

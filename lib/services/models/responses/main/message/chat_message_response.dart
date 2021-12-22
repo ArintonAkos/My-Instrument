@@ -1,5 +1,3 @@
-import 'package:my_instrument/services/models/responses/error_response.dart';
-
 import '../../base_response.dart';
 import '../../../../../shared/utils/list_parser.dart';
 import 'chat_message_model.dart';

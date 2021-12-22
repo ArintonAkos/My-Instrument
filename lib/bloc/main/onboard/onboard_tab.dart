@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_data.dart';
-import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
 
 class OnBoardTab extends StatelessWidget {
   final OnBoardData onBoardData;
 
-  OnBoardTab({
+  const OnBoardTab({Key? key,
     required this.onBoardData
-  });
+  }) : super(key: key);
 
 
   @override
@@ -22,7 +20,7 @@ class OnBoardTab extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 20.0,
                     right: 20.0,
                     top: 100
@@ -34,11 +32,11 @@ class OnBoardTab extends StatelessWidget {
                         height: 250,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: Text(
                           onBoardData.title,
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.white
@@ -46,7 +44,7 @@ class OnBoardTab extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: 30.0,
                           left: 10.0,
                           right: 10.0
@@ -54,7 +52,7 @@ class OnBoardTab extends StatelessWidget {
                         child: Text(
                           onBoardData.description,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16.0,
                             color: Colors.white
                           )

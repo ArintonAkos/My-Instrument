@@ -9,7 +9,7 @@ class LoginRequest implements BackendRequest {
     required this.email,
     required this.password,
     this.language = 0
-  }) {}
+  });
 
   @override
   Map<String, dynamic> toJson() => {

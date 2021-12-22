@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_instrument/shared/widgets/listing_card.dart';
@@ -6,7 +5,6 @@ import 'package:my_instrument/shared/widgets/page-transformer/data.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/intro_page_item.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
-import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
