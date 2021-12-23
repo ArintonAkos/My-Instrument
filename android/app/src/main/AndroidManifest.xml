@@ -2,7 +2,7 @@
     package="com.arinton.my_instrument">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="my_instrument"
+        android:label="MyInstruments"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:allowBackup="true"
