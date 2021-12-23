@@ -10,8 +10,8 @@ class RefreshTokenResponse extends BaseResponse {
 
   RefreshTokenResponse(Map<String, dynamic> json) : super(json) {
     token = json['token'];
-    tokenExpires = ParsableDateTime.fromString(json['tokenExpires']);
+    tokenExpires = ParsableDateTime.fromString(json['tokenExpires'], toLocale: false);
     refreshToken = json['refreshToken'];
-    refreshTokenExpires = ParsableDateTime.fromString(json['refreshTokenExpires']);
+    refreshTokenExpires = ParsableDateTime.fromString(json['refreshTokenExpires'], toLocale: false);
   }
 }

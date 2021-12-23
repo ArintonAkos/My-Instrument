@@ -118,7 +118,7 @@ class AuthModel {
           await saveUserToPrefs();
         }
       } else {
-        if (response.statusCode == 404 || response.statusCode == 409) {
+        if (response.statusCode == 409) {
           await signOut();
         }
 
