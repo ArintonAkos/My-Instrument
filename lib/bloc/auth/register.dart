@@ -19,7 +19,12 @@ import 'auth_pages_constants.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({
     Key? key,
+    @PathParam('email') this.email,
+    @PathParam('name') this.name,
   }) : super(key: key);
+
+  final String? email;
+  final String? name;
 
   @override
   State<StatefulWidget> createState() => _RegisterPageState();

@@ -8,6 +8,7 @@ import 'package:my_instrument/services/models/requests/auth/login_request.dart';
 import 'package:my_instrument/services/models/requests/auth/refresh_token_request.dart';
 import 'package:my_instrument/services/models/requests/auth/register_request.dart';
 import 'package:my_instrument/services/models/responses/auth/auth_constants.dart';
+import 'package:my_instrument/services/models/responses/auth/db_external_login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/external_login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
@@ -26,7 +27,8 @@ class AuthService extends HttpService {
     Response res = await postJson(request, AuthConstants.loginURL);
 
     if (res.statusCode == 200) {
-      dynamic body = jsonDecode(res.body);
+      Map<String, dynamic> body = jsonDecode(res.body);
+      body['authenticationType'] = 'email';
 
       LoginResponse loginResponse = LoginResponse(body);
       return loginResponse;
@@ -50,21 +52,33 @@ class AuthService extends HttpService {
     ExternalLoginResponse data = await _facebookLoginService.authenticateInDb();
 
     return _externalLogin(ExternalLoginRequest(
-        accessToken: data.accessToken ?? '',
-        loginProvider: 'Facebook',
-        providerKey: data.id ?? '',
-        emailAddress: data.email ?? ''
+      accessToken: data.accessToken ?? '',
+      loginProvider: 'Facebook',
+      providerKey: data.id ?? '',
+      emailAddress: data.email ?? '',
+      name: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName
     ));
   }
 
   Future<my_base_response.BaseResponse> _externalLogin(ExternalLoginRequest request) async {
     Response res = await postJson(request, AuthConstants.externalLoginURL);
 
-    if (res.statusCode == 200 || res.statusCode == CustomStatusCode.moreInfoRequired) {
-      dynamic body  = jsonDecode(res.body);
+    if (res.statusCode == 200) {
+      Map<String, dynamic> body  = jsonDecode(res.body);
+      body['authenticationType'] = request.loginProvider.toLowerCase();
 
-      my_base_response.BaseResponse response = my_base_response.BaseResponse(body);
+      LoginResponse response = LoginResponse(body);
       return response;
+    } else if (res.statusCode == CustomStatusCode.moreInfoRequired) {
+      dynamic body = jsonDecode(res.body);
+
+      return DbExternalLoginResponse(
+          body,
+          email: request.emailAddress,
+          name: request.name ?? '',
+      );
     }
 
     return my_base_response.BaseResponse.error();

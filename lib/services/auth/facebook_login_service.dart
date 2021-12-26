@@ -18,11 +18,13 @@ class FacebookLoginService {
           loginStatus: ExternalLoginStatus.succeeded,
           email: data['email'],
           accessToken: result.accessToken?.token ?? '',
-          id: data['id']
+          id: data['id'],
         );
       }
     }
 
     return ExternalLoginResponse(loginStatus: ExternalLoginStatus.failed);
   }
+
+  Future<void> signOut() => FacebookAuth.i.logOut();
 }

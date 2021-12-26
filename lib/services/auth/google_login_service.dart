@@ -1,8 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_instrument/services/auth/auth_service.dart';
-import 'package:my_instrument/services/models/requests/auth/external_login_request.dart';
 import 'package:my_instrument/services/models/responses/auth/external_login_response.dart';
-import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:my_instrument/services/models/responses/base_response.dart' as my_base_response;
 
 class GoogleLoginService {
@@ -23,7 +20,7 @@ class GoogleLoginService {
         return ExternalLoginResponse(
           loginStatus: ExternalLoginStatus.succeeded,
           email: res?.email,
-          accessToken: authentication.accessToken,
+          accessToken: authentication.idToken,
           id: res?.id
         );
       } else {
@@ -33,4 +30,6 @@ class GoogleLoginService {
       return ExternalLoginResponse(loginStatus: ExternalLoginStatus.failed);
     }
   }
+
+  Future<GoogleSignInAccount?> signOut() => _googleSignIn.signOut();
 }

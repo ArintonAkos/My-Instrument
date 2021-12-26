@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:my_instrument/bloc/auth/forgot_password.dart';
 import 'package:my_instrument/bloc/auth/login.dart';
 import 'package:my_instrument/bloc/auth/register.dart';
+import 'package:my_instrument/bloc/base/error_page.dart';
 import 'package:my_instrument/bloc/main/fav/fav.dart';
 import 'package:my_instrument/bloc/main/home/home_page.dart';
 import 'package:my_instrument/bloc/main/main_page.dart';
@@ -22,9 +23,9 @@ import 'package:my_instrument/bloc/main/splash/splash_page.dart';
       page: EmptyRouterPage,
       children: [
         AutoRoute(path: 'login', page: LoginPage),
-        AutoRoute(path: 'register', page: RegisterPage),
+        AutoRoute(path: 'register/:email:name', page: RegisterPage),
         AutoRoute(path: 'forgot-password', page: ForgotPasswordPage),
-        RedirectRoute(path: '*', redirectTo: 'login')
+        RedirectRoute(path: '*', redirectTo: 'login'),
       ]
     ),
     AutoRoute(
@@ -50,6 +51,7 @@ import 'package:my_instrument/bloc/main/splash/splash_page.dart';
         RedirectRoute(path: '*', redirectTo: '/main/'),
       ]
     ),
+    AutoRoute(path: '/error', page: ErrorPage),
     AutoRoute(path: '/splash', page: SplashPage),
     AutoRoute(path: '/onboard', page: OnBoardPage)
   ],

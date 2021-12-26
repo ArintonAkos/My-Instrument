@@ -9,25 +9,25 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/cupertino.dart' as _i16;
-import 'package:flutter/material.dart' as _i15;
+import 'package:flutter/material.dart' as _i16;
 
-import '../../bloc/auth/forgot_password.dart' as _i6;
-import '../../bloc/auth/login.dart' as _i4;
-import '../../bloc/auth/register.dart' as _i5;
-import '../../bloc/main/fav/fav.dart' as _i12;
-import '../../bloc/main/home/home_page.dart' as _i11;
-import '../../bloc/main/main_page.dart' as _i7;
-import '../../bloc/main/messages/chatting_page.dart' as _i10;
-import '../../bloc/main/messages/messages.dart' as _i13;
-import '../../bloc/main/new_listing/new_listing.dart' as _i9;
-import '../../bloc/main/onboard/onboard_page.dart' as _i3;
-import '../../bloc/main/profile/about/about.dart' as _i8;
-import '../../bloc/main/profile/user_settings_page.dart' as _i14;
-import '../../bloc/main/splash/splash_page.dart' as _i2;
+import '../../bloc/auth/forgot_password.dart' as _i7;
+import '../../bloc/auth/login.dart' as _i5;
+import '../../bloc/auth/register.dart' as _i6;
+import '../../bloc/base/error_page.dart' as _i2;
+import '../../bloc/main/fav/fav.dart' as _i13;
+import '../../bloc/main/home/home_page.dart' as _i12;
+import '../../bloc/main/main_page.dart' as _i8;
+import '../../bloc/main/messages/chatting_page.dart' as _i11;
+import '../../bloc/main/messages/messages.dart' as _i14;
+import '../../bloc/main/new_listing/new_listing.dart' as _i10;
+import '../../bloc/main/onboard/onboard_page.dart' as _i4;
+import '../../bloc/main/profile/about/about.dart' as _i9;
+import '../../bloc/main/profile/user_settings_page.dart' as _i15;
+import '../../bloc/main/splash/splash_page.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {
-  AppRouter([_i15.GlobalKey<_i15.NavigatorState>? navigatorKey])
+  AppRouter([_i16.GlobalKey<_i16.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -40,41 +40,52 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.EmptyRouterPage());
     },
+    ErrorRoute.name: (routeData) {
+      return _i1.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i2.ErrorPage());
+    },
     SplashRoute.name: (routeData) {
       final args = routeData.argsAs<SplashRouteArgs>(
           orElse: () => const SplashRouteArgs());
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i2.SplashPage(key: args.key));
+          routeData: routeData, child: _i3.SplashPage(key: args.key));
     },
     OnBoardRoute.name: (routeData) {
       final args = routeData.argsAs<OnBoardRouteArgs>(
           orElse: () => const OnBoardRouteArgs());
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i3.OnBoardPage(key: args.key));
+          routeData: routeData, child: _i4.OnBoardPage(key: args.key));
     },
     LoginRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.LoginPage());
+          routeData: routeData, child: const _i5.LoginPage());
     },
     RegisterRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<RegisterRouteArgs>(
+          orElse: () => RegisterRouteArgs(
+              email: pathParams.optString('email'),
+              name: pathParams.optString('name')));
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.RegisterPage());
+          routeData: routeData,
+          child: _i6.RegisterPage(
+              key: args.key, email: args.email, name: args.name));
     },
     ForgotPasswordRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.ForgotPasswordPage());
+          routeData: routeData, child: const _i7.ForgotPasswordPage());
     },
     MainRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.MainPage());
+          routeData: routeData, child: const _i8.MainPage());
     },
     AboutRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i8.AboutPage());
+          routeData: routeData, child: const _i9.AboutPage());
     },
     NewListingRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.NewListingPage());
+          routeData: routeData, child: const _i10.NewListingPage());
     },
     ChattingRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -83,23 +94,23 @@ class AppRouter extends _i1.RootStackRouter {
               ChattingRouteArgs(userId: pathParams.getString('userId')));
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i10.ChattingPage(key: args.key, userId: args.userId));
+          child: _i11.ChattingPage(key: args.key, userId: args.userId));
     },
     HomeRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i11.HomePage());
+          routeData: routeData, child: const _i12.HomePage());
     },
     FavRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.FavPage());
+          routeData: routeData, child: const _i13.FavPage());
     },
     MessagesRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i13.MessagesPage());
+          routeData: routeData, child: const _i14.MessagesPage());
     },
     ProfileRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i14.UserPage());
+          routeData: routeData, child: const _i15.UserPage());
     },
     BlankRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -113,7 +124,7 @@ class AppRouter extends _i1.RootStackRouter {
           _i1.RouteConfig(LoginRoute.name,
               path: 'login', parent: AuthRouter.name),
           _i1.RouteConfig(RegisterRoute.name,
-              path: 'register', parent: AuthRouter.name),
+              path: 'register/:email:name', parent: AuthRouter.name),
           _i1.RouteConfig(ForgotPasswordRoute.name,
               path: 'forgot-password', parent: AuthRouter.name),
           _i1.RouteConfig('*#redirect',
@@ -155,6 +166,7 @@ class AppRouter extends _i1.RootStackRouter {
               redirectTo: '/main/',
               fullMatch: true)
         ]),
+        _i1.RouteConfig(ErrorRoute.name, path: '/error'),
         _i1.RouteConfig(SplashRoute.name, path: '/splash'),
         _i1.RouteConfig(OnBoardRoute.name, path: '/onboard')
       ];
@@ -179,7 +191,15 @@ class BaseRouter extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.SplashPage]
+/// [_i2.ErrorPage]
+class ErrorRoute extends _i1.PageRouteInfo<void> {
+  const ErrorRoute() : super(ErrorRoute.name, path: '/error');
+
+  static const String name = 'ErrorRoute';
+}
+
+/// generated route for
+/// [_i3.SplashPage]
 class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
   SplashRoute({_i16.Key? key})
       : super(SplashRoute.name,
@@ -200,7 +220,7 @@ class SplashRouteArgs {
 }
 
 /// generated route for
-/// [_i3.OnBoardPage]
+/// [_i4.OnBoardPage]
 class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
   OnBoardRoute({_i16.Key? key})
       : super(OnBoardRoute.name,
@@ -221,7 +241,7 @@ class OnBoardRouteArgs {
 }
 
 /// generated route for
-/// [_i4.LoginPage]
+/// [_i5.LoginPage]
 class LoginRoute extends _i1.PageRouteInfo<void> {
   const LoginRoute() : super(LoginRoute.name, path: 'login');
 
@@ -229,15 +249,34 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.RegisterPage]
-class RegisterRoute extends _i1.PageRouteInfo<void> {
-  const RegisterRoute() : super(RegisterRoute.name, path: 'register');
+/// [_i6.RegisterPage]
+class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({_i16.Key? key, String? email, String? name})
+      : super(RegisterRoute.name,
+            path: 'register/:email:name',
+            args: RegisterRouteArgs(key: key, email: email, name: name),
+            rawPathParams: {'email': email, 'name': name});
 
   static const String name = 'RegisterRoute';
 }
 
+class RegisterRouteArgs {
+  const RegisterRouteArgs({this.key, this.email, this.name});
+
+  final _i16.Key? key;
+
+  final String? email;
+
+  final String? name;
+
+  @override
+  String toString() {
+    return 'RegisterRouteArgs{key: $key, email: $email, name: $name}';
+  }
+}
+
 /// generated route for
-/// [_i6.ForgotPasswordPage]
+/// [_i7.ForgotPasswordPage]
 class ForgotPasswordRoute extends _i1.PageRouteInfo<void> {
   const ForgotPasswordRoute()
       : super(ForgotPasswordRoute.name, path: 'forgot-password');
@@ -246,7 +285,7 @@ class ForgotPasswordRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.MainPage]
+/// [_i8.MainPage]
 class MainRoute extends _i1.PageRouteInfo<void> {
   const MainRoute({List<_i1.PageRouteInfo>? children})
       : super(MainRoute.name, path: 'main/', initialChildren: children);
@@ -255,7 +294,7 @@ class MainRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.AboutPage]
+/// [_i9.AboutPage]
 class AboutRoute extends _i1.PageRouteInfo<void> {
   const AboutRoute() : super(AboutRoute.name, path: 'about');
 
@@ -263,7 +302,7 @@ class AboutRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.NewListingPage]
+/// [_i10.NewListingPage]
 class NewListingRoute extends _i1.PageRouteInfo<void> {
   const NewListingRoute() : super(NewListingRoute.name, path: 'new-listing/');
 
@@ -271,7 +310,7 @@ class NewListingRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.ChattingPage]
+/// [_i11.ChattingPage]
 class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
   ChattingRoute({_i16.Key? key, required String userId})
       : super(ChattingRoute.name,
@@ -296,7 +335,7 @@ class ChattingRouteArgs {
 }
 
 /// generated route for
-/// [_i11.HomePage]
+/// [_i12.HomePage]
 class HomeRoute extends _i1.PageRouteInfo<void> {
   const HomeRoute() : super(HomeRoute.name, path: '');
 
@@ -304,7 +343,7 @@ class HomeRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.FavPage]
+/// [_i13.FavPage]
 class FavRoute extends _i1.PageRouteInfo<void> {
   const FavRoute() : super(FavRoute.name, path: 'favorites');
 
@@ -312,7 +351,7 @@ class FavRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.MessagesPage]
+/// [_i14.MessagesPage]
 class MessagesRoute extends _i1.PageRouteInfo<void> {
   const MessagesRoute() : super(MessagesRoute.name, path: 'messages');
 
@@ -320,7 +359,7 @@ class MessagesRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.UserPage]
+/// [_i15.UserPage]
 class ProfileRoute extends _i1.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: 'profile');
 

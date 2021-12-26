@@ -3,6 +3,12 @@ import 'package:my_instrument/shared/utils/parse_methods.dart';
 
 import 'settings.dart';
 
+enum AuthenticationType {
+  email,
+  google,
+  facebook
+}
+
 class User {
   User({
     required this.email,
@@ -14,7 +20,8 @@ class User {
     required this.tokenExpires,
     required this.refreshTokenExpires,
     required this.token,
-    required this.refreshToken
+    required this.refreshToken,
+    required this.authenticationType
   });
 
   final String email;
@@ -23,6 +30,7 @@ class User {
   final List<String> roles;
   final List<String> ratings;
   final Settings setting;
+  final AuthenticationType authenticationType;
   ParsableDateTime? tokenExpires;
   ParsableDateTime? refreshTokenExpires;
   String token;
@@ -38,9 +46,19 @@ class User {
       setting: Settings.fromJson(json['setting']),
       token: json['token'] ?? '',
       refreshToken: json['refreshToken'] ?? '',
+      authenticationType: parseAuthenticationType(json['authenticationType']),
       tokenExpires: ParsableDateTime.fromString(json['tokenExpires'], toLocale: false),
       refreshTokenExpires: ParsableDateTime.fromString(json['refreshTokenExpires'], toLocale: false)
     );
+  }
+
+  static AuthenticationType parseAuthenticationType(String? authenticationType) {
+    try {
+      AuthenticationType type = AuthenticationType.values.byName(authenticationType ?? '');
+      return type;
+    } catch (e) {
+      return AuthenticationType.email;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +72,8 @@ class User {
       'tokenExpires': tokenExpires,
       'refreshTokenExpires': refreshTokenExpires,
       'token': token,
-      'refreshToken': refreshToken
+      'refreshToken': refreshToken,
+      'authenticationType': authenticationType.toString(),
     };
   }
 }

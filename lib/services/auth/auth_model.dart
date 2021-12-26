@@ -6,16 +6,24 @@ import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/models/requests/auth/login_request.dart';
 import 'package:my_instrument/services/models/requests/auth/refresh_token_request.dart';
 import 'package:my_instrument/services/models/requests/auth/register_request.dart';
+import 'package:my_instrument/services/models/responses/auth/db_external_login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
+import 'package:my_instrument/services/models/responses/base_response.dart';
 import 'package:my_instrument/services/models/user.dart';
 import 'package:my_instrument/shared/data/custom_status_codes.dart';
+import 'package:my_instrument/shared/exceptions/more_info_required_exception.dart';
 import 'package:my_instrument/shared/exceptions/uninitialized_exception.dart';
 import 'package:my_instrument/shared/utils/parse_methods.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'future_response.dart';
+
+enum ExternalLoginType {
+  google,
+  facebook
+}
 
 class AuthModel {
   User? _user;
@@ -87,6 +95,44 @@ class AuthModel {
     return FutureResponse();
   }
 
+  Future<FutureResponse> externalLogin(ExternalLoginType loginType) async {
+    try {
+      BaseResponse response;
+
+      switch(loginType) {
+        case ExternalLoginType.facebook:
+          response = await authService.facebookExternalLogin();
+          break;
+        default:
+          response = await authService.googleExternalLogin();
+          break;
+      }
+
+      if (response.ok) {
+        var loginResponse = response as LoginResponse;
+
+        _user = loginResponse.applicationUser;
+
+        await prefs?.setBool('signedIn', true);
+        saveUserToPrefs();
+
+      } else if (response.statusCode == CustomStatusCode.moreInfoRequired) {
+        var dbResponse = response as DbExternalLoginResponse;
+
+        return FutureResponse(
+          data: dbResponse,
+          exception: MoreInfoRequiredException()
+        );
+      }
+
+    } catch (e) {
+      return FutureResponse(exception: e);
+    }
+
+    _controller.sink.add(true);
+    return FutureResponse();
+  }
+
   Future<FutureResponse> register(RegisterRequest request) async {
     try {
       var response = await authService.register(request);
@@ -136,6 +182,7 @@ class AuthModel {
     await prefs?.remove('signedIn');
     await prefs?.remove('user');
     await prefs?.remove('token');
+    _user = null;
     _controller.sink.add(false);
     return FutureResponse();
   }
@@ -186,8 +233,8 @@ class AuthModel {
 
   saveUserToPrefs() async {
     if (prefs != null && _user != null) {
-      await prefs?.setString('token', _user?.token ?? '');
       await prefs?.setString('user', jsonEncode(_user));
+      await prefs?.setString('token', _user?.token ?? '');
       await prefs?.setBool('signedIn', true);
     }
   }

@@ -6,16 +6,15 @@ enum ResponseStatus {
 
 class FutureResponse {
   Object? exception;
-  List<dynamic>? data;
-  late bool success;
+  dynamic data;
   final int? statusCode;
 
   FutureResponse({
     this.exception,
     this.data,
     this.statusCode
-  }) {
-    success = (exception == null);
-  }
+  });
+
+  get success => (exception == null);
 
 }

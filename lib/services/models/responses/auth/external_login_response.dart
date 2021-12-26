@@ -10,12 +10,18 @@ class ExternalLoginResponse {
   String? email;
   String? accessToken;
   String? id;
+  String? name;
+  String? firstName;
+  String? lastName;
 
   ExternalLoginResponse({
     required this.loginStatus,
     this.email,
     this.accessToken,
-    this.id
+    this.id,
+    this.name,
+    this.firstName,
+    this.lastName
   });
 
 }
