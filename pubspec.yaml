@@ -39,7 +39,9 @@ dependencies:
   url_launcher: ^6.0.9
   font_awesome_flutter: ^9.1.0
   custom_navigation_bar: ^0.8.2
-
+  flutter_facebook_auth: ^3.5.7
+  google_sign_in: ^5.2.1
+  firebase_analytics: ^9.0.4
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
   dropdown_search: ^1.0.0-beta2
@@ -64,6 +66,8 @@ dependencies:
   time_elapsed: ^0.2.6
   auto_route: ^3.2.0
   injector: ^2.0.0
+  firebase_core: ^1.10.6
+  flutterfire_cli: ^0.1.1+2
 
 
 dev_dependencies:

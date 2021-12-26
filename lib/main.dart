@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_instrument/bloc/main/splash/initialize_notifier.dart';
@@ -14,9 +16,14 @@ import 'package:my_instrument/structure/dependency_injection/injector_initialize
 
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'structure/route/router.gr.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 
@@ -105,6 +112,11 @@ class _MyAppState extends State<MyApp> {
             theme: theme.getTheme()?.materialTheme,
             routerDelegate: AutoRouterDelegate.declarative(
                 _appRouter,
+                navigatorObservers: () => [
+                  FirebaseAnalyticsObserver(
+                    analytics: FirebaseAnalytics.instance
+                  )
+                ],
                 routes: (_) => [
                   if (initialize.initialized)
                     if (isSignedIn)

@@ -3,7 +3,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/auth/auth_service.dart';
+import 'package:my_instrument/services/models/requests/auth/external_login_request.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
@@ -12,6 +15,7 @@ import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 import 'auth_pages_constants.dart';
 
@@ -28,6 +32,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final AuthService _authService = appInjector.get<AuthService>();
 
   bool _rememberMe = false;
   final controllerEmail = TextEditingController();
@@ -192,14 +198,20 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-                () => print('Login with Facebook'),
+            () async {
+              var res = await _authService.facebookExternalLogin();
+
+
+            },
             Icon(
               FontAwesomeIcons.facebookF,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
           _buildSocialBtn(
-                () => print('Login with Google'),
+              () async {
+                var res = await _authService.googleExternalLogin();
+              },
             Icon(
               FontAwesomeIcons.google,
               color: Theme.of(context).colorScheme.primary
@@ -328,6 +340,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _handleExternalLogin() {
+    // AutoRouter.of(context).push();
   }
 
   _loginUser() async {

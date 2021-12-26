@@ -19,6 +19,8 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
 
+  final AuthModel _authModel = appInjector.get<AuthModel>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -31,7 +33,7 @@ class _UserPageState extends State<UserPage> {
                   AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                 ).alignment(Alignment.center).padding(bottom: 20),
-                const UserCard(),
+                UserCard(authModel: _authModel),
                 const ActionsRow(),
                 const Settings(settingsItems: _settingsItems)
               ].toColumn()),
@@ -42,7 +44,12 @@ class _UserPageState extends State<UserPage> {
 }
 
 class UserCard extends StatelessWidget {
-  const UserCard({Key? key}) : super(key: key);
+  final AuthModel authModel;
+
+  const UserCard({
+    Key? key,
+    required this.authModel
+  }) : super(key: key);
 
   Widget _buildUserRow(BuildContext context) {
     return <Widget>[
@@ -56,16 +63,16 @@ class UserCard extends StatelessWidget {
           .constrained(height: 50, width: 50)
           .padding(right: 10),
       <Widget>[
-        const Text(
-          'User Name',
-          style: TextStyle(
+        Text(
+          authModel.getUser()?.name ?? '',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ).padding(bottom: 5),
         Text(
-          'User role',
+          authModel.getUser()?.roles[0] ?? '',
           style: TextStyle(
             color: Colors.white.withOpacity(0.6),
             fontSize: 12,
@@ -180,9 +187,9 @@ class ActionsRow extends StatelessWidget {
   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 
-logoutUser(BuildContext context) {
+logoutUser(BuildContext context) async {
   var authModel = appInjector.get<AuthModel>();
-  var result = authModel.signOut();
+  var result = await authModel.signOut();
 
   if (!result.success) {
     ScaffoldMessenger.of(context).showSnackBar(

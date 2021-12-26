@@ -9,6 +9,7 @@ import 'package:my_instrument/services/models/requests/auth/register_request.dar
 import 'package:my_instrument/services/models/responses/auth/login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
 import 'package:my_instrument/services/models/user.dart';
+import 'package:my_instrument/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/shared/exceptions/uninitialized_exception.dart';
 import 'package:my_instrument/shared/utils/parse_methods.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
@@ -110,7 +111,7 @@ class AuthModel {
         response = response as RefreshTokenResponse;
         statusCode = response.statusCode;
 
-        if (response.statusCode != 1001) {
+        if (response.statusCode != CustomStatusCode.notExpired) {
           _user?.token = response.token;
           _user?.tokenExpires = response.tokenExpires;
           _user?.refreshToken = response.refreshToken;

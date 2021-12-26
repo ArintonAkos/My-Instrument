@@ -57,6 +57,4 @@ class User {
       'refreshToken': refreshToken
     };
   }
-
-
 }
