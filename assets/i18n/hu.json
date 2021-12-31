@@ -45,7 +45,7 @@
       },
       "TERMS_OF_SERVICE": {
         "TITLE": "Szolgáltatási feltételek",
-        "DESCRIPTION": "Olvasd el a szolgáltatási feltételek",
+        "DESCRIPTION": "Olvasd el a szolgáltatási feltételek"
       },
       "PRIVACY_POLICY": {
         "TITLE": "Adatvédelmi irányelvek",
@@ -120,6 +120,10 @@
       "CONFIRM_PASSWORD_MESSAGE": "A jelszavak nem egyeznek.",
       "EMPTY_FIELD_MESSAGE": "A mező nem lehet üres.",
       "LOGOUT_MESSAGE": "Hiba lépett fel kijelentkezés közben! Kérlek probálkozz később!"
+    },
+    "INFO": {
+      "NO_DATA": "Nincs megjeleníthető adat.",
+      "SEE_MORE": "Még több"
     }
   }
 }

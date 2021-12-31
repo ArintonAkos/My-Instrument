@@ -9,25 +9,28 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/material.dart' as _i16;
+import 'package:flutter/material.dart' as _i18;
 
 import '../../bloc/auth/forgot_password.dart' as _i7;
 import '../../bloc/auth/login.dart' as _i5;
 import '../../bloc/auth/register.dart' as _i6;
 import '../../bloc/base/error_page.dart' as _i2;
-import '../../bloc/main/fav/fav.dart' as _i13;
-import '../../bloc/main/home/home_page.dart' as _i12;
+import '../../bloc/main/fav/fav.dart' as _i15;
+import '../../bloc/main/home/home_page.dart' as _i14;
 import '../../bloc/main/main_page.dart' as _i8;
 import '../../bloc/main/messages/chatting_page.dart' as _i11;
-import '../../bloc/main/messages/messages.dart' as _i14;
+import '../../bloc/main/messages/messages.dart' as _i16;
 import '../../bloc/main/new_listing/new_listing.dart' as _i10;
 import '../../bloc/main/onboard/onboard_page.dart' as _i4;
+import '../../bloc/main/product_list/filter_data.dart' as _i19;
+import '../../bloc/main/product_list/product_list_page.dart' as _i13;
 import '../../bloc/main/profile/about/about.dart' as _i9;
-import '../../bloc/main/profile/user_settings_page.dart' as _i15;
+import '../../bloc/main/profile/user_settings_page.dart' as _i17;
+import '../../bloc/main/shopping_cart/shopping_cart_page.dart' as _i12;
 import '../../bloc/main/splash/splash_page.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {
-  AppRouter([_i16.GlobalKey<_i16.NavigatorState>? navigatorKey])
+  AppRouter([_i18.GlobalKey<_i18.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -96,21 +99,32 @@ class AppRouter extends _i1.RootStackRouter {
           routeData: routeData,
           child: _i11.ChattingPage(key: args.key, userId: args.userId));
     },
+    ShoppingCartRoute.name: (routeData) {
+      return _i1.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i12.ShoppingCartPage());
+    },
+    ProductListRoute.name: (routeData) {
+      final args = routeData.argsAs<ProductListRouteArgs>();
+      return _i1.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child:
+              _i13.ProductListPage(key: args.key, filterData: args.filterData));
+    },
     HomeRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.HomePage());
+          routeData: routeData, child: const _i14.HomePage());
     },
     FavRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i13.FavPage());
+          routeData: routeData, child: const _i15.FavPage());
     },
     MessagesRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i14.MessagesPage());
+          routeData: routeData, child: const _i16.MessagesPage());
     },
     ProfileRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i15.UserPage());
+          routeData: routeData, child: const _i17.UserPage());
     },
     BlankRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -160,6 +174,10 @@ class AppRouter extends _i1.RootStackRouter {
               path: 'new-listing/', parent: BaseRouter.name),
           _i1.RouteConfig(ChattingRoute.name,
               path: 'chat/:userId', parent: BaseRouter.name),
+          _i1.RouteConfig(ShoppingCartRoute.name,
+              path: 'cart', parent: BaseRouter.name),
+          _i1.RouteConfig(ProductListRoute.name,
+              path: 'products', parent: BaseRouter.name),
           _i1.RouteConfig('*#redirect',
               path: '*',
               parent: BaseRouter.name,
@@ -201,7 +219,7 @@ class ErrorRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.SplashPage]
 class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i16.Key? key})
+  SplashRoute({_i18.Key? key})
       : super(SplashRoute.name,
             path: '/splash', args: SplashRouteArgs(key: key));
 
@@ -211,7 +229,7 @@ class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   @override
   String toString() {
@@ -222,7 +240,7 @@ class SplashRouteArgs {
 /// generated route for
 /// [_i4.OnBoardPage]
 class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
-  OnBoardRoute({_i16.Key? key})
+  OnBoardRoute({_i18.Key? key})
       : super(OnBoardRoute.name,
             path: '/onboard', args: OnBoardRouteArgs(key: key));
 
@@ -232,7 +250,7 @@ class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
 class OnBoardRouteArgs {
   const OnBoardRouteArgs({this.key});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   @override
   String toString() {
@@ -251,7 +269,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.RegisterPage]
 class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i16.Key? key, String? email, String? name})
+  RegisterRoute({_i18.Key? key, String? email, String? name})
       : super(RegisterRoute.name,
             path: 'register/:email:name',
             args: RegisterRouteArgs(key: key, email: email, name: name),
@@ -263,7 +281,7 @@ class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, this.email, this.name});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   final String? email;
 
@@ -312,7 +330,7 @@ class NewListingRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.ChattingPage]
 class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
-  ChattingRoute({_i16.Key? key, required String userId})
+  ChattingRoute({_i18.Key? key, required String userId})
       : super(ChattingRoute.name,
             path: 'chat/:userId',
             args: ChattingRouteArgs(key: key, userId: userId),
@@ -324,7 +342,7 @@ class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
 class ChattingRouteArgs {
   const ChattingRouteArgs({this.key, required this.userId});
 
-  final _i16.Key? key;
+  final _i18.Key? key;
 
   final String userId;
 
@@ -335,7 +353,39 @@ class ChattingRouteArgs {
 }
 
 /// generated route for
-/// [_i12.HomePage]
+/// [_i12.ShoppingCartPage]
+class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
+  const ShoppingCartRoute() : super(ShoppingCartRoute.name, path: 'cart');
+
+  static const String name = 'ShoppingCartRoute';
+}
+
+/// generated route for
+/// [_i13.ProductListPage]
+class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
+  ProductListRoute({_i18.Key? key, required _i19.FilterData filterData})
+      : super(ProductListRoute.name,
+            path: 'products',
+            args: ProductListRouteArgs(key: key, filterData: filterData));
+
+  static const String name = 'ProductListRoute';
+}
+
+class ProductListRouteArgs {
+  const ProductListRouteArgs({this.key, required this.filterData});
+
+  final _i18.Key? key;
+
+  final _i19.FilterData filterData;
+
+  @override
+  String toString() {
+    return 'ProductListRouteArgs{key: $key, filterData: $filterData}';
+  }
+}
+
+/// generated route for
+/// [_i14.HomePage]
 class HomeRoute extends _i1.PageRouteInfo<void> {
   const HomeRoute() : super(HomeRoute.name, path: '');
 
@@ -343,7 +393,7 @@ class HomeRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.FavPage]
+/// [_i15.FavPage]
 class FavRoute extends _i1.PageRouteInfo<void> {
   const FavRoute() : super(FavRoute.name, path: 'favorites');
 
@@ -351,7 +401,7 @@ class FavRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.MessagesPage]
+/// [_i16.MessagesPage]
 class MessagesRoute extends _i1.PageRouteInfo<void> {
   const MessagesRoute() : super(MessagesRoute.name, path: 'messages');
 
@@ -359,7 +409,7 @@ class MessagesRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.UserPage]
+/// [_i17.UserPage]
 class ProfileRoute extends _i1.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: 'profile');
 

@@ -11,6 +11,7 @@ import 'package:my_instrument/services/models/responses/main/message/chat_messag
 import 'package:my_instrument/services/models/responses/main/message/message_response.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/widgets/data-loader/data_loader.dart';
+import 'package:my_instrument/shared/widgets/page_header_text.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:provider/provider.dart';
 
@@ -97,13 +98,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Text(
-                      "Conversations",
-                      style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
+                    const PageHeaderText(text: 'Conversations'),
                     const Spacer(),
                     Container(
                       padding: const EdgeInsets.only(left: 8,right: 8,top: 2,bottom: 2),

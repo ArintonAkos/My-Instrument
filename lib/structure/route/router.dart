@@ -10,8 +10,10 @@ import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
 import 'package:my_instrument/bloc/main/messages/messages.dart';
 import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
 import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
+import 'package:my_instrument/bloc/main/product_list/product_list_page.dart';
 import 'package:my_instrument/bloc/main/profile/about/about.dart';
 import 'package:my_instrument/bloc/main/profile/user_settings_page.dart';
+import 'package:my_instrument/bloc/main/shopping_cart/shopping_cart_page.dart';
 import 'package:my_instrument/bloc/main/splash/splash_page.dart';
 
 @MaterialAutoRouter(
@@ -48,6 +50,8 @@ import 'package:my_instrument/bloc/main/splash/splash_page.dart';
         AutoRoute(path: 'about', page: AboutPage),
         AutoRoute(path: 'new-listing/', page: NewListingPage),
         AutoRoute(path: 'chat/:userId', page: ChattingPage),
+        AutoRoute(path: 'cart', page: ShoppingCartPage),
+        AutoRoute(path: 'products', page: ProductListPage),
         RedirectRoute(path: '*', redirectTo: '/main/'),
       ]
     ),

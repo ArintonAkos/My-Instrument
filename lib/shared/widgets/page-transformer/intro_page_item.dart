@@ -107,23 +107,36 @@ class IntroPageItem extends StatelessWidget {
           vertical: 16.0,
           horizontal: 8.0,
         ),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(18.0),
-            child: Material(
-              elevation: 4.0,
-              borderRadius: BorderRadius.circular(8.0),
-                child: InkWell(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      image,
-                      imageOverlayGradient,
-                      _buildTextContainer(context),
-                    ],
-                  ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18.0),
+              child: Material(
+                elevation: 4.0,
+                borderRadius: BorderRadius.circular(8.0),
+                  child: InkWell(
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        image,
+                        imageOverlayGradient,
+                        _buildTextContainer(context),
+                      ],
+                    ),
                     onTap: onTap
+                  ),
+              )
+            ),
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {  },
                 ),
-          )
+              ),
+            ),
+          ]
         ),
       );
   }

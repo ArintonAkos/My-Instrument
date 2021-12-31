@@ -13,7 +13,7 @@ class ProfileService extends HttpService {
   Future<my_base_response.BaseResponse> getProfile(String id) async {
     if (await model.ensureAuthorized()) {
       Response res =
-      await getData(ProfileConstants.GetPublicProfile + id);
+      await getData(ProfileConstants.getPublicProfile + id);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -28,7 +28,7 @@ class ProfileService extends HttpService {
   Future<my_base_response.BaseResponse> getBaseProfile(String id) async {
     if (await model.ensureAuthorized()) {
       Response res =
-      await getData(ProfileConstants.GetBaseProfile + id);
+      await getData(ProfileConstants.getBaseProfile + id);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -43,7 +43,7 @@ class ProfileService extends HttpService {
 
   Future<my_base_response.BaseResponse> getMyProfile() async {
     if (await model.ensureAuthorized()) {
-      Response res = await getData(ProfileConstants.GetMyProfile);
+      Response res = await getData(ProfileConstants.getMyProfile);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
