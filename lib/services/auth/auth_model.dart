@@ -2,19 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:my_instrument/services/auth/auth_service.dart';
-import 'package:my_instrument/services/models/requests/auth/login_request.dart';
-import 'package:my_instrument/services/models/requests/auth/refresh_token_request.dart';
-import 'package:my_instrument/services/models/requests/auth/register_request.dart';
-import 'package:my_instrument/services/models/responses/auth/db_external_login_response.dart';
-import 'package:my_instrument/services/models/responses/auth/login_response.dart';
-import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart';
-import 'package:my_instrument/services/models/user.dart';
+import 'package:my_instrument/src/data/data_providers/services/auth_service.dart';
 import 'package:my_instrument/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/shared/exceptions/more_info_required_exception.dart';
 import 'package:my_instrument/shared/exceptions/uninitialized_exception.dart';
 import 'package:my_instrument/shared/utils/parse_methods.dart';
+import 'package:my_instrument/src/data/models/repository_models/user.dart';
+import 'package:my_instrument/src/data/models/requests/auth/login_request.dart';
+import 'package:my_instrument/src/data/models/requests/auth/refresh_token_request.dart';
+import 'package:my_instrument/src/data/models/requests/auth/register_request.dart';
+import 'package:my_instrument/src/data/models/responses/auth/db_external_login_response.dart';
+import 'package:my_instrument/src/data/models/responses/auth/login_response.dart';
+import 'package:my_instrument/src/data/models/responses/auth/refresh_token_response.dart';
+import 'package:my_instrument/src/data/models/responses/base_response.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

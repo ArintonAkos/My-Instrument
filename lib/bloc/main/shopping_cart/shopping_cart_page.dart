@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_instrument/bloc/main/home/widgets/search_field.dart';
-import 'package:my_instrument/services/main/shopping_cart/shopping_cart_service.dart';
-import 'package:my_instrument/services/models/responses/main/shopping_cart/get_cart_items_response.dart';
+import 'package:my_instrument/src/data/data_providers/services/shopping_cart_service.dart';
 import 'package:my_instrument/shared/widgets/data-loader/default_loader.dart';
 import 'package:my_instrument/shared/widgets/page_header_text.dart';
+import 'package:my_instrument/src/data/models/responses/main/shopping_cart/get_cart_items_response.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 
 import 'cart_item.dart';

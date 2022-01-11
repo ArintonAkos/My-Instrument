@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:my_instrument/models/chat_profile.dart';
-import 'package:my_instrument/services/main/message/message_service.dart';
-import 'package:my_instrument/services/main/signalr/signalr_service.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart';
+import 'package:my_instrument/src/data/data_providers/services/message_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/signalr_service.dart';
+import 'package:my_instrument/src/data/models/repository_models/chat_profile.dart';
 import 'package:my_instrument/shared/utils/list_parser.dart';
-import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
-import 'package:my_instrument/services/models/responses/main/message/message_response.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/widgets/data-loader/data_loader.dart';
 import 'package:my_instrument/shared/widgets/page_header_text.dart';
+import 'package:my_instrument/src/data/models/responses/base_response.dart';
+import 'package:my_instrument/src/data/models/responses/main/message/chat_message.dart';
+import 'package:my_instrument/src/data/models/responses/main/message/message_response.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:provider/provider.dart';
 

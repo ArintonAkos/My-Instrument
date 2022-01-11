@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
 import 'package:injector/injector.dart';
+import 'package:my_instrument/src/data/models/requests/backend_request.dart';
+import 'package:my_instrument/src/data/models/requests/multipart_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/auth_model.dart';
-import 'models/requests/backend_request.dart';
-import 'models/requests/multipart_request.dart' as multipart_request;
 
 class HttpService {
   static const String _localUrl = "https://myinstrument.conveyor.cloud/";
@@ -71,7 +71,7 @@ class HttpService {
     );
   }
 
-  Future<http.StreamedResponse> postMultipart(multipart_request.MultipartRequest data, String path) async {
+  Future<http.StreamedResponse> postMultipart(MultipartRequest data, String path) async {
     String? bearerToken = prefs.getString('token');
     var request = http.MultipartRequest(
       'POST',
@@ -92,6 +92,16 @@ class HttpService {
     }
 
     return request.send();
+  }
+
+  Future<http.Response> putData(String path) async {
+    String? bearerToken = prefs.getString('token');
+    return http.put(
+      Uri.parse(apiUrl + path),
+      headers: {
+        'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
+      }
+    );
   }
 
   Future<http.Response> deleteData(String path) async {

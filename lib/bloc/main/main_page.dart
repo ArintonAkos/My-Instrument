@@ -3,16 +3,18 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/main/message/message_service.dart';
-import 'package:my_instrument/services/main/signalr/signalr_service.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart';
 import 'package:my_instrument/shared/utils/list_parser.dart';
-import 'package:my_instrument/services/models/responses/main/message/chat_message.dart';
-import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_model.dart';
-import 'package:my_instrument/services/models/responses/main/message/unseen_message_member_response.dart';
 import 'package:my_instrument/shared/theme/theme_methods.dart';
+import 'package:my_instrument/src/data/data_providers/services/message_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/signalr_service.dart';
+import 'package:my_instrument/src/data/models/responses/base_response.dart';
+import 'package:my_instrument/src/data/models/responses/main/message/chat_message.dart';
+import 'package:my_instrument/src/data/models/responses/main/message/unseen_message_member_response.dart';
+import 'package:my_instrument/src/data/models/responses/main/message/unseen_message_member_model.dart';
+import 'package:my_instrument/src/data/repositories/favorite_repository.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 
@@ -34,8 +36,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-  return
-    AutoTabsScaffold(
+  return AutoTabsScaffold(
       extendBody: true,
       routes: const [
         HomeRoute(),

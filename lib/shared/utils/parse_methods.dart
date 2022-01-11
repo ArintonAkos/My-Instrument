@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:my_instrument/services/models/user.dart';
+import 'package:my_instrument/src/data/models/repository_models/user.dart';
 
 class ParseMethods {
   static List<String> parseStringList(List<dynamic>? jsonData) {

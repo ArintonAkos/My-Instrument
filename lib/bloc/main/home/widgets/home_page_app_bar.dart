@@ -21,11 +21,10 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
       _searchController.clear();
 
       AutoRouter.of(context).push(
-        ProductListRoute(filterData: FilterData(
-          search: searchValue,
-          categories: [],
-          filters: <int, List<int>>{}
-        )
+        ProductListRoute(
+          filterData: FilterData.initial(
+            search: searchValue,
+          )
       ));
     }
   }

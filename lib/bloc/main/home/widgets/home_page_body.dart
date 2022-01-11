@@ -76,10 +76,8 @@ class _HomePageBodyState extends State<HomePageBody> {
       onTap: () {
         AutoRouter.of(context).push(
           ProductListRoute(
-            filterData: FilterData(
-              filters: <int, List<int>>{},
+            filterData: FilterData.initial(
               categories: [1],
-              search: ''
             )
           )
         );
@@ -94,11 +92,7 @@ class _HomePageBodyState extends State<HomePageBody> {
       onTap: () {
         AutoRouter.of(context).push(
           ProductListRoute(
-            filterData: FilterData(
-              filters: <int, List<int>>{},
-              categories: [],
-              search: ''
-            )
+            filterData: FilterData.initial()
           )
         );
       }
