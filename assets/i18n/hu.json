@@ -109,6 +109,12 @@
     "OR_LABEL": "VAGY",
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
   },
+  "FILTER_PAGE": {
+    "ACTION_BUTTON": {
+      "CANCEL": "Mégse",
+      "ACCEPT": "Mentés"
+    }
+  },
   "SHARED": {
     "ERROR": {
       "BASIC_MESSAGE": "Hiba lépett fel, kérlek probálkozz később!",

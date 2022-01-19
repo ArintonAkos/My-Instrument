@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:my_instrument/services/http_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/data/data_providers/constants/favorite_constants.dart';
 import 'package:my_instrument/src/data/models/requests/main/favorite/favorite_request.dart';
 import 'package:my_instrument/src/data/models/responses/base_response.dart' as my_base_response;

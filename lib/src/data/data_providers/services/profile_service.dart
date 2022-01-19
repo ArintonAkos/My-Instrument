@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:my_instrument/services/http_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/data/models/responses/base_response.dart' as my_base_response;
 import 'package:my_instrument/src/data/models/responses/main/profile/base_profile_response.dart';
 import 'package:my_instrument/src/data/data_providers/constants/profile_constants.dart';

@@ -1,4 +1,4 @@
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 
 import '../../base_response.dart';
 import 'message_model.dart';

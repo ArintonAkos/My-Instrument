@@ -109,6 +109,12 @@
     "OR_LABEL": "SAU",
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
   },
+  "FILTER_PAGE": {
+    "ACTION_BUTTON": {
+      "CANCEL": "Anulare",
+      "ACCEPT": "Salvare"
+    }
+  },
   "SHARED": {
     "ERROR": {
       "BASIC_MESSAGE": "A apărut o eroare, încercați mai târziu!",

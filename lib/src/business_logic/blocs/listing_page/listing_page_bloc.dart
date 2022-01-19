@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_instrument/bloc/main/product_list/filter_data.dart';
+import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
 import 'package:my_instrument/src/data/repositories/listing_repository.dart';

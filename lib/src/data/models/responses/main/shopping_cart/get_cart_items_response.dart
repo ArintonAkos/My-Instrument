@@ -1,5 +1,5 @@
-import 'package:my_instrument/bloc/main/shopping_cart/cart_item_data.dart';
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/data/models/view_models/cart_item_data.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 
 import '../../base_response.dart';
 

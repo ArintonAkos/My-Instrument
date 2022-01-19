@@ -1,4 +1,4 @@
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
 
 class BaseProfileModel {

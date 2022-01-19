@@ -1,4 +1,4 @@
-import 'package:my_instrument/bloc/main/product_list/filter_data.dart';
+import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 
 import '../../backend_request.dart';
 

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:logging/logging.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/shared/connectivity/network_connectivity.dart';
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
+import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 

@@ -1,4 +1,4 @@
-import 'package:my_instrument/shared/utils/parsable_date_time.dart';
+import 'package:my_instrument/src/shared/utils/parsable_date_time.dart';
 
 class UnseenMessageMemberModel {
   final String userId;

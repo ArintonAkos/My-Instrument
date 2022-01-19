@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/shared/data/custom_status_codes.dart';
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
+import 'package:my_instrument/src/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/src/data/data_providers/constants/auth_constants.dart';
 import 'package:my_instrument/src/data/models/requests/auth/external_login_request.dart';
 import 'package:my_instrument/src/data/models/requests/auth/login_request.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:my_instrument/shared/translation/app_localizations.dart';
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 
 
 class CategoryModel {

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:avatars/avatars.dart';
-import 'package:my_instrument/shared/utils/parsable_date_time.dart';
+import 'package:my_instrument/src/shared/utils/parsable_date_time.dart';
 import 'package:my_instrument/src/data/models/responses/main/message/message_model.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:styled_widget/styled_widget.dart';

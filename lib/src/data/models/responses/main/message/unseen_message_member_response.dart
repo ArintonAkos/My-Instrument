@@ -1,5 +1,5 @@
 
-import 'package:my_instrument/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/shared/utils/list_parser.dart';
 import 'package:my_instrument/src/data/models/responses/main/message/unseen_message_member_model.dart';
 
 import '../../base_response.dart';

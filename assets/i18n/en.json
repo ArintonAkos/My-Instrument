@@ -109,6 +109,12 @@
     "OR_LABEL": "OR",
     "SIGN_IN_WITH_LABEL": "Sign in with"
   },
+  "FILTER_PAGE": {
+    "ACTION_BUTTON": {
+      "CANCEL": "Cancel",
+      "ACCEPT": "Accept"
+    }
+  },
   "SHARED": {
     "ERROR": {
       "BASIC_MESSAGE": "An error occurred, please try again later!",
