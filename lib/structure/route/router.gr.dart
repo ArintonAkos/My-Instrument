@@ -7,26 +7,38 @@
 // **************************************************************************
 // AutoRouteGenerator
 // **************************************************************************
+//
+// ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i18;
 
-import '../../src/presentation/pages/auth/forgot_password_page/forgot_password.dart' as _i7;
+import '../../src/data/models/view_models/filter_data.dart' as _i19;
+import '../../src/presentation/pages/auth/forgot_password_page/forgot_password.dart'
+    as _i7;
 import '../../src/presentation/pages/auth/login_page/login_page.dart' as _i5;
-import '../../src/presentation/pages/auth/register_page/register_page.dart' as _i6;
+import '../../src/presentation/pages/auth/register_page/register_page.dart'
+    as _i6;
 import '../../src/presentation/pages/base/error_page.dart' as _i2;
+import '../../src/presentation/pages/main/chatting_page/chatting_page.dart'
+    as _i11;
 import '../../src/presentation/pages/main/fav_page/fav.dart' as _i15;
 import '../../src/presentation/pages/main/home_page/home_page.dart' as _i14;
 import '../../src/presentation/pages/main/main_page.dart' as _i8;
-import '../../src/presentation/pages/main/chatting_page/chatting_page.dart' as _i11;
-import '../../src/presentation/pages/main/messages_page/messages_page.dart' as _i16;
-import '../../src/presentation/pages/main/new_listing_page/new_listing_page.dart' as _i10;
-import '../../src/presentation/pages/main/onboard_page/onboard_page.dart' as _i4;
-import '../../src/data/models/view_models/filter_data.dart' as _i19;
-import '../../src/presentation/pages/main/product_list_page/product_list_page.dart' as _i13;
-import '../../src/presentation/pages/main/profile/about_page/about_page.dart' as _i9;
-import '../../src/presentation/pages/main/profile/user_settings_page/user_settings_page.dart' as _i17;
-import '../../src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart' as _i12;
+import '../../src/presentation/pages/main/messages_page/messages_page.dart'
+    as _i16;
+import '../../src/presentation/pages/main/new_listing_page/new_listing_page.dart'
+    as _i10;
+import '../../src/presentation/pages/main/onboard_page/onboard_page.dart'
+    as _i4;
+import '../../src/presentation/pages/main/product_list_page/product_list_page.dart'
+    as _i13;
+import '../../src/presentation/pages/main/profile/about_page/about_page.dart'
+    as _i9;
+import '../../src/presentation/pages/main/profile/user_settings_page/user_settings_page.dart'
+    as _i17;
+import '../../src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart'
+    as _i12;
 import '../../src/presentation/pages/main/splash_page/splash_page.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {

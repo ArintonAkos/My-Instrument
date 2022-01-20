@@ -169,8 +169,7 @@ class Listing extends StatelessWidget {
                                   child: buildFavoriteButton(favoriteState, listingPageState)
                               ),
                               onPressed: () {
-                                FavoriteBloc favBloc = context.read<FavoriteBloc>();
-                                favBloc.add(FavoriteClickEvent(listingId: listing.listingId));
+                                context.read<FavoriteBloc>().add(FavoriteClickEvent(listingId: listing.listingId));
                               },
                             )
                         )
