@@ -78,6 +78,7 @@ dependencies:
   shared_preferences_web: ^2.0.3
   url_launcher_web: ^2.0.6
   mockito: ^5.0.17
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -127,6 +128,7 @@ flutter:
     - assets/music_festival.svg
     - assets/search_listing.svg
     - assets/profile.svg
+    - assets/no_image_placeholder.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

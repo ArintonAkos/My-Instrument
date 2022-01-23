@@ -13,6 +13,7 @@ class CategoryModel {
     nameHu = json?['nameHu'] ?? '';
     nameRo = json?['nameRo'] ?? '';
     imagePath = json?['imagePath'];
+    imageHash = json?['imageHash'];
     children = ListParser.parse<CategoryModel>(json?['childrenRaw'], parseCategoryModel);
   }
 
@@ -21,6 +22,7 @@ class CategoryModel {
   late final String nameHu;
   late final String nameRo;
   late final String? imagePath;
+  late final String? imageHash;
   late final List<CategoryModel>? children;
 
   String getCategoryName(BuildContext context) {

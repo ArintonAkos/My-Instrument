@@ -4,11 +4,12 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
+import 'package:my_instrument/src/presentation/widgets/category_slider/category_slider.dart';
+import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
+import 'package:my_instrument/src/presentation/widgets/popup.dart';
+import 'package:my_instrument/src/presentation/widgets/uploaded_image_preview.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
-import 'package:my_instrument/src/data/models/view_models/intro_item.dart';
-import 'package:my_instrument/src/presentation/widgets/page-transformer/intro_page_item.dart';
-import 'package:my_instrument/src/presentation/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 
 import '../../../widgets/discover_slider.dart';
@@ -23,42 +24,6 @@ class HomePageBody extends StatefulWidget {
 }
 
 class _HomePageBodyState extends State<HomePageBody> {
-
-  bool isLoading = false;
-
-  List<IntroItem> getSampleItems() {
-    return <IntroItem>[
-      IntroItem(
-        title: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.GUITAR_TEXT'
-        ),
-        category: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.GUITAR_TITLE'
-        ),
-        imageUrl: 'assets/guitar1.jpeg',
-      ),
-      IntroItem(title: AppLocalizations.of(context)!.translate(
-          'HOME.INSTRUMENT_CARD.DRUM_TEXT'),
-        category: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.DRUM_TITLE'),
-        imageUrl: 'assets/drums.jpg',),
-      IntroItem(title: AppLocalizations.of(context)!.translate(
-          'HOME.INSTRUMENT_CARD.BASS_TEXT'),
-        category: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.BASS_TITLE'),
-        imageUrl: 'assets/bass-guitar.jpg',),
-      IntroItem(title: AppLocalizations.of(context)!.translate(
-          'HOME.INSTRUMENT_CARD.VIOLIN_TEXT'),
-        category: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.VIOLIN_TITLE'),
-        imageUrl: 'assets/violin.jpeg',),
-      IntroItem(title: AppLocalizations.of(context)!.translate(
-          'HOME.INSTRUMENT_CARD.PIANO_TEXT'),
-        category: AppLocalizations.of(context)!.translate(
-            'HOME.INSTRUMENT_CARD.PIANO_TITLE'),
-        imageUrl: 'assets/piano.jpeg',),
-    ];
-  }
 
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -170,60 +135,25 @@ class _HomePageBodyState extends State<HomePageBody> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            buildInstrumentsHeader(),
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: const BlurHash(
-                      image: 'https://storage.googleapis.com/myinstrument-project-bucket/listings/303e8a52-de93-42a9-93dd-7744e9be818c/12e0b093-93c8-4145-ad48-24c1f04ff51e/images-20211230-134758.jpg',
-                      imageFit: BoxFit.cover,
-                      hash: "LfGR-ftRW9t7~qSiNGt7.9WsWDof",
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () {  },
-                      ),
-                    ),
-                  ),
-                ]
-              )
-            ),
-            ClipRRect(
-              child: SizedBox.fromSize(
-                size: const Size.fromHeight(300.0),
-                child: ClipRRect(
-                  child: PageTransformer(
-                    pageViewBuilder: (_context, visibilityResolver) {
-                      final sampleItems = getSampleItems();
-
-                      return PageView.builder(
-                        controller: PageController(viewportFraction: 0.85),
-                        itemCount: sampleItems.length,
-                        itemBuilder: (context, index) {
-                          final item = sampleItems[index];
-                          final pageVisibility =
-                          visibilityResolver.resolvePageVisibility(index);
-
-                          return IntroPageItem(
-                            item: item,
-                            pageVisibility: pageVisibility,
-                            onTap: () {},
-                          );
-                        },
-                      );
-                    },
+            SizedBox(height: 20),
+            /*LongPressItem(
+                previewBuilder: (BuildContext context) => ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701',
+                    height: 150,
+                    width: 150,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-            ),
+                popupBuilder: (BuildContext context) => ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                      'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701'
+                  ),
+                )
+            ),*/
+            CategorySlider(),
             buildListingsHeader(),
             DiscoverSlider(imgList: imgList),
             const SizedBox(

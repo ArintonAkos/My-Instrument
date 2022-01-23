@@ -14,6 +14,7 @@
   "HOME": {
     "TITLE": "Home",
     "INSTRUMENTS": "Instruments",
+    "CATEGORIES": "Categories",
     "LISTINGS": "Listings",
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Guitars",

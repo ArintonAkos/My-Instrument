@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:my_instrument/src/presentation/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/src/data/models/view_models/intro_item.dart';
 
@@ -41,7 +42,7 @@ class IntroPageItem extends StatelessWidget {
     var categoryText = _applyTextEffects(
       translationFactor: 300.0,
       child: Text(
-        item.category,
+        item.title,
         style: textTheme.caption!.copyWith(
           color: Colors.white70,
           fontWeight: FontWeight.bold,
@@ -79,18 +80,20 @@ class IntroPageItem extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    var image = Image.asset(
-      item.imageUrl,
-      fit: BoxFit.cover,
-      alignment: FractionalOffset(
-        0.5 + (pageVisibility.pagePosition / 3),
-        0.5,
-      ),
-    );
+  Widget getImage() {
+    if (item.imageUrl != null) {
+      return BlurHash(
+        image: item.imageUrl!,
+        imageFit: BoxFit.cover,
+        hash: item.imageHash ?? '',
+      );
+    }
 
-    var imageOverlayGradient = const DecoratedBox(
+    return Image.asset('assets/no_image_placeholder.jpg');
+  }
+
+  Widget imageOverlayGradient() {
+    return const DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset.bottomCenter,
@@ -102,43 +105,46 @@ class IntroPageItem extends StatelessWidget {
         ),
       ),
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 8.0,
-        ),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(18.0),
-              child: Material(
-                elevation: 4.0,
-                borderRadius: BorderRadius.circular(8.0),
-                  child: InkWell(
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        image,
-                        imageOverlayGradient,
-                        _buildTextContainer(context),
-                      ],
-                    ),
-                    onTap: onTap
-                  ),
-              )
-            ),
-            Positioned.fill(
-              child: Material(
-                color: Colors.transparent,
+      padding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 8.0,
+      ),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18.0),
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8.0),
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {  },
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      getImage(),
+                      imageOverlayGradient(),
+                      _buildTextContainer(context),
+                    ],
+                  ),
+                  onTap: onTap
                 ),
+            )
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {  },
               ),
             ),
-          ]
-        ),
-      );
+          ),
+        ]
+      ),
+    );
   }
 }

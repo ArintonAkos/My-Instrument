@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
+import 'package:my_instrument/src/data/repositories/category_repository.dart';
 import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
 
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
@@ -86,8 +87,11 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => FavoriteRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => FavoriteRepository()),
+        RepositoryProvider(create: (context) => CategoryRepository())
+      ],
       child: MultiProvider(
           providers: [
             ChangeNotifierProvider<AppLanguage>(
@@ -128,7 +132,8 @@ class _MyAppState extends State<MyApp> {
                     navigatorObservers: () => [
                       FirebaseAnalyticsObserver(
                         analytics: FirebaseAnalytics.instance
-                      )
+                      ),
+                      HeroController()
                     ],
                     routes: (_) => [
                       if (initialize.initialized)
