@@ -2,12 +2,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/presentation/widgets/category_slider/category_slider.dart';
 import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
-import 'package:my_instrument/src/presentation/widgets/popup.dart';
-import 'package:my_instrument/src/presentation/widgets/uploaded_image_preview.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
@@ -136,6 +133,9 @@ class _HomePageBodyState extends State<HomePageBody> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 20),
+            CategorySlider(
+              headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
+            ),
             /*LongPressItem(
                 previewBuilder: (BuildContext context) => ClipRRect(
                   borderRadius: BorderRadius.circular(20),
@@ -153,7 +153,18 @@ class _HomePageBodyState extends State<HomePageBody> {
                   ),
                 )
             ),*/
-            CategorySlider(),
+            CategorySlider(
+              headerText: AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
+              categoryId: 1,
+            ),
+            CategorySlider(
+              headerText: AppLocalizations.of(context)!.translate('HOME.ACCESSORIES'),
+              categoryId: 2,
+            ),
+            CategorySlider(
+              headerText: AppLocalizations.of(context)!.translate('HOME.GADGETS'),
+              categoryId: 3,
+            ),
             buildListingsHeader(),
             DiscoverSlider(imgList: imgList),
             const SizedBox(

@@ -14,7 +14,7 @@ class CategoryModel {
     nameRo = json?['nameRo'] ?? '';
     imagePath = json?['imagePath'];
     imageHash = json?['imageHash'];
-    children = ListParser.parse<CategoryModel>(json?['childrenRaw'], parseCategoryModel);
+    children = ListParser.parse<CategoryModel>(json?['children'], parseCategoryModel);
   }
 
   late final int id;
@@ -23,7 +23,7 @@ class CategoryModel {
   late final String nameRo;
   late final String? imagePath;
   late final String? imageHash;
-  late final List<CategoryModel>? children;
+  late final List<CategoryModel> children;
 
   String getCategoryName(BuildContext context) {
     Locale? appLocale = AppLocalizations.of(context)?.locale;

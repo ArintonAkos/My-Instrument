@@ -14,9 +14,13 @@ import 'package:shimmer/shimmer.dart';
 
 class CategorySlider extends StatelessWidget {
   final PageController _controller = PageController(viewportFraction: 0.85);
+  final int? categoryId;
+  final String headerText;
 
   CategorySlider({
-    Key? key
+    Key? key,
+    this.categoryId,
+    required this.headerText,
   }) : super(key: key);
 
   Widget buildCategoryHeader(BuildContext context) {
@@ -25,7 +29,7 @@ class CategorySlider extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
+            headerText,
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold
@@ -97,7 +101,10 @@ class CategorySlider extends StatelessWidget {
         BlocProvider(
           create: (context) => CategoryBloc(
             categoryRepository: RepositoryProvider.of<CategoryRepository>(context)
-          )..add(const LoadBaseCategories())
+          )..add((categoryId != null)
+            ? LoadCategories(categoryId: categoryId!)
+            : const LoadBaseCategories()
+          )
         )
       ],
       child: Column(

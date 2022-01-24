@@ -47,7 +47,7 @@ class PopupAction extends StatelessWidget {
           child: Ink(
             width: 200,
             height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            padding: const EdgeInsets.only(left: 15, top: 5, bottom: 5),
             color: Theme.of(context).colorScheme.surface,
             child: Row(
               children: [
@@ -62,11 +62,13 @@ class PopupAction extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Icon(
-                  iconData,
-                  color: (isDanger ?? false)
-                      ? CupertinoColors.destructiveRed
-                      : Theme.of(context).colorScheme.onSurface
+                Expanded(
+                  child: Icon(
+                    iconData,
+                    color: (isDanger ?? false)
+                        ? CupertinoColors.destructiveRed
+                        : Theme.of(context).colorScheme.onSurface
+                  ),
                 )
               ],
             ),
