@@ -18,8 +18,8 @@ class CustomAppTheme {
   final Color textFieldBackgroundColor;
   final Color textFieldHintColor;
   final List<Color> authPagesPrimaryColors;
-  final Color NewListingTextField;
-  final Color NewListingIcon;
+  final Color newListingTextField;
+  final Color newListingIcon;
   final Color filterActionButtonColor;
   final Color onFilterActionButtonColor;
 
@@ -37,10 +37,9 @@ class CustomAppTheme {
     required this.textFieldBackgroundColor,
     required this.textFieldHintColor,
     required this.filterActionButtonColor,
-    required this.onFilterActionButtonColor
-    required this.textFieldHintColor,
-    required this.NewListingTextField,
-    required this.NewListingIcon
+    required this.onFilterActionButtonColor,
+    required this.newListingTextField,
+    required this.newListingIcon
   });
 }
 
@@ -71,9 +70,8 @@ class AppThemeData {
     ],
     textFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
     textFieldHintColor: const Color(0xff000000),
-    NewListingTextField: const Color(0xff2c2c2c),
-    NewListingIcon: const Color(0xff2c2c2c),
-    textFieldHintColor: const Color(0xff000000),
+    newListingTextField: const Color(0xff2c2c2c),
+    newListingIcon: const Color(0xff2c2c2c),
     filterActionButtonColor: const Color(0xFF41C2F5),
     onFilterActionButtonColor: Colors.white
   );
@@ -96,11 +94,10 @@ class AppThemeData {
     ],
     textFieldBackgroundColor: const Color(0xff131313),
     textFieldHintColor: const Color(0xffffffff),
+    newListingTextField: const Color(0xffdedede),
+    newListingIcon: const Color(0xffdedede),
     filterActionButtonColor: const Color(0xFF2A2A2A),
     onFilterActionButtonColor: Colors.white
-    textFieldHintColor: const Color(0xffffffff),
-    NewListingTextField: const Color(0xffdedede),
-    NewListingIcon: const Color(0xffdedede),
   );
 
 

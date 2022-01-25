@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "678342201738",
+    "project_id": "myinstruments-336216",
+    "storage_bucket": "myinstruments-336216.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678342201738:android:49610831e439c51083b873",
+        "android_client_info": {
+          "package_name": "com.arinton.my_instrument"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678342201738-fvljg8g4lqotq4qquegvo8vtamhd5rhv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arinton.my_instrument",
+            "certificate_hash": "430a93f08f3c2ffa07cb655e9eacb387ca58f9bf"
+          }
+        },
+        {
+          "client_id": "678342201738-rgbq6132ment55k9sblmaon4vb766nq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUNDFpbAzdpBLehgXHVbehs7z8d4LPvvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678342201738-rgbq6132ment55k9sblmaon4vb766nq4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

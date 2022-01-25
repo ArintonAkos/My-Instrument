@@ -1,18 +1,16 @@
 import 'dart:io';
-import 'dart:ui';
+
 import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:my_instrument/shared/theme/app_theme_data.dart';
-import 'package:my_instrument/shared/theme/theme_manager.dart';
-import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/image_gallery.dart';
-import 'package:my_instrument/shared/widgets/select_bottom_sheet.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
+import 'package:my_instrument/src/data/models/view_models/select_bottom_sheet.dart';
+import 'package:my_instrument/src/shared/theme/app_theme_data.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 final Color kAppBarDefaultColor = Colors.grey.withOpacity(0.4);
@@ -128,7 +126,7 @@ class _NewListingPageState extends State<NewListingPage>
             errorText ?? "",
             style: TextStyle(
                 fontSize: 14,
-                color: theme?.customTheme.AuthErrorColor,
+                color: theme?.customTheme.authErrorColor,
             ),
           ),
         )
