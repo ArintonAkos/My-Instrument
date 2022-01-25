@@ -1,13 +1,23 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_awesome_select/flutter_awesome_select.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:my_instrument/bloc/auth/auth_pages_constants.dart';
 import 'package:my_instrument/shared/theme/app_theme_data.dart';
+import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/theme/theme_methods.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/shared/widgets/image_gallery.dart';
+import 'package:my_instrument/shared/widgets/select_bottom_sheet.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:styled_widget/styled_widget.dart';
+
+final Color kAppBarDefaultColor = Colors.grey.withOpacity(0.4);
 
 class ListingDetailsPage extends StatefulWidget {
   const ListingDetailsPage({Key? key}) : super(key: key);
@@ -16,8 +26,58 @@ class ListingDetailsPage extends StatefulWidget {
   State<StatefulWidget> createState() => _ListingDetailsPageState();
 }
 
-class _ListingDetailsPageState extends State<ListingDetailsPage> {
+class _ListingDetailsPageState extends State<ListingDetailsPage>
+    with TickerProviderStateMixin {
+  late AnimationController _colorAnimationController;
+  Animation? _colorTween, _iconColorTween;
 
+  int _selectIndex = 0;
+  bool isAppbarCollapsing = false;
+
+  @override
+  void initState() {
+    _colorAnimationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 0));
+
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _colorTween = ColorTween(
+          begin: kAppBarDefaultColor,
+          end: Theme.of(context).colorScheme.surface
+      ).animate(_colorAnimationController);
+      _iconColorTween = ColorTween(
+          begin: Colors.white,
+          end: Theme.of(context).colorScheme.onSurface
+      ).animate(_colorAnimationController);
+    });
+  }
+
+  bool _scrollListener(ScrollNotification scrollInfo) {
+    if (scrollInfo.metrics.axis == Axis.vertical) {
+      _colorAnimationController.animateTo(scrollInfo.metrics.pixels / 350);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  void imageGallery() => Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => GalleryImg(urlImages: imgList)
+  ));
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  int titleCharNumb = 128;
+  double titleFontSize = 20.0;
+  double priceFontSize = 20.0;
+  int priceCharNumb = 10;
+  int descriptionCharNumb = 500;
+  String _listingDescription = 'The description of your instrument';
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1558098329-a11cff621064?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=636&q=80',
     'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1100&q=80',
@@ -25,97 +85,251 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
     'https://images.unsplash.com/photo-1550291652-6ea9114a47b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80'
   ];
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String? _hero = 'bat';
+
+
+  List<S2Choice<String>> heroes = [
+    S2Choice<String>(value: 'sup', title: 'Drums'),
+    S2Choice<String>(value: 'hul', title: 'Bass'),
+    S2Choice<String>(value: 'spi', title: 'Piano'),
+    S2Choice<String>(value: 'iro', title: 'Violin'),
+  ];
+
+
+  Widget _buildTF(String _formHint, AppThemeData? theme, {
+    TextEditingController? inputController,
+    TextInputType? textInputType,
+    String? errorText,
+    int? characterNumber,
+    double? fSize,
+    IconData? iconData,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+          child: TextFormField(
+            maxLines: 10,
+            minLines: 1,
+            maxLength: characterNumber,
+            keyboardType: textInputType,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.black12,
+              labelStyle: TextStyle(
+                fontSize: fSize,
+              ),
+              labelText: _formHint,
+              helperText: '',
+              enabledBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(30)
+              ),
+
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Text(
+            errorText ?? "",
+            style: TextStyle(
+              fontSize: 14,
+              color: theme?.customTheme.AuthErrorColor,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+
+  Widget _buildTitleTF() {
+    return _buildTF(
+      AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
+      Provider.of<ThemeNotifier>(context).getTheme(),
+      inputController: TextEditingController(),
+      textInputType: TextInputType.name,
+      characterNumber: titleCharNumb,
+      fSize: titleFontSize,
+    );
+  }
+
+  Widget _buildPriceTF() {
+    return _buildTF(
+      'Enter the price',
+      Provider.of<ThemeNotifier>(context).getTheme(),
+      inputController: TextEditingController(),
+      textInputType: TextInputType.number,
+      characterNumber: priceCharNumb,
+      fSize: priceFontSize,
+    );
+  }
+
+  Widget _buildDescriptionTF() {
+    return _buildTF(
+      'Enter the description of your instrument',
+      Provider.of<ThemeNotifier>(context).getTheme(),
+      inputController: TextEditingController(),
+      textInputType: TextInputType.multiline,
+      characterNumber: descriptionCharNumb,
+      fSize: titleFontSize,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: 60.0),
-          child: (
-            <Widget>[
-              Stack(
-                children: [
-                  ClipPath(
-                    clipper: ImageClipper(),
-                    child: SizedBox(
-                      height: 300,
-                      child: PageView.builder(
-                        controller: controller,
-                        itemCount: imgList.length,
-                        itemBuilder: (_, index) {
-                          final pics = imgList[index];
-                          return FittedBox(
-                              fit: BoxFit.cover,
-                              child: Image(
-                                image: NetworkImage(pics),
-                              )
-                          );
-                        },
-                      ),
-                    ),
+      body: NotificationListener<ScrollNotification>(
+        onNotification: _scrollListener,
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              height: 300,
+              child: PageView.builder(
+                controller: controller,
+                itemCount: imgList.length,
+                itemBuilder: (_, index) {
+                  final pics = imgList[index];
+                  return FittedBox(
+                      fit: BoxFit.cover,
+                      child: InkWell(
+                        child: Image(
+                          image: NetworkImage(pics),
+                        ),
+                        onTap: imageGallery,
+                      )
+                  );
+                },
+              ),
+            ),
+            Positioned(
+              left: 170,
+              top: 240,
+              child: SmoothPageIndicator(
+                controller: controller,
+                count: imgList.length,
+                effect: WormEffect(
+                    dotColor: Colors.grey,
+                    activeDotColor:  Colors.white,
+                    dotHeight: 7.0,
+                    dotWidth: 7.0
+                ),
+              ),
+            ),
+            DraggableScrollableSheet(
+                initialChildSize: 0.6,
+                minChildSize: 0.6,
+                maxChildSize: 1.0,
+                expand: true,
+                builder: (context, controller) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                    color: Theme.of(context).colorScheme.surface,
                   ),
-                  Positioned(
-                    child: SmoothPageIndicator(
-                      controller: controller,
-                      count: imgList.length,
-                      effect: WormEffect(
-                          dotColor: getCustomTheme(context)?.DotColor ?? Colors.blueGrey,
-                          activeDotColor: getCustomTheme(context)?.ActiveDotColor ?? Colors.white,
-                          dotHeight: 8.0,
-                          dotWidth: 8.0
+                  child: ListView(
+                    controller: controller,
+                    children: [
+                      SizedBox(
+                        height: 60,
                       ),
-                    ),
-                    left: 30,
-                    bottom: 3,
+                      _buildTitleTF(),
+                      _buildPriceTF(),
+                      _buildDescriptionTF(),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Card(
+
+                          elevation: 5,
+                          child: ListTile(
+                            tileColor: Theme.of(context).colorScheme.secondary,
+                            title: Text('Select the type of your product'),
+                            trailing: IconButton(
+                              splashRadius: 20,
+                              icon: Icon(Icons.arrow_forward_ios),
+                              onPressed: () {
+                                showCupertinoModalBottomSheet(context: context,
+                                  builder: (context) => SelectBottomSheet(),
+                                );
+                              },
+
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue
-                      ),
-                      alignment: Alignment.center,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
+                )
+            ),
+            SizedBox(
+              height: 50,
+              child: AnimatedBuilder(
+                animation: _colorAnimationController,
+                builder: (context, child) => AppBar(
+                  backgroundColor: _colorTween?.value ?? kAppBarDefaultColor,
+                  elevation: 0,
+                  titleSpacing: 0.0,
+                  title: Row(
+                    children: [
+                      IconButton(
+                        splashRadius: 20,
                         icon: Icon(
-                          Icons.arrow_back,
-                          size: 20,
+                          CupertinoIcons.back,
+                          color: _iconColorTween?.value,
                         ),
                         onPressed: () {
-                          Modular.to.popUntil(ModalRoute.withName('/home/'));
+
                         },
                       ),
-                    ),
-                    top: 30,
-                    left: 20,
-                  )
-                ],
-              ),
+                      Text(
+                        "Create your new listing",
+                        style: TextStyle(
+                            color: _iconColorTween?.value,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                        ),
+                      )
+                    ],
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      splashRadius: 20,
+                      icon: Icon(
+                        Icons.local_grocery_store,
+                        color: _iconColorTween?.value,
+                      ),
+                      onPressed: () {
 
-            ].toColumn()
-          ),
+                      },
+                    ),
+                    IconButton(
+                      splashRadius: 20,
+                      icon: Icon(
+                        Icons.favorite,
+                        color: _iconColorTween?.value,
+                      ),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      splashRadius: 20,
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: _iconColorTween?.value,
+                      ),
+                      onPressed: () {},
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+
+          ],
         ),
       ),
     );
   }
-}
 
-class ImageClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-    path.lineTo(0, size.height - 65);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
-  
 }

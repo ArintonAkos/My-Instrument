@@ -18,6 +18,8 @@ class CustomAppTheme {
   final Color TextFieldBackgroundColor;
   final Color TextFieldHintColor;
   final List<Color> AuthPagesPrimaryColors;
+  final Color NewListingTextField;
+  final Color NewListingIcon;
 
   const CustomAppTheme({
     required this.LoginGradientStart,
@@ -31,7 +33,9 @@ class CustomAppTheme {
     required this.ActiveDotColor,
     required this.AuthPagesPrimaryColors,
     required this.TextFieldBackgroundColor,
-    required this.TextFieldHintColor
+    required this.TextFieldHintColor,
+    required this.NewListingTextField,
+    required this.NewListingIcon,
   });
 }
 
@@ -61,7 +65,9 @@ class AppThemeData {
       const Color(0xFF71D1F7).withOpacity(0.3),
     ],
     TextFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
-    TextFieldHintColor: const Color(0xff000000)
+    TextFieldHintColor: const Color(0xff000000),
+    NewListingTextField: const Color(0xff2c2c2c),
+    NewListingIcon: const Color(0xff2c2c2c),
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
@@ -81,7 +87,9 @@ class AppThemeData {
       const Color(0xFF323232).withOpacity(1)
     ],
     TextFieldBackgroundColor: const Color(0xff131313),
-    TextFieldHintColor: const Color(0xffffffff)
+    TextFieldHintColor: const Color(0xffffffff),
+    NewListingTextField: const Color(0xffdedede),
+    NewListingIcon: const Color(0xffdedede),
   );
 
 

@@ -29,7 +29,38 @@
     }
   },
   "NEW_LISTING": {
-    "TITLE": "Új hirdetés"
+    "TITLE": "Új hírdetés",
+    "IMAGE_DROPPER": {
+      "LABEL": "Tölsön fel képet a termékéről",
+      "CAMERA": "Kamera",
+      "GALLERY": "Galéria"
+    },
+    "TITLE_INPUT": {
+      "LABEL": "Cím",
+      "HINT": "Írja be a hírdetése címét"
+    },
+    "PRICE_INPUT": {
+      "LABEL": "Ár",
+      "HINT": "Írja be a hírdetése árát"
+    },
+    "DESCRIPTION_INPUT": {
+      "LABEL": "Leírás",
+      "HINT": "Írja be a hírdetése leírását"
+    },
+    "CATEGORY_SELECT": {
+      "LABEL": "Válasszon",
+      "HINT": "Válassza ki az árúja típusát"
+    },
+    "PRIVATE_FIRM": {
+      "LABEL": "Privát vagy cég",
+      "PRIVATE": "Privát",
+      "FIRM": "Cég"
+    },
+    "NEW_USED": {
+      "LABEL": "Kondíció",
+      "NEW": "új",
+      "USED": "Használt"
+    }
   },
   "FAV": {
     "TITLE": "Kedvencek"
@@ -45,7 +76,7 @@
       },
       "TERMS_OF_SERVICE": {
         "TITLE": "Szolgáltatási feltételek",
-        "DESCRIPTION": "Olvasd el a szolgáltatási feltételek",
+        "DESCRIPTION": "Olvasd el a szolgáltatási feltételek"
       },
       "PRIVACY_POLICY": {
         "TITLE": "Adatvédelmi irányelvek",
