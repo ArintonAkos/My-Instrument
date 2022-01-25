@@ -79,7 +79,6 @@ dependencies:
   url_launcher_web: ^2.0.6
   mockito: ^5.0.17
   shimmer: ^2.0.0
-  auto_route: ^3.2.0
   flutter_awesome_select: ^6.0.1
   photo_view: ^0.13.0
   image_cropper: ^1.4.1

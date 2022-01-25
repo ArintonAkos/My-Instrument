@@ -10,10 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../change_notifiers/auth_model.dart';
 
 class HttpService {
-  static const String _localUrl = "https://myinstrument.conveyor.cloud/";
-  static const String _localRemoteUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _localUrl = "https://myinstrument-yy3.conveyor.cloud/";
+  static const String _localRemoteUrl = "https://myinstrument-yy3.conveyor.cloud/";
+
   static const String _productionUrl = "";
   static const String _productionRemoteUrl = "";
+
   final _injector = Injector.appInstance;
 
   late final AuthModel model;
