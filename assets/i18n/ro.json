@@ -31,7 +31,38 @@
     }
   },
   "NEW_LISTING": {
-    "TITLE": "Anunț nou"
+    "TITLE": "Anunț nou",
+    "IMAGE_DROPPER": {
+      "LABEL": "Încărcați imagini ale produsului dvs",
+      "CAMERA": "Aparat foto",
+      "GALLERY": "Galerie"
+    },
+    "TITLE_INPUT": {
+      "LABEL": "Titlu",
+      "HINT": "Introduceți titlul înregistrării dvs"
+    },
+    "PRICE_INPUT": {
+      "LABEL": "Preț",
+      "HINT": "Introduceți prețul înregistrării dvs"
+    },
+    "DESCRIPTION_INPUT": {
+      "LABEL": "Descriere",
+      "HINT": "Introduceți descrierea înregistrării dvs"
+    },
+    "CATEGORY_SELECT": {
+      "LABEL": "Selectați",
+      "HINT": "Selectați tipul produsului dvs\n"
+    },
+    "PRIVATE_FIRM": {
+      "LABEL": "Privat sau firmă",
+      "PRIVATE": "Privat",
+      "FIRM": "Firmă"
+    },
+    "NEW_USED": {
+      "LABEL": "Condiție",
+      "NEW": "Nou",
+      "USED": "Folosit"
+    }
   },
   "FAV": {
     "TITLE": "Favorite"

@@ -15,6 +15,11 @@ const kHintTextStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
+const nHintTextStyle = TextStyle(
+  color: Colors.black,
+  fontFamily: 'OpenSans',
+);
+
 const kLabelStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
@@ -67,6 +72,12 @@ BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
         offset: Offset(0, 2),
       ),
     ],
+  );
+}
+
+BoxDecoration nBoxDecorationStyle() {
+  return const BoxDecoration(
+    color: Colors.transparent,
   );
 }
 

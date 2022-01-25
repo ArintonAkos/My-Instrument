@@ -32,7 +32,38 @@
     }
   },
   "NEW_LISTING": {
-    "TITLE": "New Listing"
+    "TITLE": "New listing",
+    "IMAGE_DROPPER": {
+      "LABEL": "Upload images of your product",
+      "CAMERA": "Camera",
+      "GALLERY": "Gallery"
+    },
+    "TITLE_INPUT": {
+      "LABEL": "Title",
+      "HINT": "Enter the title of your listing"
+    },
+    "PRICE_INPUT": {
+      "LABEL": "Price",
+      "HINT": "Enter the price of your listing"
+    },
+    "DESCRIPTION_INPUT": {
+      "LABEL": "Description",
+      "HINT": "Enter the description of your listing"
+    },
+    "CATEGORY_SELECT": {
+      "LABEL": "Select",
+      "HINT": "Select the type of your product"
+    },
+    "PRIVATE_FIRM": {
+      "LABEL": "Private or firm",
+      "PRIVATE": "Private",
+      "FIRM": "Firm"
+    },
+    "NEW_USED": {
+      "LABEL": "Condition",
+      "NEW": "New",
+      "USED": "Used"
+    }
   },
   "FAV": {
     "TITLE": "Favorites"
