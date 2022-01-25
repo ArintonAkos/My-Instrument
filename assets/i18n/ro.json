@@ -14,6 +14,8 @@
   "HOME": {
     "TITLE": "Acasă",
     "INSTRUMENTS": "Instrumente",
+    "ACCESSORIES": "Accesorii",
+    "GADGETS": "Gadgeturi",
     "LISTINGS": "Listări",
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Chitare",
@@ -139,6 +141,12 @@
     "REMEMBER_ME_LABEL":  "Autentificare automată",
     "OR_LABEL": "SAU",
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
+  },
+  "FILTER_PAGE": {
+    "ACTION_BUTTON": {
+      "CANCEL": "Anulare",
+      "ACCEPT": "Salvare"
+    }
   },
   "SHARED": {
     "ERROR": {

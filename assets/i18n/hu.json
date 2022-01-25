@@ -14,6 +14,8 @@
   "HOME": {
     "TITLE": "Otthon",
     "INSTRUMENTS": "Hangszerek",
+    "ACCESSORIES": "Tartozékok",
+    "GADGETS": "Készülékek",
     "LISTINGS": "Hírdetések",
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Gitárok",
@@ -139,6 +141,12 @@
     "REMEMBER_ME_LABEL":  "Maradj bejelentkezve",
     "OR_LABEL": "VAGY",
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
+  },
+  "FILTER_PAGE": {
+    "ACTION_BUTTON": {
+      "CANCEL": "Mégse",
+      "ACCEPT": "Mentés"
+    }
   },
   "SHARED": {
     "ERROR": {

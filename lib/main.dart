@@ -2,16 +2,20 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:my_instrument/bloc/main/splash/initialize_notifier.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/main/signalr/signalr_service.dart';
-import 'package:my_instrument/shared/connectivity/network_connectivity.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
+import 'package:my_instrument/src/data/repositories/category_repository.dart';
+import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
 
-import 'package:my_instrument/shared/theme/theme_manager.dart';
-import 'package:my_instrument/shared/translation/app_language.dart';
-import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:logging/logging.dart';
+import 'package:my_instrument/src/business_logic/blocs/favorite/favorite_bloc.dart';
+import 'package:my_instrument/src/data/data_providers/services/signalr_service.dart';
+import 'package:my_instrument/src/data/repositories/favorite_repository.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 
 import 'package:provider/provider.dart';
@@ -83,55 +87,71 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppLanguage>(
-            create: (_) => appLanguage,
-          ),
-          ChangeNotifierProvider<ThemeNotifier>(
-            create: (_) => themeNotifier
-          ),
-          ChangeNotifierProvider<InitializeNotifier>(
-            create: (_) => initializeNotifier,
-          )
-        ],
-        child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (
-          MaterialApp.router(
-            locale: language.appLocal,
-            supportedLocales: const [
-              Locale('en', ''),
-              Locale('ro', ''),
-              Locale('hu', '')
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => FavoriteRepository()),
+        RepositoryProvider(create: (context) => CategoryRepository())
+      ],
+      child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<AppLanguage>(
+              create: (_) => appLanguage,
+            ),
+            ChangeNotifierProvider<ThemeNotifier>(
+              create: (_) => themeNotifier
+            ),
+            ChangeNotifierProvider<InitializeNotifier>(
+              create: (_) => initializeNotifier,
+            )
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FavoriteBloc(
+                    favoriteRepository: RepositoryProvider.of<FavoriteRepository>(context)
+                )..add(const LoadFavoritesEvent())
+              )
             ],
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
-            ],
-            title: 'MyInstrument',
-            theme: theme.getTheme()?.materialTheme,
-            routerDelegate: AutoRouterDelegate.declarative(
-                _appRouter,
-                navigatorObservers: () => [
-                  FirebaseAnalyticsObserver(
-                    analytics: FirebaseAnalytics.instance
-                  )
+            child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (
+              MaterialApp.router(
+                locale: language.appLocal,
+                supportedLocales: const [
+                  Locale('en', ''),
+                  Locale('ro', ''),
+                  Locale('hu', '')
                 ],
-                routes: (_) => [
-                  if (initialize.initialized)
-                    if (isSignedIn)
-                      const BaseRouter(children: [MainRoute()])
-                    else if (initialize.boardingCompleted)
-                      const AuthRouter(children: [LoginRoute()])
-                    else
-                      OnBoardRoute()
-                  else
-                    SplashRoute()
-                ]),
-            routeInformationParser: _appRouter.defaultRouteParser(includePrefixMatches: true),
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate
+                ],
+                title: 'MyInstrument',
+                theme: theme.getTheme()?.materialTheme,
+                routerDelegate: AutoRouterDelegate.declarative(
+                    _appRouter,
+                    navigatorObservers: () => [
+                      FirebaseAnalyticsObserver(
+                        analytics: FirebaseAnalytics.instance
+                      ),
+                      HeroController()
+                    ],
+                    routes: (_) => [
+                      if (initialize.initialized)
+                        if (isSignedIn)
+                          const BaseRouter(children: [MainRoute()])
+                        else if (initialize.boardingCompleted)
+                          const AuthRouter(children: [LoginRoute()])
+                        else
+                          OnBoardRoute()
+                      else
+                        SplashRoute()
+                    ]),
+                routeInformationParser: _appRouter.defaultRouteParser(includePrefixMatches: true),
+              )
+            )
+        ),
           )
-        )
-      )
+      ),
     );
   }
 

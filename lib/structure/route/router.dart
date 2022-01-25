@@ -1,20 +1,20 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:my_instrument/bloc/auth/forgot_password.dart';
-import 'package:my_instrument/bloc/auth/login.dart';
-import 'package:my_instrument/bloc/auth/register.dart';
-import 'package:my_instrument/bloc/base/error_page.dart';
-import 'package:my_instrument/bloc/main/fav/fav.dart';
-import 'package:my_instrument/bloc/main/home/home_page.dart';
-import 'package:my_instrument/bloc/main/main_page.dart';
-import 'package:my_instrument/bloc/main/messages/chatting_page.dart';
-import 'package:my_instrument/bloc/main/messages/messages.dart';
-import 'package:my_instrument/bloc/main/new_listing/new_listing.dart';
-import 'package:my_instrument/bloc/main/onboard/onboard_page.dart';
-import 'package:my_instrument/bloc/main/product_list/product_list_page.dart';
-import 'package:my_instrument/bloc/main/profile/about/about.dart';
-import 'package:my_instrument/bloc/main/profile/user_settings_page.dart';
-import 'package:my_instrument/bloc/main/shopping_cart/shopping_cart_page.dart';
-import 'package:my_instrument/bloc/main/splash/splash_page.dart';
+import 'package:my_instrument/src/presentation/pages/auth/forgot_password_page/forgot_password.dart';
+import 'package:my_instrument/src/presentation/pages/auth/login_page/login_page.dart';
+import 'package:my_instrument/src/presentation/pages/auth/register_page/register_page.dart';
+import 'package:my_instrument/src/presentation/pages/base/error_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/fav_page/fav.dart';
+import 'package:my_instrument/src/presentation/pages/main/home_page/home_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/main_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/chatting_page/chatting_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/messages_page/messages_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/new_listing_page/new_listing_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/onboard_page/onboard_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/profile/about_page/about_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/profile/user_settings_page/user_settings_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/splash_page/splash_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_page.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
