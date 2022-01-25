@@ -4,22 +4,17 @@ enum ResponseStatus {
   fail
 }
 
-extension on ResponseStatus {
-  bool get status {
-    return [true, false][this.index];
-  }
-}
-
 class FutureResponse {
   Object? exception;
-  List<dynamic>? data;
-  late bool success;
+  dynamic data;
+  final int? statusCode;
 
   FutureResponse({
     this.exception,
-    this.data
-  }) {
-    this.success = (this.exception == null);
-  }
+    this.data,
+    this.statusCode
+  });
+
+  get success => (exception == null);
 
 }

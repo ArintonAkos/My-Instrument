@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_instrument/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:provider/provider.dart';
 
 class AuthPagesConstants {
-  static const AccountType = [
+  static const accountType = [
     "Individual seller",
     "Company"
   ];
@@ -44,14 +43,14 @@ Container buildAuthButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          primary: customTheme?.LoginButtonsColor,
+          primary: customTheme?.loginButtonsColor,
           onPrimary: Colors.grey[400]
       ),
       onPressed: disabled ? null : onPressed,
       child: Text(
         buttonText,
         style: TextStyle(
-          color: customTheme?.LoginButtonText,
+          color: customTheme?.loginButtonText,
           letterSpacing: 1.5,
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
@@ -64,7 +63,7 @@ Container buildAuthButton(
 
 BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
   return BoxDecoration(
-    color: appThemeData?.customTheme.LoginInputColor,
+    color: appThemeData?.customTheme.loginInputColor,
     borderRadius: BorderRadius.circular(10.0),
     boxShadow: const [
       BoxShadow(
@@ -127,7 +126,7 @@ Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData
           errorText?? "",
           style: TextStyle(
             fontSize: 14,
-            color: theme?.customTheme.AuthErrorColor
+            color: theme?.customTheme.authErrorColor
           ),
         )
       ),
@@ -156,7 +155,7 @@ Widget buildDropDown(BuildContext context, List<String> data, int index, void Fu
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       decoration: kBoxDecorationStyle(Provider.of<ThemeNotifier>(context).getTheme()),
       child: DropdownButtonFormField(
-        dropdownColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.DropdownItemColor,
+        dropdownColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.dropdownItemColor,
         icon: const Icon(
             Icons.arrow_drop_down,
             color: Colors.white

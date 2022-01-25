@@ -1,9 +1,13 @@
 class MessageConstants {
-  static const _MessageUrl = 'Message/';
+  static const _messageUrl = 'Message/';
 
-  static const GetMessageList = _MessageUrl + 'MessageList';
+  static const getMessageList = _messageUrl + 'MessageList';
 
-  static const GetMessages = _MessageUrl + 'Conversation?userId=';
+  static const getMessages = _messageUrl + 'Conversation?userId=';
 
-  static const SendMessage = _MessageUrl + 'SendMessage?userId=';
+  static const getUnseenMessageMembers = _messageUrl + 'UnseenMessageMembers';
+
+  static const sendMessage = _messageUrl + 'SendMessage?userId=';
+
+  static const readAllMessages = _messageUrl + 'ReadAllMessages';
 }

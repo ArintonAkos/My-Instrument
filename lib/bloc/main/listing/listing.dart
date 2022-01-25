@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class ListingPage extends StatelessWidget {
   final String id;
 
   const ListingPage({
+    Key? key,
     required this.id
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +19,9 @@ class ListingPage extends StatelessWidget {
         child: Material(
           child: TextButton(
             onPressed: () {
-              Modular.to.pushNamed('/listing/23');
+              // Modular.to.pushNamed('/listing/23');
             },
-            child: Text('asdasd'),
+            child: const Text('asdasd'),
           ),
         ),
       )

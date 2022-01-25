@@ -19,8 +19,7 @@ class ListingRequest implements MultipartRequest {
     required this.creationDate,
     required this.count,
     required this.categoryId
-  }) {
-  }
+  });
 
   @override
   Map<String, String> toJson() {
@@ -36,6 +35,6 @@ class ListingRequest implements MultipartRequest {
 
   @override
   List<String> getImagePaths() {
-    return this.imagePaths ?? [];
+    return imagePaths ?? [];
   }
 }

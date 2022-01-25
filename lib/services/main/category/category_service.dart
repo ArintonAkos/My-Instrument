@@ -1,19 +1,15 @@
 import 'dart:convert';
 
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart';
-import 'package:my_instrument/services/auth/auth_model.dart';
-import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/services/models/responses/error_response.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart' as MyBaseResponse;
+import 'package:my_instrument/services/models/responses/base_response.dart' as my_base_response;
 import 'package:my_instrument/services/models/responses/main/category/category_constants.dart';
 import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 
 class CategoryService extends HttpService {
-  Future<MyBaseResponse.BaseResponse> getBaseCategoriesWithChildren({ int language = 0 }) async {
-    if (await this.model.ensureAuthorized()) {
-      Response res = await getData(CategoryConstants.BaseWithChildrenURL + '?language=${language}');
+  Future<my_base_response.BaseResponse> getBaseCategoriesWithChildren({ int language = 0 }) async {
+    if (await model.ensureAuthorized()) {
+      Response res = await getData(CategoryConstants.baseWithChildrenURL + '?language=$language');
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -22,13 +18,13 @@ class CategoryService extends HttpService {
         return response;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
-  Future<MyBaseResponse.BaseResponse> getCategoryWithChildren(int categoryId, { int language = 0}) async {
-    if (await this.model.ensureAuthorized()) {
-      Response res = await getData(CategoryConstants.BaseWithChildrenURL +
-          '?categoryId=${categoryId}&language=${language}');
+  Future<my_base_response.BaseResponse> getCategoryWithChildren(int categoryId, { int language = 0}) async {
+    if (await model.ensureAuthorized()) {
+      Response res = await getData(CategoryConstants.baseWithChildrenURL +
+          '?categoryId=$categoryId&language=$language');
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -37,6 +33,6 @@ class CategoryService extends HttpService {
         return response;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 }

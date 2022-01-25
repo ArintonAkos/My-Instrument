@@ -151,6 +151,10 @@
       "CONFIRM_PASSWORD_MESSAGE": "Passwords do not match.",
       "EMPTY_FIELD_MESSAGE": "Field cannot be empty.",
       "LOGOUT_MESSAGE": "An error occurred during logout! Please try again later!"
+    },
+    "INFO": {
+      "NO_DATA": "No item to show.",
+      "SEE_MORE": "See more"
     }
   }
 }

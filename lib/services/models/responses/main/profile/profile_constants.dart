@@ -1,7 +1,9 @@
 class ProfileConstants {
-  static const _ProfileUrl = 'Profile/';
+  static const _profileUrl = 'Profile/';
 
-  static const GetPublicProfile = _ProfileUrl + 'PublicProfile?userId=';
+  static const getPublicProfile = _profileUrl + 'PublicProfile?userId=';
 
-  static const GetMyProfile = _ProfileUrl + 'MyProfile';
+  static const getBaseProfile = _profileUrl + 'BaseProfile?userId=';
+
+  static const getMyProfile = _profileUrl + 'MyProfile';
 }

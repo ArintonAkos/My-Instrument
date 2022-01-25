@@ -1,8 +1,8 @@
 class CategoryConstants {
-  static const _CategoryURL = 'Category/';
+  static const _categoryURL = 'Category/';
 
-  static const BaseWithChildrenURL = _CategoryURL + 'BaseWithChildren';
+  static const baseWithChildrenURL = _categoryURL + 'BaseWithChildren';
 
   // Requires categoryId parameter
-  static const CategoryChildrenURL = _CategoryURL + 'CategoryChildren';
+  static const categoryChildrenURL = _categoryURL + 'CategoryChildren';
 }

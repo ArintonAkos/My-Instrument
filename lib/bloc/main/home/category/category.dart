@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/models/category.dart';
 
 class CategoryPage extends StatelessWidget {
   final Category model;
-  CategoryPage({
+
+  const CategoryPage({Key? key,
     required this.model
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +22,15 @@ class CategoryPage extends StatelessWidget {
           color: Colors.green,
           child: TextButton(
             onPressed: () {
-              Modular.to.pushNamed('/category', arguments: Category(category: 'Asd123', parentCategory: 'Lol123'));
+              /*Modular.to.pushNamed(
+                '/category',
+                arguments: Category(
+                  category: 'Asd123',
+                  parentCategory: 'Lol123'
+                )
+              );*/
             },
-            child: Text(
+            child: const Text(
               'Menj at az Asd123-ra'
             ),
           ),

@@ -1,24 +1,30 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_instrument/modular/app_module.dart';
+import 'package:my_instrument/bloc/main/splash/initialize_notifier.dart';
+import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/main/signalr/signalr_service.dart';
 import 'package:my_instrument/shared/connectivity/network_connectivity.dart';
 
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
+import 'package:logging/logging.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(
-    ModularApp(
-      module: AppModule(),
-      child: const MyApp(),
-    )
+import 'firebase_options.dart';
+import 'structure/route/router.gr.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
   );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -31,27 +37,47 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppLanguage appLanguage = AppLanguage();
   final ThemeNotifier themeNotifier = ThemeNotifier();
-  final SignalRService _signalRService = Modular.get<SignalRService>();
-  final NetworkConnectivity _connectivity = NetworkConnectivity.instance;
+  final InitializeNotifier initializeNotifier = InitializeNotifier();
+
+  late final AuthModel _authModel;
+  late final SignalRService _signalRService;
+  late final NetworkConnectivity _connectivity = NetworkConnectivity.instance;
+
+  final _appRouter = AppRouter();
+  bool isSignedIn = false;
 
   @override
   void initState() {
+    _initInjector();
     super.initState();
     _init();
-    _signalRService.startService();
-    /*_signalRService.hubConnection.onclose(({error}) {
-      print(error);
-    });*/
-    _connectivity.initialise();
-    _connectivity.myStream.listen((event) {
-      if (event == ConnectivityResult.none) { // No Internet connection
+  }
 
-      }
-    });
+  _initInjector() {
+    InjectorInitializer.initialize();
+  }
+
+  _updateSignedInState(bool signedIn) {
+    if (signedIn != isSignedIn) {
+      setState(() {
+        isSignedIn = signedIn;
+      });
+    }
   }
 
   _init() async {
+    _authModel = appInjector.get<AuthModel>();
+    _authModel.authStream.listen((event) {
+      _updateSignedInState(event);
+    });
+
     await appLanguage.fetchLocale();
+    _signalRService = appInjector.get<SignalRService>();
+
+    Logger.root.onRecord.listen((record) => {
+      print('${record.level.name}: ${record.time}: ${record.message}')
+    });
+    _connectivity.initialise();
   }
 
   // This widget is the root of your application.
@@ -65,9 +91,12 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<ThemeNotifier>(
             create: (_) => themeNotifier
           ),
+          ChangeNotifierProvider<InitializeNotifier>(
+            create: (_) => initializeNotifier,
+          )
         ],
-        child: Consumer2<AppLanguage, ThemeNotifier>(builder: (context, language, theme, child) => (
-          MaterialApp(
+        child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (
+          MaterialApp.router(
             locale: language.appLocal,
             supportedLocales: const [
               Locale('en', ''),
@@ -79,10 +108,28 @@ class _MyAppState extends State<MyApp> {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate
             ],
-            title: 'Instrumental',
+            title: 'MyInstrument',
             theme: theme.getTheme()?.materialTheme,
-            initialRoute: '/splash',
-          ).modular()
+            routerDelegate: AutoRouterDelegate.declarative(
+                _appRouter,
+                navigatorObservers: () => [
+                  FirebaseAnalyticsObserver(
+                    analytics: FirebaseAnalytics.instance
+                  )
+                ],
+                routes: (_) => [
+                  if (initialize.initialized)
+                    if (isSignedIn)
+                      const BaseRouter(children: [MainRoute()])
+                    else if (initialize.boardingCompleted)
+                      const AuthRouter(children: [LoginRoute()])
+                    else
+                      OnBoardRoute()
+                  else
+                    SplashRoute()
+                ]),
+            routeInformationParser: _appRouter.defaultRouteParser(includePrefixMatches: true),
+          )
         )
       )
     );
@@ -92,6 +139,7 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     _signalRService.stopService();
     _connectivity.disposeStream();
+    _authModel.disposeAuthStream();
     super.dispose();
   }
 }

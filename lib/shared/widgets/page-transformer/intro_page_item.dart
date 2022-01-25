@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:my_instrument/shared/widgets/page-transformer/page_transformer.dart';
 
 import 'data.dart';
 
 class IntroPageItem extends StatelessWidget {
-  IntroPageItem({
+  const IntroPageItem({
+    Key? key,
     required this.item,
     required this.pageVisibility,
     this.onTap
-  });
+  }) : super(key: key);
 
   final IntroItem item;
   final PageVisibility pageVisibility;
@@ -89,14 +89,14 @@ class IntroPageItem extends StatelessWidget {
       ),
     );
 
-    var imageOverlayGradient = DecoratedBox(
+    var imageOverlayGradient = const DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset.bottomCenter,
           end: FractionalOffset.topCenter,
           colors: [
-            const Color(0xFF000000),
-            const Color(0x00000000),
+            Color(0xFF000000),
+            Color(0x00000000),
           ],
         ),
       ),
@@ -107,23 +107,36 @@ class IntroPageItem extends StatelessWidget {
           vertical: 16.0,
           horizontal: 8.0,
         ),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(18.0),
-            child: Material(
-              elevation: 4.0,
-              borderRadius: BorderRadius.circular(8.0),
-                child: InkWell(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      image,
-                      imageOverlayGradient,
-                      _buildTextContainer(context),
-                    ],
-                  ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18.0),
+              child: Material(
+                elevation: 4.0,
+                borderRadius: BorderRadius.circular(8.0),
+                  child: InkWell(
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        image,
+                        imageOverlayGradient,
+                        _buildTextContainer(context),
+                      ],
+                    ),
                     onTap: onTap
+                  ),
+              )
+            ),
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {  },
                 ),
-          )
+              ),
+            ),
+          ]
         ),
       );
   }

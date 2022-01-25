@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
 import 'package:my_instrument/services/models/requests/auth/register_request.dart';
 import 'package:my_instrument/shared/data/page_data.dart';
@@ -8,6 +8,8 @@ import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_language.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -17,7 +19,12 @@ import 'auth_pages_constants.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({
     Key? key,
+    @PathParam('email') this.email,
+    @PathParam('name') this.name,
   }) : super(key: key);
+
+  final String? email;
+  final String? name;
 
   @override
   State<StatefulWidget> createState() => _RegisterPageState();
@@ -47,31 +54,31 @@ class _RegisterPageState extends State<RegisterPage> {
           value: SystemUiOverlayStyle.light,
           child: Stack(
             children: <Widget>[
-              Container(
+              SizedBox(
                 height: double.infinity,
                 width: double.infinity,
                 child: WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[0],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[1],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[2],
-                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[3]
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[0],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[1],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[2],
+                      Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[3]
                     ],
                     durations: [18000, 8000, 5000, 12000],
                     heightPercentages: [0.59, 0.61, 0.63, 0.65],
-                    blur: MaskFilter.blur(BlurStyle.solid, 10.0),
+                    blur: const MaskFilter.blur(BlurStyle.solid, 10.0),
                   ),
-                  size: Size(double.infinity, double.infinity),
-                  backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
+                  size: const Size(double.infinity, double.infinity),
+                  backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.loginGradientStart,
                   waveAmplitude: 1,
                 ),
               ),
-              Container(
+              SizedBox(
                   height: double.infinity,
                   child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 40.0,
                         vertical: 100.0,
                       ),
@@ -86,9 +93,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     color: Colors.transparent,
                                     child: IconButton(
                                       onPressed: () {
-                                        Modular.to.pop();
+                                        AutoRouter.of(context).replace(const LoginRoute());
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                           Icons.arrow_back,
                                           color: Colors.white
                                       )
@@ -98,11 +105,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 left: 0,
                               ),
                               Container(
-                                padding: EdgeInsets.only(top: 5.0, bottom: 10.0),
+                                padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                                 child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.translate('REGISTER.HEADER_TEXT'),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
                                         fontSize: 30.0,
@@ -113,13 +120,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15.0,),
+                          const SizedBox(height: 15.0,),
                           _buildEmailTF(),
-                          SizedBox(height: 15.0,),
+                          const SizedBox(height: 15.0,),
                           _buildPasswordTF(),
-                          SizedBox(height: 15.0,),
+                          const SizedBox(height: 15.0,),
                           _buildConfirmPasswordTF(),
-                          SizedBox(height: 15.0,),
+                          const SizedBox(height: 15.0,),
                           buildDropDownInput(context,
                             PageData.getAccountTypes(Provider.of<AppLanguage>(context)),
                             _accountType,
@@ -134,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             translate('REGISTER.ACCOUNT_TYPE_LABEL')
                           ),
                           ..._buildAdditionalInfoTF(),
-                          SizedBox(height: 15.0,),
+                          const SizedBox(height: 15.0,),
                           _buildRegisterBtn()
                         ],
                       )
@@ -231,14 +238,14 @@ class _RegisterPageState extends State<RegisterPage> {
   List<Widget> _buildAdditionalInfoTF() {
     if (_accountType == 0) {
       return [
-        SizedBox(height: 30.0,),
+        const SizedBox(height: 30.0,),
         _buildFirstNameTF(),
-        SizedBox(height: 10.0,),
+        const SizedBox(height: 10.0,),
         _buildLastNameTF(),
       ];
     } else {
       return [
-        SizedBox(height: 30.0),
+        const SizedBox(height: 30.0),
         _buildCompanyNameTF()
       ];
     }
@@ -269,16 +276,18 @@ class _RegisterPageState extends State<RegisterPage> {
       request.lastName = lastName;
     }
 
-    AuthModel authModel = Modular.get<AuthModel>();
+    AuthModel authModel = appInjector.get<AuthModel>();
     var response = await authModel.register(request);
 
     if (response.success) {
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
-          onAccept: () { Modular.to.navigate('/login'); },
+          onAccept: () {
+            AutoRouter.of(context).replace(const LoginRoute());
+          },
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.SUCCESSFUL'),
-          dialogType: DialogType.Success,
+          dialogType: DialogType.success,
         )
       );
     } else {
@@ -286,19 +295,19 @@ class _RegisterPageState extends State<RegisterPage> {
         context: context,
         builder: (BuildContext dialogContext) => CustomDialog(
           description: AppLocalizations.of(context)!.translate('REGISTER.ACCOUNT_CREATION_LABEL.FAILED'),
-          dialogType: DialogType.Failure,
+          dialogType: DialogType.failure,
         )
       );
     }
   }
 
   _resetErrorTexts() {
-    this.emailErrorText = null;
-    this.passwordErrorText = null;
-    this.confirmPasswordErrorText = null;
-    this.firstNameErrorText = null;
-    this.lastNameErrorText = null;
-    this.companyNameErrorText = null;
+    emailErrorText = null;
+    passwordErrorText = null;
+    confirmPasswordErrorText = null;
+    firstNameErrorText = null;
+    lastNameErrorText = null;
+    companyNameErrorText = null;
   }
 
   bool _validatePasswords(String password, String confirmPassword) {

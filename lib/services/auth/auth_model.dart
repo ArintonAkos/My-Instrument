@@ -1,58 +1,67 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_instrument/bloc/main/i_auth_notifier.dart';
 import 'package:my_instrument/services/auth/auth_service.dart';
 import 'package:my_instrument/services/models/requests/auth/login_request.dart';
 import 'package:my_instrument/services/models/requests/auth/refresh_token_request.dart';
 import 'package:my_instrument/services/models/requests/auth/register_request.dart';
+import 'package:my_instrument/services/models/responses/auth/db_external_login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/login_response.dart';
 import 'package:my_instrument/services/models/responses/auth/refresh_token_response.dart';
+import 'package:my_instrument/services/models/responses/base_response.dart';
 import 'package:my_instrument/services/models/user.dart';
+import 'package:my_instrument/shared/data/custom_status_codes.dart';
+import 'package:my_instrument/shared/exceptions/more_info_required_exception.dart';
 import 'package:my_instrument/shared/exceptions/uninitialized_exception.dart';
-import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 import 'package:my_instrument/shared/utils/parse_methods.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'future_response.dart';
+
+enum ExternalLoginType {
+  google,
+  facebook
+}
 
 class AuthModel {
   User? _user;
   SharedPreferences? prefs;
 
+  final _controller = StreamController<bool>();
+  Stream get authStream => _controller.stream;
+
+  void disposeAuthStream() => _controller.close();
+
   bool get isSignedIn {
     return (
-        _user?.Token != null &&
-        _user?.RefreshToken != null &&
-        _user?.TokenExpires?.dateTime != null &&
-        _user?.RefreshTokenExpires?.dateTime != null)
+        _user?.token != null &&
+        _user?.refreshToken != null &&
+        _user?.tokenExpires?.dateTime != null &&
+        _user?.refreshTokenExpires?.dateTime != null)
     ;
   }
 
   String? get userId {
-    return _user?.Id;
+    return _user?.userId;
   }
 
   late final AuthService authService;
-  IAuthNotifier? authNotifier;
 
   Future init() async {
-    authService = Modular.get<AuthService>();
+    authService = appInjector.get<AuthService>();
     prefs = await SharedPreferences.getInstance();
 
     if (prefs?.getBool('signedIn') == true) {
       String? userPref = prefs?.getString('user');
       _user = ParseMethods.fromJsonString(userPref);
 
-      if (_user?.Email != null) {
-        var result = await ensureAuthorized();
-
-        if (!result) {
-          signOut();
-        }
+      if (_user?.email != null) {
+        await ensureAuthorized();
+        _controller.sink.add(true);
       } else {
-        signOut();
+        await signOut();
       }
     }
   }
@@ -60,26 +69,67 @@ class AuthModel {
   Future<FutureResponse> signIn(String email, String password, { bool? rememberMe }) async {
     try {
       if (prefs == null) {
-        throw UninitializedException(CallerClass.SharedPreferences);
+        throw UninitializedException(CallerClass.sharedPreferences);
       }
       var response = await authService.login(LoginRequest(email: email, password: password));
 
-      if (response.OK) {
-        _user = (response as LoginResponse).ApplicationUser;
+      if (response.ok) {
+        _user = (response as LoginResponse).applicationUser;
+
         if (rememberMe == true) {
-          prefs?.setBool('signedIn', true);
-          saveUserToPrefs();
+          await prefs?.setBool('signedIn', true);
+          await saveUserToPrefs();
         }
       } else {
-        if (response.StatusCode == 409) {
-          signOut();
+        if (response.statusCode == 409) {
+          await signOut();
         }
-        return FutureResponse(exception: response.Message);
+
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
     }
 
+    _controller.sink.add(true);
+    return FutureResponse();
+  }
+
+  Future<FutureResponse> externalLogin(ExternalLoginType loginType) async {
+    try {
+      BaseResponse response;
+
+      switch(loginType) {
+        case ExternalLoginType.facebook:
+          response = await authService.facebookExternalLogin();
+          break;
+        default:
+          response = await authService.googleExternalLogin();
+          break;
+      }
+
+      if (response.ok) {
+        var loginResponse = response as LoginResponse;
+
+        _user = loginResponse.applicationUser;
+
+        await prefs?.setBool('signedIn', true);
+        saveUserToPrefs();
+
+      } else if (response.statusCode == CustomStatusCode.moreInfoRequired) {
+        var dbResponse = response as DbExternalLoginResponse;
+
+        return FutureResponse(
+          data: dbResponse,
+          exception: MoreInfoRequiredException()
+        );
+      }
+
+    } catch (e) {
+      return FutureResponse(exception: e);
+    }
+
+    _controller.sink.add(true);
     return FutureResponse();
   }
 
@@ -87,8 +137,8 @@ class AuthModel {
     try {
       var response = await authService.register(request);
 
-      if (!response.OK) {
-        return FutureResponse(exception: response.Message);
+      if (!response.ok) {
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
@@ -98,47 +148,53 @@ class AuthModel {
   }
 
   Future<FutureResponse> refreshToken(RefreshTokenRequest request) async {
+    int? statusCode;
+
     try {
       var response = await authService.refreshToken(request);
 
-      if (response.OK) {
+      if (response.ok) {
         response = response as RefreshTokenResponse;
-        if (response.StatusCode != 1001) {
-          _user?.Token = response.Token;
-          _user?.TokenExpires = response.TokenExpires;
-          _user?.RefreshToken = response.RefreshToken;
-          _user?.RefreshTokenExpires = response.RefreshTokenExpires;
-          saveUserToPrefs();
+        statusCode = response.statusCode;
+
+        if (response.statusCode != CustomStatusCode.notExpired) {
+          _user?.token = response.token;
+          _user?.tokenExpires = response.tokenExpires;
+          _user?.refreshToken = response.refreshToken;
+          _user?.refreshTokenExpires = response.refreshTokenExpires;
+          await saveUserToPrefs();
         }
       } else {
-        if (response.StatusCode == 409) {
-          signOut();
+        if (response.statusCode == 409) {
+          await signOut();
         }
-        return FutureResponse(exception: response.Message);
+
+        return FutureResponse(exception: response.message);
       }
     } catch (e) {
       return FutureResponse(exception: e);
     }
 
-    return FutureResponse();
+    return FutureResponse(statusCode: statusCode);
   }
 
-  FutureResponse signOut() {
-    prefs?.remove('signedIn');
-    prefs?.remove('user');
-    prefs?.remove('token');
-    authNotifier?.onSignOut();
+  Future<FutureResponse> signOut() async {
+    await prefs?.remove('signedIn');
+    await prefs?.remove('user');
+    await prefs?.remove('token');
+    _user = null;
+    _controller.sink.add(false);
     return FutureResponse();
   }
 
   Future<bool> ensureAuthorized() async {
-    if (_user?.TokenExpires?.dateTime == null || _user?.RefreshTokenExpires?.dateTime == null) {
-      signOut();
+    if (_user?.tokenExpires?.dateTime == null || _user?.refreshTokenExpires?.dateTime == null) {
+      await signOut();
       return false;
     }
-    if (_user?.TokenExpires?.dateTime?.isBefore(DateTime.now().toUtc()) == true) {
-      var token = _user?.Token ?? '';
-      var refreshToken = _user?.RefreshToken ?? '';
+    if (_user?.tokenExpires?.dateTime?.isBefore(DateTime.now().toUtc()) == true) {
+      var token = _user?.token ?? '';
+      var refreshToken = _user?.refreshToken ?? '';
 
       var result = await this.refreshToken(RefreshTokenRequest(
           token: token,
@@ -146,7 +202,10 @@ class AuthModel {
       ));
 
       if (!result.success) {
-        // signOut();
+        if (result.statusCode == 403 || result.statusCode == 409) {
+          await signOut();
+        }
+
         return false;
       }
     }
@@ -155,18 +214,10 @@ class AuthModel {
 
   Future<String> getAccessToken() async {
     if (await ensureAuthorized()) {
-      return _user?.Token ?? '';
+      return _user?.token ?? '';
     }
 
     return '';
-  }
-
-  setListener(IAuthNotifier authNotifier) {
-    this.authNotifier = authNotifier;
-  }
-
-  removeListener() {
-    authNotifier = null;
   }
 
   DateTime? tryParseInt(int? timeStamp) {
@@ -180,10 +231,11 @@ class AuthModel {
     return _user;
   }
 
-  saveUserToPrefs() {
+  saveUserToPrefs() async {
     if (prefs != null && _user != null) {
-      prefs?.setString('token', _user?.Token ?? '');
-      prefs?.setString('user', jsonEncode(_user));
+      await prefs?.setString('user', jsonEncode(_user));
+      await prefs?.setString('token', _user?.token ?? '');
+      await prefs?.setBool('signedIn', true);
     }
   }
 }

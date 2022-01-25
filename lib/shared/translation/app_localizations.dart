@@ -19,7 +19,7 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate =
   _AppLocalizationsDelegate();
 
-  late Map<String, String> _localizedStrings = {};
+  late final Map<String, String> _localizedStrings = {};
 
   void mapJsonProperty(Map<String, dynamic> jsonProp, String keyName) {
     jsonProp.forEach((key, value) {

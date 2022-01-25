@@ -1,5 +1,4 @@
 import 'package:my_instrument/services/models/responses/base_response.dart';
-import 'package:my_instrument/services/models/responses/main/category/category_response.dart';
 import 'package:my_instrument/services/models/responses/main/profile/profile_model.dart';
 
 import '../../error_response.dart';
@@ -22,6 +21,6 @@ class ProfileResponse extends BaseResponse {
   }
 
   factory ProfileResponse.errorMessage({int language = 0}) {
-    return ProfileResponse(ErrorResponse(language: language).ResponseJSON);
+    return ProfileResponse(ErrorResponse(language: language).responseJSON);
   }
 }

@@ -1,22 +1,19 @@
 import 'dart:async';
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:my_instrument/services/http_service.dart';
-import 'package:my_instrument/services/models/responses/base_response.dart'
-    as MyBaseResponse;
+import 'package:my_instrument/services/models/responses/base_response.dart' as my_base_response;
+import 'package:my_instrument/services/models/responses/main/profile/base_profile_response.dart';
 import 'package:my_instrument/services/models/responses/main/profile/profile_constants.dart';
 import 'package:my_instrument/services/models/responses/main/profile/profile_response.dart';
 
 class ProfileService extends HttpService {
-  // static ProfileService instance = ProfileService();
 
-  Future<MyBaseResponse.BaseResponse> getProfile(int id) async {
+  Future<my_base_response.BaseResponse> getProfile(String id) async {
     if (await model.ensureAuthorized()) {
       Response res =
-          await getData(ProfileConstants.GetPublicProfile + "$id");
+      await getData(ProfileConstants.getPublicProfile + id);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -25,13 +22,28 @@ class ProfileService extends HttpService {
         return profileResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
+  }
+
+  Future<my_base_response.BaseResponse> getBaseProfile(String id) async {
+    if (await model.ensureAuthorized()) {
+      Response res =
+      await getData(ProfileConstants.getBaseProfile + id);
+
+      if (res.statusCode == 200) {
+        dynamic body = jsonDecode(res.body);
+
+        BaseProfileResponse baseProfileResponse = BaseProfileResponse(body);
+        return baseProfileResponse;
+      }
+    }
+    return my_base_response.BaseResponse.error();
   }
 
 
-  Future<MyBaseResponse.BaseResponse> getMyProfile() async {
+  Future<my_base_response.BaseResponse> getMyProfile() async {
     if (await model.ensureAuthorized()) {
-      Response res = await getData(ProfileConstants.GetMyProfile);
+      Response res = await getData(ProfileConstants.getMyProfile);
 
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
@@ -40,7 +52,7 @@ class ProfileService extends HttpService {
         return profileResponse;
       }
     }
-    return MyBaseResponse.BaseResponse.error();
+    return my_base_response.BaseResponse.error();
   }
 
 }

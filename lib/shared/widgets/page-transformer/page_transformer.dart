@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 /// A function that builds a [PageView] lazily.
-typedef PageView PageViewBuilder(
+typedef PageViewBuilder = PageView Function(
     BuildContext context, PageVisibilityResolver visibilityResolver);
 
 /// A class that can be used to compute visibility information about
@@ -11,8 +10,8 @@ class PageVisibilityResolver {
   PageVisibilityResolver({
     ScrollMetrics? metrics,
     double? viewPortFraction,
-  }) : this._pageMetrics = metrics,
-        this._viewPortFraction = viewPortFraction;
+  }) : _pageMetrics = metrics,
+        _viewPortFraction = viewPortFraction;
 
   final ScrollMetrics? _pageMetrics;
   final double? _viewPortFraction;
@@ -93,11 +92,12 @@ class PageVisibility {
 /// Note: Does not transform pages in any way, but provides the means
 /// to easily do it, in the form of [PageVisibility].
 class PageTransformer extends StatefulWidget {
-  PageTransformer({
+  const PageTransformer({
+    Key? key,
     required this.pageViewBuilder,
-  });
+  }) : super(key: key);
 
-  late final PageViewBuilder pageViewBuilder;
+  final PageViewBuilder pageViewBuilder;
 
   @override
   _PageTransformerState createState() => _PageTransformerState();

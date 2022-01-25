@@ -151,6 +151,10 @@
       "CONFIRM_PASSWORD_MESSAGE": "Parolele nu se potrivește.",
       "EMPTY_FIELD_MESSAGE": "Câmpul nu poate fi gol.",
       "LOGOUT_MESSAGE": "A apărut o eroare în timpul deconectării! Încercați mai târziu!"
+    },
+    "INFO": {
+      "NO_DATA": "Nici un articol de afișat",
+      "SEE_MORE": "Mai multe"
     }
   }
 }

@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum DialogType {
-  Success,
-  Failure,
-  Warning,
-  Info
+  success,
+  failure,
+  warning,
+  info
 }
 
 extension on DialogType {
   String get title {
-    return ['Success', 'Error', 'Warning', 'Info'][this.index];
+    return ['Success', 'Error', 'Warning', 'Info'][index];
   }
 }
 
@@ -38,11 +37,11 @@ class CustomDialog extends StatelessWidget {
     )
   ];
 
-  CustomDialog({
+  const CustomDialog({Key? key,
     required this.description,
     required this.dialogType,
     this.onAccept
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,22 +66,22 @@ class CustomDialog extends StatelessWidget {
 
   cardPart(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: 82.0,
         bottom: 16.0,
         left: 16.0,
         right: 16.0,
       ),
-      margin: EdgeInsets.only(top: 66.0),
-      decoration: new BoxDecoration(
+      margin: const EdgeInsets.only(top: 66.0),
+      decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10.0,
-            offset: const Offset(0.0, 10.0),
+            offset: Offset(0.0, 10.0),
           ),
         ],
       ),
@@ -91,20 +90,20 @@ class CustomDialog extends StatelessWidget {
         children: <Widget>[
           Text(
             dialogType.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w700,
             ),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16.0,
             ),
           ),
-          SizedBox(height: 24.0),
+          const SizedBox(height: 24.0),
           Align(
             alignment: Alignment.bottomRight,
             child: TextButton(
@@ -114,7 +113,7 @@ class CustomDialog extends StatelessWidget {
                   onAccept!();
                 }
               },
-              child: Text('Okay'),
+              child: const Text('Okay'),
             ),
           ),
         ],
@@ -138,14 +137,14 @@ class CustomDialog extends StatelessWidget {
     var colorList = <Color>[
       Colors.greenAccent[400] ?? Colors.greenAccent,
       Theme.of(context).errorColor,
-      Color(0xFFfd9800),
+      const Color(0xFFfd9800),
       Colors.blueAccent
     ];
-    return colorList[this.dialogType.index];
+    return colorList[dialogType.index];
   }
 
   _circularImageIcon() {
-    return iconList[this.dialogType.index];
+    return iconList[dialogType.index];
   }
 
 }

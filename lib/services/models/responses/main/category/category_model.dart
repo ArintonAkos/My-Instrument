@@ -1,23 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 
+import '../../../../../shared/utils/list_parser.dart';
+
 class CategoryModel {
   Map<String, dynamic>? json;
   CategoryModel({
     required this.json
   }) {
     id = json?['id'] ?? -1;
-    name_en = json?['nameEn'] ?? '';
-    name_hu = json?['nameHu'] ?? '';
-    name_ro = json?['nameRo'] ?? '';
+    nameEn = json?['nameEn'] ?? '';
+    nameHu = json?['nameHu'] ?? '';
+    nameRo = json?['nameRo'] ?? '';
     imagePath = json?['imagePath'];
-    children = parseChildren();
+    children = ListParser.parse<CategoryModel>(json?['childrenRaw'], parseCategoryModel);
   }
 
   late final int id;
-  late final String name_en;
-  late final String name_hu;
-  late final String name_ro;
+  late final String nameEn;
+  late final String nameHu;
+  late final String nameRo;
   late final String? imagePath;
   late final List<CategoryModel>? children;
 
@@ -25,32 +27,14 @@ class CategoryModel {
     Locale? appLocale = AppLocalizations.of(context)?.locale;
     if (appLocale != null) {
       if (appLocale == const Locale("hu")) {
-        return this.name_hu;
+        return nameHu;
       } else if (appLocale == const Locale("ro")) {
-        return this.name_ro;
+        return nameRo;
       } else {
-        return this.name_en;
+        return nameEn;
       }
     }
     return "";
-  }
-
-  List<CategoryModel>? parseChildren() {
-    var childrenRaw = json?['children'];
-    if (childrenRaw != null) {
-      List<Map<String, dynamic>>? children = List<Map<String, dynamic>>.from(childrenRaw);
-      if (children != null) {
-        List<CategoryModel> list = [];
-        children.forEach((value) {
-          var cat = parseCategoryModel(value);
-          if (cat != null) {
-            list.add(cat);
-          }
-        });
-        return list;
-      }
-    }
-    return null;
   }
 
   CategoryModel? parseCategoryModel(Map<String, dynamic> json) {

@@ -6,23 +6,21 @@ class CategoryResponse extends BaseResponse {
   late final List<CategoryModel>? data;
 
   CategoryResponse(Map<String, dynamic> json) : super(json) {
-    this.data = parseCategories(json);
+    data = parseCategories(json);
   }
 
   List<CategoryModel>? parseCategories(Map<String, dynamic> json) {
-    List<Map<String, dynamic>>? data =
-        List<Map<String, dynamic>>.from(json['data']);
-    if (data != null) {
-      List<CategoryModel> categoryList = [];
-      data.forEach((value) {
-        categoryList.add(CategoryModel(json: value));
-      });
-      return categoryList;
+    List<Map<String, dynamic>>? data = List<Map<String, dynamic>>.from(json['data']);
+
+    List<CategoryModel> categoryList = [];
+    for (var value in data) {
+      categoryList.add(CategoryModel(json: value));
     }
-    return null;
+
+    return categoryList;
   }
 
   factory CategoryResponse.errorMessage({int language = 0}) {
-    return CategoryResponse(ErrorResponse(language: language).ResponseJSON);
+    return CategoryResponse(ErrorResponse(language: language).responseJSON);
   }
 }

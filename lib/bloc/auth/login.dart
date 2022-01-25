@@ -1,13 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/services/auth/auth_model.dart';
+import 'package:my_instrument/services/models/responses/auth/db_external_login_response.dart';
+import 'package:my_instrument/shared/exceptions/more_info_required_exception.dart';
 import 'package:my_instrument/shared/theme/theme_manager.dart';
 import 'package:my_instrument/shared/translation/app_localizations.dart';
 import 'package:my_instrument/shared/widgets/custom_dialog.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -27,6 +30,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthModel _authModel = appInjector.get<AuthModel>();
 
   bool _rememberMe = false;
   final controllerEmail = TextEditingController();
@@ -170,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
         width: 60.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.LoginButtonsColor,
+          color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonsColor,
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
@@ -191,14 +195,18 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-                () => print('Login with Facebook'),
+            () {
+              _externalLoginUser(ExternalLoginType.facebook);
+            },
             Icon(
               FontAwesomeIcons.facebookF,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
           _buildSocialBtn(
-                () => print('Login with Google'),
+            () {
+              _externalLoginUser(ExternalLoginType.google);
+            },
             Icon(
               FontAwesomeIcons.google,
               color: Theme.of(context).colorScheme.primary
@@ -229,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.bold,
             ),
             recognizer: TapGestureRecognizer()..onTap = () {
-              Modular.to.pushNamed('/register');
+              AutoRouter.of(context).replace(RegisterRoute());
             }
           ),
         ],
@@ -246,23 +254,23 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
             children: <Widget>[
-              Container(
+              SizedBox(
                   height: double.infinity,
                   width: double.infinity,
                   child: WaveWidget(
                     config: CustomConfig(
                       colors: [
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[0],
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[1],
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[2],
-                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.AuthPagesPrimaryColors[3]
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[0],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[1],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[2],
+                        Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.authPagesPrimaryColors[3]
                       ],
                       durations: [18000, 8000, 5000, 12000],
                       heightPercentages: [0.59, 0.61, 0.63, 0.65],
                       blur: const MaskFilter.blur(BlurStyle.solid, 10.0),
                     ),
                     size: const Size(double.infinity, double.infinity),
-                    backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.LoginGradientStart,
+                    backgroundColor: Provider.of<ThemeNotifier>(context).getTheme()!.customTheme.loginGradientStart,
                     waveAmplitude: 1,
                   ),
                 ),
@@ -334,20 +342,31 @@ class _LoginPageState extends State<LoginPage> {
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    AuthModel authModel = Modular.get<AuthModel>();
-
-    var response = await authModel.signIn(email, password, rememberMe: _rememberMe);
+    var response = await _authModel.signIn(email, password, rememberMe: _rememberMe);
 
     _enableButton();
     if (!response.success) {
       showDialog(context: context,
           builder: (BuildContext dialogContext) => CustomDialog(
             description: AppLocalizations.of(context)!.translate('SHARED.ERROR.BASIC_MESSAGE'),
-            dialogType: DialogType.Failure,
+            dialogType: DialogType.failure,
           )
       );
-    } else {
-      Modular.to.navigate('/home/');
+    }
+  }
+
+  _externalLoginUser(ExternalLoginType loginType) async {
+    var response = await _authModel.externalLogin(loginType);
+
+    if (!response.success) {
+      if (response.exception == MoreInfoRequiredException) {
+        var responseData = response.data as DbExternalLoginResponse;
+
+        AutoRouter.of(context).push(RegisterRoute(
+            email: responseData.email,
+            name: responseData.name
+        ));
+      }
     }
   }
 

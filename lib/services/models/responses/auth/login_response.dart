@@ -1,12 +1,11 @@
 import 'package:my_instrument/services/models/responses/base_response.dart';
 
-import '../../settings.dart';
 import '../../user.dart';
 
 class LoginResponse extends BaseResponse {
-  late final User ApplicationUser;
+  late final User applicationUser;
 
   LoginResponse(Map<String, dynamic> json) : super(json) {
-    ApplicationUser = User.fromJson(json);
+    applicationUser = User.fromJson(json);
   }
 }

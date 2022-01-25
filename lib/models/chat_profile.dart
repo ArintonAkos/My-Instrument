@@ -1,15 +1,19 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:avatars/avatars.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_instrument/services/models/responses/main/message/message_model.dart';
+import 'package:my_instrument/shared/utils/parsable_date_time.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:time_elapsed/time_elapsed.dart';
 
 class ChatProfile extends StatefulWidget {
   final String name;
   final String messageText;
   final String? imageUrl;
-  final String time;
+  final ParsableDateTime time;
   final bool isMessageRead;
+  final String userId;
 
   const ChatProfile({
     Key? key,
@@ -17,19 +21,31 @@ class ChatProfile extends StatefulWidget {
     required this.messageText,
     this.imageUrl,
     required this.time,
-    required this.isMessageRead
+    required this.isMessageRead,
+    required this.userId
   }) : super(key: key);
 
-  factory ChatProfile.fromStream(Object? streamObject)
-  {
-    return const ChatProfile(
-        name: 'Abc',
-        messageText: 'Efg',
-        time: 'Hijklm',
-        isMessageRead: false
+  factory ChatProfile.fromMessageModel(MessageModel messageModel) {
+    return ChatProfile(
+      name: messageModel.fullName,
+      messageText: messageModel.message,
+      time: messageModel.creationDate,
+      isMessageRead: messageModel.seen,
+      userId: messageModel.userId
     );
   }
-  
+
+  ChatProfile copyWith({ bool? seen }) {
+    return ChatProfile(
+        name: name,
+        messageText: messageText,
+        time: time,
+        imageUrl: imageUrl,
+        isMessageRead: seen ?? isMessageRead,
+        userId: userId
+    );
+  }
+
   @override
   _ConversationListState createState() => _ConversationListState();
 }
@@ -39,13 +55,9 @@ class _ConversationListState extends State<ChatProfile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/chat-hub');
+        AutoRouter.of(context).push(ChattingRoute(userId: widget.userId));
       },
       child: Container(
-        margin: const EdgeInsets.only(
-          left: 10,
-          right: 10
-        ),
         child: Container(
           padding: const EdgeInsets.only(
               left: 10,
@@ -93,7 +105,7 @@ class _ConversationListState extends State<ChatProfile> {
                 ),
               ),
               Text(
-                widget.time,
+                TimeElapsed.fromDateTime(widget.time.dateTime!),
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: widget.isMessageRead

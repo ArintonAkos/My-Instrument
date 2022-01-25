@@ -1,19 +1,30 @@
-class MessageModel {
-  Map<String, dynamic>? json;
+import 'package:my_instrument/shared/utils/parsable_date_time.dart';
 
-  MessageModel({ required this.json }) {
-    userId = json?['id'];
-    fullName = json?['fullName'];
-    lastMessageSentAt = json?['lastMessageSentAt'];
-    message = json?['message'];
-    seen = json?['seen'];
-    profilePicturePath = json?['profilePicturePath'];
+class MessageModel {
+  MessageModel({
+    required this.userId,
+    required this.fullName,
+    required this.creationDate,
+    required this.message,
+    required this.seen,
+    required this.profilePicturePath
+  });
+
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    return MessageModel(
+      userId: json['userId'],
+      fullName: json['fullName'],
+      creationDate: ParsableDateTime.fromString(json['creationDate']),
+      message: json['message'],
+      seen: json['seen'],
+      profilePicturePath: json['profilePicturePath']
+    );
   }
 
-  late final int? userId;
+  late final String userId;
   late final String fullName;
-  late final DateTime lastMessageSentAt;
+  late final ParsableDateTime creationDate;
   late final String message;
   late final bool seen;
-  late final String profilePicturePath;
+  late final String? profilePicturePath;
 }

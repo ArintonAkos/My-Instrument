@@ -19,7 +19,7 @@ class RegisterRequest implements BackendRequest {
     required this.accountType,
     this.themeMode = 0,
     this.language = 0
-  }) {}
+  });
 
   @override
   Map<String, dynamic> toJson() => {
