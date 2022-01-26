@@ -83,6 +83,7 @@ dependencies:
   photo_view: ^0.13.0
   image_cropper: ^1.4.1
   cupertino_radio_choice: ^1.0.2
+  awesome_select: ^5.1.0
 
 dev_dependencies:
   flutter_test:
