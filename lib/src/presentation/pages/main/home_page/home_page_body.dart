@@ -2,9 +2,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/presentation/widgets/category_slider/category_slider.dart';
-import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
+import 'package:my_instrument/src/presentation/widgets/error_info.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
@@ -98,81 +100,83 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
-      builder: (BuildContext context, Widget child, IndicatorController controller) =>
-        AnimatedBuilder(
-          animation: controller,
-          builder: (BuildContext context, _) =>
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                if (!controller.isIdle)
-                  Positioned(
-                    top: 35.0 * controller.value,
-                    child: SizedBox(
-                      height: 30,
-                      width: 30,
-                      child: CircularProgressIndicator(
-                        value: !controller.isLoading
-                            ? controller.value.clamp(0.0, 1.0)
-                            : null,
-                        color: getCustomTheme(context)?.loginButtonText,
-                      ),
+      builder: (BuildContext context, Widget child, IndicatorController controller) => AnimatedBuilder(
+        animation: controller,
+        builder: (BuildContext context, _) =>
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              if (!controller.isIdle)
+                Positioned(
+                  top: 35.0 * controller.value,
+                  child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: CircularProgressIndicator(
+                      value: !controller.isLoading
+                          ? controller.value.clamp(0.0, 1.0)
+                          : null,
+                      color: getCustomTheme(context)?.loginButtonText,
                     ),
                   ),
-                Transform.translate(
-                  offset: Offset(0, 100.0 * controller.value),
-                  child: child,
                 ),
-              ],
-            ),
-        ),
-      onRefresh: () => Future.delayed(const Duration(seconds: 3)),
+              Transform.translate(
+                offset: Offset(0, 100.0 * controller.value),
+                child: child,
+              ),
+            ],
+          ),
+      ),
+      onRefresh: () async {
+        await Future.delayed(const Duration(milliseconds: 400));
+        context.read<HomePageBloc>().add(const HomePageReload());
+      },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 20),
-            CategorySlider(
-              headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
-            ),
-            /*LongPressItem(
-                previewBuilder: (BuildContext context) => ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701',
-                    height: 150,
-                    width: 150,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                popupBuilder: (BuildContext context) => ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                      'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701'
-                  ),
-                )
-            ),*/
-            CategorySlider(
-              headerText: AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
-              categoryId: 1,
-            ),
-            CategorySlider(
-              headerText: AppLocalizations.of(context)!.translate('HOME.ACCESSORIES'),
-              categoryId: 2,
-            ),
-            CategorySlider(
-              headerText: AppLocalizations.of(context)!.translate('HOME.GADGETS'),
-              categoryId: 3,
-            ),
-            buildListingsHeader(),
-            DiscoverSlider(imgList: imgList),
-            const SizedBox(
-              height: 70.0,
-            ),
-          ],
-        ),
+        child: BlocBuilder<HomePageBloc, HomePageState>(
+           builder: (context, homePageState) => AnimatedSwitcher(
+             duration: const Duration(milliseconds: 350),
+             child: renderHomePage(context, homePageState)
+           )
+        )
       ),
     );
   }
+
+  Widget renderHomePage(BuildContext context, HomePageState state) {
+    if (state.isFailure) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 200),
+        child: ErrorInfo()
+      );
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const SizedBox(height: 20),
+        CategorySlider(
+          headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
+        ),
+        CategorySlider(
+          headerText: AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
+          categoryId: 1,
+        ),
+        CategorySlider(
+          headerText: AppLocalizations.of(context)!.translate('HOME.ACCESSORIES'),
+          categoryId: 2,
+        ),
+        CategorySlider(
+          headerText: AppLocalizations.of(context)!.translate('HOME.GADGETS'),
+          categoryId: 3,
+        ),
+        buildListingsHeader(),
+        DiscoverSlider(imgList: imgList),
+        const SizedBox(
+          height: 70.0,
+        ),
+      ],
+    );
+  }
+
 }

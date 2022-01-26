@@ -22,6 +22,7 @@ class CustomAppTheme {
   final Color newListingIcon;
   final Color filterActionButtonColor;
   final Color onFilterActionButtonColor;
+  final Color shimmerColor;
 
   const CustomAppTheme({
     required this.loginGradientStart,
@@ -39,7 +40,8 @@ class CustomAppTheme {
     required this.filterActionButtonColor,
     required this.onFilterActionButtonColor,
     required this.newListingTextField,
-    required this.newListingIcon
+    required this.newListingIcon,
+    required this.shimmerColor
   });
 }
 
@@ -73,7 +75,8 @@ class AppThemeData {
     newListingTextField: const Color(0xff2c2c2c),
     newListingIcon: const Color(0xff2c2c2c),
     filterActionButtonColor: const Color(0xFF41C2F5),
-    onFilterActionButtonColor: Colors.white
+    onFilterActionButtonColor: Colors.white,
+    shimmerColor: const Color(0xFFE3E3E3),
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
@@ -97,7 +100,8 @@ class AppThemeData {
     newListingTextField: const Color(0xffdedede),
     newListingIcon: const Color(0xffdedede),
     filterActionButtonColor: const Color(0xFF2A2A2A),
-    onFilterActionButtonColor: Colors.white
+    onFilterActionButtonColor: Colors.white,
+    shimmerColor: const Color(0xFF242424),
   );
 
 

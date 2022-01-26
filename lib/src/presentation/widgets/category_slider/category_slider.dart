@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/category/category_bloc.dart';
+import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/data/models/view_models/intro_item.dart';
 import 'package:my_instrument/src/data/repositories/category_repository.dart';
 import 'package:my_instrument/src/presentation/widgets/page-transformer/intro_page_item.dart';
 import 'package:my_instrument/src/presentation/widgets/page-transformer/page_transformer.dart';
+import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:shimmer/shimmer.dart';
@@ -76,12 +78,12 @@ class CategorySlider extends StatelessWidget {
       controller: _controller,
       itemCount: 5,
       itemBuilder: (context, index) => Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Shimmer.fromColors(
-          // baseColor: Theme.of(context).colorScheme.surface,
-          // highlightColor: Theme.of(context).colorScheme.onSurface,
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
+            baseColor: Theme.of(context).colorScheme.surface,
+            highlightColor: getCustomTheme(context)?.shimmerColor ?? Colors.white,
+            // baseColor: Colors.grey[300]!,
+            // highlightColor: Colors.grey[100]!,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(
@@ -100,7 +102,9 @@ class CategorySlider extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => CategoryBloc(
-            categoryRepository: RepositoryProvider.of<CategoryRepository>(context)
+            categoryRepository: RepositoryProvider.of<CategoryRepository>(context),
+            homePageBloc: context.read<HomePageBloc>(),
+            categoryId: categoryId
           )..add((categoryId != null)
             ? LoadCategories(categoryId: categoryId!)
             : const LoadBaseCategories()
@@ -138,6 +142,7 @@ class CategorySlider extends StatelessWidget {
               categoryCardBuilder(visibilityResolver, categoryState)
       );
     }
+
     return Container();
   }
 }

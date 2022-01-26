@@ -134,6 +134,7 @@ flutter:
     - assets/search_listing.svg
     - assets/profile.svg
     - assets/no_image_placeholder.jpg
+    - assets/error.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

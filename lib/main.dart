@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/data/repositories/category_repository.dart';
@@ -110,6 +111,9 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => FavoriteBloc(
                     favoriteRepository: RepositoryProvider.of<FavoriteRepository>(context)
                 )..add(const LoadFavoritesEvent())
+              ),
+              BlocProvider(
+                create: (context) => HomePageBloc()
               )
             ],
             child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (
