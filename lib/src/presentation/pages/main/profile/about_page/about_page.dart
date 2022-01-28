@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_instrument/src/presentation/widgets/basic_page_app_bar.dart';
+import 'package:my_instrument/src/presentation/widgets/settings/settings.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/src/data/models/view_models/card_item_model.dart';
 
-import '../user_settings_page/user_settings_page.dart';
+import '../user_settings_page/user_page.dart';
 
 class AboutPage extends StatelessWidget {
 
@@ -13,24 +15,15 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.translate('PROFILE.ABOUT.TITLE'),
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.onSurface
-        ),
+      appBar: getBasicPageAppBar(
+        context,
+        AppLocalizations.of(context)!.translate('PROFILE.ABOUT.TITLE'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Settings(settingsItems: _getAboutCards(context))
+        child: Settings(
+          settingsItems: _getAboutCards(context)
+        )
       ),
     );
   }

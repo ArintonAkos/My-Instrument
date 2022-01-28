@@ -1,4 +1,9 @@
 {
+  "APP_LOCALIZATIONS": {
+    "en": "Engleză",
+    "hu": "Maghiară",
+    "ro": "Română"
+  },
   "ONBOARD_TAB": {
     "TITLE": {
       "FIRST": "Noua eră a cumpărăturilor",
@@ -83,6 +88,13 @@
       "PRIVACY_POLICY": {
         "TITLE": "Politica de confidențialitate",
         "DESCRIPTION": "Citești Politica de confidențialitate"
+      }
+    },
+    "GENERAL_SETTINGS": {
+      "TITLE": "Setări generale",
+      "LANGUAGES": {
+        "TITLE": "Limbaje",
+        "DESCRIPTION": "Állítsd be a nyelvet"
       }
     }
   },

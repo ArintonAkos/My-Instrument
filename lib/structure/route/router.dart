@@ -11,10 +11,13 @@ import 'package:my_instrument/src/presentation/pages/main/messages_page/messages
 import 'package:my_instrument/src/presentation/pages/main/new_listing_page/new_listing_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/onboard_page/onboard_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/profile/about_page/about_page.dart';
-import 'package:my_instrument/src/presentation/pages/main/profile/user_settings_page/user_settings_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/profile/general_settings_page/general_settings_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/profile/general_settings_page/language_page/langauge_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/profile/user_settings_page/user_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/splash_page/splash_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_page.dart';
+import 'package:my_instrument/structure/route/route_builders/cupertino_route_builder.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -42,12 +45,34 @@ import 'package:my_instrument/src/presentation/pages/main/product_list_page/prod
             AutoRoute(path: '', page: HomePage),
             AutoRoute(path: 'favorites', page: FavPage),
             AutoRoute(path: 'messages', page: MessagesPage),
-            AutoRoute(path: 'profile', name: 'ProfileRoute', page: UserPage),
+            AutoRoute(
+              path: 'profile/',
+              name: 'ProfileRoute',
+              page: UserPage,
+            ),
             AutoRoute(path: 'blank', name: 'BlankRoute', page: EmptyRouterPage),
             RedirectRoute(path: '*', redirectTo: '')
           ]
         ),
-        AutoRoute(path: 'about', page: AboutPage),
+        AutoRoute(path: 'about/', page: AboutPage,),
+        CustomRoute(
+          path: 'general-settings/',
+          page: EmptyRouterPage,
+          customRouteBuilder: cupertinoRouteBuilder,
+          children: [
+            CustomRoute(
+              path: '',
+              page: GeneralSettingsPage,
+              customRouteBuilder: cupertinoRouteBuilder
+            ),
+            CustomRoute(
+              path: 'language',
+              page: LanguagePage,
+              customRouteBuilder: cupertinoRouteBuilder
+            ),
+            RedirectRoute(path: '*', redirectTo: ''),
+          ]
+        ),
         AutoRoute(path: 'new-listing/', page: NewListingPage),
         AutoRoute(path: 'chat/:userId', page: ChattingPage),
         AutoRoute(path: 'cart', page: ShoppingCartPage),

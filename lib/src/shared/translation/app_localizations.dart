@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+const List<String> localisations = ['en', 'ro', 'hu'];
+
 class AppLocalizations {
   final Locale locale;
 
@@ -69,7 +71,7 @@ class _AppLocalizationsDelegate
   @override
   bool isSupported(Locale locale) {
     // Include all of your supported language codes here
-    return ['en', 'ro', 'hu'].contains(locale.languageCode);
+    return localisations.contains(locale.languageCode);
   }
 
   @override

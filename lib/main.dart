@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
             ],
             child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (
               MaterialApp.router(
-                locale: language.appLocal,
+                locale: language.appLocale,
                 supportedLocales: const [
                   Locale('en', ''),
                   Locale('ro', ''),

@@ -1,4 +1,9 @@
 {
+  "APP_LOCALIZATIONS": {
+    "en": "English",
+    "hu": "Hungarian",
+    "ro": "Romanian"
+  },
   "ONBOARD_TAB": {
     "TITLE": {
       "FIRST": "New era of shopping",
@@ -84,6 +89,13 @@
       "PRIVACY_POLICY": {
         "TITLE": "Privacy Policy",
         "DESCRIPTION": "Read our privacy policy"
+      }
+    },
+    "GENERAL_SETTINGS": {
+      "TITLE": "General settings",
+      "LANGUAGES": {
+        "TITLE": "Language",
+        "DESCRIPTION": "Change language"
       }
     }
   },

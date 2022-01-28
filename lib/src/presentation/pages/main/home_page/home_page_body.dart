@@ -37,7 +37,7 @@ class _HomePageBodyState extends State<HomePageBody> {
     return buildSliderHeader(
       title: AppLocalizations.of(context)!.translate('HOME.INSTRUMENTS'),
       subTitle: AppLocalizations.of(context)!.translate('SHARED.INFO.SEE_MORE'),
-      onTap: () {
+      onTap: () async {
         AutoRouter.of(context).push(
           ProductListRoute(
             filterData: FilterData.initial(
