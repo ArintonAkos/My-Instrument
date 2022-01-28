@@ -170,10 +170,11 @@ class _ChattingPageState extends State<ChattingPage> {
     }
   }
 
-  void _handleMessageTap(types.Message message) async {
+  void _handleMessageTap(BuildContext,types.Message message) async {
     if (message is types.FileMessage) {
       await OpenFile.open(message.uri);
     }
+
   }
 
   void _handlePreviewDataFetched(

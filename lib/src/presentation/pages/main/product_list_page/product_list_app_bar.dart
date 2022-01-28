@@ -110,6 +110,8 @@ class ProductListAppBar extends StatelessWidget {
                           builder: (context) => FractionallySizedBox(
                             heightFactor: 0.5,
                             child: ModalInsideModal(
+                              onTap: (value) {},
+                              title: 'Order by',
                               orderByModels: orderByModels,
                             )
                           )

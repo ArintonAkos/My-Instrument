@@ -14,7 +14,23 @@ class CategoryModel {
     nameRo = json?['nameRo'] ?? '';
     imagePath = json?['imagePath'];
     imageHash = json?['imageHash'];
+    isLastElement = json?['isLastElement'];
     children = ListParser.parse<CategoryModel>(json?['children'], parseCategoryModel);
+
+  }
+
+  factory CategoryModel.base() {
+    Map<String, dynamic> data = {
+      "id": 0,
+      "nameEn": "Categories",
+      "nameHu": "Kategóriák",
+      "nameRo": "Categorii",
+      "imagePath": "",
+      "imageHash": "",
+      "isLastElement": false,
+      "children": []
+    };
+    return CategoryModel(json: data);
   }
 
   late final int id;
@@ -24,6 +40,7 @@ class CategoryModel {
   late final String? imagePath;
   late final String? imageHash;
   late final List<CategoryModel> children;
+  late final bool isLastElement;
 
   String getCategoryName(BuildContext context) {
     Locale? appLocale = AppLocalizations.of(context)?.locale;

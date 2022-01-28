@@ -5,11 +5,15 @@ import 'package:my_instrument/src/presentation/pages/main/product_list_page/prod
 class ModalInsideModal extends StatelessWidget {
   final bool reverse;
   final List<OrderByModel> orderByModels;
+  final String title;
+  final Function(int value) onTap;
 
   const ModalInsideModal({
     Key? key,
     required this.orderByModels,
+    required this.title,
     this.reverse = false,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -39,7 +43,7 @@ class ModalInsideModal extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Sort By',
+                  title,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                     fontWeight: FontWeight.bold,
@@ -62,7 +66,7 @@ class ModalInsideModal extends StatelessWidget {
                 value: orderByModels[index].value,
                 text: orderByModels[index].text
               ),
-              onTap: (value) {  },
+              onTap: (value) { onTap(value); },
               isSelected: (index == 2),
             ),
             itemCount: orderByModels.length,

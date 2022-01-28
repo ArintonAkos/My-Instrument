@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:cupertino_radio_choice/cupertino_radio_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +10,17 @@ import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_instrument/shared/widgets/image_gallery.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
-import 'package:my_instrument/src/data/models/view_models/select_bottom_sheet.dart';
+import 'package:my_instrument/src/data/data_providers/services/category_service.dart';
+import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
+import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_app_bar.dart';
+import 'package:my_instrument/src/presentation/widgets/category_select_modal.dart';
+import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
+import 'package:my_instrument/src/presentation/widgets/modal_inside_modal.dart';
+import 'package:my_instrument/src/presentation/widgets/popup_action.dart';
 import 'package:my_instrument/src/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
+import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:provider/provider.dart';
-
-final Color kAppBarDefaultColor = Colors.grey.withOpacity(0.4);
 
 class NewListingPage extends StatefulWidget {
   const NewListingPage({Key? key}) : super(key: key);
@@ -34,6 +41,12 @@ class _NewListingPageState extends State<NewListingPage>
     super.dispose();
   }
 
+  final List<OrderByModel> orderByModels = <OrderByModel>[
+    OrderByModel(text: "Camera", value: 0),
+    OrderByModel(text: "Gallery", value: 1),
+  ];
+
+  String selectErrorText = "";
   int titleCharNumb = 128;
   double titleFontSize = 20.0;
   double priceFontSize = 20.0;
@@ -48,28 +61,48 @@ class _NewListingPageState extends State<NewListingPage>
   ];
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _priceController = TextEditingController();
+
+  CategoryModel? selectedCategory;
+
+  Color selectedBorder = Colors.black;
 
   List<String> selectedImages = [];
 
-  Future<void> _imgPicker(ImageSource source) async {
-    XFile? selectedImage = (await ImagePicker().pickImage(source: source));
+  final CategoryModel baseCategory = CategoryModel.base();
 
-    if (selectedImage != null && selectedImages.length < 5) {
-      selectedImages.add(selectedImage.path);
-      Navigator.pop(context);
-      setState(() {
+  _imgPicker(ImageSource source) async {
+    if (source == ImageSource.camera) {
+      XFile? selectedImage = (await ImagePicker().pickImage(source: source));
+      if (selectedImage != null && selectedImages.length < 5) {
+        selectedImages.add(selectedImage.path);
+        Navigator.pop(context);
+        setState(() {});
+      }
+    } else {
+     List<XFile?> images = await ImagePicker().pickMultiImage() as List<XFile?>;
+     if (selectedImages.length + images.length <= 5) {
+       for (int i = 0; i < images.length; ++i) {
+         if(images[i] != null) {
+           selectedImages.add(images[i]!.path);
+         }
+       }
+       Navigator.pop(context);
+       setState(() {});
+     }
 
-      });
     }
-
   }
 
   void removeImage(String _image) {
     selectedImages.remove(_image);
-    setState(() {
-
-    });
+    setState(() {});
   }
+
+  final CategoryService categoryService = appInjector.get<CategoryService>();
+
 
   Widget _buildTF(String _formHint, AppThemeData? theme, String _title, {
     TextEditingController? inputController,
@@ -98,6 +131,7 @@ class _NewListingPageState extends State<NewListingPage>
           height: 10,
         ),
         TextFormField(
+          controller: inputController,
           validator: (value) {
             if(value == null || value.isEmpty) {
               return 'Please enter some text';
@@ -140,7 +174,7 @@ class _NewListingPageState extends State<NewListingPage>
       AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
         AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.LABEL'),
-      inputController: TextEditingController(),
+      inputController: _titleController,
       textInputType: TextInputType.name,
       characterNumber: titleCharNumb,
       fSize: titleFontSize,
@@ -152,7 +186,7 @@ class _NewListingPageState extends State<NewListingPage>
       AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
       AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.LABEL'),
-      inputController: TextEditingController(),
+      inputController: _priceController,
       textInputType: TextInputType.number,
       characterNumber: priceCharNumb,
       fSize: priceFontSize,
@@ -164,7 +198,7 @@ class _NewListingPageState extends State<NewListingPage>
       AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.HINT'),
       Provider.of<ThemeNotifier>(context).getTheme(),
       AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.LABEL'),
-      inputController: TextEditingController(),
+      inputController: _descriptionController,
       textInputType: TextInputType.multiline,
       characterNumber: descriptionCharNumb,
       fSize: titleFontSize,
@@ -173,7 +207,10 @@ class _NewListingPageState extends State<NewListingPage>
 
   Widget _buildImageDropper() {
     return InkWell(
-      onTap:() => showModalBottomSheet(
+      borderRadius: BorderRadius.circular(10),
+      onTap: (selectedImages.isEmpty)
+       ? () => showCupertinoModalBottomSheet(
+        topRadius: const Radius.circular(20),
         barrierColor: Colors.black.withOpacity(0.8),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
@@ -183,64 +220,35 @@ class _NewListingPageState extends State<NewListingPage>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(70)
             ),
-            height: 100.0,
-            child: Row(
-              children: [
-                const Spacer(),
-                Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top:15),
-                        child: IconButton(
-                            iconSize: 30,
-                            onPressed: () =>  _imgPicker(ImageSource.camera),
-                            icon: const Icon(Icons.add_a_photo_outlined)),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.CAMERA'),
-                      )
-                    ],
-                  ),
-                const Spacer(),
-                const VerticalDivider(
-                  width: 20,
-                  thickness: 1,
-                  indent: 20,
-                  endIndent: 10,
-                  color: Colors.grey,
-                ),
-                const Spacer(),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: IconButton(
-                          iconSize: 30,
-                          onPressed: () =>  _imgPicker(ImageSource.gallery),
-                          icon: const Icon(Icons.add_photo_alternate_outlined)),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.GALLERY')
-                    )
-                  ],
-                ),
-                const Spacer(),
-              ],
-            ),
+            height: 170.0,
+            child: ModalInsideModal(
+              title: 'Select uploading method',
+              orderByModels: orderByModels,
+              onTap: (value) {
+                ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
+                _imgPicker(source);
+              },
+            )
           )
-      ),
+      )
+      : null,
       child: Container(
         height: (selectedImages.isEmpty) ? 150 : null,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          color: Colors.grey.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10)
         ),
         child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 250),
           child: (selectedImages.isEmpty)
-            ? const Center(
-              child: Text('Select your images about the product'),
+            ? Center(
+              child: Text(
+                AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HELP'),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
+                ),
+              ),
             )
             : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -260,33 +268,99 @@ class _NewListingPageState extends State<NewListingPage>
     );
   }
 
+  void updateSelectedCategory(CategoryModel selectedCategory) {
+    setState(() {
+      this.selectedCategory = selectedCategory;
+    });
+  }
+
   Widget _miniPicture(int index) {
-    return InkWell(
-      onTap: () => removeImage(selectedImages[index]),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: (index < selectedImages.length)
-            ? Image.file(
-          File(selectedImages[index]),
-          width: 200,
-          height: 200,
-          fit: BoxFit.cover,
+    return (index < selectedImages.length) ? LongPressItem(
+        actions: [
+          const PopupAction(
+            index: 1,
+            count: 3,
+            iconData: LineIcons.boxOpen,
+            text: 'Open',
+          ),
+          const PopupAction(
+            index: 2,
+            count: 3,
+            iconData: LineIcons.alternateShare,
+            text: 'Share',
+          ),
+          PopupAction(
+            index: 3,
+            count: 3,
+            iconData: LineIcons.alternateTrashAlt,
+            text: 'Delete',
+            isDanger: true,
+            onTap: () {
+              removeImage(selectedImages[index]);
+            },
+          )
+        ],
+        previewBuilder: (BuildContext context) => ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.file(
+            File(selectedImages[index]),
+            height: 100,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+        popupBuilder: (BuildContext context) => ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.file(
+            File(selectedImages[index]),
+            width: 400,
+            height: 300,
+            fit: BoxFit.cover,
+          ),
         )
-            : Container(
+    )
+    : InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () => showCupertinoModalBottomSheet(
+          topRadius: const Radius.circular(20),
+          barrierColor: Colors.black.withOpacity(0.8),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
+          ),
+          context: context,
+          builder: (context) => Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(70)
+              ),
+              height: 170.0,
+              child: ModalInsideModal(
+                title: 'Select uploading method',
+                orderByModels: orderByModels,
+                onTap: (value) {
+                  ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
+                  _imgPicker(source);
+                },
+              )
+          )
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
           color: Colors.grey.withOpacity(0.3),
-        )
+        ),
+        width: double.infinity,
+
       ),
     );
   }
-
-  Widget _labelText(String? _text) {
+  Widget _labelText(String? _text, Color color, double fontSize) {
     return Align(
       alignment: Alignment.centerLeft,
       child: RichText(
           text: TextSpan(
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 16.0
+                  color: color,
+                  fontSize: fontSize
               ),
               children: <TextSpan> [
                 TextSpan(
@@ -297,10 +371,10 @@ class _NewListingPageState extends State<NewListingPage>
       ),
     );
   }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext rootContext) {
       return Scaffold(
+        backgroundColor: Theme.of(rootContext).backgroundColor,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -308,41 +382,115 @@ class _NewListingPageState extends State<NewListingPage>
               snap: false,
               floating: false,
               expandedHeight: 100.0,
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(rootContext).colorScheme.surface,
               leading: IconButton(
                 splashRadius: 15,
-                onPressed: () {
+                onPressed: () => {
+                  ( selectedCategory != null || _descriptionController.text.isNotEmpty || _priceController.text.isNotEmpty || _titleController.text.isNotEmpty)
+                 ? showDialog(context: rootContext, builder: (BuildContext context) {
+                   return BackdropFilter(
+                      filter: ImageFilter.blur(sigmaY: 2.3,sigmaX: 2.3),
+                      child: AlertDialog(
+                        contentPadding: const EdgeInsets.only(left: 20,top: 35, bottom: 35),
+                        backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        title: const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Are you sure you want to exit?",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ),
+                        content: const Align(
+                          alignment: Alignment.centerLeft,
+                          heightFactor: 0,
+                          child: Text(
+                            " You have unsaved data",
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(rootContext);
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Exit",
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {AutoRouter.of(context).pop();},
+                            child: const Text(
+                              "Cancel",
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+
+                          ),
+                        ],
+                      ),
+                    );
+                  })
+                    : Navigator.pop(context)
 
                 },
                 icon: const Icon(CupertinoIcons.back),
-                color: Theme.of(context).colorScheme.onSurface,
+                color: Theme.of(rootContext).colorScheme.onSurface,
               ),
               actions: [
                 IconButton(
                   splashRadius: 15,
                   onPressed: ()  {
+                    if(selectedCategory == null) {
+                      setState(() {
+                        selectedBorder = Theme.of(context).errorColor;
+                        selectErrorText = "Please select a category";
+                      });
+                    } else {
+                      selectedBorder = Colors.black;
+                      selectErrorText = "";
+                      setState(() {
+
+                      });
+                    }
                     if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing...'))
+
+                        ScaffoldMessenger.of(rootContext).showSnackBar(
+                            const SnackBar(
+                              content: Text('Processing...'),
+                              backgroundColor: Colors.green,
+                            )
                         );
                     }
                   },
                   icon: Icon(
                   LineIcons.check,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Theme.of(rootContext).colorScheme.onSurface,
                   )
                 )
               ],
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(rootContext).backgroundColor,
                 ),
                 title: Text(
-                  AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE'),
+                  AppLocalizations.of(rootContext)!.translate('NEW_LISTING.TITLE'),
                   textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 20,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(rootContext).colorScheme.onSurface,
                     //fontSize: 20
                   ),
                 ),
@@ -356,7 +504,7 @@ class _NewListingPageState extends State<NewListingPage>
                     key: _formKey,
                     child: Column(
                       children: [
-                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.LABEL')),
+                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
                         const SizedBox(
                           height: 10,
                         ),
@@ -365,41 +513,63 @@ class _NewListingPageState extends State<NewListingPage>
                           height: 20,
                         ),
                         _buildTitleTF(),
-                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.LABEL')),
-                        ListTile(
-                          tileColor: Theme.of(context).cardColor,
-                          title: Text(
-                            AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.HINT'),
-                            style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                            ),
+                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 1,
+                                color: selectedBorder,
+                              )
+                            )
                           ),
-                          trailing: IconButton(
-                            iconSize: 18,
-                            splashRadius: 15,
-                            icon: Icon(
-                              Icons.arrow_forward_ios,
+                          child: ListTile(
+                            tileColor: Colors.grey.withOpacity(0.2),
+                            title: Text(
+                              selectedCategory?.getCategoryName(context) ?? AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.HINT'),
+                              style: TextStyle(
                               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                              ),
                             ),
-                            onPressed: () {
-                              showCupertinoModalBottomSheet(context: context,
-                                builder: (context) => const SelectBottomSheet(),
-                              );
-                            },
+                            trailing: IconButton(
+                              iconSize: 18,
+                              splashRadius: 15,
+                              icon: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                              ),
+                              onPressed: () {
+                                showCupertinoModalBottomSheet(context: context,
+                                  builder: (context) => CategorySelectModal(
+                                    category: baseCategory,
+                                    newListingContext: context,
+                                    selectedName: baseCategory.getCategoryName(context),
+                                    updateSelectedCategory: updateSelectedCategory,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 7),
+                          child: _labelText(selectErrorText, Theme.of(context).errorColor, 11.5)
                         ),
                         const SizedBox(
-                            height: 40
+                            height: 15
                         ),
                         _buildDescriptionTF(),
-                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.PRIVATE_FIRM.LABEL')),
+                        _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.PRIVATE_FIRM.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
                         const SizedBox(
                           height: 5,
                         ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: CupertinoRadioChoice(
-                              selectedColor: Theme.of(context).colorScheme.primary,
+                              selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
                               notSelectedColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                               choices: {
                               'private' : AppLocalizations.of(context)!.translate('NEW_LISTING.PRIVATE_FIRM.PRIVATE'),
@@ -412,14 +582,15 @@ class _NewListingPageState extends State<NewListingPage>
                             height: 40
                         ),
                         _buildPriceTF(),
-                       _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.NEW_USED.LABEL')),
+                       _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.NEW_USED.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
                         const SizedBox(
                           height: 5,
                         ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: CupertinoRadioChoice(
-                            selectedColor: Theme.of(context).colorScheme.primary,
+                              selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                              notSelectedColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                             choices: {
                               'new' : AppLocalizations.of(context)!.translate('NEW_LISTING.NEW_USED.NEW'),
                               'used' : AppLocalizations.of(context)!.translate('NEW_LISTING.NEW_USED.USED')
