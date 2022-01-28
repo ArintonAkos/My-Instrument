@@ -35,6 +35,7 @@ class ActionsRow extends StatelessWidget {
 
     return <Widget>[
       actionIcon,
+      const SizedBox(height: 7),
       actionText,
     ].toColumn().padding(vertical: 20);
   }

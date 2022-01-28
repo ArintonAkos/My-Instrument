@@ -21,6 +21,7 @@
     "INSTRUMENTS": "Hangszerek",
     "ACCESSORIES": "Tartozékok",
     "GADGETS": "Készülékek",
+    "CATEGORIES": "Kategóriák",
     "LISTINGS": "Hírdetések",
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Gitárok",
@@ -74,6 +75,32 @@
   },
   "PROFILE": {
     "TITLE": "Profil",
+    "CARDS": {
+      "ADDRESS": {
+        "TITLE": "Cím",
+        "DESCRIPTION": "Változtasd meg a címed"
+      },
+      "PRIVACY": {
+        "TITLE": "Adatvédelem",
+        "DESCRIPTION": "Rendszerengedélyek módosítása"
+      },
+      "GENERAL":{
+        "TITLE": "Általános",
+        "DESCRIPTION": "Alapvető funkcionális beállítások"
+      },
+      "ABOUT": {
+        "TITLE": "Rólunk",
+        "DESCRIPTION": "Szolgáltatási feltételek és licencek"
+      },
+      "SUPPORT": {
+        "TITLE": "Támogatás",
+        "DESCRIPTION": "Azért vagyunk itt, hogy segítsünk"
+      },
+      "SIGN_OUT": {
+        "TITLE": "Kijelentkezés",
+        "DESCRIPTION": "Jelentkezzen ki, és térjen vissza a bejelentkezési oldalra"
+      }
+    },
     "THEME_SWITCH_LABEL": "Téma",
     "ABOUT": {
       "TITLE": "Rólunk",
