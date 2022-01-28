@@ -1,4 +1,9 @@
 {
+  "APP_LOCALIZATIONS": {
+    "en": "English",
+    "hu": "Hungarian",
+    "ro": "Romanian"
+  },
   "ONBOARD_TAB": {
     "TITLE": {
       "FIRST": "New era of shopping",
@@ -71,6 +76,32 @@
   },
   "PROFILE": {
     "TITLE": "Profile",
+    "CARDS": {
+      "ADDRESS": {
+        "TITLE": "Address",
+        "DESCRIPTION": "Change your address"
+      },
+      "PRIVACY": {
+        "TITLE": "Privacy",
+        "DESCRIPTION": "System permission change"
+      },
+      "GENERAL":{
+        "TITLE": "General",
+        "DESCRIPTION": "Basic functional settings"
+      },
+      "ABOUT": {
+        "TITLE": "About",
+        "DESCRIPTION": "Terms of Service and licenses"
+      },
+      "SUPPORT": {
+        "TITLE": "Support",
+        "DESCRIPTION": "We are here to help"
+      },
+      "SIGN_OUT": {
+        "TITLE": "Sign out",
+        "DESCRIPTION": "Sign out of and return to login page"
+      }
+    },
     "THEME_SWITCH_LABEL": "Theme",
     "ABOUT": {
       "TITLE": "About",
@@ -85,6 +116,13 @@
       "PRIVACY_POLICY": {
         "TITLE": "Privacy Policy",
         "DESCRIPTION": "Read our privacy policy"
+      }
+    },
+    "GENERAL_SETTINGS": {
+      "TITLE": "General settings",
+      "LANGUAGES": {
+        "TITLE": "Language",
+        "DESCRIPTION": "Change language"
       }
     }
   },

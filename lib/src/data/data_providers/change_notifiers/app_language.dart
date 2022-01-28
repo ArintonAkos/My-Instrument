@@ -4,15 +4,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppLanguage extends ChangeNotifier {
   Locale _appLocale = const Locale('en');
 
-  Locale get appLocal => _appLocale;
+  Locale get appLocale => _appLocale;
 
   int get localeIndex {
-    if (_appLocale == const Locale("hu")) {
+    if (_appLocale == const Locale('hu')) {
       return 1;
-    } else if (_appLocale == const Locale("ro")) {
+    } else if (_appLocale == const Locale('ro')) {
       return 2;
     }
     return 0;
+  }
+
+  static Locale getLocaleByName(String? localeText) {
+    try {
+      if (localeText == null) {
+        throw Exception();
+      }
+
+      return Locale(localeText);
+    } catch (e) {
+      return const Locale('en');
+    }
   }
 
   fetchLocale() async {

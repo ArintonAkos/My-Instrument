@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_select/flutter_awesome_select.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:my_instrument/shared/widgets/image_gallery.dart';
+import 'package:my_instrument/src/presentation/widgets/image_gallery.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
 import 'package:my_instrument/src/data/models/view_models/select_bottom_sheet.dart';
 import 'package:my_instrument/src/shared/theme/app_theme_data.dart';

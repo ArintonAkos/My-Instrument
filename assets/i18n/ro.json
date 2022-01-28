@@ -1,4 +1,9 @@
 {
+  "APP_LOCALIZATIONS": {
+    "en": "Engleză",
+    "hu": "Maghiară",
+    "ro": "Română"
+  },
   "ONBOARD_TAB": {
     "TITLE": {
       "FIRST": "Noua eră a cumpărăturilor",
@@ -16,6 +21,7 @@
     "INSTRUMENTS": "Instrumente",
     "ACCESSORIES": "Accesorii",
     "GADGETS": "Gadgeturi",
+    "CATEGORIES": "Categorii",
     "LISTINGS": "Listări",
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Chitare",
@@ -70,6 +76,32 @@
   },
   "PROFILE": {
     "TITLE": "Profil",
+    "CARDS": {
+      "ADDRESS": {
+        "TITLE": "Adresă",
+        "DESCRIPTION": "Schimbați-vă adresa\n"
+      },
+      "PRIVACY": {
+        "TITLE": "Confidențialitate",
+        "DESCRIPTION": "Modificarea permisiunii de sistem"
+      },
+      "GENERAL":{
+        "TITLE": "General",
+        "DESCRIPTION": "Setări funcționale de bază"
+      },
+      "ABOUT": {
+        "TITLE": "Despre noi",
+        "DESCRIPTION": "Termeni și licențe"
+      },
+      "SUPPORT": {
+        "TITLE": "Suport",
+        "DESCRIPTION": "Suntem aici să ajutăm"
+      },
+      "SIGN_OUT": {
+        "TITLE": "Deconectare",
+        "DESCRIPTION": "Deconectați-vă și reveniți la pagina de conectare"
+      }
+    },
     "THEME_SWITCH_LABEL": "Temă",
     "ABOUT": {
       "TITLE": "Informați",
@@ -84,6 +116,13 @@
       "PRIVACY_POLICY": {
         "TITLE": "Politica de confidențialitate",
         "DESCRIPTION": "Citești Politica de confidențialitate"
+      }
+    },
+    "GENERAL_SETTINGS": {
+      "TITLE": "Setări generale",
+      "LANGUAGES": {
+        "TITLE": "Limbaje",
+        "DESCRIPTION": "Állítsd be a nyelvet"
       }
     }
   },

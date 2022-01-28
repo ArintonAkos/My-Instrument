@@ -32,34 +32,33 @@ class ProductListBody extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               sliver: SliverToBoxAdapter(
                 child: CustomRefreshIndicator(
-                  builder: (BuildContext context, Widget child, IndicatorController controller) =>
-                      AnimatedBuilder(
-                        animation: controller,
-                        builder: (BuildContext context, _) =>
-                            Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                if (!controller.isIdle)
-                                  Positioned(
-                                    top: 35.0 * controller.value,
-                                    child: SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: CircularProgressIndicator(
-                                        value: !controller.isLoading
-                                            ? controller.value.clamp(0.0, 1.0)
-                                            : null,
-                                        color: getCustomTheme(context)?.loginButtonText,
-                                      ),
-                                    ),
+                  builder: (BuildContext context, Widget child, IndicatorController controller) => AnimatedBuilder(
+                    animation: controller,
+                    builder: (BuildContext context, _) =>
+                        Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            if (!controller.isIdle)
+                              Positioned(
+                                top: 35.0 * controller.value,
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    value: !controller.isLoading
+                                        ? controller.value.clamp(0.0, 1.0)
+                                        : null,
+                                    color: getCustomTheme(context)?.loginButtonText,
                                   ),
-                                Transform.translate(
-                                  offset: Offset(0, 100.0 * controller.value),
-                                  child: child,
                                 ),
-                              ],
+                              ),
+                            Transform.translate(
+                              offset: Offset(0, 100.0 * controller.value),
+                              child: child,
                             ),
-                      ),
+                          ],
+                        ),
+                  ),
                   onRefresh: () => Future.delayed(const Duration(seconds: 3)),
                   child: MasonryGridView.count(
                     shrinkWrap: true,
