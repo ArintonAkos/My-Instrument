@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
 import 'package:my_instrument/src/presentation/widgets/popup_action.dart';
 
@@ -9,12 +8,14 @@ class Popup extends StatelessWidget {
   final String tag;
   final String actionsTag;
   final PopupBuilder popupBuilder;
+  final List<PopupAction> actions;
 
   const Popup({
     Key? key,
     required this.tag,
     required this.actionsTag,
-    required this.popupBuilder
+    required this.popupBuilder,
+    required this.actions
   }) : super(key: key);
 
   @override
@@ -28,11 +29,12 @@ class Popup extends StatelessWidget {
           Navigator.pop(context);
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: SafeArea(
               child: Padding(
-                padding: EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
                 child: Center(
                   child: Column(
                     children: [
@@ -54,14 +56,15 @@ class Popup extends StatelessWidget {
                         tag: actionsTag,
                         child: SingleChildScrollView(
                           child: Column(
-                            children: const [
-                              PopupAction(
+                            children: actions,
+                            /*[
+                              const PopupAction(
                                 index: 1,
                                 count: 3,
                                 iconData: LineIcons.boxOpen,
                                 text: 'Open',
                               ),
-                              PopupAction(
+                              const PopupAction(
                                 index: 2,
                                 count: 3,
                                 iconData: LineIcons.alternateShare,
@@ -73,8 +76,11 @@ class Popup extends StatelessWidget {
                                 iconData: LineIcons.alternateTrashAlt,
                                 text: 'Delete',
                                 isDanger: true,
+                                onTap: () {
+
+                                },
                               )
-                            ],
+                            ]*/
                           ),
                         ),
                       )

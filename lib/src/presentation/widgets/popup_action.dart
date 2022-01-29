@@ -10,6 +10,7 @@ class PopupAction extends StatelessWidget {
   final String text;
   final IconData iconData;
   final bool? isDanger;
+  final VoidCallback? onTap;
 
   const PopupAction({
     Key? key,
@@ -17,8 +18,19 @@ class PopupAction extends StatelessWidget {
     required this.count,
     required this.text,
     required this.iconData,
-    this.isDanger
+    this.isDanger,
+    this.onTap
   }) : super(key: key);
+
+  void onClick(BuildContext context) {
+    if (isDanger == true) {
+      Navigator.pop(context);
+    }
+    if(onTap != null) {
+      onTap!();
+    }
+
+  }
 
   BorderRadius generateBorderRadius() {
     if (isLast && isFirst) {
@@ -41,9 +53,7 @@ class PopupAction extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-
-          },
+          onTap: () => onClick(context),
           child: Ink(
             width: 200,
             height: 50,

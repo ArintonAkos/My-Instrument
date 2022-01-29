@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_instrument/src/presentation/widgets/popup.dart';
+import 'package:my_instrument/src/presentation/widgets/popup_action.dart';
 import 'package:uuid/uuid.dart';
 
 typedef PreviewBuilder = Widget Function(BuildContext context);
@@ -11,10 +12,12 @@ class LongPressItem extends StatelessWidget {
 
   final PreviewBuilder previewBuilder;
   final PopupBuilder? popupBuilder;
+  final List<PopupAction> actions;
 
   LongPressItem({
     Key? key,
     required this.previewBuilder,
+    required this.actions,
     this.popupBuilder
   }) : super(key: key);
 
@@ -33,6 +36,7 @@ class LongPressItem extends StatelessWidget {
               PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => Popup(
+                  actions: actions,
                   tag: heroTag,
                   actionsTag: actionsTag,
                   popupBuilder: popupBuilder ?? previewBuilder

@@ -41,7 +41,8 @@
     "IMAGE_DROPPER": {
       "LABEL": "Încărcați imagini ale produsului dvs",
       "CAMERA": "Aparat foto",
-      "GALLERY": "Galerie"
+      "GALLERY": "Galerie",
+      "HELP": "Atingeți aici pentru a încărca imaginile despre produs\n"
     },
     "TITLE_INPUT": {
       "LABEL": "Titlu",

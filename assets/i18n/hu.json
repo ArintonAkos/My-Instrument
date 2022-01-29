@@ -41,7 +41,8 @@
     "IMAGE_DROPPER": {
       "LABEL": "Tölsön fel képet a termékéről",
       "CAMERA": "Kamera",
-      "GALLERY": "Galéria"
+      "GALLERY": "Galéria",
+      "HELP": "Bökjön ide, hogy feltölthesse a képeit a termékről"
     },
     "TITLE_INPUT": {
       "LABEL": "Cím",

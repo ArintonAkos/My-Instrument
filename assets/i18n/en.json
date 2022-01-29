@@ -41,7 +41,8 @@
     "IMAGE_DROPPER": {
       "LABEL": "Upload images of your product",
       "CAMERA": "Camera",
-      "GALLERY": "Gallery"
+      "GALLERY": "Gallery",
+      "HELP": "Tap here to upload your images about the product"
     },
     "TITLE_INPUT": {
       "LABEL": "Title",
