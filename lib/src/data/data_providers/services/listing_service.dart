@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/data/data_providers/constants/listing_constants.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/create_listing_request.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
-import 'package:my_instrument/src/data/models/requests/main/listing/listing_request.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/edit_listing_request.dart';
 import 'package:my_instrument/src/data/models/responses/base_response.dart' as my_base_response;
 import 'package:my_instrument/src/data/models/responses/main/listing/get_listings_response.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_response.dart';
@@ -40,7 +41,7 @@ class ListingService extends HttpService {
     return my_base_response.BaseResponse.error();
   }
 
-  Future<my_base_response.BaseResponse> createListing(ListingRequest listingRequest) async {
+  Future<my_base_response.BaseResponse> createListing(CreateListingRequest listingRequest) async {
     if (await model.ensureAuthorized()) {
       StreamedResponse res = await postMultipart(
         listingRequest,
@@ -58,7 +59,7 @@ class ListingService extends HttpService {
     return my_base_response.BaseResponse.error();
   }
 
-  Future<my_base_response.BaseResponse> editListing(ListingRequest listingRequest) async {
+  Future<my_base_response.BaseResponse> editListing(EditListingRequest listingRequest) async {
     if (await model.ensureAuthorized()) {
       StreamedResponse res = await postMultipart(
           listingRequest,

@@ -8,6 +8,7 @@ import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.
 import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/data/repositories/category_repository.dart';
+import 'package:my_instrument/src/data/repositories/listing_repository.dart';
 import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
 
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
@@ -91,7 +92,8 @@ class _MyAppState extends State<MyApp> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => FavoriteRepository()),
-        RepositoryProvider(create: (context) => CategoryRepository())
+        RepositoryProvider(create: (context) => CategoryRepository()),
+        RepositoryProvider(create: (context) => ListingRepository()),
       ],
       child: MultiProvider(
           providers: [

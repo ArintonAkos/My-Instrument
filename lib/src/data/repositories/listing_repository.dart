@@ -1,6 +1,7 @@
 import 'package:my_instrument/src/data/data_providers/services/listing_service.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/create_listing_request.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/edit_listing_request.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
-import 'package:my_instrument/src/data/models/requests/main/listing/listing_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/get_listings_response.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_response.dart';
@@ -29,7 +30,7 @@ class ListingRepository {
     throw Exception(res.message);
   }
 
-  Future<ListingModel> createListing(ListingRequest listingRequest) async {
+  Future<ListingModel> createListing(CreateListingRequest listingRequest) async {
     var res = await _listingService.createListing(listingRequest);
 
     if (res.ok) {
@@ -39,7 +40,7 @@ class ListingRepository {
     throw Exception(res.message);
   }
 
-  Future<ListingModel> editListing(ListingRequest listingRequest) async {
+  Future<ListingModel> editListing(EditListingRequest listingRequest) async {
     var res = await _listingService.editListing(listingRequest);
 
     if (res.ok) {
