@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/category/category_bloc.dart';
@@ -66,7 +65,9 @@ class CategorySlider extends StatelessWidget {
       controller: _controller,
       itemCount: state.categories.length,
       itemBuilder: (context, index) => IntroPageItem(
-        item: IntroItem.fromCategoryModel(state.categories[index]),
+        item: IntroItem.fromCategoryModel(
+          state.categories[index]
+        ),
         pageVisibility: visibilityResolver.resolvePageVisibility(index),
         onTap: () {},
       ),
@@ -138,8 +139,8 @@ class CategorySlider extends StatelessWidget {
     }
     else if (categoryState.isSuccess) {
       return PageTransformer(
-          pageViewBuilder: (_context, visibilityResolver) =>
-              categoryCardBuilder(visibilityResolver, categoryState)
+        pageViewBuilder: (_context, visibilityResolver) =>
+          categoryCardBuilder(visibilityResolver, categoryState)
       );
     }
 

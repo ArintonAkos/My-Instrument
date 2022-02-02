@@ -34,6 +34,7 @@ dependencies:
   auto_route: ^3.2.0
   avatars: ^3.0.2
   bloc_test: ^9.0.2
+  cached_network_image: ^3.2.0
   collection: ^1.15.0
   connectivity_plus: ^2.0.3
   cupertino_icons: ^1.0.2
@@ -44,7 +45,6 @@ dependencies:
   firebase_analytics: ^9.0.4
   firebase_core: ^1.10.6
   flutter_bloc: ^8.0.1
-  flutter_blurhash: ^0.6.0
   flutter_chat_ui: ^1.5.2
   flutter_cupertino_localizations: ^1.0.1
   flutter_facebook_auth: ^4.0.1
@@ -61,6 +61,7 @@ dependencies:
   logging: ^1.0.2
   mime: ^1.0.1
   modal_bottom_sheet: ^2.0.0
+  octo_image: ^1.0.1
   open_file: ^3.2.1
   provider: ^6.0.0
   shared_preferences: ^2.0.6
