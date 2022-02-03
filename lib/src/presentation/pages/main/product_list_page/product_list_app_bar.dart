@@ -42,8 +42,8 @@ class ProductListAppBar extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.onSurface
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.onSurface
               ),
             ),
           )
@@ -64,69 +64,83 @@ class ProductListAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       automaticallyImplyLeading: false,
       floating: true,
-      flexibleSpace: Padding(
-        padding: EdgeInsets.only(top: 10 + MediaQuery.of(context).padding.top),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    CupertinoIcons.back
-                  ),
-                  onPressed: () => AutoRouter.of(context).pop(),
-                  splashRadius: 25,
-                ),
-                SearchField(
-                  width: MediaQuery.of(context).size.width - 80,
-                  controller: searchController,
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: Row(
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10)
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(top: 10 + MediaQuery.of(context).padding.top),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  appBarItem(
-                    context,
-                    onPressed: () {
-                      showMaterialModalBottomSheet(
-                        context: context,
-                        builder: (context) => const FilterPage()
-                      );
-                    },
-                    text: 'Filters',
-                    iconData: LineIcons.filter,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: appBarItem(
-                      context,
-                      onPressed: () {
-                        showCupertinoModalBottomSheet(
-                          context: context,
-                          topRadius: Radius.circular(30),
-                          barrierColor: Colors.black.withOpacity(0.8),
-                          builder: (context) => FractionallySizedBox(
-                            heightFactor: 0.5,
-                            child: ModalInsideModal(
-                              onTap: (value) {},
-                              title: 'Order by',
-                              orderByModels: orderByModels,
-                            )
-                          )
-                        );
-                      },
-                      text: 'Order By',
-                      iconData: LineIcons.sortAmountUp
+                  IconButton(
+                    icon: const Icon(
+                      CupertinoIcons.back
                     ),
+                    onPressed: () => AutoRouter.of(context).pop(),
+                    splashRadius: 25,
+                  ),
+                  SearchField(
+                    width: MediaQuery.of(context).size.width - 80,
+                    controller: searchController,
                   )
                 ],
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                child: Row(
+                  children: [
+                    appBarItem(
+                      context,
+                      onPressed: () {
+                        showMaterialModalBottomSheet(
+                          context: context,
+                          builder: (context) => const FilterPage()
+                        );
+                      },
+                      text: 'Filters',
+                      iconData: LineIcons.filter,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: appBarItem(
+                        context,
+                        onPressed: () {
+                          showCupertinoModalBottomSheet(
+                            context: context,
+                            topRadius: const Radius.circular(30),
+                            barrierColor: Colors.black.withOpacity(0.8),
+                            builder: (context) => FractionallySizedBox(
+                              heightFactor: 0.5,
+                              child: ModalInsideModal(
+                                onTap: (value) {},
+                                title: 'Order by',
+                                orderByModels: orderByModels,
+                              )
+                            )
+                          );
+                        },
+                        text: 'Order By',
+                        iconData: LineIcons.sortAmountUp
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(15),
+          bottomLeft: Radius.circular(15)
+        )
+      )
     );
   }
 }
@@ -147,10 +161,10 @@ class OrderByItem extends StatelessWidget {
   final bool isSelected;
   
   const OrderByItem({
+    Key? key,
     required this.onTap,
     required this.model,
     required this.isSelected,
-    Key? key
   });
 
   @override

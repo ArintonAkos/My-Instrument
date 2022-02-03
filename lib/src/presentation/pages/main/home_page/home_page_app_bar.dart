@@ -41,11 +41,11 @@ class _HomePageAppBarState extends State<HomePageAppBar> {
       collapsedHeight: 80,
       backgroundColor: Theme.of(context).backgroundColor,
       flexibleSpace: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: HomeHeader(
-            onSubmitted: _onSearchSubmitted,
-            searchController: _searchController,
-          )
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child: HomeHeader(
+          onSubmitted: _onSearchSubmitted,
+          searchController: _searchController,
+        )
       ),
       floating: true,
     );

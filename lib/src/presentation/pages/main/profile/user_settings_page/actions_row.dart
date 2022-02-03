@@ -9,20 +9,21 @@ class ActionsRow extends StatelessWidget {
 
   Widget _buildActionItem(String name, IconData icon, BuildContext context, { VoidCallback? onTap } ) {
     final Widget actionIcon = Container(
-        height: 50.0,
-        width: 50.0,
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          shape: BoxShape.circle,
+      height: 50.0,
+      width: 50.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        splashRadius: 25.0,
+        icon: Icon(icon,
+          size: 20,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
-        child: IconButton(
-          splashRadius: 25.0,
-          icon: Icon(icon,
-            size: 20,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-          onPressed: onTap,
-        ).ripple()
+        onPressed: onTap,
+      )
+      .ripple()
     );
 
     final Widget actionText = Text(
@@ -34,7 +35,11 @@ class ActionsRow extends StatelessWidget {
     );
 
     return <Widget>[
-      actionIcon,
+      actionIcon.elevation(
+        10,
+        borderRadius: BorderRadius.circular(25),
+        shadowColor: Colors.grey.withOpacity(0.2),
+      ),
       const SizedBox(height: 7),
       actionText,
     ].toColumn().padding(vertical: 20);

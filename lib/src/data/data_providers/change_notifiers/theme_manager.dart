@@ -8,26 +8,26 @@ class ThemeNotifier with ChangeNotifier {
     themeMode: AppThemeMode.dark,
     themeData: ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      scaffoldBackgroundColor: const Color(0xFF121212),
-      backgroundColor: const Color(0xFF121212),
+      scaffoldBackgroundColor: const Color(0xFF161616),
+      backgroundColor: const Color(0xFF161616),
       dividerColor: const Color(0xFF121212),
-      cardColor: const Color(0xff2b2b2b),
-      errorColor: const Color(0xFFCF6679),
+      cardColor: const Color(0xFF303030),
+      errorColor: const Color(0xFFB00020),
       colorScheme: ColorScheme
         .fromSwatch(primarySwatch: Colors.grey)
         .copyWith(
-        primary: const Color(0xFF0096E1),
-        primaryVariant: const Color(0xFF015497),
-        // secondary: const Color(0xFF02E1EE),
-        // secondaryVariant: const Color(0xFF01AEC1),
-        surface: const Color(0xFF1F1F1F),
-        onPrimary: const Color(0xFFFFFFFF),
-        onSecondary: const Color(0xFFFFFFFF),
-        onBackground: const Color(0xFFFFFFFF),
-        onSurface: const Color(0xFFFFFFFF),
-        onError: const Color(0xFFFFFFFF),
-        brightness: Brightness.dark
-      ),
+          primary: const Color(0xFF0096E1),
+          primaryVariant: const Color(0xFF015497),
+          // secondary: const Color(0xFF02E1EE),
+          // secondaryVariant: const Color(0xFF01AEC1),
+          surface: const Color(0xFF121212),
+          onPrimary: const Color(0xFFFFFFFF),
+          onSecondary: const Color(0xFFFFFFFF),
+          onBackground: const Color(0xFFFFFFFF),
+          onSurface: const Color(0xFFFFFFFF),
+          onError: const Color(0xFFFFFFFF),
+          brightness: Brightness.dark
+        ),
     )
   );
 
@@ -35,14 +35,14 @@ class ThemeNotifier with ChangeNotifier {
     themeMode: AppThemeMode.light,
     themeData: ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+      scaffoldBackgroundColor: const Color(0xFFEFEFEF),
       backgroundColor: const Color(0xFFEFEFEF),
       dividerColor: Colors.grey,
-      cardColor: const Color(0xFFF0F0F0),
+      cardColor: const Color(0xFFFBFBFB),
       errorColor: const Color(0xFFB00020),
       colorScheme: ColorScheme
-          .fromSwatch(primarySwatch: Colors.blue)
-          .copyWith(
+        .fromSwatch(primarySwatch: Colors.blue)
+        .copyWith(
           primary: const Color(0xFF12B3F2),
           primaryVariant: const Color(0xFF015497),
           // secondary: const Color(0xFF02E1EE),
@@ -55,7 +55,7 @@ class ThemeNotifier with ChangeNotifier {
           onSurface: const Color(0xFF000000),
           onError: const Color(0xFFFFFFFF),
           brightness: Brightness.light
-      ),
+        ),
     )
   );
 

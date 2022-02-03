@@ -39,7 +39,7 @@ class _SettingsItemState extends State<SettingsItem> {
         ? 0
         : 20,
       borderRadius: BorderRadius.circular(25),
-      shadowColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+      shadowColor: Colors.grey.withOpacity(0.25),
     )
     .constrained(height: 80)
     .padding(vertical: 12) // margin
