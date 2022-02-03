@@ -28,15 +28,13 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
       page: EmptyRouterPage,
       children: [
         AutoRoute(path: 'login', page: LoginPage),
-        CustomRoute(
+        CupertinoRoute(
           path: 'register/:email:name',
           page: RegisterPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
-        CustomRoute(
+        CupertinoRoute(
           path: 'forgot-password',
           page: ForgotPasswordPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
         RedirectRoute(path: '*', redirectTo: 'login'),
       ]
@@ -62,44 +60,37 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
             RedirectRoute(path: '*', redirectTo: '')
           ]
         ),
-        CustomRoute(
+        CupertinoRoute(
           path: 'about/',
           page: AboutPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
-        CustomRoute(
+        CupertinoRoute(
           path: 'general-settings/',
           page: EmptyRouterPage,
-          customRouteBuilder: cupertinoRouteBuilder,
           children: [
-            CustomRoute(
+            CupertinoRoute(
               path: '',
               page: GeneralSettingsPage,
-              customRouteBuilder: cupertinoRouteBuilder
             ),
-            CustomRoute(
+            CupertinoRoute(
               path: 'language',
               page: LanguagePage,
-              customRouteBuilder: cupertinoRouteBuilder
             ),
             RedirectRoute(path: '*', redirectTo: ''),
           ]
         ),
-        CustomRoute(
+        CupertinoRoute(
           path: 'new-listing/',
           page: NewListingPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
         AutoRoute(path: 'chat/:userId', page: ChattingPage),
-        CustomRoute(
+        CupertinoRoute(
           path: 'cart',
           page: ShoppingCartPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
-        CustomRoute(
+        CupertinoRoute(
           path: 'products',
           page: ProductListPage,
-          customRouteBuilder: cupertinoRouteBuilder
         ),
         RedirectRoute(path: '*', redirectTo: '/main/'),
       ]

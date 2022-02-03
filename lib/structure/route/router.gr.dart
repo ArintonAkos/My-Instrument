@@ -11,10 +11,9 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/cupertino.dart' as _i22;
 import 'package:flutter/material.dart' as _i20;
 
-import '../../src/data/models/view_models/filter_data.dart' as _i23;
+import '../../src/data/models/view_models/filter_data.dart' as _i21;
 import '../../src/presentation/pages/auth/forgot_password_page/forgot_password.dart'
     as _i7;
 import '../../src/presentation/pages/auth/login_page/login_page.dart' as _i5;
@@ -45,7 +44,6 @@ import '../../src/presentation/pages/main/profile/user_settings_page/user_page.d
 import '../../src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart'
     as _i12;
 import '../../src/presentation/pages/main/splash_page/splash_page.dart' as _i3;
-import 'route_builders/cupertino_route_builder.dart' as _i21;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i20.GlobalKey<_i20.NavigatorState>? navigatorKey])
@@ -87,49 +85,30 @@ class AppRouter extends _i1.RootStackRouter {
           orElse: () => RegisterRouteArgs(
               email: pathParams.optString('email'),
               name: pathParams.optString('name')));
-      return _i1.CustomPage<dynamic>(
+      return _i1.CupertinoPageX<dynamic>(
           routeData: routeData,
           child: _i6.RegisterPage(
-              key: args.key, email: args.email, name: args.name),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+              key: args.key, email: args.email, name: args.name));
     },
     ForgotPasswordRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i7.ForgotPasswordPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i7.ForgotPasswordPage());
     },
     MainRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i8.MainPage());
     },
     AboutRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i9.AboutPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i9.AboutPage());
     },
     EmptyRouterRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i1.EmptyRouterPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i1.EmptyRouterPage());
     },
     NewListingRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i10.NewListingPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i10.NewListingPage());
     },
     ChattingRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -141,22 +120,15 @@ class AppRouter extends _i1.RootStackRouter {
           child: _i11.ChattingPage(key: args.key, userId: args.userId));
     },
     ShoppingCartRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i12.ShoppingCartPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i12.ShoppingCartPage());
     },
     ProductListRoute.name: (routeData) {
       final args = routeData.argsAs<ProductListRouteArgs>();
-      return _i1.CustomPage<dynamic>(
+      return _i1.CupertinoPageX<dynamic>(
           routeData: routeData,
           child:
-              _i13.ProductListPage(key: args.key, filterData: args.filterData),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+              _i13.ProductListPage(key: args.key, filterData: args.filterData));
     },
     HomeRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -179,20 +151,12 @@ class AppRouter extends _i1.RootStackRouter {
           routeData: routeData, child: const _i1.EmptyRouterPage());
     },
     GeneralSettingsRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i18.GeneralSettingsPage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i18.GeneralSettingsPage());
     },
     LanguageRoute.name: (routeData) {
-      return _i1.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i19.LanguagePage(),
-          customRouteBuilder: _i21.cupertinoRouteBuilder,
-          opaque: true,
-          barrierDismissible: false);
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i19.LanguagePage());
     }
   };
 
@@ -297,7 +261,7 @@ class ErrorRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.SplashPage]
 class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i22.Key? key})
+  SplashRoute({_i20.Key? key})
       : super(SplashRoute.name,
             path: '/splash', args: SplashRouteArgs(key: key));
 
@@ -307,7 +271,7 @@ class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i22.Key? key;
+  final _i20.Key? key;
 
   @override
   String toString() {
@@ -318,7 +282,7 @@ class SplashRouteArgs {
 /// generated route for
 /// [_i4.OnBoardPage]
 class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
-  OnBoardRoute({_i22.Key? key})
+  OnBoardRoute({_i20.Key? key})
       : super(OnBoardRoute.name,
             path: '/onboard', args: OnBoardRouteArgs(key: key));
 
@@ -328,7 +292,7 @@ class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
 class OnBoardRouteArgs {
   const OnBoardRouteArgs({this.key});
 
-  final _i22.Key? key;
+  final _i20.Key? key;
 
   @override
   String toString() {
@@ -347,7 +311,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.RegisterPage]
 class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i22.Key? key, String? email, String? name})
+  RegisterRoute({_i20.Key? key, String? email, String? name})
       : super(RegisterRoute.name,
             path: 'register/:email:name',
             args: RegisterRouteArgs(key: key, email: email, name: name),
@@ -359,7 +323,7 @@ class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, this.email, this.name});
 
-  final _i22.Key? key;
+  final _i20.Key? key;
 
   final String? email;
 
@@ -418,7 +382,7 @@ class NewListingRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.ChattingPage]
 class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
-  ChattingRoute({_i22.Key? key, required String userId})
+  ChattingRoute({_i20.Key? key, required String userId})
       : super(ChattingRoute.name,
             path: 'chat/:userId',
             args: ChattingRouteArgs(key: key, userId: userId),
@@ -430,7 +394,7 @@ class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
 class ChattingRouteArgs {
   const ChattingRouteArgs({this.key, required this.userId});
 
-  final _i22.Key? key;
+  final _i20.Key? key;
 
   final String userId;
 
@@ -451,7 +415,7 @@ class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i13.ProductListPage]
 class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
-  ProductListRoute({_i22.Key? key, required _i23.FilterData filterData})
+  ProductListRoute({_i20.Key? key, required _i21.FilterData filterData})
       : super(ProductListRoute.name,
             path: 'products',
             args: ProductListRouteArgs(key: key, filterData: filterData));
@@ -462,9 +426,9 @@ class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
 class ProductListRouteArgs {
   const ProductListRouteArgs({this.key, required this.filterData});
 
-  final _i22.Key? key;
+  final _i20.Key? key;
 
-  final _i23.FilterData filterData;
+  final _i21.FilterData filterData;
 
   @override
   String toString() {
