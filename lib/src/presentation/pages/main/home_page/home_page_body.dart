@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/presentation/widgets/category_slider/category_slider.dart';
+import 'package:my_instrument/src/presentation/widgets/custom_choice_select/choice_select.dart';
+import 'package:my_instrument/src/presentation/widgets/custom_choice_select/custom_choice_select.dart';
 import 'package:my_instrument/src/presentation/widgets/error_info.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
@@ -31,6 +33,19 @@ class _HomePageBodyState extends State<HomePageBody> {
     'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
     'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  ];
+
+  int selectedId = 0;
+
+  final List<ChoiceSelect> choices = [
+    ChoiceSelect(
+      selectId: 0,
+      text: 'Private',
+    ),
+    ChoiceSelect(
+      selectId: 1,
+      text: 'Firm'
+    ),
   ];
 
   Widget buildInstrumentsHeader() {
@@ -71,28 +86,28 @@ class _HomePageBodyState extends State<HomePageBody> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold
-              ),
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold
             ),
-            const Spacer(),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-              ),
-              onPressed: onTap,
-              child: Text(
-                subTitle,
-                style: const TextStyle(
-                  fontSize: 16
-                )
+          ),
+          const Spacer(),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            ),
+            onPressed: onTap,
+            child: Text(
+              subTitle,
+              style: const TextStyle(
+                fontSize: 16
               )
             )
-          ]
+          )
+        ]
       ),
     );
   }
@@ -155,6 +170,15 @@ class _HomePageBodyState extends State<HomePageBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const SizedBox(height: 20),
+        CustomChoiceSelect(
+          onTap: (int id) {
+            setState(() {
+              selectedId = id;
+            });
+          },
+          selectedChoiceId: selectedId,
+          choices: choices,
+        ),
         CategorySlider(
           headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
         ),
