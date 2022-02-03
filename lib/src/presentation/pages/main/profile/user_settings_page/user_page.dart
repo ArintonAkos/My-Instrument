@@ -91,6 +91,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -99,7 +100,8 @@ class _UserPageState extends State<UserPage> {
               Text(
                 AppLocalizations.of(context)!.translate('PROFILE.TITLE'),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-              ).alignment(Alignment.center).padding(bottom: 20),
+              ).alignment(Alignment.center)
+               .padding(bottom: 20),
               UserCard(authModel: _authModel),
               const ActionsRow(),
               Settings(settingsItems: getSettingsItems())
