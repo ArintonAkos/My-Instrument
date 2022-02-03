@@ -28,8 +28,16 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
       page: EmptyRouterPage,
       children: [
         AutoRoute(path: 'login', page: LoginPage),
-        AutoRoute(path: 'register/:email:name', page: RegisterPage),
-        AutoRoute(path: 'forgot-password', page: ForgotPasswordPage),
+        CustomRoute(
+          path: 'register/:email:name',
+          page: RegisterPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
+        CustomRoute(
+          path: 'forgot-password',
+          page: ForgotPasswordPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
         RedirectRoute(path: '*', redirectTo: 'login'),
       ]
     ),
@@ -54,7 +62,11 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
             RedirectRoute(path: '*', redirectTo: '')
           ]
         ),
-        AutoRoute(path: 'about/', page: AboutPage,),
+        CustomRoute(
+          path: 'about/',
+          page: AboutPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
         CustomRoute(
           path: 'general-settings/',
           page: EmptyRouterPage,
@@ -73,10 +85,22 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
             RedirectRoute(path: '*', redirectTo: ''),
           ]
         ),
-        AutoRoute(path: 'new-listing/', page: NewListingPage),
+        CustomRoute(
+          path: 'new-listing/',
+          page: NewListingPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
         AutoRoute(path: 'chat/:userId', page: ChattingPage),
-        AutoRoute(path: 'cart', page: ShoppingCartPage),
-        AutoRoute(path: 'products', page: ProductListPage),
+        CustomRoute(
+          path: 'cart',
+          page: ShoppingCartPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
+        CustomRoute(
+          path: 'products',
+          page: ProductListPage,
+          customRouteBuilder: cupertinoRouteBuilder
+        ),
         RedirectRoute(path: '*', redirectTo: '/main/'),
       ]
     ),
