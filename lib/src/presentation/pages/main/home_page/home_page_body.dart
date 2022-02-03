@@ -9,7 +9,7 @@ import 'package:my_instrument/src/presentation/widgets/category_slider/category_
 import 'package:my_instrument/src/presentation/widgets/custom_choice_select/choice_select.dart';
 import 'package:my_instrument/src/presentation/widgets/custom_choice_select/custom_choice_select.dart';
 import 'package:my_instrument/src/presentation/widgets/error_info.dart';
-import 'package:my_instrument/src/shared/theme/theme_methods.dart';
+import 'package:my_instrument/src/presentation/widgets/my_custom_refresh_indicator.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
 
@@ -115,32 +115,9 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
-      builder: (BuildContext context, Widget child, IndicatorController controller) => AnimatedBuilder(
-        animation: controller,
-        builder: (BuildContext context, _) =>
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              if (!controller.isIdle)
-                Positioned(
-                  top: 35.0 * controller.value,
-                  child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: CircularProgressIndicator(
-                      value: !controller.isLoading
-                          ? controller.value.clamp(0.0, 1.0)
-                          : null,
-                      color: getCustomTheme(context)?.loginButtonText,
-                    ),
-                  ),
-                ),
-              Transform.translate(
-                offset: Offset(0, 100.0 * controller.value),
-                child: child,
-              ),
-            ],
-          ),
+      builder: (BuildContext context, Widget child, IndicatorController controller) => MyCustomRefreshIndicator(
+        child: child,
+        controller: controller
       ),
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 400));

@@ -4,6 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
+import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
+import 'package:my_instrument/src/presentation/pages/base/error_page.dart';
+import 'package:my_instrument/src/presentation/widgets/error_info.dart';
+import 'package:my_instrument/src/presentation/widgets/my_custom_refresh_indicator.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/presentation/widgets/gradient_indeterminate_progress_bar.dart';
 import 'package:my_instrument/src/business_logic/blocs/favorite/favorite_bloc.dart';
@@ -18,48 +23,32 @@ class ProductListBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListingPageBloc, ListingPageState>(
-      builder: (context, state) {
-        switch (state.status) {
-          case ListingPageStatus.failure:
-            return SliverToBoxAdapter(
-              // TODO: Change this defaultLoader to StreamBuilder or BlocBuilder
-              // child: DefaultFallback()
-              child: Container(),
-            );
-          case ListingPageStatus.success:
-            return SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverToBoxAdapter(
-                child: CustomRefreshIndicator(
-                  builder: (BuildContext context, Widget child, IndicatorController controller) => AnimatedBuilder(
-                    animation: controller,
-                    builder: (BuildContext context, _) =>
-                        Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            if (!controller.isIdle)
-                              Positioned(
-                                top: 35.0 * controller.value,
-                                child: SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: CircularProgressIndicator(
-                                    value: !controller.isLoading
-                                        ? controller.value.clamp(0.0, 1.0)
-                                        : null,
-                                    color: getCustomTheme(context)?.loginButtonText,
-                                  ),
-                                ),
-                              ),
-                            Transform.translate(
-                              offset: Offset(0, 100.0 * controller.value),
-                              child: child,
-                            ),
-                          ],
-                        ),
-                  ),
-                  onRefresh: () => Future.delayed(const Duration(seconds: 3)),
+    return CustomRefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(milliseconds: 400));
+
+        context.read<ListingPageBloc>().add(GetListings(
+          request: GetListingsRequest(
+            filterData: FilterData.initial()
+          )
+        ));
+      },
+      builder: (BuildContext context, Widget child, IndicatorController controller) => MyCustomRefreshIndicator(
+        controller: controller,
+        child: child
+      ),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: BlocBuilder<ListingPageBloc, ListingPageState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case ListingPageStatus.failure:
+                return const Center(
+                  child: ErrorInfo()
+                );
+              case ListingPageStatus.success:
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: MasonryGridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -68,23 +57,21 @@ class ProductListBody extends StatelessWidget {
                     crossAxisSpacing: 10,
                     itemCount: state.listings.length,
                     itemBuilder: (BuildContext context, int index) =>
-                        Listing(listing: state.listings[index], listingPageState: state,)
+                      Listing(listing: state.listings[index], listingPageState: state,)
                   ),
-                )
-              ),
-            );
-          default:
-            return const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: GradientIndeterminateProgressbar(
-                  width: 50,
-                  height: 50,
-                ),
-              ),
-            );
-        }
-      }
+                );
+              default:
+                return const Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: GradientIndeterminateProgressbar(
+                    width: 50,
+                    height: 50,
+                  ),
+                );
+            }
+          }
+        ),
+      ),
     );
   }
 }

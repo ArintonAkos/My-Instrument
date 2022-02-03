@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_instrument/src/data/models/requests/main/listing/create_listing_request.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
@@ -9,9 +10,11 @@ part 'listing_page_event.dart';
 part 'listing_page_state.dart';
 
 class ListingPageBloc extends Bloc<ListingPageEvent, ListingPageState> {
-  final ListingRepository _listingRepository = ListingRepository();
+  final ListingRepository listingRepository;
 
-  ListingPageBloc() : super(ListingPageState()) {
+  ListingPageBloc({
+    required this.listingRepository
+  }) : super(ListingPageState()) {
     on<ListingPageEvent>(_onListingPageEvent);
   }
 
@@ -21,18 +24,18 @@ class ListingPageBloc extends Bloc<ListingPageEvent, ListingPageState> {
     }
 
     try {
-      final listings = await _listingRepository.getListings(
+      final listings = await listingRepository.getListings(
         GetListingsRequest(filterData: state.filterData)
       );
 
       listings.isEmpty
         ? emit(state.copyWith(hasReachedMax: true))
         : emit(state.copyWith(
-            status: ListingPageStatus.success,
-            listings: List.of(state.listings)..addAll(listings),
-            hasReachedMax: listings.isEmpty
-          ));
-
+          status: ListingPageStatus.success,
+          listings: List.of(state.listings)..addAll(listings),
+          hasReachedMax: listings.isEmpty
+        )
+      );
     } catch (_) {
       emit(state.copyWith(status: ListingPageStatus.failure));
     }

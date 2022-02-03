@@ -91,12 +91,14 @@ class _GradientIndeterminateProgressbarState
           axisLineStyle: AxisLineStyle(
             thickness: 0.2,
             cornerStyle: CornerStyle.bothCurve,
+            color: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonText ?? Colors.white,
             gradient: SweepGradient(
-                colors: <Color>[
-                  Theme.of(context).backgroundColor,
-                  Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonText ?? Colors.white                ,
-                ],
-                stops: const <double>[0.25, 1.0]),
+              colors: <Color>[
+                Theme.of(context).backgroundColor,
+                Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.loginButtonText ?? Colors.white
+              ],
+              stops: const <double>[0.25, 1.0]
+            ),
             thicknessUnit: GaugeSizeUnit.factor,
           ),
         ),

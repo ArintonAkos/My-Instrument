@@ -5,7 +5,7 @@ class ListingModel {
   final String listingId;
   final String description;
   final String title;
-  final int price;
+  final double price;
   late final String indexImagePath;
   late final String indexImageHash;
   final ParsableDateTime creationDate;
