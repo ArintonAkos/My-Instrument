@@ -23,6 +23,9 @@
     "GADGETS": "Készülékek",
     "CATEGORIES": "Kategóriák",
     "LISTINGS": "Hírdetések",
+    "SEARCH": {
+      "HINT": "Termék keresése"
+    },
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Gitárok",
       "GUITAR_TEXT": "Válaszd a legjobb gitárt az applikációban!",
@@ -213,6 +216,7 @@
   },
   "SHARED": {
     "ERROR": {
+      "APPBAR_HEADER_TEXT": "Hiba",
       "BASIC_MESSAGE": "Hiba lépett fel, kérlek probálkozz később!",
       "EMAIL_MESSAGE": "Érvénytelen email cím.",
       "PASSWORD": {

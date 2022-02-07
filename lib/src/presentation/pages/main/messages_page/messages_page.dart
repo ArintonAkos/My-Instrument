@@ -30,7 +30,6 @@ class _MessagesPageState extends State<MessagesPage> {
   late final StreamSubscription<List<String>?> _readAllMessageSubscription;
 
   bool _mounted = false;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _MessagesPageState extends State<MessagesPage> {
 
   _getMessageList() async {
     setState(() {
-      _isLoading = true;
     });
 
     BaseResponse response = await _messageService.getMessageList();
@@ -69,7 +67,6 @@ class _MessagesPageState extends State<MessagesPage> {
       if (_mounted) {
         setState(() {
           chatUsers = chatProfiles;
-          _isLoading = false;
         });
       }
     }

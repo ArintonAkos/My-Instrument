@@ -67,10 +67,10 @@ class UserCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20)
     )
         .elevation(
-      5,
-      shadowColor: Theme.of(context).colorScheme.primary,
-      borderRadius: BorderRadius.circular(20),
-    )
+          5,
+          shadowColor: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(20),
+        )
         .height(175)
         .alignment(Alignment.center);
   }

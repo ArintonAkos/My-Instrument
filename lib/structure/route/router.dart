@@ -5,6 +5,7 @@ import 'package:my_instrument/src/presentation/pages/auth/register_page/register
 import 'package:my_instrument/src/presentation/pages/base/error_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/fav_page/fav.dart';
 import 'package:my_instrument/src/presentation/pages/main/home_page/home_page.dart';
+import 'package:my_instrument/src/presentation/pages/main/listing_page/listing_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/main_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/chatting_page/chatting_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/messages_page/messages_page.dart';
@@ -17,7 +18,6 @@ import 'package:my_instrument/src/presentation/pages/main/profile/user_settings_
 import 'package:my_instrument/src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/splash_page/splash_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_page.dart';
-import 'package:my_instrument/structure/route/route_builders/cupertino_route_builder.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -28,14 +28,8 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
       page: EmptyRouterPage,
       children: [
         AutoRoute(path: 'login', page: LoginPage),
-        CupertinoRoute(
-          path: 'register/:email:name',
-          page: RegisterPage,
-        ),
-        CupertinoRoute(
-          path: 'forgot-password',
-          page: ForgotPasswordPage,
-        ),
+        CupertinoRoute(path: 'register/:email:name', page: RegisterPage, ),
+        CupertinoRoute(path: 'forgot-password', page: ForgotPasswordPage, ),
         RedirectRoute(path: '*', redirectTo: 'login'),
       ]
     ),
@@ -51,11 +45,7 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
             AutoRoute(path: '', page: HomePage),
             AutoRoute(path: 'favorites', page: FavPage),
             AutoRoute(path: 'messages', page: MessagesPage),
-            AutoRoute(
-              path: 'profile/',
-              name: 'ProfileRoute',
-              page: UserPage,
-            ),
+            AutoRoute(path: 'profile/', name: 'ProfileRoute', page: UserPage, ),
             AutoRoute(path: 'blank', name: 'BlankRoute', page: EmptyRouterPage),
             RedirectRoute(path: '*', redirectTo: '')
           ]
@@ -68,30 +58,16 @@ import 'package:my_instrument/structure/route/route_builders/cupertino_route_bui
           path: 'general-settings/',
           page: EmptyRouterPage,
           children: [
-            CupertinoRoute(
-              path: '',
-              page: GeneralSettingsPage,
-            ),
-            CupertinoRoute(
-              path: 'language',
-              page: LanguagePage,
-            ),
+            CupertinoRoute(path: '', page: GeneralSettingsPage, ),
+            CupertinoRoute(path: 'language', page: LanguagePage, ),
             RedirectRoute(path: '*', redirectTo: ''),
           ]
         ),
-        CupertinoRoute(
-          path: 'new-listing/',
-          page: NewListingPage,
-        ),
         AutoRoute(path: 'chat/:userId', page: ChattingPage),
-        CupertinoRoute(
-          path: 'cart',
-          page: ShoppingCartPage,
-        ),
-        CupertinoRoute(
-          path: 'products',
-          page: ProductListPage,
-        ),
+        CupertinoRoute(path: 'listing/:listingId', page: ListingPage),
+        CupertinoRoute(path: 'new-listing/', page: NewListingPage, ),
+        CupertinoRoute(path: 'cart', page: ShoppingCartPage),
+        CupertinoRoute(path: 'products', page: ProductListPage),
         RedirectRoute(path: '*', redirectTo: '/main/'),
       ]
     ),

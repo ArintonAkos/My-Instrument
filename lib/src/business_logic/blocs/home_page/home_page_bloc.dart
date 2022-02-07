@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_instrument/src/business_logic/blocs/category/category_bloc.dart';
 
 part 'home_page_event.dart';
 part 'home_page_state.dart';

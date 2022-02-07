@@ -4,8 +4,6 @@ import 'package:my_instrument/src/presentation/widgets/settings/settings.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/src/data/models/view_models/card_item_model.dart';
 
-import '../user_settings_page/user_page.dart';
-
 class AboutPage extends StatelessWidget {
 
   const AboutPage({

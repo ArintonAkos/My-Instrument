@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class UploadedImagePreview extends StatelessWidget {
   const UploadedImagePreview({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class UploadedImagePreview extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('asdsd'),
+            child: const Text('asdsd'),
           )
         ],
         child: Container(

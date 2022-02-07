@@ -80,6 +80,7 @@ class AuthModel {
           await prefs?.setBool('signedIn', true);
           await saveUserToPrefs();
         }
+
       } else {
         if (response.statusCode == 409) {
           await signOut();

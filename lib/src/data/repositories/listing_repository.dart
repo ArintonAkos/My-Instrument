@@ -20,8 +20,8 @@ class ListingRepository {
     throw Exception(res.message);
   }
 
-  Future<ListingModel> getListing(String listingId, { int language = 0}) async {
-    var res = await _listingService.getListing(listingId, language: language);
+  Future<ListingModel> getListing(String listingId) async {
+    var res = await _listingService.getListing(listingId);
 
     if (res.ok) {
       return (res as ListingResponse).listing;
@@ -50,8 +50,8 @@ class ListingRepository {
     throw Exception(res.message);
   }
 
-  Future<bool> deleteListing(String listingId, { int language = 0}) async {
-    var res = await _listingService.deleteListing(listingId, languageId: language);
+  Future<bool> deleteListing(String listingId) async {
+    var res = await _listingService.deleteListing(listingId);
 
     if (res.ok) {
       return true;

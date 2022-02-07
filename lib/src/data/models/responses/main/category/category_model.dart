@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/src/shared/utils/list_parser.dart';
 
@@ -7,17 +8,21 @@ import 'package:my_instrument/src/shared/utils/list_parser.dart';
 class CategoryModel extends Equatable {
   Map<String, dynamic>? json;
   CategoryModel({
-    required this.json
+    required this.json,
+    bool shouldParseChildren = true
   }) {
-    id = json?['id'] ?? -1;
-    nameEn = json?['nameEn'] ?? '';
-    nameHu = json?['nameHu'] ?? '';
-    nameRo = json?['nameRo'] ?? '';
+    id = json?['categoryId'] ?? -1;
+    nameEn = json?['categoryNameEn'] ?? '';
+    nameHu = json?['categoryNameHu'] ?? '';
+    nameRo = json?['categoryNameRo'] ?? '';
     imagePath = json?['imagePath'];
     imageHash = json?['imageHash'];
-    isLastElement = json?['isLastElement'];
-    children = ListParser.parse<CategoryModel>(json?['children'], parseCategoryModel);
 
+    if (shouldParseChildren) {
+      children = ListParser.parse<CategoryModel>(json?['childrenCategories'], parseCategoryModel);
+    } else {
+      children = [];
+    }
   }
 
   CategoryModel copyWith({ int? id }) {
@@ -28,7 +33,6 @@ class CategoryModel extends Equatable {
       "nameRo": nameRo,
       "imagePath": imagePath,
       "imageHash": imageHash,
-      "isLastElement": isLastElement,
       "children": children
     };
     return CategoryModel(json: data);
@@ -36,13 +40,12 @@ class CategoryModel extends Equatable {
 
   factory CategoryModel.base() {
     Map<String, dynamic> data = {
-      "id": 0,
-      "nameEn": "Categories",
-      "nameHu": "Kategóriák",
-      "nameRo": "Categorii",
+      "categoryId": 0,
+      "categoryNameEn": "Categories",
+      "categoryNameHu": "Kategóriák",
+      "categoryNameRo": "Categorii",
       "imagePath": "",
       "imageHash": "",
-      "isLastElement": false,
       "children": []
     };
     return CategoryModel(json: data);
@@ -55,7 +58,10 @@ class CategoryModel extends Equatable {
   late final String? imagePath;
   late final String? imageHash;
   late final List<CategoryModel> children;
-  late final bool isLastElement;
+
+  bool get isLastElement {
+    return (children.isEmpty);
+  }
 
   String getCategoryName(BuildContext context) {
     Locale? appLocale = AppLocalizations.of(context)?.locale;
@@ -72,7 +78,7 @@ class CategoryModel extends Equatable {
   }
 
   static CategoryModel? parseCategoryModel(Map<String, dynamic> json) {
-    if (json['id'] != null) {
+    if (json['categoryId'] != null) {
       return CategoryModel(json: json);
     }
     return null;
@@ -86,7 +92,6 @@ class CategoryModel extends Equatable {
       'nameRo': nameRo,
       'imagePath': imagePath,
       'imageHash': imageHash,
-      'isLastElement': isLastElement,
       'children': children,
     };
   }
@@ -99,7 +104,6 @@ class CategoryModel extends Equatable {
     nameRo,
     imagePath,
     imageHash,
-    isLastElement,
     children
   ];
 }

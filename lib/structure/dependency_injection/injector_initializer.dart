@@ -1,4 +1,5 @@
 import 'package:injector/injector.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/data/data_providers/services/auth_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/facebook_login_service.dart';
@@ -14,16 +15,16 @@ import 'package:my_instrument/src/data/data_providers/services/signalr_service.d
 
 
 class InjectorInitializer {
-  static initialize() {
+  static initialize(AppLanguage appLanguage) {
     appInjector.registerSingleton<GoogleLoginService>(() => GoogleLoginService());
     appInjector.registerSingleton<FacebookLoginService>(() => FacebookLoginService());
-    appInjector.registerSingleton<AuthService>(() => AuthService());
-    appInjector.registerSingleton<CategoryService>(() => CategoryService());
-    appInjector.registerSingleton<FavoriteService>(() => FavoriteService());
-    appInjector.registerSingleton<MessageService>(() => MessageService());
-    appInjector.registerSingleton<ProfileService>(() => ProfileService());
-    appInjector.registerSingleton<ListingService>(() => ListingService());
-    appInjector.registerSingleton<ShoppingCartService>(() => ShoppingCartService());
+    appInjector.registerSingleton<AuthService>(() => AuthService(appLanguage: appLanguage));
+    appInjector.registerSingleton<CategoryService>(() => CategoryService(appLanguage: appLanguage));
+    appInjector.registerSingleton<FavoriteService>(() => FavoriteService(appLanguage: appLanguage));
+    appInjector.registerSingleton<MessageService>(() => MessageService(appLanguage: appLanguage));
+    appInjector.registerSingleton<ProfileService>(() => ProfileService(appLanguage: appLanguage));
+    appInjector.registerSingleton<ListingService>(() => ListingService(appLanguage: appLanguage));
+    appInjector.registerSingleton<ShoppingCartService>(() => ShoppingCartService(appLanguage: appLanguage));
     appInjector.registerSingleton<AuthModel>(() => AuthModel());
     appInjector.registerSingleton<SignalRService>(() => SignalRService());
     appInjector.registerSingleton<SharedPreferencesService>(() => SharedPreferencesService());

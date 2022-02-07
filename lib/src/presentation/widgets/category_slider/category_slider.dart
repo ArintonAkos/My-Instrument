@@ -15,12 +15,12 @@ import 'package:shimmer/shimmer.dart';
 
 class CategorySlider extends StatelessWidget {
   final PageController _controller = PageController(viewportFraction: 0.85);
-  final int? categoryId;
+  final int categoryId;
   final String headerText;
 
   CategorySlider({
     Key? key,
-    this.categoryId,
+    required this.categoryId,
     required this.headerText,
   }) : super(key: key);
 
@@ -66,7 +66,8 @@ class CategorySlider extends StatelessWidget {
       itemCount: state.categories.length,
       itemBuilder: (context, index) => IntroPageItem(
         item: IntroItem.fromCategoryModel(
-          state.categories[index]
+          state.categories[index],
+          context
         ),
         pageVisibility: visibilityResolver.resolvePageVisibility(index),
         onTap: () {},
@@ -81,17 +82,15 @@ class CategorySlider extends StatelessWidget {
       itemBuilder: (context, index) => Container(
         padding: const EdgeInsets.all(10),
         child: Shimmer.fromColors(
-            baseColor: Theme.of(context).colorScheme.surface,
-            highlightColor: getCustomTheme(context)?.shimmerColor ?? Colors.white,
-            // baseColor: Colors.grey[300]!,
-            // highlightColor: Colors.grey[100]!,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 250,
-                color: Colors.grey[300],
-              ),
-            )
+          baseColor: Theme.of(context).colorScheme.surface,
+          highlightColor: getCustomTheme(context)?.shimmerColor ?? Colors.white,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 250,
+              color: Colors.grey[300],
+            ),
+          )
         ),
       ),
     );
@@ -106,10 +105,7 @@ class CategorySlider extends StatelessWidget {
             categoryRepository: RepositoryProvider.of<CategoryRepository>(context),
             homePageBloc: context.read<HomePageBloc>(),
             categoryId: categoryId
-          )..add((categoryId != null)
-            ? LoadCategories(categoryId: categoryId!)
-            : const LoadBaseCategories()
-          )
+          )..add(LoadCategories(categoryId: categoryId))
         )
       ],
       child: Column(

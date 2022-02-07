@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:badges/badges.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:my_instrument/src/business_logic/blocs/favorite/favorite_bloc.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/shared/utils/list_parser.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
@@ -114,8 +117,27 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           CustomNavigationBarItem(
-            icon: const Icon(
-              LineIcons.heart,
+            icon: BlocBuilder<FavoriteBloc, FavoriteState>(
+              builder: (context, state) {
+                int count = 0;
+                if (state is FavoriteLoadedState) {
+                  count = state.listingIds.length;
+                }
+
+                return Badge(
+                  badgeContent: Text(
+                    '$count',
+                    style: const TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
+                  badgeColor: Theme.of(context).colorScheme.primary,
+                  showBadge: (count > 0),
+                  child: const Icon(
+                    LineIcons.heart,
+                  ),
+                );
+              },
             ),
           ),
           CustomNavigationBarItem(

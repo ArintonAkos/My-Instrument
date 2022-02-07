@@ -91,9 +91,8 @@ class _FilterPageState extends State<FilterPage> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Column(
-          children: [
-            const PriceRange(),
-
+          children: const [
+            PriceRange(),
           ],
         ),
       ),

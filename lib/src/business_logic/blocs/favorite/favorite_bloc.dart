@@ -11,8 +11,8 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   FavoriteBloc({
     required this.favoriteRepository
   }) : super(FavoriteInitialState()) {
-    on<FavoriteEvent>((event, emit) =>
-      _onFavoriteEvent(event, emit)
+    on<FavoriteEvent>((event, emit) async =>
+     await _onFavoriteEvent(event, emit)
     );
   }
 
@@ -25,7 +25,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
         emit(FavoriteLoadedState(listingIds: listings));
       } else if (event is FavoriteClickEvent) {
-        _manageFavoriteClickEvent(event, emit);
+        await _manageFavoriteClickEvent(event, emit);
       }
     } catch (_) {
       emit(const FavoriteLoadedState(listingIds: []));
@@ -35,9 +35,9 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   Future<void> _manageFavoriteClickEvent(FavoriteClickEvent event, Emitter<FavoriteState> emit) async {
     if (state is FavoriteLoadedState) {
       if ((state as FavoriteLoadedState).listingIds.contains(event.listingId)) {
-        _manageFavoriteRemove(event, emit);
+        await _manageFavoriteRemove(event, emit);
       } else {
-        _manageFavoriteAdd(event, emit);
+        await _manageFavoriteAdd(event, emit);
       }
     }
   }

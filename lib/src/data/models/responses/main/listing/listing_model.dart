@@ -33,10 +33,10 @@ class ListingModel {
      listingId: json['listingId'],
      description: json['description'],
      price: json['price'],
-     indexImagePath: json['indexImagePath'],
-     indexImageHash: json['indexImageHash'],
+     indexImagePath: json['indexImagePath'] ?? '',
+     indexImageHash: json['indexImageHash'] ?? '',
      creationDate: ParsableDateTime.fromString(json['creationDate']),
-     userId: json['userId'],
+     userId: json['applicationUserId'],
      category: CategoryModel(json: json['category'])
    );
   }

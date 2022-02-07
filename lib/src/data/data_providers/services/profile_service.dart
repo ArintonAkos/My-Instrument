@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/data/models/responses/base_response.dart' as my_base_response;
 import 'package:my_instrument/src/data/models/responses/main/profile/base_profile_response.dart';
@@ -9,6 +10,7 @@ import 'package:my_instrument/src/data/data_providers/constants/profile_constant
 import 'package:my_instrument/src/data/models/responses/main/profile/profile_response.dart';
 
 class ProfileService extends HttpService {
+  ProfileService({ required AppLanguage appLanguage}) : super(appLanguage: appLanguage);
 
   Future<my_base_response.BaseResponse> getProfile(String id) async {
     if (await model.ensureAuthorized()) {
@@ -18,11 +20,11 @@ class ProfileService extends HttpService {
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
-        ProfileResponse profileResponse = ProfileResponse(body);
+        ProfileResponse profileResponse = ProfileResponse(body, appLanguage);
         return profileResponse;
       }
     }
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
   Future<my_base_response.BaseResponse> getBaseProfile(String id) async {
@@ -33,11 +35,11 @@ class ProfileService extends HttpService {
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
-        BaseProfileResponse baseProfileResponse = BaseProfileResponse(body);
+        BaseProfileResponse baseProfileResponse = BaseProfileResponse(body, appLanguage);
         return baseProfileResponse;
       }
     }
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
 
@@ -48,11 +50,11 @@ class ProfileService extends HttpService {
       if (res.statusCode == 200) {
         dynamic body = jsonDecode(res.body);
 
-        ProfileResponse profileResponse = ProfileResponse(body);
+        ProfileResponse profileResponse = ProfileResponse(body, appLanguage);
         return profileResponse;
       }
     }
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
 }

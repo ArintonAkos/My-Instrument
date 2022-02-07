@@ -17,10 +17,3 @@ class LoadCategories extends CategoryEvent {
   @override
   List<Object> get props => [];
 }
-
-class LoadBaseCategories extends CategoryEvent {
-  const LoadBaseCategories();
-
-  @override
-  List<Object> get props => [];
-}

@@ -1,3 +1,5 @@
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
+
 import '../../base_response.dart';
 import '../../error_response.dart';
 import 'category_model.dart';
@@ -5,7 +7,7 @@ import 'category_model.dart';
 class CategoryResponse extends BaseResponse {
   late final List<CategoryModel> data;
 
-  CategoryResponse(Map<String, dynamic> json) : super(json) {
+  CategoryResponse(Map<String, dynamic> json, AppLanguage appLanguage) : super(json, appLanguage) {
     data = parseCategories(json);
   }
 
@@ -20,7 +22,7 @@ class CategoryResponse extends BaseResponse {
     return categoryList;
   }
 
-  factory CategoryResponse.errorMessage({int language = 0}) {
-    return CategoryResponse(ErrorResponse(language: language).responseJSON);
+  factory CategoryResponse.errorMessage(AppLanguage appLanguage) {
+    return CategoryResponse(ErrorResponse(language: appLanguage.localeIndex).responseJSON, appLanguage);
   }
 }

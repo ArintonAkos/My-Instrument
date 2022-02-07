@@ -9,7 +9,7 @@ class RefreshTokenRequest implements BackendRequest {
     required this.token,
     required this.refreshToken,
     this.language = 0
-  }) {}
+  });
 
   @override
   Map<String, dynamic> toJson() => {

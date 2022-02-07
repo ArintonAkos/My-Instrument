@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
 import 'package:injector/injector.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/models/requests/backend_request.dart';
 import 'package:my_instrument/src/data/models/requests/multipart_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,11 +18,14 @@ class HttpService {
   static const String _productionRemoteUrl = "";
 
   final _injector = Injector.appInstance;
+  final AppLanguage appLanguage;
 
   late final AuthModel model;
   late final SharedPreferences prefs;
 
-  HttpService() {
+  HttpService({
+    required this.appLanguage
+  }) {
     model = _injector.get<AuthModel>();
     init();
   }
@@ -51,10 +55,18 @@ class HttpService {
     return _localRemoteUrl + 'hubs/chat';
   }
 
-  Future<http.Response> postJson(BackendRequest data, String path, )  async {
+  String getChainOperator(bool concat) {
+    if (concat) {
+      return '&';
+    }
+
+    return '?';
+  }
+
+  Future<http.Response> postJson(BackendRequest data, String path, { bool concat = false })  async {
     String? bearerToken = prefs.getString('token');
     return http.post(
-      Uri.parse(apiUrl + path),
+      Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       body: jsonEncode(data.toJson()),
       headers: {
         'Content-Type': 'application/json',
@@ -63,21 +75,21 @@ class HttpService {
     });
   }
 
-  Future<http.Response> getData(String path) {
+  Future<http.Response> getData(String path, { bool concat = false }) {
     String? bearerToken = prefs.getString('token');
     return http.get(
-      Uri.parse(apiUrl + path),
+      Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
     );
   }
 
-  Future<http.StreamedResponse> postMultipart(MultipartRequest data, String path) async {
+  Future<http.StreamedResponse> postMultipart(MultipartRequest data, String path, { bool concat = false }) async {
     String? bearerToken = prefs.getString('token');
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse(apiUrl + path)
+      Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}')
     )
       ..headers.addAll({
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
@@ -96,20 +108,20 @@ class HttpService {
     return request.send();
   }
 
-  Future<http.Response> putData(String path) async {
+  Future<http.Response> putData(String path, { bool concat = false }) async {
     String? bearerToken = prefs.getString('token');
     return http.put(
-      Uri.parse(apiUrl + path),
+      Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
     );
   }
 
-  Future<http.Response> deleteData(String path) async {
+  Future<http.Response> deleteData(String path, { bool concat = false }) async {
     String? bearerToken = prefs.getString('token');
     return http.delete(
-        Uri.parse(apiUrl + path),
+        Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
         headers: {
           'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
         }

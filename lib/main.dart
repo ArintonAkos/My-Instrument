@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _initInjector() {
-    InjectorInitializer.initialize();
+    InjectorInitializer.initialize(appLanguage);
   }
 
   _updateSignedInState(bool signedIn) {

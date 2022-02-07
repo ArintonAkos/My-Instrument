@@ -23,6 +23,9 @@
     "GADGETS": "Gadgets",
     "CATEGORIES": "Categories",
     "LISTINGS": "Listings",
+    "SEARCH": {
+      "HINT": "Search product"
+    },
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Guitars",
       "GUITAR_TEXT": "Choose the best guitar from the app!",
@@ -213,6 +216,7 @@
   },
   "SHARED": {
     "ERROR": {
+      "APPBAR_HEADER_TEXT": "Error",
       "BASIC_MESSAGE": "An error occurred, please try again later!",
       "EMAIL_MESSAGE": "Invalid email.",
       "PASSWORD": {

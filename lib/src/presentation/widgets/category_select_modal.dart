@@ -43,23 +43,25 @@ class _CategorySelectModalState extends State<CategorySelectModal> {
         controller: ModalScrollController.of(context),
         itemBuilder: (BuildContext context, int index) => ListTile(
           title: Text(state.categories[index].getCategoryName(context)),
-          onTap: (!state.categories[index].isLastElement) ? () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CupertinoPageScaffold(
-                  child: CategorySelectModal(
-                    category: state.categories[index],
-                    newListingContext: widget.newListingContext,
-                    selectedName: state.categories[index].nameEn,
-                    updateSelectedCategory: widget.updateSelectedCategory,
-                  )
+          onTap: (state.categories[index].children.isNotEmpty)
+            ? () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CupertinoPageScaffold(
+                    child: CategorySelectModal(
+                      category: state.categories[index],
+                      newListingContext: widget.newListingContext,
+                      selectedName: state.categories[index].nameEn,
+                      updateSelectedCategory: widget.updateSelectedCategory,
+                    )
+                  ),
                 ),
-              ),
-            );
-          } :() {
-            popOut(state.categories[index]);
-            setState(() {FocusScope.of(rootContext).requestFocus(FocusNode());});
-          },
+              );
+            }
+            : () {
+              popOut(state.categories[index]);
+              setState(() {FocusScope.of(rootContext).requestFocus(FocusNode());});
+            },
         )
       );
     } else if (state.isFailure) {

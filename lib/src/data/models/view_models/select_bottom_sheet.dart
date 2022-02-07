@@ -16,7 +16,7 @@ class SelectBottomSheet extends StatelessWidget {
             builder: (context2) => Builder(
               builder: (context) => CupertinoPageScaffold(
                 navigationBar: CupertinoNavigationBar(
-                    leading: Container(), middle: Text('Modal Page')),
+                    leading: Container(), middle: const Text('Modal Page')),
                 child: SafeArea(
                   bottom: false,
                   child: ListView(
@@ -27,14 +27,14 @@ class SelectBottomSheet extends StatelessWidget {
                       tiles: List.generate(
                           100,
                               (index) => ListTile(
-                            title: Text('Item'),
+                            title: const Text('Item'),
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => CupertinoPageScaffold(
                                     navigationBar: CupertinoNavigationBar(
                                       backgroundColor: Theme.of(context).colorScheme.secondary,
-                                      middle: Text('New Page'),
+                                      middle: const Text('New Page'),
                                     ),
                                     child: Stack(
                                       fit: StackFit.expand,
@@ -42,7 +42,7 @@ class SelectBottomSheet extends StatelessWidget {
                                         MaterialButton(
                                           onPressed: () =>
                                               Navigator.of(rootContext).pop(),
-                                          child: Text('touch here'),
+                                          child: const Text('touch here'),
                                         )
                                       ],
                                     ),

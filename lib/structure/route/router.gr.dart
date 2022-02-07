@@ -11,9 +11,9 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/material.dart' as _i20;
+import 'package:flutter/material.dart' as _i21;
 
-import '../../src/data/models/view_models/filter_data.dart' as _i21;
+import '../../src/data/models/view_models/filter_data.dart' as _i22;
 import '../../src/presentation/pages/auth/forgot_password_page/forgot_password.dart'
     as _i7;
 import '../../src/presentation/pages/auth/login_page/login_page.dart' as _i5;
@@ -21,32 +21,33 @@ import '../../src/presentation/pages/auth/register_page/register_page.dart'
     as _i6;
 import '../../src/presentation/pages/base/error_page.dart' as _i2;
 import '../../src/presentation/pages/main/chatting_page/chatting_page.dart'
-    as _i11;
-import '../../src/presentation/pages/main/fav_page/fav.dart' as _i15;
-import '../../src/presentation/pages/main/home_page/home_page.dart' as _i14;
+    as _i10;
+import '../../src/presentation/pages/main/fav_page/fav.dart' as _i16;
+import '../../src/presentation/pages/main/home_page/home_page.dart' as _i15;
+import '../../src/presentation/pages/main/listing_page/listing_page.dart' as _i11;
 import '../../src/presentation/pages/main/main_page.dart' as _i8;
 import '../../src/presentation/pages/main/messages_page/messages_page.dart'
-    as _i16;
+    as _i17;
 import '../../src/presentation/pages/main/new_listing_page/new_listing_page.dart'
-    as _i10;
+    as _i12;
 import '../../src/presentation/pages/main/onboard_page/onboard_page.dart'
     as _i4;
 import '../../src/presentation/pages/main/product_list_page/product_list_page.dart'
-    as _i13;
+    as _i14;
 import '../../src/presentation/pages/main/profile/about_page/about_page.dart'
     as _i9;
 import '../../src/presentation/pages/main/profile/general_settings_page/general_settings_page.dart'
-    as _i18;
-import '../../src/presentation/pages/main/profile/general_settings_page/language_page/langauge_page.dart'
     as _i19;
+import '../../src/presentation/pages/main/profile/general_settings_page/language_page/langauge_page.dart'
+    as _i20;
 import '../../src/presentation/pages/main/profile/user_settings_page/user_page.dart'
-    as _i17;
+    as _i18;
 import '../../src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart'
-    as _i12;
+    as _i13;
 import '../../src/presentation/pages/main/splash_page/splash_page.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {
-  AppRouter([_i20.GlobalKey<_i20.NavigatorState>? navigatorKey])
+  AppRouter([_i21.GlobalKey<_i21.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -106,10 +107,6 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.CupertinoPageX<dynamic>(
           routeData: routeData, child: const _i1.EmptyRouterPage());
     },
-    NewListingRoute.name: (routeData) {
-      return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i10.NewListingPage());
-    },
     ChattingRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<ChattingRouteArgs>(
@@ -117,34 +114,47 @@ class AppRouter extends _i1.RootStackRouter {
               ChattingRouteArgs(userId: pathParams.getString('userId')));
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i11.ChattingPage(key: args.key, userId: args.userId));
+          child: _i10.ChattingPage(key: args.key, userId: args.userId));
+    },
+    ListingRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ListingRouteArgs>(
+          orElse: () =>
+              ListingRouteArgs(id: pathParams.getString('listingId')));
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData,
+          child: _i11.ListingPage(key: args.key, id: args.id));
+    },
+    NewListingRoute.name: (routeData) {
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData, child: const _i12.NewListingPage());
     },
     ShoppingCartRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i12.ShoppingCartPage());
+          routeData: routeData, child: const _i13.ShoppingCartPage());
     },
     ProductListRoute.name: (routeData) {
       final args = routeData.argsAs<ProductListRouteArgs>();
       return _i1.CupertinoPageX<dynamic>(
           routeData: routeData,
           child:
-              _i13.ProductListPage(key: args.key, filterData: args.filterData));
+              _i14.ProductListPage(key: args.key, filterData: args.filterData));
     },
     HomeRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i14.HomePage());
+          routeData: routeData, child: const _i15.HomePage());
     },
     FavRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i15.FavPage());
+          routeData: routeData, child: const _i16.FavPage());
     },
     MessagesRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i16.MessagesPage());
+          routeData: routeData, child: const _i17.MessagesPage());
     },
     ProfileRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i17.UserPage());
+          routeData: routeData, child: const _i18.UserPage());
     },
     BlankRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -152,11 +162,11 @@ class AppRouter extends _i1.RootStackRouter {
     },
     GeneralSettingsRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i18.GeneralSettingsPage());
+          routeData: routeData, child: const _i19.GeneralSettingsPage());
     },
     LanguageRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i19.LanguagePage());
+          routeData: routeData, child: const _i20.LanguagePage());
     }
   };
 
@@ -212,10 +222,12 @@ class AppRouter extends _i1.RootStackRouter {
                     redirectTo: '',
                     fullMatch: true)
               ]),
-          _i1.RouteConfig(NewListingRoute.name,
-              path: 'new-listing/', parent: BaseRouter.name),
           _i1.RouteConfig(ChattingRoute.name,
               path: 'chat/:userId', parent: BaseRouter.name),
+          _i1.RouteConfig(ListingRoute.name,
+              path: 'listing/:listingId', parent: BaseRouter.name),
+          _i1.RouteConfig(NewListingRoute.name,
+              path: 'new-listing/', parent: BaseRouter.name),
           _i1.RouteConfig(ShoppingCartRoute.name,
               path: 'cart', parent: BaseRouter.name),
           _i1.RouteConfig(ProductListRoute.name,
@@ -261,7 +273,7 @@ class ErrorRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.SplashPage]
 class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i20.Key? key})
+  SplashRoute({_i21.Key? key})
       : super(SplashRoute.name,
             path: '/splash', args: SplashRouteArgs(key: key));
 
@@ -271,7 +283,7 @@ class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -282,7 +294,7 @@ class SplashRouteArgs {
 /// generated route for
 /// [_i4.OnBoardPage]
 class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
-  OnBoardRoute({_i20.Key? key})
+  OnBoardRoute({_i21.Key? key})
       : super(OnBoardRoute.name,
             path: '/onboard', args: OnBoardRouteArgs(key: key));
 
@@ -292,7 +304,7 @@ class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
 class OnBoardRouteArgs {
   const OnBoardRouteArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -311,7 +323,7 @@ class LoginRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.RegisterPage]
 class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i20.Key? key, String? email, String? name})
+  RegisterRoute({_i21.Key? key, String? email, String? name})
       : super(RegisterRoute.name,
             path: 'register/:email:name',
             args: RegisterRouteArgs(key: key, email: email, name: name),
@@ -323,7 +335,7 @@ class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, this.email, this.name});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   final String? email;
 
@@ -372,17 +384,9 @@ class EmptyRouterRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.NewListingPage]
-class NewListingRoute extends _i1.PageRouteInfo<void> {
-  const NewListingRoute() : super(NewListingRoute.name, path: 'new-listing/');
-
-  static const String name = 'NewListingRoute';
-}
-
-/// generated route for
-/// [_i11.ChattingPage]
+/// [_i10.ChattingPage]
 class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
-  ChattingRoute({_i20.Key? key, required String userId})
+  ChattingRoute({_i21.Key? key, required String userId})
       : super(ChattingRoute.name,
             path: 'chat/:userId',
             args: ChattingRouteArgs(key: key, userId: userId),
@@ -394,7 +398,7 @@ class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
 class ChattingRouteArgs {
   const ChattingRouteArgs({this.key, required this.userId});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   final String userId;
 
@@ -405,7 +409,40 @@ class ChattingRouteArgs {
 }
 
 /// generated route for
-/// [_i12.ShoppingCartPage]
+/// [_i11.ListingPage]
+class ListingRoute extends _i1.PageRouteInfo<ListingRouteArgs> {
+  ListingRoute({_i21.Key? key, required String id})
+      : super(ListingRoute.name,
+            path: 'listing/:listingId',
+            args: ListingRouteArgs(key: key, id: id),
+            rawPathParams: {'listingId': id});
+
+  static const String name = 'ListingRoute';
+}
+
+class ListingRouteArgs {
+  const ListingRouteArgs({this.key, required this.id});
+
+  final _i21.Key? key;
+
+  final String id;
+
+  @override
+  String toString() {
+    return 'ListingRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [_i12.NewListingPage]
+class NewListingRoute extends _i1.PageRouteInfo<void> {
+  const NewListingRoute() : super(NewListingRoute.name, path: 'new-listing/');
+
+  static const String name = 'NewListingRoute';
+}
+
+/// generated route for
+/// [_i13.ShoppingCartPage]
 class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
   const ShoppingCartRoute() : super(ShoppingCartRoute.name, path: 'cart');
 
@@ -413,9 +450,9 @@ class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.ProductListPage]
+/// [_i14.ProductListPage]
 class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
-  ProductListRoute({_i20.Key? key, required _i21.FilterData filterData})
+  ProductListRoute({_i21.Key? key, required _i22.FilterData filterData})
       : super(ProductListRoute.name,
             path: 'products',
             args: ProductListRouteArgs(key: key, filterData: filterData));
@@ -426,9 +463,9 @@ class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
 class ProductListRouteArgs {
   const ProductListRouteArgs({this.key, required this.filterData});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
-  final _i21.FilterData filterData;
+  final _i22.FilterData filterData;
 
   @override
   String toString() {
@@ -437,7 +474,7 @@ class ProductListRouteArgs {
 }
 
 /// generated route for
-/// [_i14.HomePage]
+/// [_i15.HomePage]
 class HomeRoute extends _i1.PageRouteInfo<void> {
   const HomeRoute() : super(HomeRoute.name, path: '');
 
@@ -445,7 +482,7 @@ class HomeRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.FavPage]
+/// [_i16.FavPage]
 class FavRoute extends _i1.PageRouteInfo<void> {
   const FavRoute() : super(FavRoute.name, path: 'favorites');
 
@@ -453,7 +490,7 @@ class FavRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.MessagesPage]
+/// [_i17.MessagesPage]
 class MessagesRoute extends _i1.PageRouteInfo<void> {
   const MessagesRoute() : super(MessagesRoute.name, path: 'messages');
 
@@ -461,7 +498,7 @@ class MessagesRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.UserPage]
+/// [_i18.UserPage]
 class ProfileRoute extends _i1.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: 'profile/');
 
@@ -477,7 +514,7 @@ class BlankRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i18.GeneralSettingsPage]
+/// [_i19.GeneralSettingsPage]
 class GeneralSettingsRoute extends _i1.PageRouteInfo<void> {
   const GeneralSettingsRoute() : super(GeneralSettingsRoute.name, path: '');
 
@@ -485,7 +522,7 @@ class GeneralSettingsRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i19.LanguagePage]
+/// [_i20.LanguagePage]
 class LanguageRoute extends _i1.PageRouteInfo<void> {
   const LanguageRoute() : super(LanguageRoute.name, path: 'language');
 

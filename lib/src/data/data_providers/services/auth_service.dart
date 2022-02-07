@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/src/data/data_providers/constants/auth_constants.dart';
@@ -19,6 +20,8 @@ import 'facebook_login_service.dart';
 import 'google_login_service.dart';
 
 class AuthService extends HttpService {
+  AuthService({ required AppLanguage appLanguage}) : super(appLanguage: appLanguage);
+
   final GoogleLoginService _googleLoginService = appInjector.get<GoogleLoginService>();
   final FacebookLoginService _facebookLoginService = appInjector.get<FacebookLoginService>();
 
@@ -29,11 +32,11 @@ class AuthService extends HttpService {
       Map<String, dynamic> body = jsonDecode(res.body);
       body['authenticationType'] = 'email';
 
-      LoginResponse loginResponse = LoginResponse(body);
+      LoginResponse loginResponse = LoginResponse(body, appLanguage);
       return loginResponse;
     }
 
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
   Future<my_base_response.BaseResponse> googleExternalLogin() async {
@@ -68,19 +71,20 @@ class AuthService extends HttpService {
       Map<String, dynamic> body  = jsonDecode(res.body);
       body['authenticationType'] = request.loginProvider.toLowerCase();
 
-      LoginResponse response = LoginResponse(body);
+      LoginResponse response = LoginResponse(body, appLanguage);
       return response;
     } else if (res.statusCode == CustomStatusCode.moreInfoRequired) {
       dynamic body = jsonDecode(res.body);
 
       return DbExternalLoginResponse(
         body,
+        appLanguage,
         email: request.emailAddress,
         name: request.name ?? '',
       );
     }
 
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
   Future<my_base_response.BaseResponse> register(RegisterRequest request) async {
@@ -89,11 +93,11 @@ class AuthService extends HttpService {
     if (res.statusCode == 200) {
       dynamic body = jsonDecode(res.body);
 
-      RegisterResponse registerResponse = RegisterResponse(body);
+      RegisterResponse registerResponse = RegisterResponse(body, appLanguage);
       return registerResponse;
     }
 
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 
   Future<my_base_response.BaseResponse> refreshToken(RefreshTokenRequest request) async {
@@ -102,10 +106,10 @@ class AuthService extends HttpService {
     if (res.statusCode == 200) {
       dynamic body = jsonDecode(res.body);
 
-      RefreshTokenResponse refreshTokenResponse = RefreshTokenResponse(body);
+      RefreshTokenResponse refreshTokenResponse = RefreshTokenResponse(body, appLanguage);
       return refreshTokenResponse;
     }
 
-    return my_base_response.BaseResponse.error();
+    return my_base_response.BaseResponse.error(appLanguage);
   }
 }

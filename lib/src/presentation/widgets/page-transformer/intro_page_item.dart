@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:my_instrument/src/presentation/widgets/image_extensions.dart';
 import 'package:my_instrument/src/presentation/widgets/page-transformer/page_transformer.dart';
 import 'package:my_instrument/src/data/models/view_models/intro_item.dart';
 import 'package:octo_image/octo_image.dart';
@@ -81,31 +82,6 @@ class IntroPageItem extends StatelessWidget {
     );
   }
 
-  ImageProvider<Object> getImageFromUrl() {
-    if (item.imageUrl != null) {
-      return CachedNetworkImageProvider(
-        item.imageUrl!
-      );
-    }
-
-    return const AssetImage(
-      'assets/no_image_placeholder.jpg'
-    );
-  }
-
-  Widget getImage() {
-    return OctoImage(
-      image: getImageFromUrl(),
-      placeholderBuilder: (item.imageHash != null)
-        ? OctoPlaceholder.blurHash(
-          item.imageHash!
-        )
-        : null,
-      fit: BoxFit.cover,
-      errorBuilder: OctoError.icon(),
-    );
-  }
-
   Widget imageOverlayGradient() {
     return const DecoratedBox(
       decoration: BoxDecoration(
@@ -139,7 +115,7 @@ class IntroPageItem extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      getImage(),
+                      getImage(item.imageUrl, item.imageHash),
                       imageOverlayGradient(),
                       _buildTextContainer(context),
                     ],

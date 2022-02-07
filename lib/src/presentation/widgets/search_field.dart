@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 
 class SearchField extends StatelessWidget {
   final double? width;
@@ -35,7 +36,7 @@ class SearchField extends StatelessWidget {
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
-          hintText: "Search product",
+          hintText: AppLocalizations.of(context)!.translate('HOME.SEARCH.HINT'),
           prefixIcon: Icon(
             Icons.search,
             color: Theme.of(context).colorScheme.onSurface

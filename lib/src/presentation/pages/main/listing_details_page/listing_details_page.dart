@@ -24,7 +24,6 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
   late AnimationController _colorAnimationController;
   Animation? _colorTween, _iconColorTween;
 
-  int _selectIndex = 0;
   bool isAppbarCollapsing = false;
 
   @override
@@ -70,7 +69,6 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
   double priceFontSize = 20.0;
   int priceCharNumb = 10;
   int descriptionCharNumb = 500;
-  String _listingDescription = 'The description of your instrument';
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1558098329-a11cff621064?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=636&q=80',
     'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1100&q=80',
@@ -78,10 +76,6 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
     'https://images.unsplash.com/photo-1550291652-6ea9114a47b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80'
   ];
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String? _hero = 'bat';
-
 
   List<S2Choice<String>> heroes = [
     S2Choice<String>(value: 'sup', title: 'Drums'),
@@ -97,7 +91,6 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
     String? errorText,
     int? characterNumber,
     double? fSize,
-    IconData? iconData,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +197,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
               child: SmoothPageIndicator(
                 controller: controller,
                 count: imgList.length,
-                effect: WormEffect(
+                effect: const WormEffect(
                     dotColor: Colors.grey,
                     activeDotColor:  Colors.white,
                     dotHeight: 7.0,
@@ -219,32 +212,32 @@ class _ListingDetailsPageState extends State<ListingDetailsPage>
                 expand: true,
                 builder: (context, controller) => Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                    borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
                     color: Theme.of(context).colorScheme.surface,
                   ),
                   child: ListView(
                     controller: controller,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       _buildTitleTF(),
                       _buildPriceTF(),
                       _buildDescriptionTF(),
                       Padding(
-                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Card(
 
                           elevation: 5,
                           child: ListTile(
                             tileColor: Theme.of(context).colorScheme.secondary,
-                            title: Text('Select the type of your product'),
+                            title: const Text('Select the type of your product'),
                             trailing: IconButton(
                               splashRadius: 20,
-                              icon: Icon(Icons.arrow_forward_ios),
+                              icon: const Icon(Icons.arrow_forward_ios),
                               onPressed: () {
                                 showCupertinoModalBottomSheet(context: context,
-                                  builder: (context) => SelectBottomSheet(),
+                                  builder: (context) => const SelectBottomSheet(),
                                 );
                               },
 

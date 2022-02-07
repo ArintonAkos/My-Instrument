@@ -23,6 +23,9 @@
     "GADGETS": "Gadgeturi",
     "CATEGORIES": "Categorii",
     "LISTINGS": "Listări",
+    "SEARCH": {
+      "HINT": "Căutare produs"
+    },
     "INSTRUMENT_CARD": {
       "GUITAR_TITLE": "Chitare",
       "GUITAR_TEXT": "Alegeți cea mai bună chitară din aplicație!",
@@ -213,6 +216,7 @@
   },
   "SHARED": {
     "ERROR": {
+      "APPBAR_HEADER_TEXT": "Eroare",
       "BASIC_MESSAGE": "A apărut o eroare, încercați mai târziu!",
       "EMAIL_MESSAGE": "Adresă de email invalid.",
       "PASSWORD": {

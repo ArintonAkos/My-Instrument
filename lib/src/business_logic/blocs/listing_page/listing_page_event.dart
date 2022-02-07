@@ -2,18 +2,15 @@ part of 'listing_page_bloc.dart';
 
 abstract class ListingPageEvent extends Equatable {
   const ListingPageEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-class GetListings extends ListingPageEvent {
-  final GetListingsRequest request;
+class LoadListingEvent extends ListingPageEvent {
+  final String listingId;
 
-  const GetListings({
-    required this.request
+  const LoadListingEvent({
+    required this.listingId
   });
 
   @override
-  List<Object> get props => [ request ];
+  List<Object> get props => [ listingId ];
 }

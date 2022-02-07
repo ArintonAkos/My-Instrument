@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
 
 class IntroItem{
@@ -13,9 +14,9 @@ class IntroItem{
   final String? imageUrl;
   final String? imageHash;
 
-  factory IntroItem.fromCategoryModel(CategoryModel model) {
+  factory IntroItem.fromCategoryModel(CategoryModel model, BuildContext context) {
     return IntroItem(
-      title: model.nameEn,
+      title: model.getCategoryName(context),
       category: model.id,
       imageUrl: model.imagePath,
       imageHash: model.imageHash

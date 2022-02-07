@@ -1,20 +1,21 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
-import 'package:my_instrument/src/presentation/pages/base/error_page.dart';
 import 'package:my_instrument/src/presentation/widgets/error_info.dart';
+import 'package:my_instrument/src/presentation/widgets/image_extensions.dart';
 import 'package:my_instrument/src/presentation/widgets/my_custom_refresh_indicator.dart';
-import 'package:my_instrument/src/shared/theme/theme_methods.dart';
 import 'package:my_instrument/src/presentation/widgets/gradient_indeterminate_progress_bar.dart';
 import 'package:my_instrument/src/business_logic/blocs/favorite/favorite_bloc.dart';
-import 'package:my_instrument/src/business_logic/blocs/listing_page/listing_page_bloc.dart';
-import 'package:my_instrument/src/data/data_providers/constants/image_constants.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 class ProductListBody extends StatelessWidget {
   const ProductListBody({
@@ -27,7 +28,7 @@ class ProductListBody extends StatelessWidget {
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 400));
 
-        context.read<ListingPageBloc>().add(GetListings(
+        context.read<NewListingPageBloc>().add(GetListings(
           request: GetListingsRequest(
             filterData: FilterData.initial()
           )
@@ -39,7 +40,7 @@ class ProductListBody extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: BlocBuilder<ListingPageBloc, ListingPageState>(
+        child: BlocBuilder<NewListingPageBloc, NewListingPageState>(
           builder: (context, state) {
             switch (state.status) {
               case ListingPageStatus.failure:
@@ -48,7 +49,7 @@ class ProductListBody extends StatelessWidget {
                 );
               case ListingPageStatus.success:
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
                   child: MasonryGridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -78,7 +79,7 @@ class ProductListBody extends StatelessWidget {
 
 class Listing extends StatelessWidget {
   final ListingModel listing;
-  final ListingPageState listingPageState;
+  final NewListingPageState listingPageState;
 
   const Listing({
     Key? key,
@@ -86,13 +87,13 @@ class Listing extends StatelessWidget {
     required this.listingPageState
   }) : super(key: key);
 
-  Widget buildFavoriteButton(FavoriteState favoriteState, ListingPageState state) {
+  Widget buildFavoriteButton(FavoriteState favoriteState, NewListingPageState state) {
     if (favoriteState is FavoriteLoadedState) {
       if (favoriteState.listingIds.contains(listing.listingId)) {
         return const Icon(
-            LineIcons.heartAlt,
-            key: ValueKey<int>(0),
-            color: Color(0xFFEF3534)
+          LineIcons.heartAlt,
+          key: ValueKey<int>(0),
+          color: Color(0xFFEF3534)
         );
       }
     }
@@ -105,91 +106,109 @@ class Listing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return InkWell(
       borderRadius: BorderRadius.circular(5),
-      child: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 1.6,
-            child: BlurHash(
-                imageFit: BoxFit.cover,
-                image: ImageConstants.cloudStorageURL + listing.indexImagePath,
-                hash: listing.indexImageHash
-            ),
-          ),
-          Card(
-            margin: EdgeInsets.zero,
-            color: Theme.of(context).colorScheme.surface,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Instruments/Guitars/Electric-Guitars',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                          fontSize: 12
-                      ),
-                    ),
-                  ),
-                  Row(
+      onTap: () {
+        AutoRouter.of(context).push(ListingRoute(id: listing.listingId));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Hero(
+          tag: 'listing-${listing.listingId}',
+          child: Container(
+            color: Theme.of(context).cardColor.withOpacity(0.85),
+            child: Column(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.6,
+                  child: getImage(
+                    listing.indexImagePath,
+                    listing.indexImageHash,
+                    isPersonalDb: true
+                  )
+                ),
+                Card(
+                  margin: EdgeInsets.zero,
+                  color: Theme.of(context).cardColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: Column(
                       children: [
-                        Expanded(
+                        Container(
+                          alignment: Alignment.centerLeft,
                           child: Text(
-                              listing.description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontSize: 18
-                              )
+                            'Instruments/Guitars/Electric-Guitars',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              fontSize: 12
+                            ),
                           ),
                         ),
-                        BlocBuilder<FavoriteBloc, FavoriteState>(
-                            builder: (context, favoriteState) => IconButton(
-                              icon: AnimatedSwitcher(
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                listing.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 18
+                                )
+                              ),
+                            ),
+                            BlocBuilder<FavoriteBloc, FavoriteState>(
+                              builder: (context, favoriteState) => IconButton(
+                                icon: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 250),
                                   transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(scale: animation, child: child,),
                                   child: buildFavoriteButton(favoriteState, listingPageState)
-                              ),
-                              onPressed: () {
-                                context.read<FavoriteBloc>().add(FavoriteClickEvent(listingId: listing.listingId));
-                              },
+                                ),
+                                onPressed: () {
+                                  context.read<FavoriteBloc>().add(FavoriteClickEvent(listingId: listing.listingId));
+                                },
+                              )
                             )
+                          ]
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '${listing.price} lei',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                            )
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Text(
+                            'Stock: 2',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
+                            ),
+                          ),
                         )
-                      ]
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        '${listing.price} lei',
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20
-                        )
+                      ],
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      'Stock: 2',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
-    );
+    )
+    .elevation(
+      10.0,
+      borderRadius: BorderRadius.circular(5),
+      shadowColor: Theme.of(context).colorScheme.onBackground
+    )
+    ;
   }
 
 }

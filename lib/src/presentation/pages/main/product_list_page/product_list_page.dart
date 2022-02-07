@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/data/repositories/listing_repository.dart';
 import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_app_bar.dart';
-import 'package:my_instrument/src/business_logic/blocs/listing_page/listing_page_bloc.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_model.dart';
 import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_body.dart';
@@ -52,7 +51,7 @@ class _ProductListPageState extends State<ProductListPage> {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ListingPageBloc(
+            create: (context) => NewListingPageBloc(
               listingRepository: RepositoryProvider.of<ListingRepository>(context)
             )
             ..add(GetListings(

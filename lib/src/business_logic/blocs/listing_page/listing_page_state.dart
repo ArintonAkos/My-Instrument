@@ -1,51 +1,49 @@
 part of 'listing_page_bloc.dart';
 
-enum ListingPageStatus {
-  initial,
-  success,
-  failure
+enum ListingPageStatus { initial, loading, success, failure }
+
+extension ListingPageStateX on ListingPageState {
+  bool get isLoading => (status == ListingPageStatus.loading);
+  bool get isSuccess => (status == ListingPageStatus.success);
+  bool get isFailure => (status == ListingPageStatus.failure);
 }
 
 class ListingPageState extends Equatable {
-  final List<ListingModel> listings;
-  late final FilterData filterData;
   final ListingPageStatus status;
-  final bool hasReachedMax;
+  final ListingModel? listing;
 
-  ListingPageState({
-    this.listings = const <ListingModel>[],
-    this.status = ListingPageStatus.initial,
-    this.hasReachedMax = false,
-    FilterData? filterData,
-  }) {
-    this.filterData = filterData ?? FilterData.initial();
-  }
+  const ListingPageState({
+    required this.status,
+    required this.listing
+  });
 
   ListingPageState copyWith({
     ListingPageStatus? status,
-    List<ListingModel>? listings,
-    FilterData? filterData,
-    bool? hasReachedMax,
+    ListingModel? listing
   }) {
     return ListingPageState(
-      listings: listings ?? this.listings,
       status: status ?? this.status,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      filterData: filterData ?? this.filterData
+      listing: listing ?? this.listing
     );
   }
 
-
-  @override
-  String toString() {
-    return '''ListingPageState {
-      status: $status,
-      filterData: $filterData,
-      hasReachedMax: $hasReachedMax,
-      listings: ${listings.length},
-    }''';
+  factory ListingPageState.initial() {
+    return const ListingPageState(
+      status: ListingPageStatus.initial,
+      listing: null
+    );
   }
 
   @override
-  List<Object> get props => [listings, filterData, status, hasReachedMax ];
+  String toString() {
+    return '''
+    ListingPageState {
+      status: $status,
+      listing: $listing
+    }
+    ''';
+  }
+
+  @override
+  List<Object?> get props => [ status, listing ];
 }

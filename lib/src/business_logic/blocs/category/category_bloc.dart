@@ -12,20 +12,20 @@ part 'category_state.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository categoryRepository;
   final HomePageBloc homePageBloc;
-  final int? categoryId;
+  final int categoryId;
   late final StreamSubscription homePageSubscription;
 
   CategoryBloc({
     required this.categoryRepository,
     required this.homePageBloc,
-    this.categoryId
+    required this.categoryId
   }) : super(CategoryState.initial()) {
     registerHomePageListener();
     on<CategoryEvent>(handleEvent);
   }
 
   Future<void> handleEvent(CategoryEvent event, Emitter emit) async {
-    if (event is LoadCategories || event is LoadBaseCategories) {
+    if (event is LoadCategories) {
       await handleCategories(event, emit);
     }
   }
@@ -52,8 +52,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   Future<List<CategoryModel>> getCategories(CategoryEvent event) async {
     if (event is LoadCategories) {
       return await categoryRepository.getCategoryWithChildren(event.categoryId);
-    } else if (event is LoadBaseCategories) {
-      return await categoryRepository.getBaseCategoriesWithChildren();
     }
 
     return [];
@@ -62,11 +60,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   void registerHomePageListener() {
     homePageSubscription = homePageBloc.stream.listen((HomePageState homePageState) {
       if (homePageState.isReloading) {
-        if (categoryId != null) {
-          add(LoadCategories(categoryId: categoryId!));
-        } else {
-          add(const LoadBaseCategories());
-        }
+       add(LoadCategories(categoryId: categoryId));
       }
     });
   }
