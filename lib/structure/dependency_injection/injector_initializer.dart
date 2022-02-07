@@ -8,8 +8,10 @@ import 'package:my_instrument/src/data/data_providers/services/category_service.
 import 'package:my_instrument/src/data/data_providers/services/listing_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/message_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/profile_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/shared_preferences_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/shopping_cart_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/signalr_service.dart';
+
 
 class InjectorInitializer {
   static initialize() {
@@ -24,6 +26,7 @@ class InjectorInitializer {
     appInjector.registerSingleton<ShoppingCartService>(() => ShoppingCartService());
     appInjector.registerSingleton<AuthModel>(() => AuthModel());
     appInjector.registerSingleton<SignalRService>(() => SignalRService());
+    appInjector.registerSingleton<SharedPreferencesService>(() => SharedPreferencesService());
   }
 }
 

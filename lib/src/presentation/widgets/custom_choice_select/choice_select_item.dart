@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_instrument/src/shared/theme/theme_methods.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 
 import 'choice_select.dart';
 
@@ -66,7 +67,7 @@ class ChoiceSelectItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
-              choice.text,
+              AppLocalizations.of(context)!.translate(choice.text),
               style: TextStyle(
                 color: (selected)
                   ? getCustomTheme(context)?.loginButtonsColor

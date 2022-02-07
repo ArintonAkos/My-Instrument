@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/src/shared/utils/list_parser.dart';
 
 
-class CategoryModel {
+class CategoryModel extends Equatable {
   Map<String, dynamic>? json;
   CategoryModel({
     required this.json
@@ -17,6 +18,20 @@ class CategoryModel {
     isLastElement = json?['isLastElement'];
     children = ListParser.parse<CategoryModel>(json?['children'], parseCategoryModel);
 
+  }
+
+  CategoryModel copyWith({ int? id }) {
+    Map<String, dynamic> data = {
+      "id": id ?? this.id,
+      "nameEn": nameEn,
+      "nameHu": nameHu,
+      "nameRo": nameRo,
+      "imagePath": imagePath,
+      "imageHash": imageHash,
+      "isLastElement": isLastElement,
+      "children": children
+    };
+    return CategoryModel(json: data);
   }
 
   factory CategoryModel.base() {
@@ -33,7 +48,7 @@ class CategoryModel {
     return CategoryModel(json: data);
   }
 
-  late final int id;
+  late int id;
   late final String nameEn;
   late final String nameHu;
   late final String nameRo;
@@ -56,10 +71,35 @@ class CategoryModel {
     return "";
   }
 
-  CategoryModel? parseCategoryModel(Map<String, dynamic> json) {
+  static CategoryModel? parseCategoryModel(Map<String, dynamic> json) {
     if (json['id'] != null) {
       return CategoryModel(json: json);
     }
     return null;
   }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'nameEn': nameEn,
+      'nameHu': nameHu,
+      'nameRo': nameRo,
+      'imagePath': imagePath,
+      'imageHash': imageHash,
+      'isLastElement': isLastElement,
+      'children': children,
+    };
+  }
+
+  @override
+  List<Object?> get props => [
+    id,
+    nameEn,
+    nameHu,
+    nameRo,
+    imagePath,
+    imageHash,
+    isLastElement,
+    children
+  ];
 }

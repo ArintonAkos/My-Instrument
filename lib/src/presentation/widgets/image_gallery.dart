@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -27,7 +29,7 @@ class _GalleryImgState extends State<GalleryImg> {
                     final urlImage = widget.urlImages[index];
 
                     return PhotoViewGalleryPageOptions(
-                      imageProvider: NetworkImage(urlImage),
+                      imageProvider: FileImage(File(urlImage)),
                       minScale: PhotoViewComputedScale.contained,
                       maxScale: PhotoViewComputedScale.contained * 4,
                     );

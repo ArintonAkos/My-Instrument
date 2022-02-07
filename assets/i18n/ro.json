@@ -42,7 +42,8 @@
       "LABEL": "Încărcați imagini ale produsului dvs",
       "CAMERA": "Aparat foto",
       "GALLERY": "Galerie",
-      "HELP": "Atingeți aici pentru a încărca imaginile despre produs\n"
+      "HELP": "Atingeți aici pentru a încărca imaginile despre produs",
+      "HINT": "Selectați metoda de încărcare"
     },
     "TITLE_INPUT": {
       "LABEL": "Titlu",
@@ -58,17 +59,39 @@
     },
     "CATEGORY_SELECT": {
       "LABEL": "Selectați",
-      "HINT": "Selectați tipul produsului dvs\n"
+      "HINT": "Selectați tipul produsului dvs"
     },
-    "PRIVATE_FIRM": {
-      "LABEL": "Privat sau firmă",
-      "PRIVATE": "Privat",
-      "FIRM": "Firmă"
-    },
-    "NEW_USED": {
+    "CONDITION": {
       "LABEL": "Condiție",
       "NEW": "Nou",
       "USED": "Folosit"
+    },
+    "COUNT": {
+      "LABEL": "Cate?",
+      "HINT": "Câte vrei să vinzi?"
+    },
+    "ERROR_MESSAGE": {
+      "INPUT_FIELD": "Vă rugăm să completați cu informații",
+      "NUMBER_INPUT": "Numai numere pozitive",
+      "SELECT": "Vă rugăm să selectați o categorie",
+      "UPLOAD": "Ceva n-a mers bine..."
+    },
+    "EXIT_DIALOG":{
+      "TITLE": "Ești sigur că vrei să ieși?",
+      "CONTENT": "Aveți date nesalvate",
+      "EXIT": "Ieșire",
+      "CANCEL": "Anulare"
+    },
+    "ENTER_DIALOG":{
+      "TITLE": "Ai salvat date",
+      "CONTENT": "Vrei să le încarci?",
+      "YES": "Da",
+      "NO": "Nu"
+    },
+    "POPUP": {
+      "OPEN": "Deschis",
+      "INDEX_IMAGE": "Imagine index",
+      "DELETE": "Șterge"
     }
   },
   "FAV": {

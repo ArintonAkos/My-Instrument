@@ -147,15 +147,6 @@ class _HomePageBodyState extends State<HomePageBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const SizedBox(height: 20),
-        CustomChoiceSelect(
-          onTap: (int id) {
-            setState(() {
-              selectedId = id;
-            });
-          },
-          selectedChoiceId: selectedId,
-          choices: choices,
-        ),
         CategorySlider(
           headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
         ),

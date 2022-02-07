@@ -47,7 +47,7 @@ class LongPressItem extends StatelessWidget {
         ),
         Hero(
           tag: actionsTag,
-          child: SizedBox(height: 0,),
+          child: const SizedBox(height: 0),
         )
       ]
     );

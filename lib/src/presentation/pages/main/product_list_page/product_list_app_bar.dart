@@ -5,6 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_instrument/src/presentation/widgets/search_field.dart';
 import 'package:my_instrument/src/presentation/widgets/modal_inside_modal.dart';
+import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 
 import '../filter_page/filter_page.dart';
 
@@ -165,7 +166,7 @@ class OrderByItem extends StatelessWidget {
     required this.onTap,
     required this.model,
     required this.isSelected,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +181,7 @@ class OrderByItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Text(
-            model.text,
+            AppLocalizations.of(context)!.translate(model.text),
             textAlign: TextAlign.left,
             style: TextStyle(
               color: isSelected

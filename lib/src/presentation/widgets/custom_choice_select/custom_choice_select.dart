@@ -18,8 +18,7 @@ class CustomChoiceSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: Row(
         children: List.generate(
           choices.length,

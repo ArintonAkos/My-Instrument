@@ -42,7 +42,8 @@
       "LABEL": "Upload images of your product",
       "CAMERA": "Camera",
       "GALLERY": "Gallery",
-      "HELP": "Tap here to upload your images about the product"
+      "HELP": "Tap here to upload your images about the product",
+      "HINT": "Select uploading method"
     },
     "TITLE_INPUT": {
       "LABEL": "Title",
@@ -60,15 +61,37 @@
       "LABEL": "Select",
       "HINT": "Select the type of your product"
     },
-    "PRIVATE_FIRM": {
-      "LABEL": "Private or firm",
-      "PRIVATE": "Private",
-      "FIRM": "Firm"
-    },
-    "NEW_USED": {
+    "CONDITION": {
       "LABEL": "Condition",
       "NEW": "New",
       "USED": "Used"
+    },
+    "COUNT": {
+      "LABEL": "Item count",
+      "HINT": "How many do you want to sell?"
+    },
+    "ERROR_MESSAGE": {
+      "INPUT_FIELD": "Please fill in with information",
+      "NUMBER_INPUT": "Only positive numbers",
+      "SELECT": "Please select a category",
+      "UPLOAD": "Something went wrong..."
+    },
+    "EXIT_DIALOG":{
+      "TITLE": "Are you sure you want to exit?",
+      "CONTENT": "You have unsaved data",
+      "EXIT":"Exit",
+      "CANCEL": "Cancel"
+    },
+    "ENTER_DIALOG":{
+      "TITLE": "You have saved data",
+      "CONTENT": "Do you want to load them?",
+      "YES": "Yes",
+      "NO": "No"
+    },
+    "POPUP": {
+      "OPEN": "Open",
+      "INDEX_IMAGE": "Index image",
+      "DELETE": "Delete"
     }
   },
   "FAV": {

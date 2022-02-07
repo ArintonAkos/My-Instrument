@@ -58,6 +58,7 @@ class _CategorySelectModalState extends State<CategorySelectModal> {
             );
           } :() {
             popOut(state.categories[index]);
+            setState(() {FocusScope.of(rootContext).requestFocus(FocusNode());});
           },
         )
       );
@@ -86,6 +87,7 @@ class _CategorySelectModalState extends State<CategorySelectModal> {
                   backgroundColor: Theme.of(rootContext).colorScheme.surface,
                     leading: IconButton(
                       onPressed: () {
+                        FocusScope.of(rootContext).requestFocus(FocusNode());
                         Navigator.pop(rootContext);
                       },
                       icon: const Icon(
