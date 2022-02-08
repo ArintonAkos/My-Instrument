@@ -10,6 +10,10 @@ import 'package:my_instrument/src/data/models/responses/main/category/get_catego
 class CategoryService extends HttpService {
   CategoryService({ required AppLanguage appLanguage}) : super(appLanguage: appLanguage);
 
+  Future<my_base_response.BaseResponse> getAllCategoriesWithAllChildren() async {
+    return await getCategoryWithAllChildren(0);
+  }
+
   Future<my_base_response.BaseResponse> getCategoryWithAllChildren(int categoryId) async {
     if (await model.ensureAuthorized()) {
       Response res = await getData(CategoryConstants.categoryAllChildrenURL +

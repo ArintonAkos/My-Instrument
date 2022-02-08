@@ -295,77 +295,77 @@ class _NewListingPageState extends State<NewListingPage> {
     });
 
     return Scaffold(
-        backgroundColor: Theme.of(rootContext).backgroundColor,
-        body: CustomScrollView(
-          controller: _scrollController,
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: true,
-              expandedHeight: _kExpandedHeight,
-              backgroundColor: Theme.of(rootContext).colorScheme.surface,
-              leading: IconButton(
+      backgroundColor: Theme.of(rootContext).backgroundColor,
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: _kExpandedHeight,
+            backgroundColor: Theme.of(rootContext).colorScheme.surface,
+            leading: IconButton(
+              splashRadius: 15,
+              onPressed: () {
+                    (_selectedCategory.id != 0 || _descriptionController.text != "" || _priceController.text.isNotEmpty || _titleController.text != "" || selectedImages.isNotEmpty || condition != 0 || _countController.text.isNotEmpty)
+               ? showDialog(context: rootContext, builder: (BuildContext context) {
+                 return ExitDialog(
+                   rootContext: rootContext,
+                   dataManager: exitAndSave,
+                     );
+                })
+                  : Navigator.pop(context);
+
+              },
+              icon: const Icon(CupertinoIcons.back),
+              color: Theme.of(rootContext).colorScheme.onSurface,
+            ),
+            actions: [
+              IconButton(
                 splashRadius: 15,
                 onPressed: () {
-                      (_selectedCategory.id != 0 || _descriptionController.text != "" || _priceController.text.isNotEmpty || _titleController.text != "" || selectedImages.isNotEmpty || condition != 0 || _countController.text.isNotEmpty)
-                 ? showDialog(context: rootContext, builder: (BuildContext context) {
-                   return ExitDialog(
-                     rootContext: rootContext,
-                     dataManager: exitAndSave,
-                       );
-                  })
-                    : Navigator.pop(context);
+                  submitNewListing();
 
+                  if (isLoading) {
+                    showDialog(context: context, builder: (BuildContext context) {
+                      return const Center(
+                        child: GradientIndeterminateProgressbar(
+                          height: 150,
+                          width: 150,
+                        ),
+                        );
+                    });
+                  }
                 },
-                icon: const Icon(CupertinoIcons.back),
+                icon: Icon(
+                LineIcons.check,
                 color: Theme.of(rootContext).colorScheme.onSurface,
-              ),
-              actions: [
-                IconButton(
-                  splashRadius: 15,
-                  onPressed: () {
-                    submitNewListing();
-
-                    if (isLoading) {
-                      showDialog(context: context, builder: (BuildContext context) {
-                        return const Center(
-                          child: GradientIndeterminateProgressbar(
-                            height: 150,
-                            width: 150,
-                          ),
-                          );
-                      });
-                    }
-                  },
-                  icon: Icon(
-                  LineIcons.check,
-                  color: Theme.of(rootContext).colorScheme.onSurface,
-                  )
                 )
-              ],
-              flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.pin,
-                  centerTitle: false,
-                  titlePadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                  title: ValueListenableBuilder(
-                    valueListenable: _titlePaddingNotifier,
-                    builder: (context, value, child) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: value as double),
-                        child: Text(
-                          AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE'),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface
-                          ),
-                        )
-                      );
-                    },
-                  ),
-                  background: Container(color: Theme.of(context).backgroundColor)
-              ),
+              )
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.pin,
+                centerTitle: false,
+                titlePadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                title: ValueListenableBuilder(
+                  valueListenable: _titlePaddingNotifier,
+                  builder: (context, value, child) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: value as double),
+                      child: Text(
+                        AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE'),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface
+                        ),
+                      )
+                    );
+                  },
+                ),
+                background: Container(color: Theme.of(context).backgroundColor)
             ),
+          ),
           SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return Padding(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20,top: 40),
                 child: Form(
                   key: _formKey,
@@ -431,7 +431,11 @@ class _NewListingPageState extends State<NewListingPage> {
                         characterNumber: 10,
                         fSize: 20
                       ),
-                     _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CONDITION.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
+                     _labelText(
+                        AppLocalizations.of(context)!.translate('NEW_LISTING.CONDITION.LABEL'),
+                        Theme.of(context).colorScheme.onSurface,
+                        16.0
+                     ),
                       const SizedBox(
                         height: 5,
                       ),
@@ -463,11 +467,10 @@ class _NewListingPageState extends State<NewListingPage> {
                     ]
                   ),
                 ),
-              );
-            },
-            childCount: 1,
+              ),
+              childCount: 1,
+            )
           )
-        )
         ],
       ),
     );

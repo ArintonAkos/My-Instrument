@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
+import 'package:my_instrument/src/business_logic/blocs/product_list_page/product_list_page_bloc.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/get_listings_request.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/presentation/widgets/error_info.dart';
@@ -28,7 +28,7 @@ class ProductListBody extends StatelessWidget {
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 400));
 
-        context.read<NewListingPageBloc>().add(GetListings(
+        context.read<ProductListPageBloc>().add(GetListings(
           request: GetListingsRequest(
             filterData: FilterData.initial()
           )
@@ -40,7 +40,7 @@ class ProductListBody extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: BlocBuilder<NewListingPageBloc, NewListingPageState>(
+        child: BlocBuilder<ProductListPageBloc, ProductListPageState>(
           builder: (context, state) {
             switch (state.status) {
               case ListingPageStatus.failure:
@@ -79,7 +79,7 @@ class ProductListBody extends StatelessWidget {
 
 class Listing extends StatelessWidget {
   final ListingModel listing;
-  final NewListingPageState listingPageState;
+  final ProductListPageState listingPageState;
 
   const Listing({
     Key? key,
@@ -87,7 +87,7 @@ class Listing extends StatelessWidget {
     required this.listingPageState
   }) : super(key: key);
 
-  Widget buildFavoriteButton(FavoriteState favoriteState, NewListingPageState state) {
+  Widget buildFavoriteButton(FavoriteState favoriteState, ProductListPageState state) {
     if (favoriteState is FavoriteLoadedState) {
       if (favoriteState.listingIds.contains(listing.listingId)) {
         return const Icon(

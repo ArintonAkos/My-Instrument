@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
-import 'package:my_instrument/src/presentation/widgets/category_select_modal.dart';
+import 'package:my_instrument/src/presentation/widgets/category_select_modal/default_select_modal.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 
 class CategorySelect extends StatefulWidget {
@@ -61,10 +61,8 @@ class _CategorySelectState extends State<CategorySelect> {
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 onPressed: () {
                   showCupertinoModalBottomSheet(context: context,
-                    builder: (context) => CategorySelectModal(
-                      category: CategoryModel.base(),
+                    builder: (context) => DefaultCategorySelectModal(
                       newListingContext: context,
-                      selectedName: CategoryModel.base().getCategoryName(context),
                       updateSelectedCategory: widget.onCategorySelect,
                     ),
                   );

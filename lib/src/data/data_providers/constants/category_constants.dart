@@ -6,4 +6,7 @@ class CategoryConstants {
 
   // Requires categoryId parameter
   static const categoryChildrenURL = _categoryURL + 'CategoryChildren';
+
+  // Required for caching (key)
+  static const categoryCacheKey = 'Category-CategoryWithAllChildren-0';
 }

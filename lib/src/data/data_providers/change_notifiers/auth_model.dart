@@ -183,6 +183,7 @@ class AuthModel {
     await prefs?.remove('signedIn');
     await prefs?.remove('user');
     await prefs?.remove('token');
+    await prefs?.remove('newListingPage');
     _user = null;
     _controller.sink.add(false);
     return FutureResponse();

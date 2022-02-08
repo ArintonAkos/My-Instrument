@@ -25,3 +25,11 @@ class FavoriteClickEvent extends FavoriteEvent {
   @override
   List<Object> get props => [ listingId ];
 }
+
+class ClearFavoritesEvent extends FavoriteEvent {
+
+  const ClearFavoritesEvent();
+
+  @override
+  List<Object> get props => [];
+}

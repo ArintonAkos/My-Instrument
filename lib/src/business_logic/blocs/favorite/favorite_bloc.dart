@@ -26,6 +26,8 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         emit(FavoriteLoadedState(listingIds: listings));
       } else if (event is FavoriteClickEvent) {
         await _manageFavoriteClickEvent(event, emit);
+      } else if (event is ClearFavoritesEvent) {
+        emit(FavoriteInitialState());
       }
     } catch (_) {
       emit(const FavoriteLoadedState(listingIds: []));

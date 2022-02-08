@@ -43,16 +43,16 @@ class _ImageDropperState extends State<ImageDropper> {
         setState(() {});
       }
     } else {
-      List<XFile?> images = await ImagePicker().pickMultiImage() as List<XFile?>;
-      if (widget.selectedImages.length + images.length <= 5) {
-        for (int i = 0; i < images.length; ++i) {
-          if (images[i] != null) {
-            widget.selectedImages.add(images[i]!.path);
+      List<XFile>? images = await ImagePicker().pickMultiImage();
+      if (images != null) {
+        if (widget.selectedImages.length + images.length <= 5) {
+          for (int i = 0; i < images.length; ++i) {
+            widget.selectedImages.add(images[i].path);
           }
+          Navigator.pop(context);
+          FocusScope.of(context).requestFocus(FocusNode());
+          setState(() {});
         }
-        Navigator.pop(context);
-        FocusScope.of(context).requestFocus(FocusNode());
-        setState(() {});
       }
     }
   }

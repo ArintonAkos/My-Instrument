@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
+import 'package:my_instrument/src/business_logic/blocs/product_list_page/product_list_page_bloc.dart';
 import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/data/repositories/listing_repository.dart';
 import 'package:my_instrument/src/presentation/pages/main/product_list_page/product_list_app_bar.dart';
@@ -51,7 +51,7 @@ class _ProductListPageState extends State<ProductListPage> {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => NewListingPageBloc(
+            create: (context) => ProductListPageBloc(
               listingRepository: RepositoryProvider.of<ListingRepository>(context)
             )
             ..add(GetListings(

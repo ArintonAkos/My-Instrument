@@ -46,6 +46,7 @@ dependencies:
   firebase_analytics: ^9.0.4
   firebase_core: ^1.10.6
   flutter_bloc: ^8.0.1
+  flutter_cache_manager: ^3.3.0
   flutter_chat_ui: ^1.5.2
   flutter_cupertino_localizations: ^1.0.1
   flutter_facebook_auth: ^4.0.1

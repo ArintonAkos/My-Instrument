@@ -2,6 +2,7 @@ import 'package:injector/injector.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/data/data_providers/services/auth_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/category_cache_manager.dart';
 import 'package:my_instrument/src/data/data_providers/services/facebook_login_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/favorite_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/google_login_service.dart';
@@ -16,6 +17,7 @@ import 'package:my_instrument/src/data/data_providers/services/signalr_service.d
 
 class InjectorInitializer {
   static initialize(AppLanguage appLanguage) {
+    appInjector.registerSingleton<CategoryCacheManager>(() => CategoryCacheManager());
     appInjector.registerSingleton<GoogleLoginService>(() => GoogleLoginService());
     appInjector.registerSingleton<FacebookLoginService>(() => FacebookLoginService());
     appInjector.registerSingleton<AuthService>(() => AuthService(appLanguage: appLanguage));

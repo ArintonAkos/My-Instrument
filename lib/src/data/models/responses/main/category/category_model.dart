@@ -27,13 +27,13 @@ class CategoryModel extends Equatable {
 
   CategoryModel copyWith({ int? id }) {
     Map<String, dynamic> data = {
-      "id": id ?? this.id,
-      "nameEn": nameEn,
-      "nameHu": nameHu,
-      "nameRo": nameRo,
+      "categoryId": id ?? this.id,
+      "categoryNameEn": nameEn,
+      "categoryNameHu": nameHu,
+      "categoryNameRo": nameRo,
       "imagePath": imagePath,
       "imageHash": imageHash,
-      "children": children
+      "childrenCategories": children
     };
     return CategoryModel(json: data);
   }
@@ -46,7 +46,7 @@ class CategoryModel extends Equatable {
       "categoryNameRo": "Categorii",
       "imagePath": "",
       "imageHash": "",
-      "children": []
+      "childrenCategories": []
     };
     return CategoryModel(json: data);
   }
@@ -86,13 +86,13 @@ class CategoryModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'nameEn': nameEn,
-      'nameHu': nameHu,
-      'nameRo': nameRo,
+      'categoryId': id,
+      'categoryNameEn': nameEn,
+      'categoryNameHu': nameHu,
+      'categoryNameRo': nameRo,
       'imagePath': imagePath,
       'imageHash': imageHash,
-      'children': children,
+      'childrenCategories': children,
     };
   }
 

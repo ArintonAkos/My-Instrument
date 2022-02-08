@@ -1,51 +1,50 @@
 part of 'new_listing_page_bloc.dart';
 
-enum ListingPageStatus {
+enum NewListingPageStatus {
   initial,
+  loading,
+  loadingCategories,
   success,
+  categoriesSuccess,
+  categoriesFailure,
   failure
 }
 
+extension NewListingPageStateX on NewListingPageState {
+  bool get isLoading => (status == NewListingPageStatus.loading);
+  bool get isLoadingCategories => (status == NewListingPageStatus.loadingCategories);
+  bool get isSuccess => (status == NewListingPageStatus.success);
+  bool get isCategoriesSuccess => (status == NewListingPageStatus.categoriesSuccess);
+  bool get isFailure => (status == NewListingPageStatus.failure);
+  bool get isCategoriesFailure => (status == NewListingPageStatus.categoriesFailure);
+}
+
 class NewListingPageState extends Equatable {
-  final List<ListingModel> listings;
-  late final FilterData filterData;
-  final ListingPageStatus status;
-  final bool hasReachedMax;
+  final NewListingPageStatus status;
+  final CategoryModel? category;
 
-  NewListingPageState({
-    this.listings = const <ListingModel>[],
-    this.status = ListingPageStatus.initial,
-    this.hasReachedMax = false,
-    FilterData? filterData,
-  }) {
-    this.filterData = filterData ?? FilterData.initial();
-  }
+  const NewListingPageState({
+    required this.status,
+    required this.category
+  });
 
-  NewListingPageState copyWith({
-    ListingPageStatus? status,
-    List<ListingModel>? listings,
-    FilterData? filterData,
-    bool? hasReachedMax,
-  }) {
-    return NewListingPageState(
-      listings: listings ?? this.listings,
-      status: status ?? this.status,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      filterData: filterData ?? this.filterData
+  factory NewListingPageState.initial() {
+    return const NewListingPageState(
+      status: NewListingPageStatus.initial,
+      category: null
     );
   }
 
-
-  @override
-  String toString() {
-    return '''ListingPageState {
-      status: $status,
-      filterData: $filterData,
-      hasReachedMax: $hasReachedMax,
-      listings: ${listings.length},
-    }''';
+  NewListingPageState copyWith({
+    NewListingPageStatus? status,
+    CategoryModel? category
+  }) {
+    return NewListingPageState(
+      status: status ?? this.status,
+      category: category ?? this.category
+    );
   }
 
   @override
-  List<Object> get props => [listings, filterData, status, hasReachedMax ];
+  List<Object?> get props => [ status, category ];
 }

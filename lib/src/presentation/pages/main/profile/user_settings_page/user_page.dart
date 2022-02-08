@@ -12,27 +12,6 @@ import 'package:styled_widget/styled_widget.dart';
 
 import 'actions_row.dart';
 
-navigateToGeneralSettingsPage(BuildContext context) {
-  AutoRouter.of(context).push(const EmptyRouterRoute(children: [ GeneralSettingsRoute() ]));
-}
-
-navigateToAboutPage(BuildContext context) {
-  AutoRouter.of(context).push(const AboutRoute());
-}
-
-logoutUser(BuildContext context) async {
-  var authModel = appInjector.get<AuthModel>();
-  var result = await authModel.signOut();
-
-  if (!result.success) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        buildInfoSnackBar(
-            AppLocalizations.of(context)?.translate('SHARED.ERROR.LOGOUT_MESSAGE') ?? ''
-        )
-    );
-  }
-}
-
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
 
@@ -41,8 +20,32 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-
   final AuthModel _authModel = appInjector.get<AuthModel>();
+
+  navigateToGeneralSettingsPage(BuildContext context) {
+    AutoRouter.of(context).push(const EmptyRouterRoute(children: [ GeneralSettingsRoute() ]));
+  }
+
+  navigateToAboutPage(BuildContext context) {
+    AutoRouter.of(context).push(const AboutRoute());
+  }
+
+  showErrorSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      buildInfoSnackBar(
+        AppLocalizations.of(context)?.translate('SHARED.ERROR.LOGOUT_MESSAGE') ?? ''
+      )
+    );
+  }
+
+  logoutUser(BuildContext context) async {
+    AutoRouter.of(context).pop();
+    var result = await _authModel.signOut();
+
+    if (!result.success) {
+      showErrorSnackBar();
+    }
+  }
 
   List<CardItemModel> getSettingsItems() {
     return [
