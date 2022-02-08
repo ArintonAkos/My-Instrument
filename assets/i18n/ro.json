@@ -229,7 +229,8 @@
     },
     "INFO": {
       "NO_DATA": "Nici un articol de afișat",
-      "SEE_MORE": "Mai multe"
+      "SEE_MORE": "Mai multe",
+      "LOADING": "Se încarcă..."
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:my_instrument/src/data/data_providers/services/listing_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/shared_preferences_service.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/create_listing_request.dart';
+import 'package:my_instrument/src/data/models/responses/main/listing/create_listing_response.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_response.dart';
 import 'package:my_instrument/src/data/models/view_models/new_listing_local_data.dart';
 import 'package:my_instrument/src/presentation/pages/main/new_listing_page/category_select.dart';
@@ -18,8 +19,10 @@ import 'package:my_instrument/src/presentation/widgets/custom_choice_select/cust
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
 import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
 import 'package:my_instrument/src/presentation/widgets/gradient_indeterminate_progress_bar.dart';
+import 'package:my_instrument/src/presentation/widgets/loading_dialog.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
+import 'package:my_instrument/structure/route/router.gr.dart';
 import 'package:provider/provider.dart';
 
 part 'new_listing_page_constants.dart';
@@ -51,6 +54,7 @@ class _NewListingPageState extends State<NewListingPage> {
   String selectErrorText = "";
   int indexImageId = 0;
   bool isLoading = false;
+  bool opacity = false;
 
   double get _horizontalTitlePadding {
     const kCollapsedPadding = 40.0;
@@ -81,6 +85,7 @@ class _NewListingPageState extends State<NewListingPage> {
     }
     condition = savedData!.condition;
     _selectedCategory = savedData!.category;
+    indexImageId = savedData!.indexImageId;
 
     setState(() {});
 
@@ -88,23 +93,25 @@ class _NewListingPageState extends State<NewListingPage> {
 
   Future<void> exitAndSave() async {
     await _sharedPreferencesService.saveData("newListingPage", NewListingLocalData(
-      title: (_titleController.text.isNotEmpty )
-          ? _titleController.text
-          : "",
-      price: (_priceController.text.isNotEmpty)
-          ? double.parse(_priceController.text)
-          : 0,
-      description: (_descriptionController.text.isNotEmpty)
-          ?_descriptionController.text
-          :"",
-      images: (selectedImages.isNotEmpty)
-          ? selectedImages
-          : [],
-      condition: condition,
-      category: _selectedCategory,
-      count: (_countController.text.isNotEmpty)
-          ? int.parse(_countController.text)
-          : 0
+        title: (_titleController.text.isNotEmpty )
+            ? _titleController.text
+            : "",
+        price: (_priceController.text.isNotEmpty)
+            ? double.parse(_priceController.text)
+            : 0,
+        description: (_descriptionController.text.isNotEmpty)
+            ?_descriptionController.text
+            :"",
+        images: (selectedImages.isNotEmpty)
+            ? selectedImages
+            : [],
+        condition: condition,
+        category: _selectedCategory,
+        count: (_countController.text.isNotEmpty)
+            ? int.parse(_countController.text)
+            : 0,
+        indexImageId: indexImageId
+
     )
     );
   }
@@ -140,11 +147,11 @@ class _NewListingPageState extends State<NewListingPage> {
       selectErrorText = "";
       setState(() {});
     }
-
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _selectedCategory.id != 0) {
 
       setState(() {
         isLoading = true;
+        opacity = true;
       });
 
       var res = await _listingService.createListing(CreateListingRequest(
@@ -153,35 +160,37 @@ class _NewListingPageState extends State<NewListingPage> {
         description: _descriptionController.text,
         price: double.parse(_priceController.text),
         count: int.parse(_countController.text),
-        categoryId: _selectedCategory.id,
+        categoryId: 224,//_selectedCategory.id,
         title: _titleController.text,
         condition: condition,
       ));
 
       if (res.ok) {
+        Navigator.pop(context);
         setState(() {
           isLoading = false;
         });
-        var response = (res as ListingResponse);
-        AutoRouter.of(context).pop();
+        deleteData();
+        var response = (res as CreateListingResponse);
+        AutoRouter.of(context).popAndPush(ListingRoute(id: response.listingId));
       } else {
+        //Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              AppLocalizations.of(context)!.translate('NEW_LISTING.ERROR_MESSAGE.UPLOAD'),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface
+            SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.translate('NEW_LISTING.ERROR_MESSAGE.UPLOAD'),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface
+                ),
               ),
-            ),
-            backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
-          )
+              backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
+            )
         );
-        setState(() {
-          isLoading = false;
-        });
+        isLoading = false;
+        Navigator.pop(context);
+        setState(() {});
       }
     }
-
   }
 
   void onCategorySelect(CategoryModel selectedCategory) {
@@ -192,6 +201,17 @@ class _NewListingPageState extends State<NewListingPage> {
 
   void deleteData() {
     _sharedPreferencesService.deleteData("newListingPage");
+
+    _titleController.text = "";
+    _descriptionController.text = "";
+    _priceController.text = "";
+    _countController.text = "";
+    selectedImages = [];
+    _selectedCategory = CategoryModel.base();
+    condition = 0;
+    indexImageId = 0;
+
+    setState(() {});
   }
 
   void setIndexPicture(int index) {
@@ -239,16 +259,7 @@ class _NewListingPageState extends State<NewListingPage> {
                   TextButton(
                     onPressed: () {
                       deleteData();
-                      _titleController.text = "";
-                      _descriptionController.text = "";
-                      _priceController.text = "";
-                      _countController.text = "";
-                      selectedImages = [];
-                      _selectedCategory = CategoryModel.base();
-                      condition = 0;
-
                       AutoRouter.of(context).pop();
-                      setState(() {});
                     },
                     child: Text(
                       AppLocalizations.of(context)!.translate('NEW_LISTING.ENTER_DIALOG.NO'),
@@ -276,6 +287,38 @@ class _NewListingPageState extends State<NewListingPage> {
         });
       }
     });
+  }
+
+  void _openCustomDialog() {
+    showGeneralDialog(barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+              opacity: a1.value,
+              child: const LoadingDialog()
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context, pageBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation) { return const LoadingDialog(); },);
+  }
+
+  void removeImage(String _image, int index) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    selectedImages.remove(_image);
+
+    if (index == indexImageId) {
+      indexImageId = 0;
+    } else if(index < indexImageId) {
+      indexImageId--;
+    }
+    setState(() {});
   }
 
   @override
@@ -306,14 +349,14 @@ class _NewListingPageState extends State<NewListingPage> {
             leading: IconButton(
               splashRadius: 15,
               onPressed: () {
-                    (_selectedCategory.id != 0 || _descriptionController.text != "" || _priceController.text.isNotEmpty || _titleController.text != "" || selectedImages.isNotEmpty || condition != 0 || _countController.text.isNotEmpty)
-               ? showDialog(context: rootContext, builder: (BuildContext context) {
-                 return ExitDialog(
-                   rootContext: rootContext,
-                   dataManager: exitAndSave,
-                     );
+                (_selectedCategory.id != 0 || _descriptionController.text != "" || _priceController.text.isNotEmpty || _titleController.text != "" || selectedImages.isNotEmpty || condition != 0 || _countController.text.isNotEmpty || indexImageId != 0)
+                    ? showDialog(context: rootContext, builder: (BuildContext context) {
+                  return ExitDialog(
+                    rootContext: rootContext,
+                    dataManager: exitAndSave,
+                  );
                 })
-                  : Navigator.pop(context);
+                    : Navigator.pop(context);
 
               },
               icon: const Icon(CupertinoIcons.back),
@@ -321,25 +364,18 @@ class _NewListingPageState extends State<NewListingPage> {
             ),
             actions: [
               IconButton(
-                splashRadius: 15,
-                onPressed: () {
-                  submitNewListing();
+                  splashRadius: 15,
+                  onPressed: () {
+                    submitNewListing();
 
-                  if (isLoading) {
-                    showDialog(context: context, builder: (BuildContext context) {
-                      return const Center(
-                        child: GradientIndeterminateProgressbar(
-                          height: 150,
-                          width: 150,
-                        ),
-                        );
-                    });
-                  }
-                },
-                icon: Icon(
-                LineIcons.check,
-                color: Theme.of(rootContext).colorScheme.onSurface,
-                )
+                    if (isLoading) {
+                      return _openCustomDialog();
+                    }
+                  },
+                  icon: Icon(
+                    LineIcons.check,
+                    color: Theme.of(rootContext).colorScheme.onSurface,
+                  )
               )
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -350,13 +386,13 @@ class _NewListingPageState extends State<NewListingPage> {
                   valueListenable: _titlePaddingNotifier,
                   builder: (context, value, child) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: value as double),
-                      child: Text(
-                        AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE'),
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface
-                        ),
-                      )
+                        padding: EdgeInsets.symmetric(horizontal: value as double),
+                        child: Text(
+                          AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE'),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface
+                          ),
+                        )
                     );
                   },
                 ),
@@ -364,112 +400,111 @@ class _NewListingPageState extends State<NewListingPage> {
             ),
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20,top: 40),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ImageDropper(
-                        selectedImages: selectedImages,
-                        onNewIndexImage: setIndexPicture,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CustomInputField(
-                        formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
-                        theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                        title: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.LABEL'),
-                        inputController: _titleController,
-                        textInputType: TextInputType.text,
-                        errorText: '',
-                        characterNumber: 128,
-                        fSize: 20
-                      ),
-                      _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CategorySelect(
-                        selectedCategory: _selectedCategory,
-                        selectedBorder: selectedBorder,
-                        onCategorySelect: onCategorySelect,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 7),
-                        child: _labelText(selectErrorText, Theme.of(context).errorColor, 11.5)
-                      ),
-                      const SizedBox(
-                        height: 15
-                      ),
-                      CustomInputField(
-                        formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.HINT'),
-                        theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                        title: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.LABEL'),
-                        inputController: _descriptionController,
-                        textInputType: TextInputType.multiline,
-                        errorText: '',
-                        characterNumber: 5000,
-                        fSize: 20
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      CustomInputField(
-                        formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.HINT'),
-                        theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                        title: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.LABEL'),
-                        inputController: _priceController,
-                        textInputType: TextInputType.number,
-                        errorText: '',
-                        characterNumber: 10,
-                        fSize: 20
-                      ),
-                     _labelText(
-                        AppLocalizations.of(context)!.translate('NEW_LISTING.CONDITION.LABEL'),
-                        Theme.of(context).colorScheme.onSurface,
-                        16.0
-                     ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      CustomChoiceSelect(
-                        onTap: (int id) {
-                          setState(() {
-                            condition = id;
-                          });
-                        },
-                        selectedChoiceId: condition,
-                        choices: conditions,
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      CustomInputField(
-                        formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.HINT'),
-                        theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                        title: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.LABEL'),
-                        inputController: _countController,
-                        textInputType: TextInputType.number,
-                        errorText: '',
-                        characterNumber: 10,
-                        fSize: 20
-                      ),
-                      const SizedBox(
-                        height: 40
-                      ),
-                    ]
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20,top: 40),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        children: [
+                          _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          ImageDropper(
+                            selectedImages: selectedImages,
+                            onNewIndexImage: setIndexPicture,
+                            onRemoveImage: removeImage,
+                            indexImageId: indexImageId,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          CustomInputField(
+                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
+                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.LABEL'),
+                              inputController: _titleController,
+                              textInputType: TextInputType.text,
+                              errorText: '',
+                              characterNumber: 128,
+                              fSize: 20
+                          ),
+                          _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CategorySelect(
+                            selectedCategory: _selectedCategory,
+                            selectedBorder: selectedBorder,
+                            onCategorySelect: onCategorySelect,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(left: 10, top: 7),
+                              child: _labelText(selectErrorText, Theme.of(context).errorColor, 11.5)
+                          ),
+                          const SizedBox(
+                              height: 15
+                          ),
+                          CustomInputField(
+                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.HINT'),
+                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.LABEL'),
+                              inputController: _descriptionController,
+                              textInputType: TextInputType.multiline,
+                              errorText: '',
+                              characterNumber: 5000,
+                              fSize: 20
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomInputField(
+                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.HINT'),
+                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.LABEL'),
+                              inputController: _priceController,
+                              textInputType: TextInputType.number,
+                              errorText: '',
+                              characterNumber: 10,
+                              fSize: 20
+                          ),
+                          _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CONDITION.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomChoiceSelect(
+                            onTap: (int id) {
+                              setState(() {
+                                condition = id;
+                              });
+                            },
+                            selectedChoiceId: condition,
+                            choices: conditions,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          CustomInputField(
+                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.HINT'),
+                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.LABEL'),
+                              inputController: _countController,
+                              textInputType: TextInputType.number,
+                              errorText: '',
+                              characterNumber: 10,
+                              fSize: 20
+                          ),
+                          const SizedBox(
+                              height: 40
+                          ),
+                        ]
+                    ),
                   ),
-                ),
-              ),
-              childCount: 1,
-            )
+                );
+              },
+                childCount: 1,
+              )
           )
         ],
       ),

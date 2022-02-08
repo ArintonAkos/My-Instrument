@@ -23,6 +23,8 @@ class CustomAppTheme {
   final Color filterActionButtonColor;
   final Color onFilterActionButtonColor;
   final Color shimmerColor;
+  final Color exitButtonBackground;
+  final Color exitButtonColor;
 
   const CustomAppTheme({
     required this.loginGradientStart,
@@ -41,7 +43,9 @@ class CustomAppTheme {
     required this.onFilterActionButtonColor,
     required this.newListingTextField,
     required this.newListingIcon,
-    required this.shimmerColor
+    required this.shimmerColor,
+    required this.exitButtonBackground,
+    required this.exitButtonColor
   });
 }
 
@@ -55,53 +59,57 @@ class AppThemeData {
   });
 
   CustomAppTheme customLightTheme = CustomAppTheme(
-    loginGradientStart: const Color(0xFF0E7FC2),
-    loginGradientEnd: const Color(0xFF015497),
-    loginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
-    loginButtonsColor: Colors.white,
-    loginButtonText: const Color(0xFF12B3F2),
-    dropdownItemColor: const Color(0xFF008eca),
-    authErrorColor: const Color(0xFFFF80AB),
-    dotColor: Colors.black,
-    activeDotColor: const Color(0xFF12B3F2),
-    authPagesPrimaryColors: [
-      const Color(0xFF12B3F1).withOpacity(0.3),
-      const Color(0xFF2ABBF3).withOpacity(0.3),
-      const Color(0xFF41C2F5).withOpacity(0.3),
-      const Color(0xFF71D1F7).withOpacity(0.3),
-    ],
-    textFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
-    textFieldHintColor: const Color(0xff000000),
-    newListingTextField: const Color(0xff2c2c2c),
-    newListingIcon: const Color(0xff2c2c2c),
-    filterActionButtonColor: const Color(0xFF41C2F5),
-    onFilterActionButtonColor: Colors.white,
-    shimmerColor: const Color(0xFFE3E3E3),
+      loginGradientStart: const Color(0xFF0E7FC2),
+      loginGradientEnd: const Color(0xFF015497),
+      loginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
+      loginButtonsColor: Colors.white,
+      loginButtonText: const Color(0xFF12B3F2),
+      dropdownItemColor: const Color(0xFF008eca),
+      authErrorColor: const Color(0xFFFF80AB),
+      dotColor: Colors.black,
+      activeDotColor: const Color(0xFF12B3F2),
+      authPagesPrimaryColors: [
+        const Color(0xFF12B3F1).withOpacity(0.3),
+        const Color(0xFF2ABBF3).withOpacity(0.3),
+        const Color(0xFF41C2F5).withOpacity(0.3),
+        const Color(0xFF71D1F7).withOpacity(0.3),
+      ],
+      textFieldBackgroundColor: const Color(0xffffffff).withOpacity(0.6),
+      textFieldHintColor: const Color(0xff000000),
+      newListingTextField: const Color(0xff2c2c2c),
+      newListingIcon: const Color(0xff2c2c2c),
+      filterActionButtonColor: const Color(0xFF41C2F5),
+      onFilterActionButtonColor: Colors.white,
+      shimmerColor: const Color(0xFFE3E3E3),
+      exitButtonBackground: Colors.white,
+      exitButtonColor: Colors.lightBlue
   );
 
   CustomAppTheme customDarkTheme = CustomAppTheme(
-    loginGradientStart: const Color(0xFF1F1F1F),
-    loginGradientEnd: const Color(0xFF1F1F1F),
-    loginInputColor: const Color(0xFF2B2B2B),
-    loginButtonsColor: const Color(0xFF2A2A2A),
-    loginButtonText: Colors.white,
-    dropdownItemColor: const Color(0xFF2B2B2B),
-    authErrorColor: Colors.white,
-    dotColor: Colors.white,
-    activeDotColor: const Color(0xFF16BDFF),
-    authPagesPrimaryColors: [
-      const Color(0xFF1F1F1F).withOpacity(0.8),
-      const Color(0xFF2B2B2B).withOpacity(0.7),
-      const Color(0xFF2F2F2F).withOpacity(0.6),
-      const Color(0xFF323232).withOpacity(1)
-    ],
-    textFieldBackgroundColor: const Color(0xff131313),
-    textFieldHintColor: const Color(0xffffffff),
-    newListingTextField: const Color(0xffdedede),
-    newListingIcon: const Color(0xffdedede),
-    filterActionButtonColor: const Color(0xFF2A2A2A),
-    onFilterActionButtonColor: Colors.white,
-    shimmerColor: const Color(0xFF242424),
+      loginGradientStart: const Color(0xFF1F1F1F),
+      loginGradientEnd: const Color(0xFF1F1F1F),
+      loginInputColor: const Color(0xFF2B2B2B),
+      loginButtonsColor: const Color(0xFF2A2A2A),
+      loginButtonText: Colors.white,
+      dropdownItemColor: const Color(0xFF2B2B2B),
+      authErrorColor: Colors.white,
+      dotColor: Colors.white,
+      activeDotColor: const Color(0xFF16BDFF),
+      authPagesPrimaryColors: [
+        const Color(0xFF1F1F1F).withOpacity(0.8),
+        const Color(0xFF2B2B2B).withOpacity(0.7),
+        const Color(0xFF2F2F2F).withOpacity(0.6),
+        const Color(0xFF323232).withOpacity(1)
+      ],
+      textFieldBackgroundColor: const Color(0xff131313),
+      textFieldHintColor: const Color(0xffffffff),
+      newListingTextField: const Color(0xffdedede),
+      newListingIcon: const Color(0xffdedede),
+      filterActionButtonColor: const Color(0xFF2A2A2A),
+      onFilterActionButtonColor: Colors.white,
+      shimmerColor: const Color(0xFF242424),
+      exitButtonBackground: const Color(0xFF1F1F1F),
+      exitButtonColor: Colors.white
   );
 
 

@@ -25,5 +25,4 @@ pushNewModal(BuildContext context, BuildContext newListingContext, Function(Cate
 
 selectCategoryAndPop(BuildContext rootContext, BuildContext newListingContext, Function(CategoryModel) updateSelectedCategory, CategoryModel category) {
   popOut(category, newListingContext, updateSelectedCategory);
-  FocusScope.of(rootContext).requestFocus(FocusNode());
 }

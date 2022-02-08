@@ -20,7 +20,7 @@ class ThemeNotifier with ChangeNotifier {
           primaryVariant: const Color(0xFF015497),
           // secondary: const Color(0xFF02E1EE),
           // secondaryVariant: const Color(0xFF01AEC1),
-          surface: const Color(0xFF121212),
+          surface: const Color(0xFF1E1E1E),
           onPrimary: const Color(0xFFFFFFFF),
           onSecondary: const Color(0xFFFFFFFF),
           onBackground: const Color(0xFFFFFFFF),

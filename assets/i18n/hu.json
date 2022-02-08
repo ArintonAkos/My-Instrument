@@ -229,7 +229,8 @@
     },
     "INFO": {
       "NO_DATA": "Nincs megjeleníthető adat.",
-      "SEE_MORE": "Még több"
+      "SEE_MORE": "Még több",
+      "LOADING": "Betöltés..."
     }
   }
 }

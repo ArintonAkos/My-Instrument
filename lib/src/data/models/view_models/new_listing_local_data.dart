@@ -11,6 +11,7 @@ class NewListingLocalData extends Equatable implements SharedPreferencesData {
   final List<String> images;
   final CategoryModel category;
   final int count;
+  final int indexImageId;
 
   NewListingLocalData({
     required this.title,
@@ -19,45 +20,49 @@ class NewListingLocalData extends Equatable implements SharedPreferencesData {
     required this.images,
     required this.condition,
     required this.category,
-    required this.count
+    required this.count,
+    required this.indexImageId
   });
 
   factory NewListingLocalData.fromJson(Map<String, dynamic> parsedJson) {
     return NewListingLocalData(
-      title: parsedJson['title'] ?? "",
-      price: parsedJson['price'] ?? 0,
-      description: parsedJson['description'] ?? "",
-      images: ParseMethods.parseStringList(parsedJson['images']),
-      condition: parsedJson['condition'] ?? 0,
-      category: CategoryModel.parseCategoryModel(parsedJson['category']) ?? CategoryModel.base(),
-      count: parsedJson['count'] ?? 0,
+        title: parsedJson['title'] ?? "",
+        price: parsedJson['price'] ?? 0,
+        description: parsedJson['description'] ?? "",
+        images: ParseMethods.parseStringList(parsedJson['images']),
+        condition: parsedJson['condition'] ?? 0,
+        category: CategoryModel.parseCategoryModel(parsedJson['category']) ?? CategoryModel.base(),
+        count: parsedJson['count'] ?? 0,
+        indexImageId: parsedJson['indexImageId'] ?? 0
     );
   }
 
   factory NewListingLocalData.defaultState() {
     return NewListingLocalData(
-      title: "",
-      price: 0,
-      description: "",
-      images: [],
-      condition: 0,
-      category: CategoryModel.base(),
-      count: 0
+        title: "",
+        price: 0,
+        description: "",
+        images: [],
+        condition: 0,
+        category: CategoryModel.base(),
+        count: 0,
+        indexImageId: 0
     );
   }
 
   @override
   Map<String, dynamic> toJson() {
-   return {
-     "title": title,
-     "price": price,
-     "description": description,
-     "images": images,
-     "condition": condition,
-     "category": category,
-     "count": count
+    return {
+      "title": title,
+      "price": price,
+      "description": description,
+      "images": images,
+      "condition": condition,
+      "category": category,
+      "count": count,
+      "indexImageId": indexImageId
 
-   };
+    };
   }
 
   @override
@@ -68,7 +73,7 @@ class NewListingLocalData extends Equatable implements SharedPreferencesData {
     images,
     condition,
     category,
-    count
+    count,
+    indexImageId
   ];
 }
-

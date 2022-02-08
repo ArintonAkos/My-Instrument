@@ -229,7 +229,8 @@
     },
     "INFO": {
       "NO_DATA": "No item to show.",
-      "SEE_MORE": "See more"
+      "SEE_MORE": "See more",
+      "LOADING": "Loading..."
     }
   }
 }

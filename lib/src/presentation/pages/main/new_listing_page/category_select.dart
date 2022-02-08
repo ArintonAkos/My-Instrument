@@ -60,6 +60,7 @@ class _CategorySelectState extends State<CategorySelect> {
                 icon: const Icon(Icons.arrow_forward_ios),
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 onPressed: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
                   showCupertinoModalBottomSheet(context: context,
                     builder: (context) => DefaultCategorySelectModal(
                       newListingContext: context,
