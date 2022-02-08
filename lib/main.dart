@@ -4,12 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:my_instrument/src/business_logic/blocs/category/category_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
-import 'package:my_instrument/src/business_logic/blocs/product_list_page/product_list_page_bloc.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
+import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
 import 'package:my_instrument/src/data/repositories/category_repository.dart';
 import 'package:my_instrument/src/data/repositories/listing_repository.dart';
 import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
@@ -33,6 +32,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  await SharedPrefs.init();
   runApp(const MyApp());
 }
 
@@ -45,8 +45,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AppLanguage appLanguage = AppLanguage();
-  final ThemeNotifier themeNotifier = ThemeNotifier();
   final InitializeNotifier initializeNotifier = InitializeNotifier();
+  late final FavoriteRepository favoriteRepository;
+  late final FavoriteBloc favoriteBloc;
 
   late final AuthModel _authModel;
   late final SignalRService _signalRService;
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     _initInjector();
+    _createBlocs();
     super.initState();
     _init();
   }
@@ -66,11 +68,27 @@ class _MyAppState extends State<MyApp> {
     InjectorInitializer.initialize(appLanguage);
   }
 
+  _createBlocs() {
+    favoriteRepository = FavoriteRepository();
+    favoriteBloc = FavoriteBloc(
+      favoriteRepository: favoriteRepository
+    );
+  }
+
   _updateSignedInState(bool signedIn) {
     if (signedIn != isSignedIn) {
+      handleSignedInState(signedIn);
       setState(() {
         isSignedIn = signedIn;
       });
+    }
+  }
+
+  handleSignedInState(bool signedIn) {
+    if (signedIn) {
+      favoriteBloc.add(const LoadFavoritesEvent());
+    } else {
+      favoriteBloc.add(const ClearFavoritesEvent());
     }
   }
 
@@ -94,7 +112,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => FavoriteRepository()),
+        RepositoryProvider(create: (context) => favoriteRepository),
         RepositoryProvider(create: (context) => CategoryRepository()),
         RepositoryProvider(create: (context) => ListingRepository()),
       ],
@@ -104,7 +122,7 @@ class _MyAppState extends State<MyApp> {
               create: (_) => appLanguage,
             ),
             ChangeNotifierProvider<ThemeNotifier>(
-              create: (_) => themeNotifier
+              create: (_) => ThemeNotifier()
             ),
             ChangeNotifierProvider<InitializeNotifier>(
               create: (_) => initializeNotifier,
@@ -113,10 +131,7 @@ class _MyAppState extends State<MyApp> {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => FavoriteBloc(
-                    favoriteRepository: RepositoryProvider.of<FavoriteRepository>(context)
-                )..add(const LoadFavoritesEvent()),
-                lazy: false,
+                create: (context) => favoriteBloc,
               ),
               BlocProvider(
                 create: (context) => HomePageBloc()

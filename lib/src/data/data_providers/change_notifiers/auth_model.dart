@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:my_instrument/src/data/data_providers/services/auth_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
 import 'package:my_instrument/src/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/src/shared/exceptions/more_info_required_exception.dart';
-import 'package:my_instrument/src/shared/exceptions/uninitialized_exception.dart';
 import 'package:my_instrument/src/shared/utils/parse_methods.dart';
 import 'package:my_instrument/src/data/models/repository_models/user.dart';
 import 'package:my_instrument/src/data/models/requests/auth/login_request.dart';
@@ -16,7 +16,6 @@ import 'package:my_instrument/src/data/models/responses/auth/login_response.dart
 import 'package:my_instrument/src/data/models/responses/auth/refresh_token_response.dart';
 import 'package:my_instrument/src/data/models/responses/base_response.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/responses/future_response.dart';
 
@@ -27,7 +26,6 @@ enum ExternalLoginType {
 
 class AuthModel {
   User? _user;
-  SharedPreferences? prefs;
 
   final _controller = StreamController<bool>();
   Stream get authStream => _controller.stream;
@@ -36,11 +34,11 @@ class AuthModel {
 
   bool get isSignedIn {
     return (
-        _user?.token != null &&
-        _user?.refreshToken != null &&
-        _user?.tokenExpires?.dateTime != null &&
-        _user?.refreshTokenExpires?.dateTime != null)
-    ;
+      _user?.token != null &&
+      _user?.refreshToken != null &&
+      _user?.tokenExpires?.dateTime != null &&
+      _user?.refreshTokenExpires?.dateTime != null
+    );
   }
 
   String? get userId {
@@ -51,10 +49,9 @@ class AuthModel {
 
   Future init() async {
     authService = appInjector.get<AuthService>();
-    prefs = await SharedPreferences.getInstance();
 
-    if (prefs?.getBool('signedIn') == true) {
-      String? userPref = prefs?.getString('user');
+    if (SharedPrefs.instance.getBool('signedIn') == true) {
+      String? userPref = SharedPrefs.instance.getString('user');
       _user = ParseMethods.fromJsonString(userPref);
 
       if (_user?.email != null) {
@@ -66,20 +63,15 @@ class AuthModel {
     }
   }
 
-  Future<FutureResponse> signIn(String email, String password, { bool? rememberMe }) async {
+  Future<FutureResponse> signIn(String email, String password) async {
     try {
-      if (prefs == null) {
-        throw UninitializedException(CallerClass.sharedPreferences);
-      }
       var response = await authService.login(LoginRequest(email: email, password: password));
 
       if (response.ok) {
         _user = (response as LoginResponse).applicationUser;
 
-        if (rememberMe == true) {
-          await prefs?.setBool('signedIn', true);
-          await saveUserToPrefs();
-        }
+        await SharedPrefs.instance.setBool('signedIn', true);
+        await saveUserToPrefs();
 
       } else {
         if (response.statusCode == 409) {
@@ -114,7 +106,7 @@ class AuthModel {
 
         _user = loginResponse.applicationUser;
 
-        await prefs?.setBool('signedIn', true);
+        await SharedPrefs.instance.setBool('signedIn', true);
         saveUserToPrefs();
 
       } else if (response.statusCode == CustomStatusCode.moreInfoRequired) {
@@ -180,10 +172,10 @@ class AuthModel {
   }
 
   Future<FutureResponse> signOut() async {
-    await prefs?.remove('signedIn');
-    await prefs?.remove('user');
-    await prefs?.remove('token');
-    await prefs?.remove('newListingPage');
+    await SharedPrefs.instance.remove('signedIn');
+    await SharedPrefs.instance.remove('user');
+    await SharedPrefs.instance.remove('token');
+    await SharedPrefs.instance.remove('newListingPage');
     _user = null;
     _controller.sink.add(false);
     return FutureResponse();
@@ -234,10 +226,10 @@ class AuthModel {
   }
 
   saveUserToPrefs() async {
-    if (prefs != null && _user != null) {
-      await prefs?.setString('user', jsonEncode(_user));
-      await prefs?.setString('token', _user?.token ?? '');
-      await prefs?.setBool('signedIn', true);
+    if (_user != null) {
+      await SharedPrefs.instance.setString('user', jsonEncode(_user));
+      await SharedPrefs.instance.setString('token', _user?.token ?? '');
+      await SharedPrefs.instance.setBool('signedIn', true);
     }
   }
 }

@@ -68,26 +68,26 @@ class ThemeNotifier with ChangeNotifier {
   bool get isDarkMode => _themeName == 'dark';
 
   ThemeNotifier() {
-    ThemeStorageManager.readData('themeMode').then((value) {
-      var themeMode = value ?? 'light';
-      if (themeMode == 'light') {
-        _themeData = lightTheme;
-      } else {
-        _themeData = darkTheme;
-      }
-      _themeName = themeMode;
-      notifyListeners();
-    });
+    String? themeMode = ThemeStorageManager.readData('themeMode');
+    themeMode ??= 'light';
+
+    if (themeMode == 'light') {
+      _themeData = lightTheme;
+    } else {
+      _themeData = darkTheme;
+    }
+    _themeName = themeMode;
+    notifyListeners();
   }
 
-  void setDarkMode() async {
+  void setDarkMode() {
     _themeData = darkTheme;
     _themeName = 'dark';
     ThemeStorageManager.saveData('themeMode', 'dark');
     notifyListeners();
   }
 
-  void setLightMode() async {
+  void setLightMode() {
     _themeData = lightTheme;
     _themeName = 'light';
     ThemeStorageManager.saveData('themeMode', 'light');

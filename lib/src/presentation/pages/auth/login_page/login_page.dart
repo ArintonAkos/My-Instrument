@@ -32,7 +32,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final AuthModel _authModel = appInjector.get<AuthModel>();
 
-  bool _rememberMe = false;
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
   late Icon _themeSwitcherIcon;
@@ -97,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForgotPasswordBtn() {
     return Container(
-      alignment: Alignment.centerRight,
+      alignment: Alignment.centerLeft,
       child: TextButton(
         style: TextButton.styleFrom(
           padding: const EdgeInsets.only(right: 0.0),
@@ -107,33 +106,6 @@ class _LoginPageState extends State<LoginPage> {
           AppLocalizations.of(context)!.translate('LOGIN.FORGOT_PASSWORD_LABEL'),
           style: kLabelStyle,
         ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
-    return SizedBox(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Theme.of(context).colorScheme.primary,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
-          ),
-          Text(
-            AppLocalizations.of(context)!.translate('LOGIN.REMEMBER_ME_LABEL'),
-            style: kLabelStyle,
-          ),
-        ],
       ),
     );
   }
@@ -321,7 +293,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                       _buildSignInWithText(),
                       _buildSocialBtnRow(),
@@ -342,7 +313,7 @@ class _LoginPageState extends State<LoginPage> {
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    var response = await _authModel.signIn(email, password, rememberMe: _rememberMe);
+    var response = await _authModel.signIn(email, password);
 
     _enableButton();
     if (!response.success) {

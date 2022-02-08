@@ -10,6 +10,7 @@ import 'package:my_instrument/src/presentation/widgets/error_info.dart';
 import 'package:my_instrument/src/presentation/widgets/my_custom_refresh_indicator.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
+import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({
@@ -142,6 +143,12 @@ class _HomePageBodyState extends State<HomePageBody> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        ElevatedButton(
+          onPressed: () {
+            String? asd = SharedPrefs.instance.getString('token');
+          },
+          child: const Text('asdasdasdasd'),
+        ),
         const SizedBox(height: 20),
         CategorySlider(
           headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),

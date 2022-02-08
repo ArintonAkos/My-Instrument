@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
       _initializeNotifier = Provider.of<InitializeNotifier>(context, listen: false);
       _initializeNotifier.init(widget, context);
     });

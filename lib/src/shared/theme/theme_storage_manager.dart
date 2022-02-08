@@ -1,33 +1,29 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
 
 class ThemeStorageManager {
   static void saveData(String key, dynamic value) async {
-    final prefs = await SharedPreferences.getInstance();
     if (value is int) {
-      prefs.setInt(key, value);
+      SharedPrefs.instance.setInt(key, value);
     } else if (value is String) {
-      prefs.setString(key, value);
+      SharedPrefs.instance.setString(key, value);
     } else if (value is bool) {
-      prefs.setBool(key, value);
+      SharedPrefs.instance.setBool(key, value);
     }
   }
 
-  static Future<dynamic> readData(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    dynamic obj = prefs.get(key);
+  static dynamic readData(String key) {
+    dynamic obj = SharedPrefs.instance.get(key);
     return obj;
   }
 
-  static Future<dynamic> getThemeMode() async {
-    final prefs = await SharedPreferences.getInstance();
-    String obj = prefs.getString('themeMode') ?? '';
+  static dynamic getThemeMode() {
+    String obj = SharedPrefs.instance.getString('themeMode') ?? '';
     return obj == 'dark'
         ? 'dark'
         : 'light';
   }
 
   static Future<bool> deleteData(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.remove(key);
+    return SharedPrefs.instance.remove(key);
   }
 }

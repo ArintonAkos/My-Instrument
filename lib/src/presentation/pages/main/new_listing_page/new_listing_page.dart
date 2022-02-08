@@ -8,7 +8,6 @@ import 'package:my_instrument/src/data/data_providers/services/listing_service.d
 import 'package:my_instrument/src/data/data_providers/services/shared_preferences_service.dart';
 import 'package:my_instrument/src/data/models/requests/main/listing/create_listing_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/listing/create_listing_response.dart';
-import 'package:my_instrument/src/data/models/responses/main/listing/listing_response.dart';
 import 'package:my_instrument/src/data/models/view_models/new_listing_local_data.dart';
 import 'package:my_instrument/src/presentation/pages/main/new_listing_page/category_select.dart';
 import 'package:my_instrument/src/presentation/pages/main/new_listing_page/exit_dialog.dart';
@@ -18,7 +17,6 @@ import 'package:my_instrument/src/presentation/widgets/custom_choice_select/choi
 import 'package:my_instrument/src/presentation/widgets/custom_choice_select/custom_choice_select.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
 import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
-import 'package:my_instrument/src/presentation/widgets/gradient_indeterminate_progress_bar.dart';
 import 'package:my_instrument/src/presentation/widgets/loading_dialog.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
@@ -68,7 +66,7 @@ class _NewListingPageState extends State<NewListingPage> {
   }
 
   Future getData() async {
-    savedData = await _sharedPreferencesService.getData<NewListingLocalData>("newListingPage",
+    savedData = _sharedPreferencesService.getData<NewListingLocalData>("newListingPage",
         NewListingLocalData.fromJson, NewListingLocalData.defaultState);
     for (int i = 0; i < savedData!.images.length; ++i) {
       selectedImages.add(savedData!.images[i]);
@@ -199,8 +197,8 @@ class _NewListingPageState extends State<NewListingPage> {
     });
   }
 
-  void deleteData() {
-    _sharedPreferencesService.deleteData("newListingPage");
+  void deleteData() async {
+    await _sharedPreferencesService.deleteData("newListingPage");
 
     _titleController.text = "";
     _descriptionController.text = "";
