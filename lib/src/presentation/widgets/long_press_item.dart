@@ -7,19 +7,24 @@ typedef PreviewBuilder = Widget Function(BuildContext context);
 typedef PopupBuilder = Widget Function(BuildContext context);
 
 class LongPressItem extends StatelessWidget {
-  final String heroTag = const Uuid().v4();
-  final String actionsTag = const Uuid().v4();
+  late final String heroTag;
+  late final String actionsTag;
 
   final PreviewBuilder previewBuilder;
   final PopupBuilder? popupBuilder;
   final List<PopupAction> actions;
+  final int index;
 
   LongPressItem({
     Key? key,
     required this.previewBuilder,
     required this.actions,
+    required this.index,
     this.popupBuilder
-  }) : super(key: key);
+  }) : super(key: key) {
+    heroTag = 'new-listing-page-hero-preview-item-$index';
+    actionsTag = 'new-listing-page-hero-popup-action-item-$index';
+  }
 
   @override
   Widget build(BuildContext context) {

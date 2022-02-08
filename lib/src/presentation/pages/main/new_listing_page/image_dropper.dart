@@ -66,26 +66,30 @@ class _ImageDropperState extends State<ImageDropper> {
   void imageGallery() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryImg(
-          urlImages: widget.selectedImages
+        urlImages: widget.selectedImages
       )
     ));
   }
 
   Widget _miniPicture(int index) {
-    return (index < widget.selectedImages.length) ? LongPressItem(
+    if (index < widget.selectedImages.length) {
+      return LongPressItem(
+        index: index,
         actions: [
           PopupAction(
             index: 1,
             count: 3,
             iconData: LineIcons.boxOpen,
-            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.OPEN'),
+            text: AppLocalizations.of(context)!.translate(
+                'NEW_LISTING.POPUP.OPEN'),
             onTap: imageGallery
           ),
           PopupAction(
             index: 2,
             count: 3,
             iconData: LineIcons.alternateShare,
-            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.INDEX_IMAGE'),
+            text: AppLocalizations.of(context)!.translate(
+                'NEW_LISTING.POPUP.INDEX_IMAGE'),
             onTap: () {
               widget.onNewIndexImage(index);
               Navigator.pop(context);
@@ -95,55 +99,60 @@ class _ImageDropperState extends State<ImageDropper> {
             index: 3,
             count: 3,
             iconData: LineIcons.alternateTrashAlt,
-            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.DELETE'),
+            text: AppLocalizations.of(context)!.translate(
+                'NEW_LISTING.POPUP.DELETE'),
             isDanger: true,
             onTap: () {
               removeImage(widget.selectedImages[index]);
             },
           )
         ],
-        previewBuilder: (BuildContext context) => ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: Image.file(
-            File(widget.selectedImages[index]),
-            height: 100,
-            width: double.infinity,
-            fit: BoxFit.cover,
+        previewBuilder: (BuildContext context) =>
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.file(
+              File(widget.selectedImages[index]),
+              height: 100,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        popupBuilder: (BuildContext context) => ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.file(
-            File(widget.selectedImages[index]),
-            width: 400,
-            height: 300,
-            fit: BoxFit.cover,
-          ),
-        )
-    )
-    : InkWell(
+        popupBuilder: (BuildContext context) =>
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.file(
+              File(widget.selectedImages[index]),
+              width: 400,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+          )
+      );
+    }
+
+    return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: () => showCupertinoModalBottomSheet(
-          topRadius: const Radius.circular(20),
-          barrierColor: Colors.black.withOpacity(0.8),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
-          ),
-          context: context,
-          builder: (context) => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(70)
-              ),
-              height: 170.0,
-              child: ModalInsideModal(
-                title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
-                orderByModels: orderByModels,
-                onTap: (value) {
-                  ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
-                  _imgPicker(source);
-                },
-              )
-          )
+        topRadius: const Radius.circular(20),
+        barrierColor: Colors.black.withOpacity(0.8),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
+        ),
+        context: context,
+        builder: (context) => Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(70)
+            ),
+            height: 170.0,
+            child: ModalInsideModal(
+              title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
+              orderByModels: orderByModels,
+              onTap: (value) {
+                ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
+                _imgPicker(source);
+              },
+            )
+        )
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -151,7 +160,6 @@ class _ImageDropperState extends State<ImageDropper> {
           color: Colors.grey.withOpacity(0.3),
         ),
         width: double.infinity,
-
       ),
     );
   }
@@ -161,7 +169,7 @@ class _ImageDropperState extends State<ImageDropper> {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: (widget.selectedImages.isEmpty)
-          ? () => showCupertinoModalBottomSheet(
+        ? () => showCupertinoModalBottomSheet(
           topRadius: const Radius.circular(20),
           barrierColor: Colors.black.withOpacity(0.8),
           shape: const RoundedRectangleBorder(
@@ -182,40 +190,40 @@ class _ImageDropperState extends State<ImageDropper> {
                 },
               )
           )
-      )
-          : null,
+        )
+        : null,
       child: Container(
         height: (widget.selectedImages.isEmpty) ? 150 : null,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(10)
+          color: Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10)
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
           child: (widget.selectedImages.isEmpty)
-              ? Center(
-                child: Text(
-                  AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HELP'),
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
-                  ),
+            ? Center(
+              child: Text(
+                AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HELP'),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
                 ),
-              )
-              : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.50,
-                  mainAxisSpacing: 15.0,
-                  crossAxisSpacing: 15.0,
-                ),
-                itemCount: 5,
-                itemBuilder: (context,index) => _miniPicture(index),
-                //scrollDirection: Axis.vertical,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                shrinkWrap: true,
               ),
+            )
+            : GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.50,
+                mainAxisSpacing: 15.0,
+                crossAxisSpacing: 15.0,
+              ),
+              itemCount: 5,
+              itemBuilder: (context,index) => _miniPicture(index),
+              //scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+              shrinkWrap: true,
+            ),
         ),
       ),
     );

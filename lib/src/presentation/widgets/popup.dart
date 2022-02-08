@@ -57,30 +57,6 @@ class Popup extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: Column(
                             children: actions,
-                            /*[
-                              const PopupAction(
-                                index: 1,
-                                count: 3,
-                                iconData: LineIcons.boxOpen,
-                                text: 'Open',
-                              ),
-                              const PopupAction(
-                                index: 2,
-                                count: 3,
-                                iconData: LineIcons.alternateShare,
-                                text: 'Share',
-                              ),
-                              PopupAction(
-                                index: 3,
-                                count: 3,
-                                iconData: LineIcons.alternateTrashAlt,
-                                text: 'Delete',
-                                isDanger: true,
-                                onTap: () {
-
-                                },
-                              )
-                            ]*/
                           ),
                         ),
                       )

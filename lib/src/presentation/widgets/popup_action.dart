@@ -76,8 +76,8 @@ class PopupAction extends StatelessWidget {
                   child: Icon(
                     iconData,
                     color: (isDanger ?? false)
-                        ? CupertinoColors.destructiveRed
-                        : Theme.of(context).colorScheme.onSurface
+                      ? CupertinoColors.destructiveRed
+                      : Theme.of(context).colorScheme.onSurface
                   ),
                 )
               ],

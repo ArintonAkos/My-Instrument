@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +7,9 @@ import 'package:my_instrument/src/data/models/view_models/filter_data.dart';
 import 'package:my_instrument/src/presentation/widgets/category_slider/category_slider.dart';
 import 'package:my_instrument/src/presentation/widgets/custom_choice_select/choice_select.dart';
 import 'package:my_instrument/src/presentation/widgets/error_info.dart';
-import 'package:my_instrument/src/presentation/widgets/long_press_item.dart';
 import 'package:my_instrument/src/presentation/widgets/my_custom_refresh_indicator.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/structure/route/router.gr.dart';
-
-import '../../../widgets/discover_slider.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({
@@ -147,24 +143,6 @@ class _HomePageBodyState extends State<HomePageBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const SizedBox(height: 20),
-        LongPressItem(
-          previewBuilder: (BuildContext context) => ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701',
-              height: 150,
-              width: 150,
-              fit: BoxFit.cover,
-            ),
-          ),
-          popupBuilder: (BuildContext context) => ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-                'https://cdn.shopify.com/s/files/1/0557/0556/7432/articles/acoustic-vs-classical_7aa53ad4-bd8b-4b5e-94be-7cb6fde78a4b_600x.jpg?v=1620932701'
-            ),
-          ),
-          actions: [],
-        ),
         CategorySlider(
           headerText: AppLocalizations.of(context)!.translate('HOME.CATEGORIES'),
           categoryId: 0,
@@ -182,7 +160,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           categoryId: 3,
         ),
         buildListingsHeader(),
-        DiscoverSlider(imgList: imgList),
+        // DiscoverSlider(imgList: imgList),
         const SizedBox(
           height: 70.0,
         ),
