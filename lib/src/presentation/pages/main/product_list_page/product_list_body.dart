@@ -87,23 +87,6 @@ class Listing extends StatelessWidget {
     required this.listingPageState
   }) : super(key: key);
 
-  Widget buildFavoriteButton(FavoriteState favoriteState, ProductListPageState state) {
-    if (favoriteState is FavoriteLoadedState) {
-      if (favoriteState.listingIds.contains(listing.listingId)) {
-        return const Icon(
-          LineIcons.heartAlt,
-          key: ValueKey<int>(0),
-          color: Color(0xFFEF3534)
-        );
-      }
-    }
-
-    return const Icon(
-      LineIcons.heart,
-      key: ValueKey<int>(1),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -162,7 +145,14 @@ class Listing extends StatelessWidget {
                                 icon: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 250),
                                   transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(scale: animation, child: child,),
-                                  child: buildFavoriteButton(favoriteState, listingPageState)
+                                  child: buildFavoriteButton(
+                                    favoriteState,
+                                    listing.listingId,
+                                    const Icon(
+                                      LineIcons.heart,
+                                      key: ValueKey<int>(1),
+                                    )
+                                  )
                                 ),
                                 onPressed: () {
                                   context.read<FavoriteBloc>().add(FavoriteClickEvent(listingId: listing.listingId));
@@ -207,8 +197,20 @@ class Listing extends StatelessWidget {
       10.0,
       borderRadius: BorderRadius.circular(5),
       shadowColor: Theme.of(context).colorScheme.onBackground
-    )
-    ;
+    );
+  }
+}
+
+Widget buildFavoriteButton(FavoriteState favoriteState, String listingId, Widget defaultIcon) {
+  if (favoriteState is FavoriteLoadedState) {
+    if (favoriteState.listingIds.contains(listingId)) {
+      return const Icon(
+        LineIcons.heartAlt,
+        key: ValueKey<int>(0),
+        color: Color(0xFFEF3534)
+      );
+    }
   }
 
+  return defaultIcon;
 }

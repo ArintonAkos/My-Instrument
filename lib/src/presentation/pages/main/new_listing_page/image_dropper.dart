@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
@@ -66,9 +66,9 @@ class _ImageDropperState extends State<ImageDropper> {
 
   void imageGallery() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => GalleryImg(
-            urlImages: widget.selectedImages
-        )
+      builder: (_) => GalleryImg(
+        urlImages: widget.selectedImages
+      )
     ));
   }
 
@@ -91,20 +91,23 @@ class _ImageDropperState extends State<ImageDropper> {
   }
 
   Widget _miniPicture(int index) {
-    return (index < widget.selectedImages.length) ? LongPressItem(
+    if (index < widget.selectedImages.length) {
+      return LongPressItem(
         actions: [
           PopupAction(
               index: 1,
               count: 3,
               iconData: LineIcons.boxOpen,
-              text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.OPEN'),
+              text: AppLocalizations.of(context)!.translate(
+                  'NEW_LISTING.POPUP.OPEN'),
               onTap: imageGallery
           ),
           PopupAction(
             index: 2,
             count: 3,
             iconData: LineIcons.alternateShare,
-            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.INDEX_IMAGE'),
+            text: AppLocalizations.of(context)!.translate(
+                'NEW_LISTING.POPUP.INDEX_IMAGE'),
             onTap: () {
               widget.onNewIndexImage(index);
               Navigator.pop(context);
@@ -114,93 +117,98 @@ class _ImageDropperState extends State<ImageDropper> {
             index: 3,
             count: 3,
             iconData: LineIcons.alternateTrashAlt,
-            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.DELETE'),
+            text: AppLocalizations.of(context)!.translate(
+                'NEW_LISTING.POPUP.DELETE'),
             isDanger: true,
             onTap: () {
               widget.onRemoveImage(widget.selectedImages[index], index);
             },
           )
         ],
-        previewBuilder: (BuildContext context) =>  SizedBox(
-          height: 100,
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Stack(
-                children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: imageGallery,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        color: Colors.grey.withOpacity(0.3),
-                        child: Image.file(
-                          File(widget.selectedImages[index]),
-                          height: 100,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+        previewBuilder: (BuildContext context) =>
+            SizedBox(
+              height: 100,
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Stack(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: imageGallery,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            color: Colors.grey.withOpacity(0.3),
+                            child: Image.file(
+                              File(widget.selectedImages[index]),
+                              height: 100,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 400),
-                    child: (index == widget.indexImageId)
-                        ? Padding(
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        child: (index == widget.indexImageId)
+                            ? Padding(
                           child: selectedIndexCheckMark(),
                           padding: const EdgeInsets.only(top: 5),
-                    )
-                        : null,
-                  ),
-                ]
+                        )
+                            : null,
+                      ),
+                    ]
+                ),
+              ),
             ),
-          ),
-        ),
-        popupBuilder: (BuildContext context) => ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            color: Colors.grey.shade400,
-            child: Image.file(
-              File(widget.selectedImages[index]),
-              width: 400,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ), index: index,
-    )
-        : InkWell(
+        popupBuilder: (BuildContext context) =>
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                color: Colors.grey.shade400,
+                child: Image.file(
+                  File(widget.selectedImages[index]),
+                  width: 400,
+                  height: 300,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ), index: index,
+      );
+    }
+
+    return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: () => showCupertinoModalBottomSheet(
-          topRadius: const Radius.circular(20),
-          barrierColor: Colors.black.withOpacity(0.8),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
+        topRadius: const Radius.circular(20),
+        barrierColor: Colors.black.withOpacity(0.8),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
+        ),
+        context: context,
+        builder: (context) => Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(70)
           ),
-          context: context,
-          builder: (context) => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(70)
-              ),
-              height: 170.0,
-              child: ModalInsideModal(
-                title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
-                orderByModels: orderByModels,
-                onTap: (value) {
-                  ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
-                  _imgPicker(source);
-                },
-              )
+          height: 170.0,
+          child: ModalInsideModal(
+            title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
+            orderByModels: orderByModels,
+            onTap: (value) {
+              ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
+              _imgPicker(source);
+            },
           )
+        )
       ),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey.withOpacity(0.3),
-        ),
-        width: double.infinity,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.grey.withOpacity(0.3),
+    ),
+    width: double.infinity,
 
-      ),
+  ),
     );
   }
 

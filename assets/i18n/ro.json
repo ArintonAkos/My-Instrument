@@ -214,6 +214,13 @@
       "ACCEPT": "Salvare"
     }
   },
+  "PRODUCT_LIST_PAGE": {
+    "ORDER_BY": "Sortare",
+    "FILTERS": "Filtru"
+  },
+  "LISTING_PAGE": {
+    "SHARE_LISTING_TITLE": "Distribuire articol"
+  },
   "SHARED": {
     "ERROR": {
       "APPBAR_HEADER_TEXT": "Eroare",

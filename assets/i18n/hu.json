@@ -214,6 +214,13 @@
       "ACCEPT": "Mentés"
     }
   },
+  "PRODUCT_LIST_PAGE": {
+    "ORDER_BY": "Rendezés",
+    "FILTERS": "Szűrők"
+  },
+  "LISTING_PAGE": {
+    "SHARE_LISTING_TITLE": "Elem megosztása"
+  },
   "SHARED": {
     "ERROR": {
       "APPBAR_HEADER_TEXT": "Hiba",

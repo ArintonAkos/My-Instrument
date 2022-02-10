@@ -103,7 +103,7 @@ class ProductListAppBar extends StatelessWidget {
                           builder: (context) => const FilterPage()
                         );
                       },
-                      text: 'Filters',
+                      text: AppLocalizations.of(context)!.translate('PRODUCT_LIST_PAGE.FILTERS'),
                       iconData: LineIcons.filter,
                     ),
                     Padding(
@@ -119,13 +119,13 @@ class ProductListAppBar extends StatelessWidget {
                               heightFactor: 0.5,
                               child: ModalInsideModal(
                                 onTap: (value) {},
-                                title: 'Order by',
+                                title: AppLocalizations.of(context)!.translate('PRODUCT_LIST_PAGE.ORDER_BY'),
                                 orderByModels: orderByModels,
                               )
                             )
                           );
                         },
-                        text: 'Order By',
+                        text: AppLocalizations.of(context)!.translate('PRODUCT_LIST_PAGE.ORDER_BY'),
                         iconData: LineIcons.sortAmountUp
                       ),
                     )

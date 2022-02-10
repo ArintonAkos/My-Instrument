@@ -1,3 +1,5 @@
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
+
 class ListingConstants {
   static const _listingURL = 'Listing/';
 
@@ -10,4 +12,6 @@ class ListingConstants {
   static const createListingURL = _listingURL + 'Create/';
 
   static const editListingURL = _listingURL + 'Edit/';
+
+  static String fullListingPathURL = HttpService.basicUrl + 'listing/';
 }

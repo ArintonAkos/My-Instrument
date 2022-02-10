@@ -419,14 +419,14 @@ class _NewListingPageState extends State<NewListingPage> {
                             height: 20,
                           ),
                           CustomInputField(
-                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
-                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.LABEL'),
-                              inputController: _titleController,
-                              textInputType: TextInputType.text,
-                              errorText: '',
-                              characterNumber: 128,
-                              fSize: 20
+                            formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.HINT'),
+                            theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                            title: AppLocalizations.of(context)!.translate('NEW_LISTING.TITLE_INPUT.LABEL'),
+                            inputController: _titleController,
+                            textInputType: TextInputType.text,
+                            errorText: '',
+                            characterNumber: 128,
+                            fSize: 20
                           ),
                           _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CATEGORY_SELECT.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
                           const SizedBox(
@@ -438,34 +438,34 @@ class _NewListingPageState extends State<NewListingPage> {
                             onCategorySelect: onCategorySelect,
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, top: 7),
-                              child: _labelText(selectErrorText, Theme.of(context).errorColor, 11.5)
+                            padding: const EdgeInsets.only(left: 10, top: 7),
+                            child: _labelText(selectErrorText, Theme.of(context).errorColor, 11.5)
                           ),
                           const SizedBox(
                               height: 15
                           ),
                           CustomInputField(
-                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.HINT'),
-                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.LABEL'),
-                              inputController: _descriptionController,
-                              textInputType: TextInputType.multiline,
-                              errorText: '',
-                              characterNumber: 5000,
-                              fSize: 20
+                            formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.HINT'),
+                            theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                            title: AppLocalizations.of(context)!.translate('NEW_LISTING.DESCRIPTION_INPUT.LABEL'),
+                            inputController: _descriptionController,
+                            textInputType: TextInputType.multiline,
+                            errorText: '',
+                            characterNumber: 5000,
+                            fSize: 20
                           ),
                           const SizedBox(
                             height: 5,
                           ),
                           CustomInputField(
-                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.HINT'),
-                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.LABEL'),
-                              inputController: _priceController,
-                              textInputType: TextInputType.number,
-                              errorText: '',
-                              characterNumber: 10,
-                              fSize: 20
+                            formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.HINT'),
+                            theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                            title: AppLocalizations.of(context)!.translate('NEW_LISTING.PRICE_INPUT.LABEL'),
+                            inputController: _priceController,
+                            textInputType: TextInputType.number,
+                            errorText: '',
+                            characterNumber: 10,
+                            fSize: 20
                           ),
                           _labelText(AppLocalizations.of(context)!.translate('NEW_LISTING.CONDITION.LABEL'), Theme.of(context).colorScheme.onSurface, 16.0),
                           const SizedBox(
@@ -484,17 +484,17 @@ class _NewListingPageState extends State<NewListingPage> {
                             height: 30,
                           ),
                           CustomInputField(
-                              formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.HINT'),
-                              theme: Provider.of<ThemeNotifier>(context).getTheme(),
-                              title: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.LABEL'),
-                              inputController: _countController,
-                              textInputType: TextInputType.number,
-                              errorText: '',
-                              characterNumber: 10,
-                              fSize: 20
+                            formHint: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.HINT'),
+                            theme: Provider.of<ThemeNotifier>(context).getTheme(),
+                            title: AppLocalizations.of(context)!.translate('NEW_LISTING.COUNT.LABEL'),
+                            inputController: _countController,
+                            textInputType: TextInputType.number,
+                            errorText: '',
+                            characterNumber: 10,
+                            fSize: 20
                           ),
                           const SizedBox(
-                              height: 40
+                            height: 40
                           ),
                         ]
                     ),

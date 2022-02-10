@@ -35,8 +35,8 @@ class ThemeNotifier with ChangeNotifier {
     themeMode: AppThemeMode.light,
     themeData: ThemeData(
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      scaffoldBackgroundColor: const Color(0xFFEFEFEF),
-      backgroundColor: const Color(0xFFEFEFEF),
+      scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       dividerColor: Colors.grey,
       cardColor: const Color(0xFFFFFFFF),
       errorColor: const Color(0xFFB00020),
