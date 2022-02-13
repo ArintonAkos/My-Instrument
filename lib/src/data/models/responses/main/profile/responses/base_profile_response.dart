@@ -5,23 +5,9 @@ import '../../../base_response.dart';
 import '../../../error_response.dart';
 
 class BaseProfileResponse extends BaseResponse {
-  late final BaseProfileModel? data;
+  late final BaseProfileModel data;
 
   BaseProfileResponse(Map<String, dynamic> json, AppLanguage appLanguage) : super(json, appLanguage) {
-    data = parseBaseProfile(json);
-  }
-
-  BaseProfileModel? parseBaseProfile(Map<String, dynamic> json) {
-    dynamic data = json['profile'];
-
-    if (data != null) {
-      return BaseProfileModel(json: data);
-    }
-
-    return null;
-  }
-
-  factory BaseProfileResponse.errorMessage(AppLanguage appLanguage) {
-    return BaseProfileResponse(ErrorResponse(language: appLanguage.localeIndex).responseJSON, appLanguage);
+    data = BaseProfileModel.fromJson(json);
   }
 }

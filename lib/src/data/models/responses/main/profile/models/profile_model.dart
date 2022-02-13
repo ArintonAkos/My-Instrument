@@ -12,6 +12,10 @@ class BaseProfileModel {
     id = json?['userId'];
     baseName = json?['baseName'];
   }
+
+  factory BaseProfileModel.fromJson(Map<String, dynamic> json) {
+    return BaseProfileModel(json: json);
+  }
 }
 
 class ProfileModel extends BaseProfileModel {
@@ -23,5 +27,9 @@ class ProfileModel extends BaseProfileModel {
   }) : super(json: json) {
     rating = json?['rating'] ?? 0;
     listings = ListParser.parse<ListingModel>(json?['listings'], ListingModel.fromJson);
+  }
+
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    return ProfileModel(json: json);
   }
 }
