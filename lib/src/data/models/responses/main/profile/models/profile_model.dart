@@ -16,10 +16,12 @@ class BaseProfileModel {
 
 class ProfileModel extends BaseProfileModel {
   late final List<ListingModel> listings;
+  late final double rating;
 
   ProfileModel({
     Map<String, dynamic>? json
   }) : super(json: json) {
+    rating = json?['rating'] ?? 0;
     listings = ListParser.parse<ListingModel>(json?['listings'], ListingModel.fromJson);
   }
 }

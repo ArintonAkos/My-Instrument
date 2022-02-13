@@ -19,7 +19,7 @@ import 'package:my_instrument/src/data/models/requests/main/message/read_all_mes
 import 'package:my_instrument/src/data/models/requests/main/message/send_message_request.dart';
 import 'package:my_instrument/src/data/models/responses/main/message/chat_message.dart';
 import 'package:my_instrument/src/data/models/responses/main/message/chat_message_response.dart';
-import 'package:my_instrument/src/data/models/responses/main/profile/base_profile_response.dart';
+import 'package:my_instrument/src/data/models/responses/main/profile/responses/base_profile_response.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
