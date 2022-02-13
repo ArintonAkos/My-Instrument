@@ -286,11 +286,11 @@ class _ChattingPageState extends State<ChattingPage> {
       var baseProfileRes = res as BaseProfileResponse;
 
       _partner = _partner.copyWith(
-        firstName: baseProfileRes.data?.baseName
+        firstName: baseProfileRes.data.baseName
       );
       setState(() {
         isProfileLoading = false;
-        fullName = baseProfileRes.data?.baseName ?? '';
+        fullName = baseProfileRes.data.baseName;
       });
     } else {
       setState(() {
