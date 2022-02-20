@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_instrument/src/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 
 class CustomInputField extends StatelessWidget {
 
   final String formHint;
-  final AppThemeData? theme;
   final String title;
   final TextEditingController inputController;
   final TextInputType? textInputType;
-  final String? errorText;
   final int? characterNumber;
   final double? fSize;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomInputField({
     Key? key,
     required this.formHint,
-    required this.theme,
     required this.title,
     required this.inputController,
     required this.textInputType,
-    required this.errorText,
-    required this.characterNumber,
-    required this.fSize
+    this.characterNumber,
+    this.fSize,
+    this.inputFormatters
   }) : super(key: key);
+
+  static double get defaultFontSize => 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -63,27 +64,19 @@ class CustomInputField extends StatelessWidget {
           minLines: 1,
           maxLength: characterNumber,
           keyboardType: textInputType,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.grey.withOpacity(0.2),
             labelStyle: TextStyle(
-              fontSize: fSize,
+              fontSize: fSize ?? defaultFontSize,
             ),
             hintText: formHint,
             helperText: '',
             enabledBorder: const UnderlineInputBorder(),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: Text(
-            errorText ?? "",
-            style: TextStyle(
-              fontSize: 14,
-              color: theme?.customTheme.authErrorColor,
-            ),
-          ),
-        )
+        // const SizedBox(height: 5)
       ],
     );
   }

@@ -39,4 +39,9 @@ class EditListingRequest implements MultipartRequest {
   List<String> getImagePaths() {
     return imagePaths ?? [];
   }
+
+  @override
+  Map<String, dynamic> toMap() {
+    throw UnimplementedError();
+  }
 }

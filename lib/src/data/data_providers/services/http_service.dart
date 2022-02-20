@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:injector/injector.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
@@ -9,10 +12,11 @@ import 'package:my_instrument/src/data/models/requests/backend_request.dart';
 import 'package:my_instrument/src/data/models/requests/multipart_request.dart';
 
 import '../change_notifiers/auth_model.dart';
+import 'package:path/path.dart' as p;
 
 class HttpService {
-  static const String _localUrl = "https://myinstrument.conveyor.cloud/";
-  static const String _localRemoteUrl = "https://myinstrument.conveyor.cloud/";
+  static const String _localUrl = "https://192.168.100.72:3000/";
+  static const String _localRemoteUrl = "https://192.168.100.72:3000/";
 
   static const String _productionUrl = "";
   static const String _productionRemoteUrl = "";
@@ -59,7 +63,7 @@ class HttpService {
 
   Future<http.Response> postJson(BackendRequest data, String path, { bool concat = false })  async {
     String? bearerToken = SharedPrefs.instance.getString('token');
-    return http.post(
+    return await http.post(
       Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       body: jsonEncode(data.toJson()),
       headers: {
@@ -69,9 +73,9 @@ class HttpService {
     });
   }
 
-  Future<http.Response> getData(String path, { bool concat = false }) {
+  Future<http.Response> getData(String path, { bool concat = false }) async {
     String? bearerToken = SharedPrefs.instance.getString('token');
-    return http.get(
+    return await http.get(
       Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
@@ -81,30 +85,36 @@ class HttpService {
 
   Future<http.StreamedResponse> postMultipart(MultipartRequest data, String path, { bool concat = false }) async {
     String? bearerToken = SharedPrefs.instance.getString('token');
+
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}')
-    )
-      ..headers.addAll({
-        'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
-        'X-Requested-With': 'XMLHttpRequest'
-      })
-      ..fields.addAll(data.toJson());
+      Uri.parse(apiUrl + path)
+    );
+
+    request.fields.addAll(data.toJson());
 
     var imagePaths = data.getImagePaths();
-    int i = 0;
-    for (var element in imagePaths) {
-      var multipartFile = await http.MultipartFile.fromPath('file-$i', element);
-      request.files.add(multipartFile);
-      i++;
+    for (var imagePath in imagePaths) {
+      String? fileType = _getImageType(_getFileType(imagePath));
+      if (fileType != null) {
+        request.files.add(await http.MultipartFile.fromPath('images', imagePath,
+          contentType: MediaType.parse(fileType)
+        ));
+      }
     }
 
-    return request.send();
+    request.headers.addAll({
+      'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
+    });
+
+    return await request.send();
   }
+
+
 
   Future<http.Response> putData(String path, { bool concat = false }) async {
     String? bearerToken = SharedPrefs.instance.getString('token');
-    return http.put(
+    return await http.put(
       Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
@@ -114,11 +124,34 @@ class HttpService {
 
   Future<http.Response> deleteData(String path, { bool concat = false }) async {
     String? bearerToken = SharedPrefs.instance.getString('token');
-    return http.delete(
+    return await http.delete(
         Uri.parse(apiUrl + path + getChainOperator(concat) + 'language=${appLanguage.localeIndex}'),
         headers: {
           'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
         }
     );
+  }
+
+
+
+  String _getFileType(String filePath) {
+    return p.extension(filePath);
+  }
+
+  String? _getImageType(String? extension) {
+    const defaultTypeStr = 'image/';
+
+    switch (extension) {
+      case '.gif':
+        return defaultTypeStr + 'gif';
+      case '.jpg':
+        return defaultTypeStr + 'jpeg';
+      case '.jpeg':
+        return defaultTypeStr + 'jpeg';
+      case '.png':
+        return defaultTypeStr + 'png';
+    }
+
+    return null;
   }
 }

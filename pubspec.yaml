@@ -88,6 +88,7 @@ dependencies:
   image_cropper: ^1.4.1
   cupertino_radio_choice: ^1.0.2
   awesome_select: ^5.1.0
+  dio: ^4.0.4
 
 dev_dependencies:
   flutter_test:

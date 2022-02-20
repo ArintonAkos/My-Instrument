@@ -6,12 +6,13 @@ class BaseCacheManager {
   late final CacheManager instance;
 
   BaseCacheManager({
-    required this.key
+    required this.key,
+    Duration? stalePeriod
   }) {
     instance = CacheManager(
       Config(
         key,
-        stalePeriod: const Duration(days: 7),
+        stalePeriod: stalePeriod ?? const Duration(days: 7),
         maxNrOfCacheObjects: 15,
         repo: JsonCacheInfoRepository(databaseName: key),
       )

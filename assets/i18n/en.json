@@ -25,18 +25,6 @@
     "LISTINGS": "Listings",
     "SEARCH": {
       "HINT": "Search product"
-    },
-    "INSTRUMENT_CARD": {
-      "GUITAR_TITLE": "Guitars",
-      "GUITAR_TEXT": "Choose the best guitar from the app!",
-      "DRUM_TITLE": "Drum kits",
-      "DRUM_TEXT": "Choose the best drum kit from the app!",
-      "BASS_TITLE": "Basses",
-      "BASS_TEXT": "Choose the best bass from the app!",
-      "VIOLIN_TITLE": "Violins",
-      "VIOLIN_TEXT": "Choose the best violin from the app!",
-      "PIANO_TITLE": "Pianos",
-      "PIANO_TEXT": "Choose the best piano from the app!"
     }
   },
   "NEW_LISTING": {
@@ -61,7 +49,7 @@
       "HINT": "Enter the description of your listing"
     },
     "CATEGORY_SELECT": {
-      "LABEL": "Select",
+      "LABEL": "Categories",
       "HINT": "Select the type of your product"
     },
     "CONDITION": {
@@ -71,7 +59,7 @@
     },
     "COUNT": {
       "LABEL": "Item count",
-      "HINT": "How many do you want to sell?"
+      "HINT": "Number of products"
     },
     "ERROR_MESSAGE": {
       "INPUT_FIELD": "Please fill in with information",

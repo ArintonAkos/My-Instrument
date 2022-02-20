@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:my_instrument/src/business_logic/blocs/category_filter_select/category_filter_select_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/home_page/home_page_bloc.dart';
 import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/initialize_notifier.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/auth_model.dart';
 import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
+import 'package:my_instrument/src/data/models/repository_models/category.dart';
 import 'package:my_instrument/src/data/repositories/category_repository.dart';
 import 'package:my_instrument/src/data/repositories/listing_repository.dart';
 import 'package:my_instrument/src/shared/connectivity/network_connectivity.dart';
@@ -20,6 +24,7 @@ import 'package:logging/logging.dart';
 import 'package:my_instrument/src/business_logic/blocs/favorite/favorite_bloc.dart';
 import 'package:my_instrument/src/data/data_providers/services/signalr_service.dart';
 import 'package:my_instrument/src/data/repositories/favorite_repository.dart';
+import 'package:my_instrument/src/shared/utils/CustomHttpOverride.dart';
 import 'package:my_instrument/structure/dependency_injection/injector_initializer.dart';
 
 import 'package:provider/provider.dart';
@@ -29,6 +34,8 @@ import 'structure/route/router.gr.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = CustomHttpOverride();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
@@ -141,6 +148,11 @@ class _MyAppState extends State<MyApp> {
                   categoryRepository: RepositoryProvider.of<CategoryRepository>(context),
                 )..add(const GetCategoriesEvent()),
                 lazy: false,
+              ),
+              BlocProvider(
+                create: (context) => CategoryFilterSelectBloc(
+                  categoryRepository: RepositoryProvider.of<CategoryRepository>(context)
+                )
               )
             ],
             child: Consumer3<AppLanguage, ThemeNotifier, InitializeNotifier>(builder: (context, language, theme, initialize, child) => (

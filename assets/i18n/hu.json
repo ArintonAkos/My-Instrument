@@ -26,23 +26,11 @@
     "SEARCH": {
       "HINT": "Termék keresése"
     },
-    "INSTRUMENT_CARD": {
-      "GUITAR_TITLE": "Gitárok",
-      "GUITAR_TEXT": "Válaszd a legjobb gitárt az applikációban!",
-      "DRUM_TITLE": "Dobfelszerelések",
-      "DRUM_TEXT": "Válaszd a legjobb dobfelszerelést az applikációban!",
-      "BASS_TITLE": "Basszusgitárok",
-      "BASS_TEXT": "Válaszd a legjobb basszusgitárt az applikációban!",
-      "VIOLIN_TITLE": "Hegedűk",
-      "VIOLIN_TEXT": "Válaszd a legjobb hegedűt az applikációban!",
-      "PIANO_TITLE": "Zongora",
-      "PIANO_TEXT": "Válaszd a legjobb zongorát az applikációban!"
-    }
   },
   "NEW_LISTING": {
-    "TITLE": "Új hírdetés",
+    "TITLE": "Új hirdetés",
     "IMAGE_DROPPER": {
-      "LABEL": "Tölsön fel képet a termékéről",
+      "LABEL": "Töltsön fel képet a termékéről",
       "CAMERA": "Kamera",
       "GALLERY": "Galéria",
       "HELP": "Bökjön ide, hogy feltölthesse a képeit a termékről",
@@ -50,19 +38,19 @@
     },
     "TITLE_INPUT": {
       "LABEL": "Cím",
-      "HINT": "Írja be a hírdetése címét"
+      "HINT": "Írja be a termék címét"
     },
     "PRICE_INPUT": {
       "LABEL": "Ár",
-      "HINT": "Írja be a hírdetése árát"
+      "HINT": "Írja be a termék árát"
     },
     "DESCRIPTION_INPUT": {
       "LABEL": "Leírás",
-      "HINT": "Írja be a hírdetése leírását"
+      "HINT": "Írja be a termék leírását"
     },
     "CATEGORY_SELECT": {
-      "LABEL": "Válasszon",
-      "HINT": "Válassza ki az árúja típusát"
+      "LABEL": "Kategória",
+      "HINT": "Válassza ki a termék típusát"
     },
     "CONDITION": {
       "LABEL": "Kondíció",
@@ -70,8 +58,8 @@
       "USED": "Használt"
     },
     "COUNT": {
-      "LABEL": "Mennyit?",
-      "HINT": "Mennyit szeretne eladni?"
+      "LABEL": "Darabszám",
+      "HINT": "Eladó termékek száma"
     },
     "ERROR_MESSAGE": {
       "INPUT_FIELD": "Kérem töltse ki információval",
@@ -80,13 +68,13 @@
       "UPLOAD": "Valami hiba történt..."
     },
     "EXIT_DIALOG":{
-      "TITLE": "Bíztos benne, hogy ki szeretne lépni?",
-      "CONTENT": "Van mentetlen adata",
+      "TITLE": "Biztos benne, hogy ki szeretne lépni?",
+      "CONTENT": "Van elmentetlen adata",
       "EXIT":"Kilépés",
       "CANCEL": "Mégse"
     },
     "ENTER_DIALOG":{
-      "TITLE": "Van lementett adata",
+      "TITLE": "Van elmentett adata",
       "CONTENT": "Be szeretné tölteni őket?",
       "YES": "Igen",
       "NO": "Nem"

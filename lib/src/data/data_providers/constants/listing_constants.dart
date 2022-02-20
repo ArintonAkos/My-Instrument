@@ -9,9 +9,9 @@ class ListingConstants {
 
   static const deleteListingURL = _listingURL;
 
-  static const createListingURL = _listingURL + 'Create/';
+  static const createListingURL = _listingURL + 'Create';
 
-  static const editListingURL = _listingURL + 'Edit/';
+  static const editListingURL = _listingURL + 'Edit';
 
   static String fullListingPathURL = HttpService.basicUrl + 'listing/';
 }

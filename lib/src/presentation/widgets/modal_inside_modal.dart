@@ -20,6 +20,7 @@ class ModalInsideModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 70,
@@ -56,20 +57,23 @@ class ModalInsideModal extends StatelessWidget {
         ),
         body: SafeArea(
           bottom: false,
-          child: ListView.builder(
-            reverse: reverse,
-            shrinkWrap: true,
-            controller: ModalScrollController.of(context),
-            physics: const ClampingScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) => OrderByItem(
-              model: OrderByModel(
-                value: orderByModels[index].value,
-                text: orderByModels[index].text
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListView.builder(
+              reverse: reverse,
+              shrinkWrap: true,
+              controller: ModalScrollController.of(context),
+              physics: const ClampingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) => OrderByItem(
+                model: OrderByModel(
+                  value: orderByModels[index].value,
+                  text: orderByModels[index].text
+                ),
+                onTap: (value) { onTap(value); },
+                isSelected: (index == 2),
               ),
-              onTap: (value) { onTap(value); },
-              isSelected: (index == 2),
+              itemCount: orderByModels.length,
             ),
-            itemCount: orderByModels.length,
           ),
         ),
       )

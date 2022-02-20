@@ -9,4 +9,8 @@ class CategoryConstants {
 
   // Required for caching (key)
   static const categoryCacheKey = 'Category-CategoryWithAllChildren-0';
+
+  static const categoryFilterCacheKey = 'Category-CategoryFilters';
+
+  static const categoryFilters = _categoryURL + 'CategoryFilters';
 }

@@ -9,14 +9,15 @@ popOut(CategoryModel actualCategory, BuildContext newListingContext, Function(Ca
   Navigator.of(newListingContext).pop();
 }
 
-pushNewModal(BuildContext context, BuildContext newListingContext, Function(CategoryModel) updateSelectedCategory, CategoryModel category) {
+pushNewModal(BuildContext context, BuildContext newListingContext, Function(CategoryModel) updateSelectedCategory, CategoryModel category, { required int selectedCategory }) {
   Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => CupertinoPageScaffold(
-        child: CategorySelectModal(
+    CupertinoPageRoute(
+      builder: (context) => Scaffold(
+        body: CategorySelectModal(
           category: category,
           newListingContext: newListingContext,
           updateSelectedCategory: updateSelectedCategory,
+          selectedCategory: selectedCategory
         )
       ),
     ),

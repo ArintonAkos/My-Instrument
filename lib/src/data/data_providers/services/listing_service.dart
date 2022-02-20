@@ -13,7 +13,8 @@ import 'package:my_instrument/src/data/models/responses/main/listing/get_listing
 import 'package:my_instrument/src/data/models/responses/main/listing/listing_response.dart';
 
 class ListingService extends HttpService {
-  ListingService({ required AppLanguage appLanguage}) : super(appLanguage: appLanguage);
+
+  ListingService({ required AppLanguage appLanguage }) : super(appLanguage: appLanguage);
 
   Future<my_base_response.BaseResponse> getListings(GetListingsRequest request) async {
     if (await model.ensureAuthorized()) {
@@ -65,8 +66,8 @@ class ListingService extends HttpService {
   Future<my_base_response.BaseResponse> editListing(EditListingRequest listingRequest) async {
     if (await model.ensureAuthorized()) {
       StreamedResponse res = await postMultipart(
-          listingRequest,
-          ListingConstants.getListingURL
+        listingRequest,
+        ListingConstants.getListingURL
       );
 
       final respStr = await res.stream.bytesToString();

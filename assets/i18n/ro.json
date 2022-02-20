@@ -42,7 +42,7 @@
   "NEW_LISTING": {
     "TITLE": "Anunț nou",
     "IMAGE_DROPPER": {
-      "LABEL": "Încărcați imagini ale produsului dvs",
+      "LABEL": "Încărcați imagini despre produs",
       "CAMERA": "Aparat foto",
       "GALLERY": "Galerie",
       "HELP": "Atingeți aici pentru a încărca imaginile despre produs",
@@ -50,19 +50,19 @@
     },
     "TITLE_INPUT": {
       "LABEL": "Titlu",
-      "HINT": "Introduceți titlul înregistrării dvs"
+      "HINT": "Introduceți titlul produsului"
     },
     "PRICE_INPUT": {
       "LABEL": "Preț",
-      "HINT": "Introduceți prețul înregistrării dvs"
+      "HINT": "Introduceți prețul produsului"
     },
     "DESCRIPTION_INPUT": {
       "LABEL": "Descriere",
-      "HINT": "Introduceți descrierea înregistrării dvs"
+      "HINT": "Introduceți descrierea produsului"
     },
     "CATEGORY_SELECT": {
-      "LABEL": "Selectați",
-      "HINT": "Selectați tipul produsului dvs"
+      "LABEL": "Categorie",
+      "HINT": "Selectați tipul produsului"
     },
     "CONDITION": {
       "LABEL": "Condiție",
@@ -70,8 +70,8 @@
       "USED": "Folosit"
     },
     "COUNT": {
-      "LABEL": "Cate?",
-      "HINT": "Câte vrei să vinzi?"
+      "LABEL": "Cantitate",
+      "HINT": "Numărul de produse"
     },
     "ERROR_MESSAGE": {
       "INPUT_FIELD": "Vă rugăm să completați cu informații",

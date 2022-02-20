@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:my_instrument/src/business_logic/blocs/new_listing_page/new_listing_page_bloc.dart';
 import 'package:my_instrument/src/data/models/responses/main/category/category_model.dart';
 import 'package:my_instrument/src/presentation/widgets/category_select_modal/category_select_modal_methods.dart';
@@ -14,11 +15,13 @@ import '../error_info.dart';
 class DefaultCategorySelectModal extends StatelessWidget {
   final BuildContext newListingContext;
   final Function(CategoryModel) updateSelectedCategory;
+  final int selectedCategory;
 
   const DefaultCategorySelectModal({
     Key? key,
     required this.newListingContext,
     required this.updateSelectedCategory,
+    required this.selectedCategory
   }) : super(key: key);
 
   Widget getMiddleText() {
@@ -49,8 +52,9 @@ class DefaultCategorySelectModal extends StatelessWidget {
         return Text(
           titleText,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface
+            color: Theme.of(context).colorScheme.onSurface,
           ),
+          textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         );
@@ -61,6 +65,7 @@ class DefaultCategorySelectModal extends StatelessWidget {
   Widget getBody(BuildContext context, BuildContext rootContext, NewListingPageState state) {
     if (state.isCategoriesSuccess && state.category != null) {
       return ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: state.category!.children.length,
         itemBuilder: (context, index) => ListTile(
           title: Text(state.category!.children[index].getCategoryName(context)),
@@ -69,25 +74,22 @@ class DefaultCategorySelectModal extends StatelessWidget {
               rootContext,
               newListingContext,
               updateSelectedCategory,
-              state.category!.children[index]
+              state.category!.children[index],
             )
             : () => pushNewModal(
               context,
               newListingContext,
               updateSelectedCategory,
-              state.category!.children[index]
+              state.category!.children[index],
+              selectedCategory: selectedCategory
             )
         )
       );
     } else if (state.isLoadingCategories) {
-      return const Center(
-        child: GradientIndeterminateProgressbar()
-      );
+      return const GradientIndeterminateProgressbar();
     }
 
-    return const Center(
-      child: ErrorInfo(),
-    );
+    return const ErrorInfo();
   }
 
   @override
@@ -96,22 +98,15 @@ class DefaultCategorySelectModal extends StatelessWidget {
       child: Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(
           builder: (context) => Builder(
-            builder: (context) => CupertinoPageScaffold(
-              backgroundColor: Theme.of(context).backgroundColor,
-              navigationBar: CupertinoNavigationBar(
+            builder: (context) => Scaffold(
+              backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.85),
+              appBar: AppBar(
+                centerTitle: true,
+                shadowColor: Colors.black45,
                 backgroundColor: Theme.of(context).backgroundColor,
-                leading: IconButton(
-                  onPressed: () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    Navigator.pop(rootContext);
-                  },
-                  icon: const Icon(
-                    CupertinoIcons.back
-                  ),
-                ),
-                middle: getMiddleText(),
+                title: getMiddleText(),
               ),
-              child: SafeArea(
+              body: SafeArea(
                 bottom: false,
                 child: BlocBuilder<NewListingPageBloc, NewListingPageState>(
                   builder: (BuildContext context, NewListingPageState state) {

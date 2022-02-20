@@ -26,8 +26,8 @@ class LoadingDialog extends StatelessWidget {
             AppLocalizations.of(context)!.translate('SHARED.INFO.LOADING'),
             textAlign: TextAlign.center,
             style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold
+              fontSize: 22,
+              fontWeight: FontWeight.bold
             ),
           ),
         ),

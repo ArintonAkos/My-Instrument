@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/app_language.dart';
 
 import 'error_response.dart';
@@ -16,13 +17,13 @@ class BaseResponse {
     language = appLanguage.localeIndex;
   }
 
-  factory BaseResponse.error(AppLanguage appLanguage) {
+  factory BaseResponse.error(AppLanguage appLanguage, { Map<String, dynamic>? responseBody }) {
     var errorResponse = ErrorResponse(language: appLanguage.localeIndex).responseJSON;
     Map<String, dynamic> json = {
-      'message': errorResponse['message'],
-      'statusCode': 404,
-      'status': errorResponse['status'],
-      'language': appLanguage.localeIndex
+      'message': responseBody?['message'] ?? errorResponse['message'],
+      'statusCode': responseBody?['statusCode'] ?? 404,
+      'status': responseBody?['status'] ?? errorResponse['status'],
+      'language': responseBody?['language'] ?? appLanguage.localeIndex
     };
     return BaseResponse(json, appLanguage);
   }

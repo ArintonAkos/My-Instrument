@@ -40,13 +40,16 @@ class _ImageDropperState extends State<ImageDropper> {
   _imgPicker(ImageSource source) async {
     if (source == ImageSource.camera) {
       XFile? selectedImage = (await ImagePicker().pickImage(source: source));
+
       if (selectedImage != null && widget.selectedImages.length < 5) {
         widget.selectedImages.add(selectedImage.path);
         Navigator.pop(context);
         setState(() {});
       }
+
     } else {
       List<XFile>? images = await ImagePicker().pickMultiImage();
+
       if(images != null) {
         int length = images.length;
         if (images.length + widget.selectedImages.length > 5) {
@@ -59,6 +62,7 @@ class _ImageDropperState extends State<ImageDropper> {
           }
         }
       }
+
       Navigator.pop(context);
       FocusScope.of(context).requestFocus(FocusNode());
     }
@@ -74,19 +78,19 @@ class _ImageDropperState extends State<ImageDropper> {
 
   Widget selectedIndexCheckMark() {
     return Align(
-        alignment: Alignment.topCenter,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            width: 70,
-            color: Colors.grey.withOpacity(0.8),
-            child: const Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 25,
-            ),
+      alignment: Alignment.topCenter,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          width: 70,
+          color: Colors.grey.withOpacity(0.8),
+          child: const Icon(
+            Icons.check,
+            color: Colors.white,
+            size: 25,
           ),
-        )
+        ),
+      )
     );
   }
 
@@ -95,19 +99,17 @@ class _ImageDropperState extends State<ImageDropper> {
       return LongPressItem(
         actions: [
           PopupAction(
-              index: 1,
-              count: 3,
-              iconData: LineIcons.boxOpen,
-              text: AppLocalizations.of(context)!.translate(
-                  'NEW_LISTING.POPUP.OPEN'),
-              onTap: imageGallery
+            index: 1,
+            count: 3,
+            iconData: LineIcons.boxOpen,
+            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.OPEN'),
+            onTap: imageGallery
           ),
           PopupAction(
             index: 2,
             count: 3,
             iconData: LineIcons.alternateShare,
-            text: AppLocalizations.of(context)!.translate(
-                'NEW_LISTING.POPUP.INDEX_IMAGE'),
+            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.INDEX_IMAGE'),
             onTap: () {
               widget.onNewIndexImage(index);
               Navigator.pop(context);
@@ -117,8 +119,7 @@ class _ImageDropperState extends State<ImageDropper> {
             index: 3,
             count: 3,
             iconData: LineIcons.alternateTrashAlt,
-            text: AppLocalizations.of(context)!.translate(
-                'NEW_LISTING.POPUP.DELETE'),
+            text: AppLocalizations.of(context)!.translate('NEW_LISTING.POPUP.DELETE'),
             isDanger: true,
             onTap: () {
               widget.onRemoveImage(widget.selectedImages[index], index);
@@ -126,54 +127,54 @@ class _ImageDropperState extends State<ImageDropper> {
           )
         ],
         previewBuilder: (BuildContext context) =>
-            SizedBox(
+          SizedBox(
               height: 100,
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 body: Stack(
-                    children: [
-                      InkWell(
+                  children: [
+                    InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: imageGallery,
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        onTap: imageGallery,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            color: Colors.grey.withOpacity(0.3),
-                            child: Image.file(
-                              File(widget.selectedImages[index]),
-                              height: 100,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+                        child: Container(
+                          color: Colors.grey.withOpacity(0.3),
+                          child: Image.file(
+                            File(widget.selectedImages[index]),
+                            height: 100,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 400),
-                        child: (index == widget.indexImageId)
-                            ? Padding(
-                          child: selectedIndexCheckMark(),
-                          padding: const EdgeInsets.only(top: 5),
-                        )
-                            : null,
-                      ),
-                    ]
+                    ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      child: (index == widget.indexImageId)
+                      ? Padding(
+                        child: selectedIndexCheckMark(),
+                        padding: const EdgeInsets.only(top: 5),
+                      )
+                      : null,
+                    ),
+                  ]
                 ),
               ),
             ),
-        popupBuilder: (BuildContext context) =>
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                color: Colors.grey.shade400,
-                child: Image.file(
-                  File(widget.selectedImages[index]),
-                  width: 400,
-                  height: 300,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ), index: index,
+        popupBuilder: (BuildContext context) => ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            color: Colors.grey.shade400,
+            child: Image.file(
+              File(widget.selectedImages[index]),
+              width: 400,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        index: index,
       );
     }
 
@@ -202,13 +203,12 @@ class _ImageDropperState extends State<ImageDropper> {
         )
       ),
       child: Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: Colors.grey.withOpacity(0.3),
-    ),
-    width: double.infinity,
-
-  ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.grey.withOpacity(0.3),
+        ),
+        width: double.infinity,
+      ),
     );
   }
 
@@ -217,48 +217,51 @@ class _ImageDropperState extends State<ImageDropper> {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: (widget.selectedImages.isEmpty)
-          ? () => showCupertinoModalBottomSheet(
-          topRadius: const Radius.circular(20),
-          barrierColor: Colors.black.withOpacity(0.8),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
-          ),
-          context: context,
-          builder: (context) => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(70)
-              ),
-              height: 170.0,
-              child: ModalInsideModal(
-                title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
-                orderByModels: orderByModels,
-                onTap: (value) {
-                  ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
-                  _imgPicker(source);
-                },
-              )
+      ? () => showCupertinoModalBottomSheet(
+        topRadius: const Radius.circular(20),
+        barrierColor: Colors.black.withOpacity(0.8),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20)
           )
+        ),
+        context: context,
+        builder: (context) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(70),
+          ),
+          height: 210,
+          child: ModalInsideModal(
+            title: AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HINT'),
+            orderByModels: orderByModels,
+            onTap: (value) {
+              ImageSource source = value == 0 ? ImageSource.camera : ImageSource.gallery;
+              _imgPicker(source);
+            },
+          )
+        )
       )
-          : null,
+      : null,
       child: Container(
         height: (widget.selectedImages.isEmpty) ? 150 : null,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(10)
+          color: Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10)
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
           child: (widget.selectedImages.isEmpty)
-              ? Center(
+          ? Center(
             child: Text(
               AppLocalizations.of(context)!.translate('NEW_LISTING.IMAGE_DROPPER.HELP'),
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)
               ),
             ),
           )
-              : GridView.builder(
+          : GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1.50,

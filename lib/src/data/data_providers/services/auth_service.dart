@@ -103,13 +103,14 @@ class AuthService extends HttpService {
   Future<my_base_response.BaseResponse> refreshToken(RefreshTokenRequest request) async {
     Response res = await postJson(request, AuthConstants.refreshTokenURL);
 
-    if (res.statusCode == 200) {
-      dynamic body = jsonDecode(res.body);
+    Map<String, dynamic> body = jsonDecode(res.body);
+    body['statusCode'] = res.statusCode;
 
+    if (res.statusCode == 200) {
       RefreshTokenResponse refreshTokenResponse = RefreshTokenResponse(body, appLanguage);
       return refreshTokenResponse;
     }
 
-    return my_base_response.BaseResponse.error(appLanguage);
+    return my_base_response.BaseResponse.error(appLanguage, responseBody: body);
   }
 }

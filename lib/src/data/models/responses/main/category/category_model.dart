@@ -3,12 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_instrument/src/shared/translation/app_localizations.dart';
 import 'package:my_instrument/src/shared/utils/list_parser.dart';
+import 'package:my_instrument/src/shared/utils/translation_methods.dart';
 
 
 class CategoryModel extends Equatable {
-  Map<String, dynamic>? json;
+
+  static int get defaultId => -1;
+
   CategoryModel({
-    required this.json,
+    required Map<String, dynamic>? json,
     bool shouldParseChildren = true
   }) {
     id = json?['categoryId'] ?? -1;
@@ -40,10 +43,10 @@ class CategoryModel extends Equatable {
 
   factory CategoryModel.base() {
     Map<String, dynamic> data = {
-      "categoryId": 0,
-      "categoryNameEn": "Categories",
-      "categoryNameHu": "Kategóriák",
-      "categoryNameRo": "Categorii",
+      "categoryId": defaultId,
+      "categoryNameEn": "Select category",
+      "categoryNameHu": "Válassz kategóriát",
+      "categoryNameRo": "Selectează categorie",
       "imagePath": "",
       "imageHash": "",
       "childrenCategories": []
@@ -51,7 +54,7 @@ class CategoryModel extends Equatable {
     return CategoryModel(json: data);
   }
 
-  late int id;
+  late final int id;
   late final String nameEn;
   late final String nameHu;
   late final String nameRo;
@@ -64,17 +67,7 @@ class CategoryModel extends Equatable {
   }
 
   String getCategoryName(BuildContext context) {
-    Locale? appLocale = AppLocalizations.of(context)?.locale;
-    if (appLocale != null) {
-      if (appLocale == const Locale("hu")) {
-        return nameHu;
-      } else if (appLocale == const Locale("ro")) {
-        return nameRo;
-      } else {
-        return nameEn;
-      }
-    }
-    return "";
+    return TranslationMethods.translateName(context, nameEn, nameHu, nameRo);
   }
 
   static CategoryModel? parseCategoryModel(Map<String, dynamic> json) {
