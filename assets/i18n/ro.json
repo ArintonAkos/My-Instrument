@@ -155,9 +155,10 @@
   "REGISTER": {
     "HEADER_TEXT": "REGISTRAȚIE",
     "BUTTON": "Înregistrează-te",
+    "SUB_TITLE": "Înregistrează-te acum și alăturați-vă unei comunități de muzicieni.",
     "EMAIL_INPUT": {
       "LABEL": "Email",
-      "HINT": "Adresă email"
+      "HINT": "email@adresă.ro"
     },
     "PASSWORD_INPUT": {
       "LABEL": "Parolă",
@@ -183,6 +184,13 @@
     "ACCOUNT_CREATION_LABEL": {
       "SUCCESSFUL": "Cont creat cu succes! Întoarceți la pagina de autentificare și autentificați în cont.",
       "FAILED": "A apărut o eroare, încercați mai târziu!"
+    },
+    "INFO_TEXT": {
+      "FIRST_ELEMENT": "Cu îngregistrarea acceptați ",
+      "SECOND_ELEMENT": "Termenii și Condiții",
+      "THIRD_ELEMENT": " și ",
+      "FOURTH_ELEMENT": "Politica de Confidențialitate",
+      "FIFTH_ELEMENT": "."
     }
   },
   "MESSAGES": {
@@ -207,6 +215,19 @@
     "REMEMBER_ME_LABEL":  "Autentificare automată",
     "OR_LABEL": "SAU",
     "SIGN_IN_WITH_LABEL": "Autentificați cu"
+  },
+  "FORGOT_PASSWORD": {
+    "SUB_TITLE": "Vă rugăm să introduceți adresa de email asociată cu contul vostru.",
+    "SUCCESS_MESSAGE": "E-mail de reamintire a parolei trimis. Vă rugăm să vă verificați e-mailurile."
+  },
+  "FORGOT_PASSWORD_VERIFICATION UITATĂ": {
+    "TITLE": "Verificare resetare parolă",
+    "HINT_TEXT": "Vă rugăm să introduceți codul PIN din 4 cifre ",
+    "ERROR_MESSAGE":"Verificarea eșuată, ${state.remainingTries} încercări rămase."
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Resetează parola",
+    "SUCCESS_MESSAGE": "Parola a fost resetată cu succes. Vă puteți conecta la contul dumneavoastră."
   },
   "FILTER_PAGE": {
     "ACTION_BUTTON": {
@@ -237,7 +258,8 @@
     "INFO": {
       "NO_DATA": "Nici un articol de afișat",
       "SEE_MORE": "Mai multe",
-      "LOADING": "Se încarcă..."
+      "LOADING": "Se încarcă...",
+      "SUBMIT": "Trimite"
     }
   }
 }

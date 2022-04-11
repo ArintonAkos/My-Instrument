@@ -28,15 +28,15 @@ class AuthService extends HttpService {
   Future<my_base_response.BaseResponse> login(LoginRequest request) async {
     Response res = await postJson(request, AuthConstants.loginURL);
 
+    Map<String, dynamic> body = decodeBody(res.body);
     if (res.statusCode == 200) {
-      Map<String, dynamic> body = jsonDecode(res.body);
       body['authenticationType'] = 'email';
 
       LoginResponse loginResponse = LoginResponse(body, appLanguage);
       return loginResponse;
     }
 
-    return my_base_response.BaseResponse.error(appLanguage);
+    return my_base_response.BaseResponse.error(appLanguage, responseBody: body);
   }
 
   Future<my_base_response.BaseResponse> googleExternalLogin() async {

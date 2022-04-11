@@ -89,6 +89,8 @@ dependencies:
   cupertino_radio_choice: ^1.0.2
   awesome_select: ^5.1.0
   dio: ^4.0.4
+  pin_code_fields: ^7.3.0
+  flutter_styled_toast: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -130,16 +132,8 @@ flutter:
     - assets/i18n/en.json
     - assets/i18n/ro.json
     - assets/i18n/hu.json
-    - assets/guitar1.jpeg
-    - assets/drums.jpg
-    - assets/bass-guitar.jpg
-    - assets/violin.jpeg
-    - assets/piano.jpeg
-    - assets/music_festival.svg
-    - assets/search_listing.svg
-    - assets/profile.svg
-    - assets/no_image_placeholder.jpg
-    - assets/error.png
+    - assets/
+    - assets/auth/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

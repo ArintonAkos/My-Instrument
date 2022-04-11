@@ -143,6 +143,7 @@
   "REGISTER": {
     "HEADER_TEXT": "REGISTER",
     "BUTTON": "Sign Up",
+    "SUB_TITLE": "Register now and join a community of musicians.",
     "EMAIL_INPUT": {
       "LABEL": "Email",
       "HINT": "Enter your email"
@@ -171,6 +172,13 @@
     "ACCOUNT_CREATION_LABEL": {
       "SUCCESSFUL": "User successfully created! Please return to login page and log in to your account.",
       "FAILED": "An error occurred, please try again later!"
+    },
+    "INFO_TEXT": {
+      "FIRST_ELEMENT": "By registering you agree our ",
+      "SECOND_ELEMENT": "Terms & Conditions",
+      "THIRD_ELEMENT": " and ",
+      "FOURTH_ELEMENT": "Privacy Policy",
+      "FIFTH_ELEMENT": "."
     }
   },
   "MESSAGES": {
@@ -179,7 +187,7 @@
   "LOGIN": {
     "EMAIL_INPUT": {
       "LABEL": "Email",
-      "HINT": "Enter your email"
+      "HINT": "email@address.com"
     },
     "PASSWORD_INPUT": {
       "LABEL": "Password",
@@ -195,6 +203,19 @@
     "REMEMBER_ME_LABEL":  "Remember me",
     "OR_LABEL": "OR",
     "SIGN_IN_WITH_LABEL": "Sign in with"
+  },
+  "FORGOT_PASSWORD": {
+    "SUB_TITLE": "Please enter the address associated with your account.",
+    "SUCCESS_MESSAGE": "Forgot password email sent. Please check your email."
+  },
+  "FORGOT_PASSWORD_VERIFICATION": {
+    "TITLE": "Forgot Password Verification",
+    "HINT_TEXT": "Please enter the 4 digit PIN ",
+    "ERROR_MESSAGE": "Verification failed, ${state.remainingTries} tries left."
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Reset password",
+    "SUCCESS_MESSAGE": "Your password has been successfully reset. You can log in to your account."
   },
   "FILTER_PAGE": {
     "ACTION_BUTTON": {
@@ -225,7 +246,8 @@
     "INFO": {
       "NO_DATA": "No item to show.",
       "SEE_MORE": "See more",
-      "LOADING": "Loading..."
+      "LOADING": "Loading...",
+      "SUBMIT": "Submit"
     }
   }
 }

@@ -1,7 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -14,9 +13,25 @@ import 'package:my_instrument/src/data/models/requests/multipart_request.dart';
 import '../change_notifiers/auth_model.dart';
 import 'package:path/path.dart' as p;
 
+class CustomTimeoutException extends TimeoutException {
+  final int statusCode;
+  CustomTimeoutException(String? message, this.statusCode) : super(message);
+}
+
+extension on Future {
+  Future defaultTimeOut() {
+    return timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        throw CustomTimeoutException("No response from server!", 404);
+      }
+    );
+  }
+}
+
 class HttpService {
-  static const String _localUrl = "https://192.168.100.72:3000/";
-  static const String _localRemoteUrl = "https://192.168.100.72:3000/";
+  static const String _localUrl = "https://192.168.1.155:3000/";
+  static const String _localRemoteUrl = "https://192.168.1.155:3000/";
 
   static const String _productionUrl = "";
   static const String _productionRemoteUrl = "";
@@ -70,7 +85,7 @@ class HttpService {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
-    });
+    }).defaultTimeOut();
   }
 
   Future<http.Response> getData(String path, { bool concat = false }) async {
@@ -80,7 +95,7 @@ class HttpService {
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
-    );
+    ).defaultTimeOut();
   }
 
   Future<http.StreamedResponse> postMultipart(MultipartRequest data, String path, { bool concat = false }) async {
@@ -107,7 +122,7 @@ class HttpService {
       'Authorization': bearerToken != null ? 'Bearer $bearerToken' : '',
     });
 
-    return await request.send();
+    return await request.send().defaultTimeOut();
   }
 
 
@@ -119,7 +134,7 @@ class HttpService {
       headers: {
         'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
       }
-    );
+    ).defaultTimeOut();
   }
 
   Future<http.Response> deleteData(String path, { bool concat = false }) async {
@@ -129,10 +144,16 @@ class HttpService {
         headers: {
           'Authorization': bearerToken != null ? 'Bearer $bearerToken' : ''
         }
-    );
+    ).defaultTimeOut();
   }
 
-
+  Map<String, dynamic> decodeBody(String body) {
+    try {
+      return jsonDecode(body);
+    } catch (e) {
+      return <String, dynamic>{};
+    }
+  }
 
   String _getFileType(String filePath) {
     return p.extension(filePath);

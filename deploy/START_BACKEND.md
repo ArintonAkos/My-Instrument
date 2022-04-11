@@ -9,8 +9,8 @@ Start git-bash
 
 Run this command:
 openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
-  -keyout example.key -out example.crt -subj "//CN=localhost" \
-  -addext "subjectAltName=DNS:localhost,DNS:localhost,IP:192.168.100.72"
+  -keyout example-home.key -out example-home.crt -subj "//CN=localhost" \
+  -addext "subjectAltName=DNS:localhost,DNS:localhost,IP:192.168.0.136"
 
 Run this command: 
 iisexpress-proxy https://localhost:44308 to https://*:3000 --key=./example.key --cert=./example.crt

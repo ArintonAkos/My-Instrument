@@ -58,7 +58,7 @@ class ChoiceSelectItem extends StatelessWidget {
         child: AnimatedContainer(
           decoration: BoxDecoration(
             border: Border.all(
-                color: getCustomTheme(context)?.loginButtonText ?? Colors.white
+              color: getCustomTheme(context)?.loginButtonText ?? Colors.white
             ),
             borderRadius: getBorderRadius(),
             color: choiceColor(context),

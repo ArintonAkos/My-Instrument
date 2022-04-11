@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:my_instrument/src/data/data_providers/services/auth_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/http_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/shared_prefs.dart';
 import 'package:my_instrument/src/shared/data/custom_status_codes.dart';
 import 'package:my_instrument/src/shared/exceptions/more_info_required_exception.dart';
@@ -80,6 +81,8 @@ class AuthModel {
 
         return FutureResponse(exception: response.message);
       }
+    } on CustomTimeoutException catch (e) {
+      return FutureResponse(exception: e, statusCode: e.statusCode);
     } catch (e) {
       return FutureResponse(exception: e);
     }

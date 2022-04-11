@@ -11,4 +11,11 @@ class PageData {
     return accountTypes[appLanguage.localeIndex];
   }
 
+  static String getAccountType(AppLanguage appLanguage, int index) {
+    if (index > 3 || index < 0) {
+      return '';
+    }
+
+    return getAccountTypes(appLanguage)[index];
+  }
 }

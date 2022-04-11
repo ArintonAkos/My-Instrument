@@ -61,9 +61,9 @@ class AppThemeData {
   CustomAppTheme customLightTheme = CustomAppTheme(
       loginGradientStart: const Color(0xFF0E7FC2),
       loginGradientEnd: const Color(0xFF015497),
-      loginInputColor: const Color(0xFF12B3F2).withOpacity(0.5),
+      loginInputColor: const Color(0xFF0065FF).withOpacity(0.5),
       loginButtonsColor: Colors.white,
-      loginButtonText: const Color(0xFF12B3F2),
+      loginButtonText: const Color(0xFF0065FF),
       dropdownItemColor: const Color(0xFF008eca),
       authErrorColor: const Color(0xFFFF80AB),
       dotColor: Colors.black,

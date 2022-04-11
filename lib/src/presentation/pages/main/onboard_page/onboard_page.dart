@@ -88,10 +88,10 @@ class _OnBoardPageState extends State<OnBoardPage> {
             ? TextButton(
               onPressed: () {
                 widget.liquidController.animateToPage(
-                    page:
-                    widget.liquidController.currentPage + 1 > _pages().length - 1
-                        ? 0
-                        : widget.liquidController.currentPage + 1
+                  page:
+                  widget.liquidController.currentPage + 1 > _pages().length - 1
+                      ? 0
+                      : widget.liquidController.currentPage + 1
                 );
               },
               child: const Text(
@@ -164,29 +164,29 @@ class _OnBoardPageState extends State<OnBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Stack(
-            children: [
-              LiquidSwipe(
-                liquidController: widget.liquidController,
-                ignoreUserGestureWhileAnimating: true,
-                onPageChangeCallback: (int index) {
-                  setState(() {
-                    page = index;
-                  });
-                },
-                enableLoop: false,
-                pages: <Widget>[
-                    ..._pages().map((pageData) => OnBoardTab(
-                      onBoardData: pageData,
-                    )
+        child: Stack(
+          children: [
+            LiquidSwipe(
+              liquidController: widget.liquidController,
+              ignoreUserGestureWhileAnimating: true,
+              onPageChangeCallback: (int index) {
+                setState(() {
+                  page = index;
+                });
+              },
+              enableLoop: false,
+              pages: <Widget>[
+                  ..._pages().map((pageData) => OnBoardTab(
+                    onBoardData: pageData,
                   )
-                ],
-              ),
-              _buildPageIndicators(),
-              _buildNextButton(),
-              _buildSkipButton(),
-            ],
-          )
+                )
+              ],
+            ),
+            _buildPageIndicators(),
+            _buildNextButton(),
+            _buildSkipButton(),
+          ],
+        )
       ),
     );
   }

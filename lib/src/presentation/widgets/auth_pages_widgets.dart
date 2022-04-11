@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_instrument/src/shared/theme/app_theme_data.dart';
 import 'package:my_instrument/src/data/data_providers/change_notifiers/theme_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 class AuthPagesConstants {
   static const accountType = [
@@ -9,11 +10,6 @@ class AuthPagesConstants {
     "Company"
   ];
 }
-
-const kHintTextStyle = TextStyle(
-  color: Colors.white54,
-  fontFamily: 'OpenSans',
-);
 
 const nHintTextStyle = TextStyle(
   color: Colors.black,
@@ -38,13 +34,13 @@ Container buildAuthButton(
     width: double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-          elevation: 5.0,
-          padding: const EdgeInsets.all(15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          primary: customTheme?.loginButtonsColor,
-          onPrimary: Colors.grey[400]
+        elevation: 5.0,
+        padding: const EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        primary: customTheme?.loginButtonsColor,
+        onPrimary: Colors.grey[400]
       ),
       onPressed: disabled ? null : onPressed,
       child: Text(
@@ -61,15 +57,66 @@ Container buildAuthButton(
   );
 }
 
-BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
-  return BoxDecoration(
-    color: appThemeData?.customTheme.loginInputColor,
-    borderRadius: BorderRadius.circular(10.0),
-    boxShadow: const [
-      BoxShadow(
-        color: Colors.black12,
-        blurRadius: 6.0,
-        offset: Offset(0, 2),
+Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData iconData,
+{
+  TextEditingController? inputController,
+  TextInputType? textInputType,
+  bool? obscureText,
+  TextStyle? labelStyle,
+  FormFieldValidator<String>? validator,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        inputLabel,
+        style: labelStyle ?? kLabelStyle,
+      ),
+      const SizedBox(height: 10.0),
+      Stack(
+        children: [
+          const SizedBox(
+            height: 55,
+            width: double.infinity,
+          ).elevation(12, 
+            shadowColor: Colors.black,
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+          TextFormField(
+            keyboardType: textInputType,
+            controller: inputController,
+            obscureText: obscureText ?? false,
+            validator: validator,
+            style: TextStyle(
+              color: theme?.materialTheme.colorScheme.onSurface,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              errorMaxLines: 3,
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              filled: true,
+              fillColor: theme?.materialTheme.colorScheme.surface,
+              prefixIcon: Icon(
+                iconData,
+                color: theme?.materialTheme.colorScheme.onSurface.withOpacity(0.75),
+                size: 23
+              ),
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: theme?.materialTheme.colorScheme.onSurface.withOpacity(0.65),
+                fontFamily: 'OpenSans',
+              ),
+            ),
+          ),
+        ],
       ),
     ],
   );
@@ -78,59 +125,6 @@ BoxDecoration kBoxDecorationStyle(AppThemeData? appThemeData) {
 BoxDecoration nBoxDecorationStyle() {
   return const BoxDecoration(
     color: Colors.transparent,
-  );
-}
-
-Widget buildTF(String inputLabel, String hintText, AppThemeData? theme, IconData iconData,
-    {
-      TextEditingController? inputController,
-      TextInputType? textInputType,
-      bool? obscureText,
-      String? errorText
-    }) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        inputLabel,
-        style: kLabelStyle,
-      ),
-      const SizedBox(height: 5.0),
-      Container(
-        alignment: Alignment.centerLeft,
-        decoration: kBoxDecorationStyle(theme),
-        height: 60.0,
-        child: TextField(
-          keyboardType: textInputType,
-          controller: inputController,
-          obscureText: obscureText ?? false,
-          style: TextStyle(
-            color: theme?.materialTheme.colorScheme.onPrimary,
-            fontFamily: 'OpenSans',
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.only(top: 14.0),
-            prefixIcon: Icon(
-              iconData,
-              color: Colors.white,
-            ),
-            hintText: hintText,
-            hintStyle: kHintTextStyle,
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 5.0),
-        child: Text(
-          errorText?? "",
-          style: TextStyle(
-            fontSize: 14,
-            color: theme?.customTheme.authErrorColor
-          ),
-        )
-      ),
-    ],
   );
 }
 
@@ -152,30 +146,30 @@ Widget buildDropDownInput(BuildContext context, List<String> data, int index, vo
 
 Widget buildDropDown(BuildContext context, List<String> data, int index, void Function(String?)? onChanged) {
   return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      decoration: kBoxDecorationStyle(Provider.of<ThemeNotifier>(context).getTheme()),
-      child: DropdownButtonFormField(
-        dropdownColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.dropdownItemColor,
-        icon: const Icon(
-            Icons.arrow_drop_down,
-            color: Colors.white
-        ),
-        value: data[index],
-        decoration: const InputDecoration.collapsed(
-          hintText: '',
-        ),
-        onChanged: onChanged,
-        items: data.map((String val) {
-          return DropdownMenuItem(
-            value: val,
-            child: Text(
-              val,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary
-              ),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+    // decoration: kBoxDecorationStyle(Provider.of<ThemeNotifier>(context).getTheme()),
+    child: DropdownButtonFormField(
+      dropdownColor: Provider.of<ThemeNotifier>(context).getTheme()?.customTheme.dropdownItemColor,
+      icon: const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white
+      ),
+      value: data[index],
+      decoration: const InputDecoration.collapsed(
+        hintText: '',
+      ),
+      onChanged: onChanged,
+      items: data.map((String val) {
+        return DropdownMenuItem(
+          value: val,
+          child: Text(
+            val,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary
             ),
-          );
-        }).toList(),
-      )
+          ),
+        );
+      }).toList(),
+    )
   );
 }

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.arinton.my_instrument">
     <queries>
         <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
@@ -9,8 +10,10 @@
         android:label="MyInstruments"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        tools:targetApi="m">
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

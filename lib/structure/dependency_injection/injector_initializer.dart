@@ -9,6 +9,7 @@ import 'package:my_instrument/src/data/data_providers/services/favorite_service.
 import 'package:my_instrument/src/data/data_providers/services/google_login_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/category_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/listing_service.dart';
+import 'package:my_instrument/src/data/data_providers/services/manage_user_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/message_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/profile_service.dart';
 import 'package:my_instrument/src/data/data_providers/services/shared_preferences_service.dart';
@@ -26,6 +27,7 @@ class InjectorInitializer {
     appInjector.registerSingleton<AuthService>(() => AuthService(appLanguage: appLanguage));
     appInjector.registerSingleton<CategoryService>(() => CategoryService(appLanguage: appLanguage));
     appInjector.registerSingleton<FavoriteService>(() => FavoriteService(appLanguage: appLanguage));
+    appInjector.registerSingleton<ManageUserService>(() => ManageUserService(appLanguage: appLanguage));
     appInjector.registerSingleton<MessageService>(() => MessageService(appLanguage: appLanguage));
     appInjector.registerSingleton<ProfileService>(() => ProfileService(appLanguage: appLanguage));
     appInjector.registerSingleton<ListingService>(() => ListingService(appLanguage: appLanguage));

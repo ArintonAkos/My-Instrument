@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:my_instrument/src/presentation/pages/auth/forgot_password_page/forgot_password.dart';
+import 'package:my_instrument/src/presentation/pages/auth/forgot_password_verification_page/forgot_passsword_verification_page.dart';
 import 'package:my_instrument/src/presentation/pages/auth/login_page/login_page.dart';
 import 'package:my_instrument/src/presentation/pages/auth/register_page/register_page.dart';
+import 'package:my_instrument/src/presentation/pages/auth/reset_password_page/reset_password_page.dart';
 import 'package:my_instrument/src/presentation/pages/base/error_page.dart';
 import 'package:my_instrument/src/presentation/pages/main/fav_page/fav.dart';
 import 'package:my_instrument/src/presentation/pages/main/home_page/home_page.dart';
@@ -30,6 +32,8 @@ import 'package:my_instrument/src/presentation/pages/main/product_list_page/prod
         AutoRoute(path: 'login', page: LoginPage),
         CupertinoRoute(path: 'register/:email:name', page: RegisterPage, ),
         CupertinoRoute(path: 'forgot-password', page: ForgotPasswordPage, ),
+        CupertinoRoute(path: 'reset-password', page: ResetPasswordPage),
+        CupertinoRoute(path: 'forgot-password-verification', page: ForgotPasswordVerificationPage),
         RedirectRoute(path: '*', redirectTo: 'login'),
       ]
     ),

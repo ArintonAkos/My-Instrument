@@ -25,7 +25,7 @@
     "LISTINGS": "Hírdetések",
     "SEARCH": {
       "HINT": "Termék keresése"
-    },
+    }
   },
   "NEW_LISTING": {
     "TITLE": "Új hirdetés",
@@ -143,9 +143,10 @@
   "REGISTER": {
     "HEADER_TEXT": "REGISZTRÁLÁS",
     "BUTTON": "Regisztrálj",
+    "SUB_TITLE": "Regisztrálj most, és csatlakozz a zenészek közösségéhez.",
     "EMAIL_INPUT": {
       "LABEL": "Email",
-      "HINT": "Email cím"
+      "HINT": "email@cím.hu"
     },
     "PASSWORD_INPUT": {
       "LABEL": "Jelszó",
@@ -171,6 +172,13 @@
     "ACCOUNT_CREATION_LABEL": {
       "SUCCESSFUL": "Felhasználó sikeresen létrehozva! Kérlek térj vissza a bejelentkezési lapra és jelentkezz be a fiókodba.",
       "FAILED": "Hiba lépett fel, kérlek, próbálkozz később!"
+    },
+    "INFO_TEXT": {
+      "FIRST_ELEMENT": "A regisztrálással elfogadod az ",
+      "SECOND_ELEMENT": "Általános Szerződési Feltételeket",
+      "THIRD_ELEMENT": " és ",
+      "FOURTH_ELEMENT": "Adatvédelmi Irányelveket",
+      "FIFTH_ELEMENT": "."
     }
   },
   "MESSAGES": {
@@ -195,6 +203,19 @@
     "REMEMBER_ME_LABEL":  "Maradj bejelentkezve",
     "OR_LABEL": "VAGY",
     "SIGN_IN_WITH_LABEL": "Jelentkezz be"
+  },
+  "FORGOT_PASSWORD": {
+    "SUB_TITLE": "Kérjük írja be a fiókjához tartozó email címet.",
+    "SUCCESS_MESSAGE": "Jelszóemlékeztető email elküldve. Kérem nézze meg emailjeit."
+  },
+  "FORGOT_PASSWORD_VERIFICATION": {
+    "TITLE": "Elfelejtett jelszó ellenőrzés",
+    "HINT_TEXT": "Kérjük, adja meg a 4 számjegyű PIN-kódot",
+    "ERROR_MESSAGE": "Az ellenőrzés sikertelen, ${state.remainingTries} próbálkozás maradt."
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Jelszó visszaállítása",
+    "SUCCESS_MESSAGE": "Jelszava sikeresen visszaállításra került. Bejelentkezhet fiókjába."
   },
   "FILTER_PAGE": {
     "ACTION_BUTTON": {
@@ -225,7 +246,8 @@
     "INFO": {
       "NO_DATA": "Nincs megjeleníthető adat.",
       "SEE_MORE": "Még több",
-      "LOADING": "Betöltés..."
+      "LOADING": "Betöltés...",
+      "SUBMIT": "Küldés"
     }
   }
 }

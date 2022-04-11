@@ -11,43 +11,48 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/material.dart' as _i21;
+import 'package:flutter/material.dart' as _i23;
 
-import '../../src/data/models/view_models/filter_data.dart' as _i22;
+import '../../src/data/models/view_models/filter_data.dart' as _i24;
 import '../../src/presentation/pages/auth/forgot_password_page/forgot_password.dart'
     as _i7;
+import '../../src/presentation/pages/auth/forgot_password_verification_page/forgot_passsword_verification_page.dart'
+    as _i9;
 import '../../src/presentation/pages/auth/login_page/login_page.dart' as _i5;
 import '../../src/presentation/pages/auth/register_page/register_page.dart'
     as _i6;
+import '../../src/presentation/pages/auth/reset_password_page/reset_password_page.dart'
+    as _i8;
 import '../../src/presentation/pages/base/error_page.dart' as _i2;
 import '../../src/presentation/pages/main/chatting_page/chatting_page.dart'
-    as _i10;
-import '../../src/presentation/pages/main/fav_page/fav.dart' as _i16;
-import '../../src/presentation/pages/main/home_page/home_page.dart' as _i15;
-import '../../src/presentation/pages/main/listing_page/listing_page.dart' as _i11;
-import '../../src/presentation/pages/main/main_page.dart' as _i8;
-import '../../src/presentation/pages/main/messages_page/messages_page.dart'
-    as _i17;
-import '../../src/presentation/pages/main/new_listing_page/new_listing_page.dart'
     as _i12;
+import '../../src/presentation/pages/main/fav_page/fav.dart' as _i18;
+import '../../src/presentation/pages/main/home_page/home_page.dart' as _i17;
+import '../../src/presentation/pages/main/listing_page/listing_page.dart'
+    as _i13;
+import '../../src/presentation/pages/main/main_page.dart' as _i10;
+import '../../src/presentation/pages/main/messages_page/messages_page.dart'
+    as _i19;
+import '../../src/presentation/pages/main/new_listing_page/new_listing_page.dart'
+    as _i14;
 import '../../src/presentation/pages/main/onboard_page/onboard_page.dart'
     as _i4;
 import '../../src/presentation/pages/main/product_list_page/product_list_page.dart'
-    as _i14;
+    as _i16;
 import '../../src/presentation/pages/main/profile/about_page/about_page.dart'
-    as _i9;
+    as _i11;
 import '../../src/presentation/pages/main/profile/general_settings_page/general_settings_page.dart'
-    as _i19;
+    as _i21;
 import '../../src/presentation/pages/main/profile/general_settings_page/language_page/langauge_page.dart'
-    as _i20;
+    as _i22;
 import '../../src/presentation/pages/main/profile/user_settings_page/user_page.dart'
-    as _i18;
+    as _i20;
 import '../../src/presentation/pages/main/shopping_cart_page/shopping_cart_page.dart'
-    as _i13;
+    as _i15;
 import '../../src/presentation/pages/main/splash_page/splash_page.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {
-  AppRouter([_i21.GlobalKey<_i21.NavigatorState>? navigatorKey])
+  AppRouter([_i23.GlobalKey<_i23.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -77,8 +82,10 @@ class AppRouter extends _i1.RootStackRouter {
           routeData: routeData, child: _i4.OnBoardPage(key: args.key));
     },
     LoginRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.LoginPage());
+          routeData: routeData, child: _i5.LoginPage(key: args.key));
     },
     RegisterRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -95,13 +102,31 @@ class AppRouter extends _i1.RootStackRouter {
       return _i1.CupertinoPageX<dynamic>(
           routeData: routeData, child: const _i7.ForgotPasswordPage());
     },
+    ResetPasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ResetPasswordRouteArgs>();
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData,
+          child: _i8.ResetPasswordPage(
+              key: args.key,
+              email: args.email,
+              resetPasswordToken: args.resetPasswordToken));
+    },
+    ForgotPasswordVerificationRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgotPasswordVerificationRouteArgs>();
+      return _i1.CupertinoPageX<dynamic>(
+          routeData: routeData,
+          child: _i9.ForgotPasswordVerificationPage(
+              key: args.key,
+              email: args.email,
+              resetPasswordId: args.resetPasswordId));
+    },
     MainRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.MainPage());
+          routeData: routeData, child: const _i10.MainPage());
     },
     AboutRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i9.AboutPage());
+          routeData: routeData, child: const _i11.AboutPage());
     },
     EmptyRouterRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
@@ -114,7 +139,7 @@ class AppRouter extends _i1.RootStackRouter {
               ChattingRouteArgs(userId: pathParams.getString('userId')));
       return _i1.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i10.ChattingPage(key: args.key, userId: args.userId));
+          child: _i12.ChattingPage(key: args.key, userId: args.userId));
     },
     ListingRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -123,38 +148,38 @@ class AppRouter extends _i1.RootStackRouter {
               ListingRouteArgs(id: pathParams.getString('listingId')));
       return _i1.CupertinoPageX<dynamic>(
           routeData: routeData,
-          child: _i11.ListingPage(key: args.key, id: args.id));
+          child: _i13.ListingPage(key: args.key, id: args.id));
     },
     NewListingRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i12.NewListingPage());
+          routeData: routeData, child: const _i14.NewListingPage());
     },
     ShoppingCartRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i13.ShoppingCartPage());
+          routeData: routeData, child: const _i15.ShoppingCartPage());
     },
     ProductListRoute.name: (routeData) {
       final args = routeData.argsAs<ProductListRouteArgs>();
       return _i1.CupertinoPageX<dynamic>(
           routeData: routeData,
           child:
-              _i14.ProductListPage(key: args.key, filterData: args.filterData));
+              _i16.ProductListPage(key: args.key, filterData: args.filterData));
     },
     HomeRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i15.HomePage());
+          routeData: routeData, child: const _i17.HomePage());
     },
     FavRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i16.FavPage());
+          routeData: routeData, child: const _i18.FavPage());
     },
     MessagesRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i17.MessagesPage());
+          routeData: routeData, child: const _i19.MessagesPage());
     },
     ProfileRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i18.UserPage());
+          routeData: routeData, child: const _i20.UserPage());
     },
     BlankRoute.name: (routeData) {
       return _i1.MaterialPageX<dynamic>(
@@ -162,11 +187,11 @@ class AppRouter extends _i1.RootStackRouter {
     },
     GeneralSettingsRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i19.GeneralSettingsPage());
+          routeData: routeData, child: const _i21.GeneralSettingsPage());
     },
     LanguageRoute.name: (routeData) {
       return _i1.CupertinoPageX<dynamic>(
-          routeData: routeData, child: const _i20.LanguagePage());
+          routeData: routeData, child: const _i22.LanguagePage());
     }
   };
 
@@ -179,6 +204,10 @@ class AppRouter extends _i1.RootStackRouter {
               path: 'register/:email:name', parent: AuthRouter.name),
           _i1.RouteConfig(ForgotPasswordRoute.name,
               path: 'forgot-password', parent: AuthRouter.name),
+          _i1.RouteConfig(ResetPasswordRoute.name,
+              path: 'reset-password', parent: AuthRouter.name),
+          _i1.RouteConfig(ForgotPasswordVerificationRoute.name,
+              path: 'forgot-password-verification', parent: AuthRouter.name),
           _i1.RouteConfig('*#redirect',
               path: '*',
               parent: AuthRouter.name,
@@ -273,7 +302,7 @@ class ErrorRoute extends _i1.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.SplashPage]
 class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i21.Key? key})
+  SplashRoute({_i23.Key? key})
       : super(SplashRoute.name,
             path: '/splash', args: SplashRouteArgs(key: key));
 
@@ -283,7 +312,7 @@ class SplashRoute extends _i1.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -294,7 +323,7 @@ class SplashRouteArgs {
 /// generated route for
 /// [_i4.OnBoardPage]
 class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
-  OnBoardRoute({_i21.Key? key})
+  OnBoardRoute({_i23.Key? key})
       : super(OnBoardRoute.name,
             path: '/onboard', args: OnBoardRouteArgs(key: key));
 
@@ -304,7 +333,7 @@ class OnBoardRoute extends _i1.PageRouteInfo<OnBoardRouteArgs> {
 class OnBoardRouteArgs {
   const OnBoardRouteArgs({this.key});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
   @override
   String toString() {
@@ -314,16 +343,28 @@ class OnBoardRouteArgs {
 
 /// generated route for
 /// [_i5.LoginPage]
-class LoginRoute extends _i1.PageRouteInfo<void> {
-  const LoginRoute() : super(LoginRoute.name, path: 'login');
+class LoginRoute extends _i1.PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({_i23.Key? key})
+      : super(LoginRoute.name, path: 'login', args: LoginRouteArgs(key: key));
 
   static const String name = 'LoginRoute';
+}
+
+class LoginRouteArgs {
+  const LoginRouteArgs({this.key});
+
+  final _i23.Key? key;
+
+  @override
+  String toString() {
+    return 'LoginRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
 /// [_i6.RegisterPage]
 class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i21.Key? key, String? email, String? name})
+  RegisterRoute({_i23.Key? key, String? email, String? name})
       : super(RegisterRoute.name,
             path: 'register/:email:name',
             args: RegisterRouteArgs(key: key, email: email, name: name),
@@ -335,7 +376,7 @@ class RegisterRoute extends _i1.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key, this.email, this.name});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
   final String? email;
 
@@ -357,7 +398,70 @@ class ForgotPasswordRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.MainPage]
+/// [_i8.ResetPasswordPage]
+class ResetPasswordRoute extends _i1.PageRouteInfo<ResetPasswordRouteArgs> {
+  ResetPasswordRoute(
+      {_i23.Key? key,
+      required String email,
+      required String resetPasswordToken})
+      : super(ResetPasswordRoute.name,
+            path: 'reset-password',
+            args: ResetPasswordRouteArgs(
+                key: key,
+                email: email,
+                resetPasswordToken: resetPasswordToken));
+
+  static const String name = 'ResetPasswordRoute';
+}
+
+class ResetPasswordRouteArgs {
+  const ResetPasswordRouteArgs(
+      {this.key, required this.email, required this.resetPasswordToken});
+
+  final _i23.Key? key;
+
+  final String email;
+
+  final String resetPasswordToken;
+
+  @override
+  String toString() {
+    return 'ResetPasswordRouteArgs{key: $key, email: $email, resetPasswordToken: $resetPasswordToken}';
+  }
+}
+
+/// generated route for
+/// [_i9.ForgotPasswordVerificationPage]
+class ForgotPasswordVerificationRoute
+    extends _i1.PageRouteInfo<ForgotPasswordVerificationRouteArgs> {
+  ForgotPasswordVerificationRoute(
+      {_i23.Key? key, required String email, required String resetPasswordId})
+      : super(ForgotPasswordVerificationRoute.name,
+            path: 'forgot-password-verification',
+            args: ForgotPasswordVerificationRouteArgs(
+                key: key, email: email, resetPasswordId: resetPasswordId));
+
+  static const String name = 'ForgotPasswordVerificationRoute';
+}
+
+class ForgotPasswordVerificationRouteArgs {
+  const ForgotPasswordVerificationRouteArgs(
+      {this.key, required this.email, required this.resetPasswordId});
+
+  final _i23.Key? key;
+
+  final String email;
+
+  final String resetPasswordId;
+
+  @override
+  String toString() {
+    return 'ForgotPasswordVerificationRouteArgs{key: $key, email: $email, resetPasswordId: $resetPasswordId}';
+  }
+}
+
+/// generated route for
+/// [_i10.MainPage]
 class MainRoute extends _i1.PageRouteInfo<void> {
   const MainRoute({List<_i1.PageRouteInfo>? children})
       : super(MainRoute.name, path: 'main/', initialChildren: children);
@@ -366,7 +470,7 @@ class MainRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.AboutPage]
+/// [_i11.AboutPage]
 class AboutRoute extends _i1.PageRouteInfo<void> {
   const AboutRoute() : super(AboutRoute.name, path: 'about/');
 
@@ -384,9 +488,9 @@ class EmptyRouterRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.ChattingPage]
+/// [_i12.ChattingPage]
 class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
-  ChattingRoute({_i21.Key? key, required String userId})
+  ChattingRoute({_i23.Key? key, required String userId})
       : super(ChattingRoute.name,
             path: 'chat/:userId',
             args: ChattingRouteArgs(key: key, userId: userId),
@@ -398,7 +502,7 @@ class ChattingRoute extends _i1.PageRouteInfo<ChattingRouteArgs> {
 class ChattingRouteArgs {
   const ChattingRouteArgs({this.key, required this.userId});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
   final String userId;
 
@@ -409,9 +513,9 @@ class ChattingRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ListingPage]
+/// [_i13.ListingPage]
 class ListingRoute extends _i1.PageRouteInfo<ListingRouteArgs> {
-  ListingRoute({_i21.Key? key, required String id})
+  ListingRoute({_i23.Key? key, required String id})
       : super(ListingRoute.name,
             path: 'listing/:listingId',
             args: ListingRouteArgs(key: key, id: id),
@@ -423,7 +527,7 @@ class ListingRoute extends _i1.PageRouteInfo<ListingRouteArgs> {
 class ListingRouteArgs {
   const ListingRouteArgs({this.key, required this.id});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
   final String id;
 
@@ -434,7 +538,7 @@ class ListingRouteArgs {
 }
 
 /// generated route for
-/// [_i12.NewListingPage]
+/// [_i14.NewListingPage]
 class NewListingRoute extends _i1.PageRouteInfo<void> {
   const NewListingRoute() : super(NewListingRoute.name, path: 'new-listing/');
 
@@ -442,7 +546,7 @@ class NewListingRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.ShoppingCartPage]
+/// [_i15.ShoppingCartPage]
 class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
   const ShoppingCartRoute() : super(ShoppingCartRoute.name, path: 'cart');
 
@@ -450,9 +554,9 @@ class ShoppingCartRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.ProductListPage]
+/// [_i16.ProductListPage]
 class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
-  ProductListRoute({_i21.Key? key, required _i22.FilterData filterData})
+  ProductListRoute({_i23.Key? key, required _i24.FilterData filterData})
       : super(ProductListRoute.name,
             path: 'products',
             args: ProductListRouteArgs(key: key, filterData: filterData));
@@ -463,9 +567,9 @@ class ProductListRoute extends _i1.PageRouteInfo<ProductListRouteArgs> {
 class ProductListRouteArgs {
   const ProductListRouteArgs({this.key, required this.filterData});
 
-  final _i21.Key? key;
+  final _i23.Key? key;
 
-  final _i22.FilterData filterData;
+  final _i24.FilterData filterData;
 
   @override
   String toString() {
@@ -474,7 +578,7 @@ class ProductListRouteArgs {
 }
 
 /// generated route for
-/// [_i15.HomePage]
+/// [_i17.HomePage]
 class HomeRoute extends _i1.PageRouteInfo<void> {
   const HomeRoute() : super(HomeRoute.name, path: '');
 
@@ -482,7 +586,7 @@ class HomeRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.FavPage]
+/// [_i18.FavPage]
 class FavRoute extends _i1.PageRouteInfo<void> {
   const FavRoute() : super(FavRoute.name, path: 'favorites');
 
@@ -490,7 +594,7 @@ class FavRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.MessagesPage]
+/// [_i19.MessagesPage]
 class MessagesRoute extends _i1.PageRouteInfo<void> {
   const MessagesRoute() : super(MessagesRoute.name, path: 'messages');
 
@@ -498,7 +602,7 @@ class MessagesRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i18.UserPage]
+/// [_i20.UserPage]
 class ProfileRoute extends _i1.PageRouteInfo<void> {
   const ProfileRoute() : super(ProfileRoute.name, path: 'profile/');
 
@@ -514,7 +618,7 @@ class BlankRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i19.GeneralSettingsPage]
+/// [_i21.GeneralSettingsPage]
 class GeneralSettingsRoute extends _i1.PageRouteInfo<void> {
   const GeneralSettingsRoute() : super(GeneralSettingsRoute.name, path: '');
 
@@ -522,7 +626,7 @@ class GeneralSettingsRoute extends _i1.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i20.LanguagePage]
+/// [_i22.LanguagePage]
 class LanguageRoute extends _i1.PageRouteInfo<void> {
   const LanguageRoute() : super(LanguageRoute.name, path: 'language');
 
